@@ -12,8 +12,9 @@
     <meta name="description" content="ROP-chall
 Author:堇姬
 
+題目來源ICED的pwn題目https://ctf.nicewhite.xyz/
 確認保護image看到有開Stack canary，但溢出後卻沒有報stack canary的錯誤，所以應該是沒開。另外他有開NX，所以沒辦法寫shellcodeimage
-分析ASMimage有gets 可以BOF，不過沒有其他function可以retu"/>
+分"/>
 
 
 <!--Author-->
@@ -31,8 +32,9 @@ Author:堇姬
     <meta property="og:description" content="ROP-chall
 Author:堇姬
 
+題目來源ICED的pwn題目https://ctf.nicewhite.xyz/
 確認保護image看到有開Stack canary，但溢出後卻沒有報stack canary的錯誤，所以應該是沒開。另外他有開NX，所以沒辦法寫shellcodeimage
-分析ASMimage有gets 可以BOF，不過沒有其他function可以retu"/>
+分"/>
 
 
 <!--Open Graph Site Name-->
@@ -167,6 +169,7 @@ Author:堇姬
                 <h1 id="ROP-chall"><a href="#ROP-chall" class="headerlink" title="ROP-chall"></a>ROP-chall</h1><blockquote>
 <p>Author:堇姬</p>
 </blockquote>
+<h2 id="題目來源"><a href="#題目來源" class="headerlink" title="題目來源"></a>題目來源</h2><p>ICED的pwn題目<br><a target="_blank" rel="noopener" href="https://ctf.nicewhite.xyz/">https://ctf.nicewhite.xyz/</a></p>
 <h2 id="確認保護"><a href="#確認保護" class="headerlink" title="確認保護"></a>確認保護</h2><p><div class="img-item" data-src="https://hackmd.io/_uploads/Bkl1bnrvZC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/Bkl1bnrvZC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div><br>看到有開Stack canary，但溢出後卻沒有報stack canary的錯誤，所以應該是沒開。<br>另外他有開NX，所以沒辦法寫shellcode<br><div class="img-item" data-src="https://hackmd.io/_uploads/B1dwprPZ0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/B1dwprPZ0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
 <h2 id="分析ASM"><a href="#分析ASM" class="headerlink" title="分析ASM"></a>分析ASM</h2><p><div class="img-item" data-src="https://hackmd.io/_uploads/rJSkCrvZA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/rJSkCrvZA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div><br>有gets 可以BOF，不過沒有其他function可以return過去，所以應該是要ROP</p>
 <h2 id="堆ROP"><a href="#堆ROP" class="headerlink" title="堆ROP"></a>堆ROP</h2><ul>
