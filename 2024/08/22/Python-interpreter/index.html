@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<!--Description-->
+
+
+
+    <meta name="description" content="Python interpreter
+Author: 堇姬Naup
+
+定義先定義一下何謂python interpreter，就是用來解釋code object的
+image
+tiny interpreter首先要建立一個解釋器，需要給他一個指令集這邊先要求實現一件是，就是做加法需要有以下指令
+
+L"/>
+
+
+<!--Author-->
+
+    <meta name="author" content="Naup堇姬"/>
+
+
+<!--Open Graph Title-->
+
+    <meta property="og:title" content="Python-interpreter"/>
+
+
+<!--Open Graph Description-->
+
+    <meta property="og:description" content="Python interpreter
+Author: 堇姬Naup
+
+定義先定義一下何謂python interpreter，就是用來解釋code object的
+image
+tiny interpreter首先要建立一個解釋器，需要給他一個指令集這邊先要求實現一件是，就是做加法需要有以下指令
+
+L"/>
+
+
+<!--Open Graph Site Name-->
+    <meta property="og:site_name" content="堇姬 Naup&#39;s Blog"/>
+
+<!--Type page-->
+
+    <meta property="og:type" content="article"/>
+
+
+<!--Page Cover-->
+
+
+    <meta property="og:image" content="http://example.com/img/bg4.jpg"/>
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+
+
+
+
+    <meta name="twitter:image" content="http://example.com/img/bg4.jpg"/>
+
+
+<!-- Title -->
+
+<title>Python-interpreter | 堇姬 Naup&#39;s Blog</title>
+
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+
+<!-- Custom CSS -->
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<!-- Custom Fonts -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Gallery -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/featherlight@1.4.0/src/featherlight.css" integrity="sha256-30DV/STftlyQ6v8yaOWlabammvCYtRJERLj/m0b3zno=" crossorigin="anonymous">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/css/lightgallery.min.css">
+
+<!-- favicon -->
+
+<link rel="icon" href="/img/icon.jpg"/>
+
+
+
+    <!-- Google Analytics -->
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+<!-- Head tag -->
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top bg-transparent position-absolute w-100 p-0" id="nav">
+    <div class="container pl-0 pr-0">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <a class="navbar-brand text-white p-1 pl-3" href="/">堇姬 Naup's Blog</a>
+        </div>
+        <div class="navbar-nav float-right">
+            <button class="btn btn-link search-btn navbar-item" data-toggle="modal" data-target="#searchModal">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/bg4.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 text-center">
+                <div class="post-heading text-white">
+                    <h1>Python-interpreter</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Main Content -->
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                
+                    <span class="meta d-inline-block">
+    
+    
+    <!-- Date -->
+    
+        <span class="post-meta-split">&nbsp;|&nbsp;</span>
+        <i class="far fa-calendar-check fa-fw"></i>
+        2024-08-22
+    
+    <!-- word count and read count -->
+    
+
+    
+
+    
+</span>  
+                
+                <h1 id="Python-interpreter"><a href="#Python-interpreter" class="headerlink" title="Python interpreter"></a>Python interpreter</h1><blockquote>
+<p>Author: 堇姬Naup</p>
+</blockquote>
+<h2 id="定義"><a href="#定義" class="headerlink" title="定義"></a>定義</h2><p>先定義一下何謂python interpreter，就是用來解釋code object的</p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/SyVmFu7jC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SyVmFu7jC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<h2 id="tiny-interpreter"><a href="#tiny-interpreter" class="headerlink" title="tiny interpreter"></a>tiny interpreter</h2><p>首先要建立一個解釋器，需要給他一個指令集<br>這邊先要求實現一件是，就是做加法<br>需要有以下指令</p>
+<ul>
+<li>LOAD_VALUE -&gt; 載入數字至stack上、參數是要載入到stack上的數字</li>
+<li>ADD_TWO_VALUES -&gt; 將stack最上層跟最上層-1 pop然後相加，將結果放到stack上、無參數</li>
+<li>PRINT_ANSWER -&gt; 印出stack最上方層並pop掉、無參數</li>
+</ul>
+<p>先將要加的兩個數字載入至stack上，相加後印出<br><div class="img-item" data-src="https://hackmd.io/_uploads/H1uRoOQoA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/H1uRoOQoA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>並且加入<br>run_code()<br>循環執行每條指令及參數</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">what_to_execute = &#123;</span><br><span class="line">    <span class="string">&quot;instructions&quot;</span>: [(<span class="string">&quot;LOAD_VALUE&quot;</span>, <span class="number">0</span>),  <span class="comment"># the first number</span></span><br><span class="line">                     (<span class="string">&quot;LOAD_VALUE&quot;</span>, <span class="number">1</span>),  <span class="comment"># the second number</span></span><br><span class="line">                     (<span class="string">&quot;ADD_TWO_VALUES&quot;</span>, <span class="literal">None</span>),</span><br><span class="line">                     (<span class="string">&quot;PRINT_ANSWER&quot;</span>, <span class="literal">None</span>)],</span><br><span class="line">    <span class="string">&quot;numbers&quot;</span>: [<span class="number">7</span>, <span class="number">5</span>] &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Interpreter</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.stack = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">LOAD_VALUE</span>(<span class="params">self, number</span>):</span><br><span class="line">        self.stack.append(number)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">PRINT_ANSWER</span>(<span class="params">self</span>):</span><br><span class="line">        answer = self.stack.pop()</span><br><span class="line">        <span class="built_in">print</span>(answer)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">ADD_TWO_VALUES</span>(<span class="params">self</span>):</span><br><span class="line">        first_num = self.stack.pop()</span><br><span class="line">        second_num = self.stack.pop()</span><br><span class="line">        total = first_num + second_num</span><br><span class="line">        self.stack.append(total)</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">run_code</span>(<span class="params">self, what_to_execute</span>):</span><br><span class="line">        instructions = what_to_execute[<span class="string">&quot;instructions&quot;</span>]</span><br><span class="line">        numbers = what_to_execute[<span class="string">&quot;numbers&quot;</span>]</span><br><span class="line">        <span class="keyword">for</span> each_step <span class="keyword">in</span> instructions:</span><br><span class="line">            instruction, argument = each_step</span><br><span class="line">            <span class="keyword">if</span> instruction == <span class="string">&quot;LOAD_VALUE&quot;</span>:</span><br><span class="line">                number = numbers[argument]</span><br><span class="line">                self.LOAD_VALUE(number)</span><br><span class="line">            <span class="keyword">elif</span> instruction == <span class="string">&quot;ADD_TWO_VALUES&quot;</span>:</span><br><span class="line">                self.ADD_TWO_VALUES()</span><br><span class="line">            <span class="keyword">elif</span> instruction == <span class="string">&quot;PRINT_ANSWER&quot;</span>:</span><br><span class="line">                self.PRINT_ANSWER()</span><br><span class="line">                </span><br><span class="line">interpreter = Interpreter()</span><br><span class="line">interpreter.run_code(what_to_execute)</span><br></pre></td></tr></table></figure>
+
+<p>透過這樣來實現加法</p>
+<h2 id="變數"><a href="#變數" class="headerlink" title="變數"></a>變數</h2><p>接下來引入一些簡單的mmap關係<br>LOAD_NAME -&gt; 將變數值放到stack上<br>STORE_NAME -&gt; 將變數mmap到stack最上層的值並pop</p>
+<p>除了const表以外，還需要加入變數表</p>
+<p>並新增environment來建立mmap關係</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">what_to_execute = &#123;</span><br><span class="line">    <span class="string">&quot;instructions&quot;</span>: [(<span class="string">&quot;LOAD_VALUE&quot;</span>, <span class="number">0</span>),</span><br><span class="line">                     (<span class="string">&quot;STORE_NAME&quot;</span>, <span class="number">0</span>),</span><br><span class="line">                     (<span class="string">&quot;LOAD_VALUE&quot;</span>, <span class="number">1</span>),</span><br><span class="line">                     (<span class="string">&quot;STORE_NAME&quot;</span>, <span class="number">1</span>),</span><br><span class="line">                     (<span class="string">&quot;LOAD_NAME&quot;</span>, <span class="number">0</span>),</span><br><span class="line">                     (<span class="string">&quot;LOAD_NAME&quot;</span>, <span class="number">1</span>),</span><br><span class="line">                     (<span class="string">&quot;ADD_TWO_VALUES&quot;</span>, <span class="literal">None</span>),</span><br><span class="line">                     (<span class="string">&quot;PRINT_ANSWER&quot;</span>, <span class="literal">None</span>)],</span><br><span class="line">    <span class="string">&quot;numbers&quot;</span>: [<span class="number">1</span>, <span class="number">2</span>],    <span class="comment"># 數值列表，用於 LOAD_VALUE 指令</span></span><br><span class="line">    <span class="string">&quot;names&quot;</span>:   [<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>] <span class="comment"># 變數名稱列表，用於 STORE_NAME 和 LOAD_NAME 指令</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Interpreter</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.stack = []          <span class="comment"># 用來儲存運算過程中的數值堆疊</span></span><br><span class="line">        self.environment = &#123;&#125;    <span class="comment"># 用來儲存變數名稱和值的映射環境</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">LOAD_VALUE</span>(<span class="params">self, number</span>):</span><br><span class="line">        self.stack.append(number) <span class="comment"># 將數值推入堆疊</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">PRINT_ANSWER</span>(<span class="params">self</span>):</span><br><span class="line">        answer = self.stack.pop() <span class="comment"># 從堆疊中取出結果</span></span><br><span class="line">        <span class="built_in">print</span>(answer)             <span class="comment"># 輸出結果</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">ADD_TWO_VALUES</span>(<span class="params">self</span>):</span><br><span class="line">        first_num = self.stack.pop()    <span class="comment"># 從堆疊中取出第一個數值</span></span><br><span class="line">        second_num = self.stack.pop()   <span class="comment"># 從堆疊中取出第二個數值</span></span><br><span class="line">        total = first_num + second_num  <span class="comment"># 將兩個數值相加</span></span><br><span class="line">        self.stack.append(total)        <span class="comment"># 將總和推回堆疊</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">STORE_NAME</span>(<span class="params">self, name</span>):</span><br><span class="line">        val = self.stack.pop()         <span class="comment"># 從堆疊中取出數值</span></span><br><span class="line">        self.environment[name] = val   <span class="comment"># 將數值儲存到指定的變數名稱中</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">LOAD_NAME</span>(<span class="params">self, name</span>):</span><br><span class="line">        val = self.environment[name]   <span class="comment"># 從環境中取出變數的值</span></span><br><span class="line">        self.stack.append(val)         <span class="comment"># 將該值推入堆疊</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">parse_argument</span>(<span class="params">self, instruction, argument, what_to_execute</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;解析指令的參數，並根據指令類型返回對應的值或名稱。&quot;&quot;&quot;</span></span><br><span class="line">        numbers = [<span class="string">&quot;LOAD_VALUE&quot;</span>]       <span class="comment"># 對應 LOAD_VALUE 的指令</span></span><br><span class="line">        names = [<span class="string">&quot;LOAD_NAME&quot;</span>, <span class="string">&quot;STORE_NAME&quot;</span>] <span class="comment"># 對應變數名稱的指令</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> instruction <span class="keyword">in</span> numbers:</span><br><span class="line">            argument = what_to_execute[<span class="string">&quot;numbers&quot;</span>][argument] <span class="comment"># 根據索引返回對應的數值</span></span><br><span class="line">        <span class="keyword">elif</span> instruction <span class="keyword">in</span> names:</span><br><span class="line">            argument = what_to_execute[<span class="string">&quot;names&quot;</span>][argument]   <span class="comment"># 根據索引返回對應的變數名稱</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> argument</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">run_code</span>(<span class="params">self, what_to_execute</span>):</span><br><span class="line">        instructions = what_to_execute[<span class="string">&quot;instructions&quot;</span>] <span class="comment"># 獲取執行指令的列表</span></span><br><span class="line">        <span class="keyword">for</span> each_step <span class="keyword">in</span> instructions:</span><br><span class="line">            instruction, argument = each_step</span><br><span class="line">            argument = self.parse_argument(instruction, argument, what_to_execute) <span class="comment"># 解析指令參數</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 根據指令類型執行相應的操作</span></span><br><span class="line">            <span class="keyword">if</span> instruction == <span class="string">&quot;LOAD_VALUE&quot;</span>:</span><br><span class="line">                self.LOAD_VALUE(argument)</span><br><span class="line">            <span class="keyword">elif</span> instruction == <span class="string">&quot;ADD_TWO_VALUES&quot;</span>:</span><br><span class="line">                self.ADD_TWO_VALUES()</span><br><span class="line">            <span class="keyword">elif</span> instruction == <span class="string">&quot;PRINT_ANSWER&quot;</span>:</span><br><span class="line">                self.PRINT_ANSWER()</span><br><span class="line">            <span class="keyword">elif</span> instruction == <span class="string">&quot;STORE_NAME&quot;</span>:</span><br><span class="line">                self.STORE_NAME(argument)</span><br><span class="line">            <span class="keyword">elif</span> instruction == <span class="string">&quot;LOAD_NAME&quot;</span>:</span><br><span class="line">                self.LOAD_NAME(argument)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 建立解釋器並執行代碼</span></span><br><span class="line">interpreter = Interpreter()</span><br><span class="line">interpreter.run_code(what_to_execute)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="優化run-code"><a href="#優化run-code" class="headerlink" title="優化run_code"></a>優化run_code</h2><p>這邊可以觀察到，使用if分支來建立指令集已經開始變得冗長，這邊我們可以使用getattr來優化動態查找</p>
+<p>可以參考這篇<br><a target="_blank" rel="noopener" href="https://www.runoob.com/python/python-func-getattr.html">https://www.runoob.com/python/python-func-getattr.html</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">run_code</span>(<span class="params">self, what_to_execute</span>):</span><br><span class="line">    instructions = what_to_execute[<span class="string">&quot;instructions&quot;</span>]</span><br><span class="line">    <span class="keyword">for</span> each_step <span class="keyword">in</span> instructions:</span><br><span class="line">        instruction, argument = each_step</span><br><span class="line">        argument = self.parse_argument(instruction, argument, what_to_execute)</span><br><span class="line">        <span class="comment"># 用getattr優化</span></span><br><span class="line">        bytecode_method = <span class="built_in">getattr</span>(self, instruction)</span><br><span class="line">        <span class="keyword">if</span> argument <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            bytecode_method()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            bytecode_method(argument)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Real-Python-Bytecode"><a href="#Real-Python-Bytecode" class="headerlink" title="Real Python Bytecode"></a>Real Python Bytecode</h2><p>以上簡單的了解了指令集的建立及該如何跑他，現在回歸原本的python bytecode來看看</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>():</span><br><span class="line">    x = <span class="number">3</span></span><br><span class="line">    <span class="keyword">if</span> x &lt; <span class="number">5</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;yes&#x27;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;no&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>可以用__code__看一下</p>
+<h3 id="code"><a href="#code" class="headerlink" title="code"></a><strong>code</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>():</span><br><span class="line">    x = <span class="number">3</span></span><br><span class="line">    <span class="keyword">if</span> x &lt; <span class="number">5</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;yes&#x27;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;no&#x27;</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">for</span> attr <span class="keyword">in</span> <span class="built_in">dir</span>(f.__code__):</span><br><span class="line">    <span class="keyword">if</span> attr.startswith(<span class="string">&#x27;co_&#x27;</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;attr&#125;</span>:\t<span class="subst">&#123;<span class="built_in">getattr</span>(f.__code__, attr)&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>觀察一下它裡面到底存了甚麼資訊</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">co_argcount:    0</span><br><span class="line">co_cellvars:    ()</span><br><span class="line">co_code:        b&#x27;d\x01&#125;\x00|\x00d\x02k\x00r\x08d\x03S\x00d\x04S\x00&#x27;</span><br><span class="line">co_consts:      (None, 3, 5, &#x27;yes&#x27;, &#x27;no&#x27;)</span><br><span class="line">co_filename:    d:\Users\user\Downloads\dist (10)\tst.py</span><br><span class="line">co_firstlineno: 1</span><br><span class="line">co_flags:       67</span><br><span class="line">co_freevars:    ()</span><br><span class="line">co_kwonlyargcount:      0</span><br><span class="line">co_lines:       &lt;built-in method co_lines of code object at 0x000001CCAFC9FCB0&gt;</span><br><span class="line">co_linetable:   b&#x27;\x04\x01\x08\x01\x04\x01\x04\x02&#x27;</span><br><span class="line">co_lnotab:      b&#x27;\x00\x01\x04\x01\x08\x01\x04\x02&#x27;</span><br><span class="line">co_name:        f</span><br><span class="line">co_names:       ()</span><br><span class="line">co_nlocals:     1</span><br><span class="line">co_posonlyargcount:     0</span><br><span class="line">co_stacksize:   2</span><br><span class="line">co_varnames:    (&#x27;x&#x27;,)</span><br></pre></td></tr></table></figure>
+<p>包含了許多函數相關bytecode以及執行資訊</p>
+<p>.co_code下的就是他的bytecode</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">b&#x27;d\x01&#125;\x00|\x00d\x02k\x00r\x08d\x03S\x00d\x04S\x00&#x27;</span><br><span class="line">```       </span><br><span class="line"></span><br><span class="line">可以把他轉成list來看</span><br><span class="line">```python</span><br><span class="line">def f():</span><br><span class="line">    x = 3</span><br><span class="line">    if x &lt; 5:</span><br><span class="line">        return &#x27;yes&#x27;</span><br><span class="line">    else:</span><br><span class="line">        return &#x27;no&#x27;</span><br><span class="line">    </span><br><span class="line">print(list(f.__code__.co_code))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[100, 1, 125, 0, 124, 0, 100, 2, 107, 0, 114, 8, 100, 3, 83, 0, 100, 4, 83, 0]</span><br></pre></td></tr></table></figure>
+
+<p>這邊搭配dis來看</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">  3           0 LOAD_CONST               1 (3)</span><br><span class="line">              2 STORE_FAST               0 (x)</span><br><span class="line"></span><br><span class="line">  4           4 LOAD_FAST                0 (x)</span><br><span class="line">              6 LOAD_CONST               2 (5)</span><br><span class="line">              8 COMPARE_OP               0 (&lt;)</span><br><span class="line">             10 POP_JUMP_IF_FALSE        8 (to 16)</span><br><span class="line"></span><br><span class="line">  5          12 LOAD_CONST               3 (&#x27;yes&#x27;)</span><br><span class="line">             14 RETURN_VALUE</span><br><span class="line"></span><br><span class="line">  7     &gt;&gt;   16 LOAD_CONST               4 (&#x27;no&#x27;)</span><br><span class="line">             18 RETURN_VALUE</span><br><span class="line">None</span><br></pre></td></tr></table></figure>
+
+<p>一個bytecode對應一個指令</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">list</span>(f.__code__.co_code):</span><br><span class="line">   <span class="built_in">print</span>(i,<span class="string">&quot;=&quot;</span>,dis.opname[i])</span><br></pre></td></tr></table></figure>
+
+<p>對應關係</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">100 = LOAD_CONST</span><br><span class="line">1 </span><br><span class="line">125 = STORE_FAST</span><br><span class="line">0 </span><br><span class="line">124 = LOAD_FAST</span><br><span class="line">0 </span><br><span class="line">100 = LOAD_CONST</span><br><span class="line">2 </span><br><span class="line">107 = COMPARE_OP</span><br><span class="line">0 </span><br><span class="line">114 = POP_JUMP_IF_FALSE</span><br><span class="line">8 </span><br><span class="line">100 = LOAD_CONST</span><br><span class="line">3 </span><br><span class="line">83 = RETURN_VALUE</span><br><span class="line">0 </span><br><span class="line">100 = LOAD_CONST</span><br><span class="line">4</span><br><span class="line">83 = RETURN_VALUE</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+
+<p>LOAD_CONST 就相當於上方的 LOAD_FAST<br>LOAD_VALUE 就相當於上方的 LOAD_NAME</p>
+<h2 id="比較和循環"><a href="#比較和循環" class="headerlink" title="比較和循環"></a>比較和循環</h2><p>通常一個程式當然不可能只有單純的一行行執行，一定有條件判斷跟迴圈，而python bytecode也有類似的goto可以做跳轉</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if x &lt; 5</span><br></pre></td></tr></table></figure>
+<p>被編譯成了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">4           4 LOAD_FAST                0 (x)</span><br><span class="line">            6 LOAD_CONST               2 (5)</span><br><span class="line">            8 COMPARE_OP               0 (&lt;)</span><br><span class="line">           10 POP_JUMP_IF_FALSE        8 (to 16)</span><br></pre></td></tr></table></figure>
+
+<p>如果是false就跳到16行的no<br>對的話往下執行</p>
+<p>POP_JUMP_IF_FALSE -&gt; 將stack頂部的值pop掉看是true or false</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>():</span><br><span class="line">    x = <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> x &lt; <span class="number">5</span>:</span><br><span class="line">        x = x + <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> x</span><br></pre></td></tr></table></figure>
+<p>迴圈也是一樣的概念</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">3           0 LOAD_CONST               1 (1)</span><br><span class="line">            2 STORE_FAST               0 (x)</span><br><span class="line"></span><br><span class="line">4           4 LOAD_FAST                0 (x)</span><br><span class="line">            6 LOAD_CONST               2 (5)</span><br><span class="line">            8 COMPARE_OP               0 (&lt;)</span><br><span class="line">           10 POP_JUMP_IF_FALSE       14 (to 28)</span><br><span class="line"></span><br><span class="line">5     &gt;&gt;   12 LOAD_FAST                0 (x)</span><br><span class="line">           14 LOAD_CONST               1 (1)</span><br><span class="line">           16 BINARY_ADD</span><br><span class="line">           18 STORE_FAST               0 (x)</span><br><span class="line"></span><br><span class="line">4          20 LOAD_FAST                0 (x)</span><br><span class="line">           22 LOAD_CONST               2 (5)</span><br><span class="line">           24 COMPARE_OP               0 (&lt;)</span><br><span class="line">           26 POP_JUMP_IF_TRUE         6 (to 12)</span><br><span class="line"></span><br><span class="line">6     &gt;&gt;   28 LOAD_FAST                0 (x)</span><br><span class="line">           30 RETURN_VALUE</span><br></pre></td></tr></table></figure>
+<p>看有沒有達成compare條件，並進行跳轉</p>
+<h2 id="Frame"><a href="#Frame" class="headerlink" title="Frame"></a>Frame</h2><p>接下來要介紹的是Frame，觀察一下可以發現 RETURN_VALUE會return一個值，那他究竟return到哪裡呢?</p>
+<p>可以想像，一個bytecode object有很多的Frame，return的value會被return到main frame，可以簡單想像他是作用域的概念</p>
+<p>如果一個遞迴函式調用自己十次，會有十一個frame</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">bar</span>(<span class="params">y</span>):</span><br><span class="line">   z = y + <span class="number">3</span>   </span><br><span class="line">   <span class="keyword">return</span> z</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">foo</span>():</span><br><span class="line">    a = <span class="number">1</span></span><br><span class="line">    b = <span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> a + bar(b)</span><br><span class="line"></span><br><span class="line">foo()</span><br></pre></td></tr></table></figure>
+
+<p>現在共有三個frame，一但bar return就會把bar frame 從call stack pop掉</p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/SJkRif4iR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SJkRif4iR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>由於python在frame被pop掉幾乎都會清掉data stack，所以其實所有frame共用一個data stack也是可以的(非生成器的情況)</p>
+<ul>
+<li>生成器的特殊性: 生成器的特性在於它可以暫停一個frame的執行，並在之後恢復到相同的狀態繼續執行，這要求每個frame必須有獨立的data stack</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/python3/python3-iterator-generator.html">https://www.runoob.com/python3/python3-iterator-generator.html</a></p>
+<h2 id="Byterun"><a href="#Byterun" class="headerlink" title="Byterun"></a>Byterun</h2><p>上述就是基礎的python interpreter的知識，開始看byterun吧<br>byterun有四種對象</p>
+<ul>
+<li>VirtualMachine<ul>
+<li>負責整體結構管理(frame call stack、指令到操作的映射)</li>
+<li>處理指令到操作的映射</li>
+<li>較複雜的管理邏輯</li>
+</ul>
+</li>
+<li>Frame<ul>
+<li>關聯 code object</li>
+<li>管理全局、局部命名空間</li>
+<li>跟踪call stack和執行狀態</li>
+</ul>
+</li>
+<li>Function<ul>
+<li>調用函數時，會創建一個新的 Frame</li>
+<li>控制新 Frame 的創建和管理</li>
+</ul>
+</li>
+<li>Block</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://github.com/nedbat/byterun">https://github.com/nedbat/byterun</a></p>
+<h2 id="VirtualMachine"><a href="#VirtualMachine" class="headerlink" title="VirtualMachine"></a>VirtualMachine</h2><p>python interpreter就是一個VirtualMachine<br>VirtualMachine 負責保存call stack、異常狀態，以及在 frame 中傳遞的返回值</p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/H1Yh-X4i0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/H1Yh-X4i0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>編譯後的code object為參數，並且創建一個frame，這個frame可能會在增加或刪減更多的frame，call stack也隨之伸縮，當第一個frame return時就結束(跟之前學的幾乎一樣)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">VirtualMachine</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.frames = []   <span class="comment"># 儲存調用棧的列表。</span></span><br><span class="line">        self.frame = <span class="literal">None</span>  <span class="comment"># 當前正在執行的 frame。</span></span><br><span class="line">        self.return_value = <span class="literal">None</span>  <span class="comment"># 儲存當前 frame 的返回值。</span></span><br><span class="line">        self.last_exception = <span class="literal">None</span>  <span class="comment"># 儲存最後一個異常狀態。</span></span><br><span class="line">        </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">run_code</span>(<span class="params">self, code, global_names=<span class="literal">None</span>, local_names=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot; An entry point to execute code using the virtual machine.&quot;&quot;&quot;</span></span><br><span class="line">        frame = self.make_frame(code, global_names=global_names, </span><br><span class="line">                                local_names=local_names)</span><br><span class="line">        self.run_frame(frame)</span><br></pre></td></tr></table></figure>
+
+<h2 id="frame"><a href="#frame" class="headerlink" title="frame"></a>frame</h2><p>就是一個屬性的集合，包含了code object、global name、local name、內建命名空間、前一個frame、data stack、block stack</p>
+<p><a target="_blank" rel="noopener" href="https://docs.python.org/zh-tw/3/library/builtins.html">https://docs.python.org/zh-tw/3/library/builtins.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/goldsunshine/p/15085333.html">https://www.cnblogs.com/goldsunshine/p/15085333.html</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Frame</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, code_obj, global_names, local_names, prev_frame</span>):</span><br><span class="line">        self.code_obj = code_obj  <span class="comment"># 儲存當前的程式碼物件</span></span><br><span class="line">        self.global_names = global_names  <span class="comment"># 儲存全域名稱空間</span></span><br><span class="line">        self.local_names = local_names  <span class="comment"># 儲存區域名稱空間</span></span><br><span class="line">        self.prev_frame = prev_frame  <span class="comment"># 儲存前一個執行框架（如果有的話）</span></span><br><span class="line">        self.stack = []  <span class="comment"># 初始化操作堆疊為空</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> prev_frame:</span><br><span class="line">            <span class="comment"># 如果有前一個框架，繼承其內建函式名稱空間</span></span><br><span class="line">            self.builtin_names = prev_frame.builtin_names</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 否則，使用當前區域名稱空間中的 &#x27;__builtins__&#x27; 來設置內建函式名稱空間</span></span><br><span class="line">            self.builtin_names = local_names[<span class="string">&#x27;__builtins__&#x27;</span>]</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">hasattr</span>(self.builtin_names, <span class="string">&#x27;__dict__&#x27;</span>):</span><br><span class="line">                <span class="comment"># 如果內建函式名稱有 __dict__ 屬性，則使用其字典</span></span><br><span class="line">                self.builtin_names = self.builtin_names.__dict__</span><br><span class="line"></span><br><span class="line">        self.last_instruction = <span class="number">0</span>  <span class="comment"># 記錄最後執行的指令索引，初始為 0</span></span><br><span class="line">        self.block_stack = []  <span class="comment"># 初始化區塊堆疊為空，用於處理控制流（如 try/except 等）</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>剛剛的virtual machine並沒有實現對於frame的操作，這邊加入</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">VirtualMachine</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    [... snip ...]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 處理執行框架的相關方法</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">make_frame</span>(<span class="params">self, code, callargs=&#123;&#125;, global_names=<span class="literal">None</span>, local_names=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="comment"># 建立新的執行框架</span></span><br><span class="line">        <span class="keyword">if</span> global_names <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> local_names <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="comment"># 如果提供了全域名稱和區域名稱，將區域名稱設為全域名稱</span></span><br><span class="line">            local_names = global_names</span><br><span class="line">        <span class="keyword">elif</span> self.frames:</span><br><span class="line">            <span class="comment"># 如果已經有現存的框架，繼承目前框架的全域名稱空間，並初始化一個空的區域名稱空間</span></span><br><span class="line">            global_names = self.frame.global_names</span><br><span class="line">            local_names = &#123;&#125;</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 如果沒有現存的框架，初始化全域和區域名稱空間</span></span><br><span class="line">            global_names = local_names = &#123;</span><br><span class="line">                <span class="string">&#x27;__builtins__&#x27;</span>: __builtins__,  <span class="comment"># 預設的內建函式集合</span></span><br><span class="line">                <span class="string">&#x27;__name__&#x27;</span>: <span class="string">&#x27;__main__&#x27;</span>,  <span class="comment"># 預設的模組名稱</span></span><br><span class="line">                <span class="string">&#x27;__doc__&#x27;</span>: <span class="literal">None</span>,  <span class="comment"># 預設的文件字串</span></span><br><span class="line">                <span class="string">&#x27;__package__&#x27;</span>: <span class="literal">None</span>,  <span class="comment"># 預設的包名稱</span></span><br><span class="line">            &#125;</span><br><span class="line">        local_names.update(callargs)  <span class="comment"># 將函式的引數更新至區域名稱空間</span></span><br><span class="line">        frame = Frame(code, global_names, local_names, self.frame)  <span class="comment"># 創建新的 Frame 物件</span></span><br><span class="line">        <span class="keyword">return</span> frame  <span class="comment"># 返回新的執行框架</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">push_frame</span>(<span class="params">self, frame</span>):</span><br><span class="line">        <span class="comment"># 將新的執行框架推入堆疊並設為當前框架</span></span><br><span class="line">        self.frames.append(frame)</span><br><span class="line">        self.frame = frame</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">pop_frame</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># 將當前框架從堆疊中彈出，並更新當前框架為堆疊頂端的框架</span></span><br><span class="line">        self.frames.pop()</span><br><span class="line">        <span class="keyword">if</span> self.frames:</span><br><span class="line">            self.frame = self.frames[-<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.frame = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">run_frame</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># 執行當前框架的程式邏輯 (此部分尚未實作)</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h2><p>重要的只有創建一個frame並執行他的__call__</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Function</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    創建一個現實的函式物件，定義了解譯器所需的功能。</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    __slots__ = [</span><br><span class="line">        <span class="string">&#x27;func_code&#x27;</span>, <span class="string">&#x27;func_name&#x27;</span>, <span class="string">&#x27;func_defaults&#x27;</span>, <span class="string">&#x27;func_globals&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;func_locals&#x27;</span>, <span class="string">&#x27;func_dict&#x27;</span>, <span class="string">&#x27;func_closure&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;__name__&#x27;</span>, <span class="string">&#x27;__dict__&#x27;</span>, <span class="string">&#x27;__doc__&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;_vm&#x27;</span>, <span class="string">&#x27;_func&#x27;</span>,</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, code, globs, defaults, closure, vm</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;此部分細節對於理解解譯器來說並不是特別重要。&quot;&quot;&quot;</span></span><br><span class="line">        self._vm = vm  <span class="comment"># 儲存虛擬機器實例</span></span><br><span class="line">        self.func_code = code  <span class="comment"># 儲存函式的程式碼物件</span></span><br><span class="line">        self.func_name = self.__name__ = name <span class="keyword">or</span> code.co_name  <span class="comment"># 儲存函式名稱</span></span><br><span class="line">        self.func_defaults = <span class="built_in">tuple</span>(defaults)  <span class="comment"># 儲存函式的預設引數</span></span><br><span class="line">        self.func_globals = globs  <span class="comment"># 儲存全域名稱空間</span></span><br><span class="line">        self.func_locals = self._vm.frame.f_locals  <span class="comment"># 儲存當前區域名稱空間</span></span><br><span class="line">        self.__dict__ = &#123;&#125;  <span class="comment"># 初始化函式的屬性字典</span></span><br><span class="line">        self.func_closure = closure  <span class="comment"># 儲存閉包（如果有的話）</span></span><br><span class="line">        self.__doc__ = code.co_consts[<span class="number">0</span>] <span class="keyword">if</span> code.co_consts <span class="keyword">else</span> <span class="literal">None</span>  <span class="comment"># 儲存函式的文檔字串</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 有時需要一個真正的 Python 函式，這裡是為了這個目的</span></span><br><span class="line">        kw = &#123;</span><br><span class="line">            <span class="string">&#x27;argdefs&#x27;</span>: self.func_defaults,  <span class="comment"># 設置預設引數</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> closure:</span><br><span class="line">            <span class="comment"># 如果有閉包，創建對應的 cell</span></span><br><span class="line">            kw[<span class="string">&#x27;closure&#x27;</span>] = <span class="built_in">tuple</span>(make_cell(<span class="number">0</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> closure)</span><br><span class="line">        self._func = types.FunctionType(code, globs, **kw)  <span class="comment"># 創建真正的 Python 函式物件</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__call__</span>(<span class="params">self, *args, **kwargs</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;當調用函式時，創建一個新的框架並執行它。&quot;&quot;&quot;</span></span><br><span class="line">        callargs = inspect.getcallargs(self._func, *args, **kwargs)</span><br><span class="line">        <span class="comment"># 使用 callargs 來提供引數與其值的映射，以便傳遞到新的框架中</span></span><br><span class="line">        frame = self._vm.make_frame(</span><br><span class="line">            self.func_code, callargs, self.func_globals, &#123;&#125;</span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">return</span> self._vm.run_frame(frame)  <span class="comment"># 執行新的框架並返回結果</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">make_cell</span>(<span class="params">value</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;創建一個真正的 Python 閉包並抓取一個 cell。&quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 感謝 Alex Gaynor 這部分的幫助</span></span><br><span class="line">    fn = (<span class="keyword">lambda</span> x: <span class="keyword">lambda</span>: x)(value)</span><br><span class="line">    <span class="keyword">return</span> fn.__closure__[<span class="number">0</span>]  <span class="comment"># 返回閉包中的 cell</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>virtual machine也加入了管理stack更多方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">VirtualMachine</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    [... snip ...]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 資料堆疊操作</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">top</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;返回堆疊頂端的值。&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> self.frame.stack[-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">pop</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;彈出並返回堆疊頂端的值。&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> self.frame.stack.pop()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">push</span>(<span class="params">self, *vals</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;將一個或多個值推入堆疊。&quot;&quot;&quot;</span></span><br><span class="line">        self.frame.stack.extend(vals)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">popn</span>(<span class="params">self, n</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;從堆疊中彈出 `n` 個值。</span></span><br><span class="line"><span class="string">        返回一個 `n` 個值的列表，最深的值在前。</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> n:</span><br><span class="line">            ret = self.frame.stack[-n:]  <span class="comment"># 取出最上面的 `n` 個值</span></span><br><span class="line">            self.frame.stack[-n:] = []  <span class="comment"># 清空這些值</span></span><br><span class="line">            <span class="keyword">return</span> ret</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> []  <span class="comment"># 如果 `n` 為 0，返回空列表</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>並且要加入解析指令是否有參數跟更新最後一行執行</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">VirtualMachine</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    [... snip ...]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">parse_byte_and_args</span>(<span class="params">self</span>):</span><br><span class="line">        f = self.frame</span><br><span class="line">        opoffset = f.last_instruction</span><br><span class="line">        byteCode = f.code_obj.co_code[opoffset]</span><br><span class="line">        f.last_instruction += <span class="number">1</span></span><br><span class="line">        byte_name = dis.opname[byteCode]</span><br><span class="line">        <span class="keyword">if</span> byteCode &gt;= dis.HAVE_ARGUMENT:</span><br><span class="line">            <span class="comment"># index into the bytecode</span></span><br><span class="line">            arg = f.code_obj.co_code[f.last_instruction:f.last_instruction+<span class="number">2</span>]  </span><br><span class="line">            f.last_instruction += <span class="number">2</span>   <span class="comment"># advance the instruction pointer</span></span><br><span class="line">            arg_val = arg[<span class="number">0</span>] + (arg[<span class="number">1</span>] * <span class="number">256</span>)</span><br><span class="line">            <span class="keyword">if</span> byteCode <span class="keyword">in</span> dis.hasconst:   <span class="comment"># Look up a constant</span></span><br><span class="line">                arg = f.code_obj.co_consts[arg_val]</span><br><span class="line">            <span class="keyword">elif</span> byteCode <span class="keyword">in</span> dis.hasname:  <span class="comment"># Look up a name</span></span><br><span class="line">                arg = f.code_obj.co_names[arg_val]</span><br><span class="line">            <span class="keyword">elif</span> byteCode <span class="keyword">in</span> dis.haslocal: <span class="comment"># Look up a local name</span></span><br><span class="line">                arg = f.code_obj.co_varnames[arg_val]</span><br><span class="line">            <span class="keyword">elif</span> byteCode <span class="keyword">in</span> dis.hasjrel:  <span class="comment"># Calculate a relative jump</span></span><br><span class="line">                arg = f.last_instruction + arg_val</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                arg = arg_val</span><br><span class="line">            argument = [arg]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            argument = []</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> byte_name, argument</span><br></pre></td></tr></table></figure>
+<h2 id="block-沒有很重要，看看就好了"><a href="#block-沒有很重要，看看就好了" class="headerlink" title="block(沒有很重要，看看就好了)"></a>block(沒有很重要，看看就好了)</h2><p>block在控制流程中扮演重要角色，尤其是在處理異常和迴圈時。它確保在操作完成後，數據堆疊（data stack）的狀態是正確</p>
+<p>在迴圈中，一個特殊的迭代器會存在於堆疊中，當迴圈完成時，它會從堆疊中彈出。解釋器需要檢查迴圈是否仍在進行中，或者已經停止</p>
+<p>為了跟蹤這些額外的信息，解釋器設置了一個標誌來指示它的狀態。我們用一個變量 why 來實現這個標誌，它可以是 None 或以下幾個字符串之一：”continue”、”break”、”exception”、”return”。這些標誌指示如何對區塊堆疊和數據堆疊進行操作。例如，在迴圈的例子中，如果區塊堆疊的堆疊頂部是 loop 區塊，並且 why 是 “continue”，那麼迭代器應該保留在數據堆疊上；如果 why 是 “break”，那麼迭代器會被彈出。</p>
+<p>(原文解釋得很好了)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> collections</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定義區塊的數據結構</span></span><br><span class="line">Block = collections.namedtuple(<span class="string">&quot;Block&quot;</span>, <span class="string">&quot;type, handler, stack_height&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">VirtualMachine</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    [... snip ...]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 推入區塊到區塊堆疊</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">push_block</span>(<span class="params">self, b_type, handler=<span class="literal">None</span></span>):</span><br><span class="line">        level = <span class="built_in">len</span>(self.frame.stack)  <span class="comment"># 獲取當前堆疊的深度</span></span><br><span class="line">        self.frame.block_stack.append(Block(b_type, handler, level))  <span class="comment"># 將區塊推入堆疊</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 彈出區塊</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">pop_block</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self.frame.block_stack.pop()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 清理與特定區塊相關的數據堆疊值</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">unwind_block</span>(<span class="params">self, block</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot; 根據給定的區塊清理數據堆疊上的值。 &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> block.<span class="built_in">type</span> == <span class="string">&#x27;except-handler&#x27;</span>:</span><br><span class="line">            <span class="comment"># 異常本身在堆疊中，包括類型、值和回溯</span></span><br><span class="line">            offset = <span class="number">3</span>  </span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            offset = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> <span class="built_in">len</span>(self.frame.stack) &gt; block.stack_height + offset:</span><br><span class="line">            self.pop()  <span class="comment"># 彈出堆疊中的值</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> block.<span class="built_in">type</span> == <span class="string">&#x27;except-handler&#x27;</span>:</span><br><span class="line">            traceback, value, exctype = self.popn(<span class="number">3</span>)  <span class="comment"># 彈出異常相關的三個值</span></span><br><span class="line">            self.last_exception = exctype, value, traceback  <span class="comment"># 記錄最後的異常</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 根據給定的標誌處理區塊堆疊</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">manage_block_stack</span>(<span class="params">self, why</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot; 管理區塊堆疊。 &quot;&quot;&quot;</span></span><br><span class="line">        frame = self.frame</span><br><span class="line">        block = frame.block_stack[-<span class="number">1</span>]  <span class="comment"># 獲取區塊堆疊的最上層區塊</span></span><br><span class="line">        <span class="keyword">if</span> block.<span class="built_in">type</span> == <span class="string">&#x27;loop&#x27;</span> <span class="keyword">and</span> why == <span class="string">&#x27;continue&#x27;</span>:</span><br><span class="line">            self.jump(self.return_value)  <span class="comment"># 繼續執行循環</span></span><br><span class="line">            why = <span class="literal">None</span></span><br><span class="line">            <span class="keyword">return</span> why</span><br><span class="line"></span><br><span class="line">        self.pop_block()  <span class="comment"># 彈出區塊</span></span><br><span class="line">        self.unwind_block(block)  <span class="comment"># 清理數據堆疊中的值</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> block.<span class="built_in">type</span> == <span class="string">&#x27;loop&#x27;</span> <span class="keyword">and</span> why == <span class="string">&#x27;break&#x27;</span>:</span><br><span class="line">            why = <span class="literal">None</span></span><br><span class="line">            self.jump(block.handler)  <span class="comment"># 跳轉到處理器</span></span><br><span class="line">            <span class="keyword">return</span> why</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (block.<span class="built_in">type</span> <span class="keyword">in</span> [<span class="string">&#x27;setup-except&#x27;</span>, <span class="string">&#x27;finally&#x27;</span>] <span class="keyword">and</span> why == <span class="string">&#x27;exception&#x27;</span>):</span><br><span class="line">            self.push_block(<span class="string">&#x27;except-handler&#x27;</span>)  <span class="comment"># 推入異常處理區塊</span></span><br><span class="line">            exctype, value, tb = self.last_exception  <span class="comment"># 獲取最後的異常信息</span></span><br><span class="line">            self.push(tb, value, exctype)  <span class="comment"># 推入異常信息</span></span><br><span class="line">            self.push(tb, value, exctype)  <span class="comment"># 再次推入異常信息</span></span><br><span class="line">            why = <span class="literal">None</span></span><br><span class="line">            self.jump(block.handler)  <span class="comment"># 跳轉到異常處理器</span></span><br><span class="line">            <span class="keyword">return</span> why</span><br><span class="line"></span><br><span class="line">        <span class="keyword">elif</span> block.<span class="built_in">type</span> == <span class="string">&#x27;finally&#x27;</span>:</span><br><span class="line">            <span class="keyword">if</span> why <span class="keyword">in</span> (<span class="string">&#x27;return&#x27;</span>, <span class="string">&#x27;continue&#x27;</span>):</span><br><span class="line">                self.push(self.return_value)  <span class="comment"># 推入返回值</span></span><br><span class="line"></span><br><span class="line">            self.push(why)  <span class="comment"># 推入標誌</span></span><br><span class="line"></span><br><span class="line">            why = <span class="literal">None</span></span><br><span class="line">            self.jump(block.handler)  <span class="comment"># 跳轉到最終處理器</span></span><br><span class="line">            <span class="keyword">return</span> why</span><br><span class="line">        <span class="keyword">return</span> why</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="實現指令集"><a href="#實現指令集" class="headerlink" title="實現指令集"></a>實現指令集</h2><p>基本上跟上面都差不多</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">VirtualMachine</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    [... snip ...]</span><br><span class="line"></span><br><span class="line">    <span class="comment">## Stack manipulation</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_LOAD_CONST</span>(<span class="params">self, const</span>):</span><br><span class="line">        self.push(const)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_POP_TOP</span>(<span class="params">self</span>):</span><br><span class="line">        self.pop()</span><br><span class="line"></span><br><span class="line">    <span class="comment">## Names</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_LOAD_NAME</span>(<span class="params">self, name</span>):</span><br><span class="line">        frame = self.frame</span><br><span class="line">        <span class="keyword">if</span> name <span class="keyword">in</span> frame.f_locals:</span><br><span class="line">            val = frame.f_locals[name]</span><br><span class="line">        <span class="keyword">elif</span> name <span class="keyword">in</span> frame.f_globals:</span><br><span class="line">            val = frame.f_globals[name]</span><br><span class="line">        <span class="keyword">elif</span> name <span class="keyword">in</span> frame.f_builtins:</span><br><span class="line">            val = frame.f_builtins[name]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> NameError(<span class="string">&quot;name &#x27;%s&#x27; is not defined&quot;</span> % name)</span><br><span class="line">        self.push(val)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_STORE_NAME</span>(<span class="params">self, name</span>):</span><br><span class="line">        self.frame.f_locals[name] = self.pop()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_LOAD_FAST</span>(<span class="params">self, name</span>):</span><br><span class="line">        <span class="keyword">if</span> name <span class="keyword">in</span> self.frame.f_locals:</span><br><span class="line">            val = self.frame.f_locals[name]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> UnboundLocalError(</span><br><span class="line">                <span class="string">&quot;local variable &#x27;%s&#x27; referenced before assignment&quot;</span> % name</span><br><span class="line">            )</span><br><span class="line">        self.push(val)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_STORE_FAST</span>(<span class="params">self, name</span>):</span><br><span class="line">        self.frame.f_locals[name] = self.pop()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_LOAD_GLOBAL</span>(<span class="params">self, name</span>):</span><br><span class="line">        f = self.frame</span><br><span class="line">        <span class="keyword">if</span> name <span class="keyword">in</span> f.f_globals:</span><br><span class="line">            val = f.f_globals[name]</span><br><span class="line">        <span class="keyword">elif</span> name <span class="keyword">in</span> f.f_builtins:</span><br><span class="line">            val = f.f_builtins[name]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> NameError(<span class="string">&quot;global name &#x27;%s&#x27; is not defined&quot;</span> % name)</span><br><span class="line">        self.push(val)</span><br><span class="line"></span><br><span class="line">    <span class="comment">## Operators</span></span><br><span class="line"></span><br><span class="line">    BINARY_OPERATORS = &#123;</span><br><span class="line">        <span class="string">&#x27;POWER&#x27;</span>:    <span class="built_in">pow</span>,</span><br><span class="line">        <span class="string">&#x27;MULTIPLY&#x27;</span>: operator.mul,</span><br><span class="line">        <span class="string">&#x27;FLOOR_DIVIDE&#x27;</span>: operator.floordiv,</span><br><span class="line">        <span class="string">&#x27;TRUE_DIVIDE&#x27;</span>:  operator.truediv,</span><br><span class="line">        <span class="string">&#x27;MODULO&#x27;</span>:   operator.mod,</span><br><span class="line">        <span class="string">&#x27;ADD&#x27;</span>:      operator.add,</span><br><span class="line">        <span class="string">&#x27;SUBTRACT&#x27;</span>: operator.sub,</span><br><span class="line">        <span class="string">&#x27;SUBSCR&#x27;</span>:   operator.getitem,</span><br><span class="line">        <span class="string">&#x27;LSHIFT&#x27;</span>:   operator.lshift,</span><br><span class="line">        <span class="string">&#x27;RSHIFT&#x27;</span>:   operator.rshift,</span><br><span class="line">        <span class="string">&#x27;AND&#x27;</span>:      operator.and_,</span><br><span class="line">        <span class="string">&#x27;XOR&#x27;</span>:      operator.xor,</span><br><span class="line">        <span class="string">&#x27;OR&#x27;</span>:       operator.or_,</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">binaryOperator</span>(<span class="params">self, op</span>):</span><br><span class="line">        x, y = self.popn(<span class="number">2</span>)</span><br><span class="line">        self.push(self.BINARY_OPERATORS[op](x, y))</span><br><span class="line"></span><br><span class="line">    COMPARE_OPERATORS = [</span><br><span class="line">        operator.lt,</span><br><span class="line">        operator.le,</span><br><span class="line">        operator.eq,</span><br><span class="line">        operator.ne,</span><br><span class="line">        operator.gt,</span><br><span class="line">        operator.ge,</span><br><span class="line">        <span class="keyword">lambda</span> x, y: x <span class="keyword">in</span> y,</span><br><span class="line">        <span class="keyword">lambda</span> x, y: x <span class="keyword">not</span> <span class="keyword">in</span> y,</span><br><span class="line">        <span class="keyword">lambda</span> x, y: x <span class="keyword">is</span> y,</span><br><span class="line">        <span class="keyword">lambda</span> x, y: x <span class="keyword">is</span> <span class="keyword">not</span> y,</span><br><span class="line">        <span class="keyword">lambda</span> x, y: <span class="built_in">issubclass</span>(x, Exception) <span class="keyword">and</span> <span class="built_in">issubclass</span>(x, y),</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_COMPARE_OP</span>(<span class="params">self, opnum</span>):</span><br><span class="line">        x, y = self.popn(<span class="number">2</span>)</span><br><span class="line">        self.push(self.COMPARE_OPERATORS[opnum](x, y))</span><br><span class="line"></span><br><span class="line">    <span class="comment">## Attributes and indexing</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_LOAD_ATTR</span>(<span class="params">self, attr</span>):</span><br><span class="line">        obj = self.pop()</span><br><span class="line">        val = <span class="built_in">getattr</span>(obj, attr)</span><br><span class="line">        self.push(val)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_STORE_ATTR</span>(<span class="params">self, name</span>):</span><br><span class="line">        val, obj = self.popn(<span class="number">2</span>)</span><br><span class="line">        <span class="built_in">setattr</span>(obj, name, val)</span><br><span class="line"></span><br><span class="line">    <span class="comment">## Building</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_BUILD_LIST</span>(<span class="params">self, count</span>):</span><br><span class="line">        elts = self.popn(count)</span><br><span class="line">        self.push(elts)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_BUILD_MAP</span>(<span class="params">self, size</span>):</span><br><span class="line">        self.push(&#123;&#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_STORE_MAP</span>(<span class="params">self</span>):</span><br><span class="line">        the_map, val, key = self.popn(<span class="number">3</span>)</span><br><span class="line">        the_map[key] = val</span><br><span class="line">        self.push(the_map)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_LIST_APPEND</span>(<span class="params">self, count</span>):</span><br><span class="line">        val = self.pop()</span><br><span class="line">        the_list = self.frame.stack[-count] <span class="comment"># peek</span></span><br><span class="line">        the_list.append(val)</span><br><span class="line"></span><br><span class="line">    <span class="comment">## Jumps</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_JUMP_FORWARD</span>(<span class="params">self, jump</span>):</span><br><span class="line">        self.jump(jump)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_JUMP_ABSOLUTE</span>(<span class="params">self, jump</span>):</span><br><span class="line">        self.jump(jump)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_POP_JUMP_IF_TRUE</span>(<span class="params">self, jump</span>):</span><br><span class="line">        val = self.pop()</span><br><span class="line">        <span class="keyword">if</span> val:</span><br><span class="line">            self.jump(jump)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_POP_JUMP_IF_FALSE</span>(<span class="params">self, jump</span>):</span><br><span class="line">        val = self.pop()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> val:</span><br><span class="line">            self.jump(jump)</span><br><span class="line"></span><br><span class="line">    <span class="comment">## Blocks</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_SETUP_LOOP</span>(<span class="params">self, dest</span>):</span><br><span class="line">        self.push_block(<span class="string">&#x27;loop&#x27;</span>, dest)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_GET_ITER</span>(<span class="params">self</span>):</span><br><span class="line">        self.push(<span class="built_in">iter</span>(self.pop()))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_FOR_ITER</span>(<span class="params">self, jump</span>):</span><br><span class="line">        iterobj = self.top()</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            v = <span class="built_in">next</span>(iterobj)</span><br><span class="line">            self.push(v)</span><br><span class="line">        <span class="keyword">except</span> StopIteration:</span><br><span class="line">            self.pop()</span><br><span class="line">            self.jump(jump)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_BREAK_LOOP</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;break&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_POP_BLOCK</span>(<span class="params">self</span>):</span><br><span class="line">        self.pop_block()</span><br><span class="line"></span><br><span class="line">    <span class="comment">## Functions</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_MAKE_FUNCTION</span>(<span class="params">self, argc</span>):</span><br><span class="line">        name = self.pop()</span><br><span class="line">        code = self.pop()</span><br><span class="line">        defaults = self.popn(argc)</span><br><span class="line">        globs = self.frame.f_globals</span><br><span class="line">        fn = Function(name, code, globs, defaults, <span class="literal">None</span>, self)</span><br><span class="line">        self.push(fn)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_CALL_FUNCTION</span>(<span class="params">self, arg</span>):</span><br><span class="line">        lenKw, lenPos = <span class="built_in">divmod</span>(arg, <span class="number">256</span>) <span class="comment"># KWargs not supported here</span></span><br><span class="line">        posargs = self.popn(lenPos)</span><br><span class="line"></span><br><span class="line">        func = self.pop()</span><br><span class="line">        frame = self.frame</span><br><span class="line">        retval = func(*posargs)</span><br><span class="line">        self.push(retval)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">byte_RETURN_VALUE</span>(<span class="params">self</span>):</span><br><span class="line">        self.return_value = self.pop()</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;return&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="詳細實現參考"><a href="#詳細實現參考" class="headerlink" title="詳細實現參考"></a>詳細實現參考</h2><p><a target="_blank" rel="noopener" href="https://github.com/nedbat/byterun">https://github.com/nedbat/byterun</a></p>
+<h2 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h2><p><a target="_blank" rel="noopener" href="https://docs.python.org/3/library/dis.html">https://docs.python.org/3/library/dis.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://qingyunha.github.io/taotao/">https://qingyunha.github.io/taotao/</a></p>
+
+            </div>
+
+            <!-- Post information -->
+            
+            
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+        <ul class="pagination d-block text-center">
+            
+            
+                <li class="next page-item d-inline"><a href="/2024/08/20/Pwn-heap-note-2/" class="page-link float-right">Older  &rarr;</a></li>
+            
+        </ul>
+    </div>
+
+
+            
+                <!-- Comments -->
+                
+
+                
+
+            
+
+        </div>
+    </div>
+</article> 
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    <style>
+        #toc-content .toc-link::before {
+            background-color: transparent;
+            max-height: 25px;
+        }
+
+        #toc-content .toc-link.is-active-link::before {
+            background-color: #404040;
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <div class="ui-toc dropup scrollspy-body pull-right" style="right: 3%;">
+        <button type="button" class="toc-btn btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <i class="fas fa-list"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right p-2"  aria-labelledby="tocLabel">
+            <div class="toc-widget">
+                <div id="toc-content" class="text-truncate">
+                </div>
+            </div>
+            <div class="toc-menu pt-3 pl-4">
+                <a class="expand-toggle d-block py-1" href="#"><span class="expand-text">Expand all</span><span class="close-text" style="display: none;">Collapse all</span></a>
+                <a class="back-to-top d-block py-1" href="#">Back to top</a>
+                <a class="go-to-bottom d-block py-1" href="#">Go to bottom</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '#toc-content',
+            // Where to grab the headings to build the table of contents.
+            contentSelector: 'article',
+            // Which headings to grab inside of the contentSelector element.
+            headingSelector: 'h1, h2, h3',
+            // For headings inside relative or absolute positioned containers within content.
+            hasInnerContainers: true,
+        });
+    </script>
+
+
+    
+
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 text-center">
+                <ul class="list-inline">
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="https://github.com/Naupjjin" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="mailto:naup96721@gmail.com" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                </ul>
+                <ul class="copyright footer-menu list-inline">
+                    
+                    
+                        <li class="list-inline-item">
+                            
+                            
+                            <a href="/">
+                                
+                                    Home
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/archives">
+                                
+                                    Archives
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/tags">
+                                
+                                    Tags
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/categories">
+                                
+                                    Categories
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/about">
+                                
+                                    About
+                                
+                            </a>
+                        </li>
+                    
+                </ul>
+                <p class="copyright footer-author">
+                    &copy; -2024 
+                    <a rel="external" class="copyright-link" href="" target="_blank">Naup堇姬</a><br/>
+                    Powered by <a rel="external" class="copyright-link" href="https://hexo.io/" target="_blank">Hexo</a>  
+                    <span class="copyright-split">&nbsp;|&nbsp;&nbsp;</span>
+                    Theme <a rel="external" class="copyright-link" href="https://github.com/luswdev/hexo-theme-clean.git" target="_blank">Clean</a>
+                    
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    <!-- jQuery -->
+<script src="//cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>
+
+<!-- For drop down -->
+<script src="//cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+<!-- Gallery -->
+<script src="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery-all.min.js"></script>
+<!-- Busuanzi -->
+
+
+<!-- Search script -->
+
+<script src="/js/search.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        searchFunc( '/search.xml' , 'searchInput', 'searchResult');
+    });
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+
+
+    <!-- Search Modal -->
+    <!-- Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content overflow-auto">
+            <div class="modal-header">
+                <input type="text" class="form-control" placeholder="Searching Keywords..." id="searchInput">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id="searchResult">
+                    <div class="search-empty text-center text-muted p-5">
+                        <i class="far fa-meh"></i>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
