@@ -265,7 +265,9 @@ libcglibc all in one 中沒有 2.23-0ubuntu5所以去網路上找libchttps://lau
 </tbody></table>
 <p>目前_chain 指向 main arena + 88 + 0x68 &#x3D; main arena + 0xc0 這是一個small bin，將small bin的chunk偽造，頭部改成&#x2F;bin&#x2F;sh\x00，vtable的IO_OVERFLOW改system<br>透過觸發malloc err來觸發</p>
 <p><div class="img-item" data-src="https://hackmd.io/_uploads/H1i75zYAR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/H1i75zYAR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<p>接下來我們回到題目上<br>我要使用house of orange那我應該如何去寫unsorted bin呢<br>因為我們現在是沒有一個heap overflow可以去寫到unsorted bin的fd bk<br>觀察一下IDA跟gdb<br>會發現heap array長度是8，緊接著是size array，但是他循環了9次可以malloc，所以可以溢出寫size array，讓size變成一個很大的數字<br><div class="img-item" data-src="https://hackmd.io/_uploads/H1WdqG5C0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/H1WdqG5C0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>接下來我們回到題目上<br>我要使用house of orange那我應該如何去寫unsorted bin呢<br>因為我們現在是沒有一個heap overflow可以去寫到unsorted bin的fd bk<br>觀察一下IDA跟gdb<br>會發現heap array長度是8，緊接著是size array，但是他循環了9次可以malloc，所以可以溢出寫size array，讓size變成一個很大的數字</p>
+<div class="img-item" data-src="/2024/10/02/Pwnable-bookwriter/aaaaa.png" data-sub-html=".caption"><img src="/2024/10/02/Pwnable-bookwriter/aaaaa.png" class=""></div>
+
 <p>第一塊chunk就會有超級大的溢出<br>我們把原本top chunk變成unsorted bin的那塊prev size改為&#x2F;bin&#x2F;sh<br>size 蓋成 0x60<br>剩下的就按照house of orange蓋法，之後蓋掉vtable pointer到fake file下方，並偽造第4個為system<br>之後去處發malloc error，原本的unsorted bin那塊0x60，會進到small bin，_IO_list_all會被蓋成main arena<br>small bin 0x60會是_chain，剛好只到0x60那塊<br>malloc err在flush，就會IO_overflow(small_bin_fp(指向&#x2F;bin&#x2F;sh))</p>
 <p>-&gt; system(‘&#x2F;bin&#x2F;sh’)</p>
 <p>不過我腳本不是百分百成功，不知道為甚麼</p>
