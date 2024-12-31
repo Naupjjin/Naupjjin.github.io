@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<!--Description-->
+
+
+
+    <meta name="description" content="Kernel mode &amp;amp; user mode switch
+Author: 堇姬Naup
+
+Usermode to Kernel mode
+call swapgs
+
+這裡先解釋幾個東西GS register、IA32_GS_BASE、IA32_KERNEL_GS_BASE、swapgs 是"/>
+
+
+<!--Author-->
+
+    <meta name="author" content="Naup堇姬"/>
+
+
+<!--Open Graph Title-->
+
+    <meta property="og:title" content="Kernel mode &amp; user mode switch"/>
+
+
+<!--Open Graph Description-->
+
+    <meta property="og:description" content="Kernel mode &amp;amp; user mode switch
+Author: 堇姬Naup
+
+Usermode to Kernel mode
+call swapgs
+
+這裡先解釋幾個東西GS register、IA32_GS_BASE、IA32_KERNEL_GS_BASE、swapgs 是"/>
+
+
+<!--Open Graph Site Name-->
+    <meta property="og:site_name" content="堇姬 Naup&#39;s Blog"/>
+
+<!--Type page-->
+
+    <meta property="og:type" content="article"/>
+
+
+<!--Page Cover-->
+
+
+    <meta property="og:image" content="http://example.com/img/bg4.jpg"/>
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+
+
+
+
+    <meta name="twitter:image" content="http://example.com/img/bg4.jpg"/>
+
+
+<!-- Title -->
+
+<title>Kernel mode &amp; user mode switch | 堇姬 Naup&#39;s Blog</title>
+
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+
+<!-- Custom CSS -->
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<!-- Custom Fonts -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
+<link href="//fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Gallery -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/featherlight@1.4.0/src/featherlight.css" integrity="sha256-30DV/STftlyQ6v8yaOWlabammvCYtRJERLj/m0b3zno=" crossorigin="anonymous">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/css/lightgallery.min.css">
+
+<!-- favicon -->
+
+<link rel="icon" href="/img/icon.jpg"/>
+
+
+
+    <!-- Google Analytics -->
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+<!-- Head tag -->
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top bg-transparent position-absolute w-100 p-0" id="nav">
+    <div class="container pl-0 pr-0">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <a class="navbar-brand text-white p-1 pl-3" href="/">堇姬 Naup's Blog</a>
+        </div>
+        <div class="navbar-nav float-right">
+            <button class="btn btn-link search-btn navbar-item" data-toggle="modal" data-target="#searchModal">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/bg4.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 text-center">
+                <div class="post-heading text-white">
+                    <h1>Kernel mode & user mode switch</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Main Content -->
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                
+                    <span class="meta d-inline-block">
+    
+    
+    <!-- Date -->
+    
+        <span class="post-meta-split">&nbsp;|&nbsp;</span>
+        <i class="far fa-calendar-check fa-fw"></i>
+        2024-12-31
+    
+    <!-- word count and read count -->
+    
+
+    
+
+    
+</span>  
+                
+                <h1 id="Kernel-mode-user-mode-switch"><a href="#Kernel-mode-user-mode-switch" class="headerlink" title="Kernel mode &amp; user mode switch"></a>Kernel mode &amp; user mode switch</h1><blockquote>
+<p>Author: 堇姬Naup</p>
+</blockquote>
+<h2 id="Usermode-to-Kernel-mode"><a href="#Usermode-to-Kernel-mode" class="headerlink" title="Usermode to Kernel mode"></a>Usermode to Kernel mode</h2><ul>
+<li>call swapgs</li>
+</ul>
+<p>這裡先解釋幾個東西<br>GS register、IA32_GS_BASE、IA32_KERNEL_GS_BASE、swapgs 是甚麼</p>
+<ul>
+<li>GS reg: 用途主要圍繞上下文切換、內核態與用戶態的切換以及訪問每個 CPU 的數據結構，在 64 位模式下，GS 指向一個base address，允許進行高效的offset訪問，例如通過<code>gs:[offset]</code> 訪問data。</li>
+<li>IA32_GS_BASE: 用於保存當前 GS base(MSR 地址為 0xC0000101)</li>
+<li>IA32_KERNEL_GS_BASE: 用來保存kernel mode GS base address(MSR 地址為 0xC0000102)</li>
+<li>swapgs<br>快速切換 GS 段寄存器的address value<br>user mode的 GS base address（存儲在 IA32_GS_BASE register中）和 kernel mode的 GS base address（存儲在 IA32_KERNEL_GS_BASE register中）交換</li>
+</ul>
+<p>現在要切換至kernel mode，gs存的是usermode的base address(IA32_GS_BASE)，會和 kernel base address交換(IA32_KERNEL_GS_BASE)</p>
+<ul>
+<li>接下來，將當前stack 頂部(usermode)放在per CPU內，並將per CPU中的kernel stack頂部放入rsp&#x2F;rbp</li>
+</ul>
+<p>PS: per CPU 變數用於在多處理器（SMP, Symmetric Multi-Processing）環境下，為每個 CPU 分配一份獨立的變數空間</p>
+<p>偷偷塞個東西(大致是這種概念):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SystemCallEntryPoint:</span><br><span class="line">  SwapGS                        ; set up kernel pointer, save user&#x27;s GS base    </span><br><span class="line">  mov gs:[SavedUserRSP], rsp    ; save user&#x27;s stack pointer</span><br><span class="line">  mov rsp, gs:[KernelStackPtr]  ; set up kernel stack</span><br><span class="line">  push rax                      ; now that we have a stack, save user&#x27;s GPRs    </span><br><span class="line">  mov rax, gs:[CPUnumber]       ; get CPU number     &lt; or whatever &gt;</span><br><span class="line">  .                             ; perform system service</span><br><span class="line">  .</span><br><span class="line">  SwapGS                        ; restore user&#x27;s GS, save kernel pointer</span><br></pre></td></tr></table></figure>
+<ul>
+<li>之後通過push保存每個register的值</li>
+</ul>
+<p>大概是通過以下方式，會先切換至kernel stack<br>將register壓進kernel stack(一整個形成一個struct，pt_regs)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">ENTRY(entry_SYSCALL_64)</span><br><span class="line"><span class="comment">/* SWAPGS_UNSAFE_STACK is a macro, directly defined as the swapgs instruction in x86 */</span></span><br><span class="line">SWAPGS_UNSAFE_STACK</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Save the stack pointer value and set the kernel stack */</span></span><br><span class="line">movq %rsp, PER_CPU_VAR(rsp_scratch)</span><br><span class="line">movq <span class="title function_">PER_CPU_VAR</span><span class="params">(cpu_current_top_of_stack)</span>, %rsp</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Save register values by pushing them onto the stack to form a pt_regs structure */</span></span><br><span class="line"><span class="comment">/* Construct struct pt_regs on stack */</span></span><br><span class="line">pushq  $__USER_DS                <span class="comment">/* pt_regs-&gt;ss */</span></span><br><span class="line">pushq  <span class="title function_">PER_CPU_VAR</span><span class="params">(rsp_scratch)</span>  <span class="comment">/* pt_regs-&gt;sp */</span></span><br><span class="line">pushq  %r11                      <span class="comment">/* pt_regs-&gt;flags */</span></span><br><span class="line">pushq  $__USER_CS                <span class="comment">/* pt_regs-&gt;cs */</span></span><br><span class="line">pushq  %rcx                      <span class="comment">/* pt_regs-&gt;ip */</span></span><br><span class="line">pushq  %rax                      <span class="comment">/* pt_regs-&gt;orig_ax */</span></span><br><span class="line">pushq  %rdi                      <span class="comment">/* pt_regs-&gt;di */</span></span><br><span class="line">pushq  %rsi                      <span class="comment">/* pt_regs-&gt;si */</span></span><br><span class="line">pushq  %rdx                      <span class="comment">/* pt_regs-&gt;dx */</span></span><br><span class="line">pushq  %rcx                      <span class="comment">/* pt_regs-&gt;cx */</span></span><br><span class="line">pushq  $-ENOSYS                  <span class="comment">/* pt_regs-&gt;ax */</span></span><br><span class="line">pushq  %r8                       <span class="comment">/* pt_regs-&gt;r8 */</span></span><br><span class="line">pushq  %r9                       <span class="comment">/* pt_regs-&gt;r9 */</span></span><br><span class="line">pushq  %r10                      <span class="comment">/* pt_regs-&gt;r10 */</span></span><br><span class="line">pushq  %r11                      <span class="comment">/* pt_regs-&gt;r11 */</span></span><br><span class="line">sub $<span class="params">(<span class="number">6</span>*<span class="number">8</span>)</span>, %rsp                 <span class="comment">/* pt_regs-&gt;bp, bx, r12-15 not saved */</span></span><br></pre></td></tr></table></figure>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/SJo6dZxIke.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SJo6dZxIke.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>這是pt_regs struct</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pt_regs</span> &#123;</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * C ABI says these regs are callee-preserved. They aren&#x27;t saved on kernel entry</span></span><br><span class="line"><span class="comment"> * unless syscall needs a complete, fully filled &quot;struct pt_regs&quot;.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> r15;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> r14;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> r13;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> r12;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> rbp;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> rbx;</span><br><span class="line"><span class="comment">/* These regs are callee-clobbered. Always saved on kernel entry. */</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> r11;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> r10;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> r9;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> r8;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> rax;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> rcx;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> rdx;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> rsi;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> rdi;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * On syscall entry, this is syscall#. On CPU exception, this is error code.</span></span><br><span class="line"><span class="comment"> * On hw interrupt, it&#x27;s IRQ number:</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> orig_rax;</span><br><span class="line"><span class="comment">/* Return frame for iretq */</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> rip;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> cs;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> eflags;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> rsp;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> ss;</span><br><span class="line"><span class="comment">/* top of stack page */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>補一下</p>
+<ul>
+<li>unsigned long rip：指令指標寄存器（Instruction Pointer Register），指向當前執行的指令地址。</li>
+<li>unsigned long cs：代碼段選擇器（Code Segment Selector），描述代碼段的特性。</li>
+<li>unsigned long eflags：標誌寄存器（Flags Register），保存處理器狀態標誌。</li>
+<li>unsigned long rsp：堆疊指標寄存器（Stack Pointer Register），指向堆疊頂部。</li>
+<li>unsigned long ss：堆疊段選擇器（Stack Segment Selector），描述堆疊段的特性。</li>
+</ul>
+<p>這樣就進入到kernel mode了</p>
+<h2 id="Kernel-mode-to-usermode-No-KPTI"><a href="#Kernel-mode-to-usermode-No-KPTI" class="headerlink" title="Kernel mode to usermode(No KPTI)"></a>Kernel mode to usermode(No KPTI)</h2><ul>
+<li>call swapgs</li>
+<li>通過swapgs gs會拿回usermode base address</li>
+<li>接下來通過 sysretq 或 iretq 恢復到user space</li>
+<li>若使用 iretq 需要再給出userspace額外的資訊，也就是trap_frame</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">trap_frame</span> &#123;</span></span><br><span class="line">    <span class="type">size_t</span> user_rip;</span><br><span class="line">    <span class="type">size_t</span> user_cs;</span><br><span class="line">    <span class="type">size_t</span> user_rflags;</span><br><span class="line">    <span class="type">size_t</span> user_sp;</span><br><span class="line">    <span class="type">size_t</span> user_ss;</span><br><span class="line">&#125; __attribute__((packed));</span><br></pre></td></tr></table></figure>
+
+<h3 id="iret"><a href="#iret" class="headerlink" title="iret"></a>iret</h3><p>這是詳細的iret實現方式</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">SYM_INNER_LABEL(swapgs_restore_regs_and_return_to_usermode, SYM_L_GLOBAL)</span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> CONFIG_DEBUG_ENTRY</span></span><br><span class="line">    <span class="comment">/* Assert that pt_regs indicates user mode. */</span></span><br><span class="line">    testb   $<span class="number">3</span>, CS(%rsp)</span><br><span class="line">    jnz <span class="number">1f</span></span><br><span class="line">    ud2</span><br><span class="line"><span class="number">1</span>:</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">    POP_REGS pop_rdi=<span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * The stack is now user RDI, orig_ax, RIP, CS, EFLAGS, RSP, SS.</span></span><br><span class="line"><span class="comment">     * Save old stack pointer and switch to trampoline stack.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    movq    %rsp, %rdi</span><br><span class="line">    movq    PER_CPU_VAR(cpu_tss_rw + TSS_sp0), %rsp</span><br><span class="line">    UNWIND_HINT_EMPTY</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Copy the IRET frame to the trampoline stack. */</span></span><br><span class="line">    pushq   <span class="number">6</span>*<span class="number">8</span>(%rdi)   <span class="comment">/* SS */</span></span><br><span class="line">    pushq   <span class="number">5</span>*<span class="number">8</span>(%rdi)   <span class="comment">/* RSP */</span></span><br><span class="line">    pushq   <span class="number">4</span>*<span class="number">8</span>(%rdi)   <span class="comment">/* EFLAGS */</span></span><br><span class="line">    pushq   <span class="number">3</span>*<span class="number">8</span>(%rdi)   <span class="comment">/* CS */</span></span><br><span class="line">    pushq   <span class="number">2</span>*<span class="number">8</span>(%rdi)   <span class="comment">/* RIP */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Push user RDI on the trampoline stack. */</span></span><br><span class="line">    pushq   (%rdi)</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * We are on the trampoline stack.  All regs except RDI are live.</span></span><br><span class="line"><span class="comment">     * We can do future final exit work right here.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    STACKLEAK_ERASE_NOCLOBBER</span><br><span class="line"></span><br><span class="line">    SWITCH_TO_USER_CR3_STACK scratch_reg=%rdi</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Restore RDI. */</span></span><br><span class="line">    popq    %rdi</span><br><span class="line">    SWAPGS</span><br><span class="line">    INTERRUPT_RETURN</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Kernel-mode-to-usermode-Open-KPTI"><a href="#Kernel-mode-to-usermode-Open-KPTI" class="headerlink" title="Kernel mode to usermode(Open KPTI)"></a>Kernel mode to usermode(Open KPTI)</h2><p>不能單純透過call <code>swapgs; iret</code> 來切換<br>還需要去切換page table</p>
+<p>首先是四層頁表(基本跟windows kernel沒有差，可以參考我的<a target="_blank" rel="noopener" href="https://hackmd.io/@naup96321/S1jjFnjEkx">windows kernel exploitation</a>那篇)<br><div class="img-item" data-src="https://hackmd.io/_uploads/Bk4r-G-Lyl.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/Bk4r-G-Lyl.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>通過 PGD-&gt;PUD-&gt;PMD-&gt;PTE 找到對應的page，再透過offset找到該page內的正確address，來將virtual address 映射到 physical address<br>CR3 register則儲存了PGD位置<br>而KPTI讓userspace只有少量的kernel page table(必要的如中斷等)<br>簡單來說就是原本的一張表usermode、kernel mode用同一張<br>但是開啟KPTI後會拆成兩個如下圖</p>
+<p><div class="img-item" data-src="https://hackmd.io/_uploads/SJiWfGZL1l.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SJiWfGZL1l.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>在切換mode時同時也需要去更改cr3存的page table address<br>另外再KPTI開啟時，其映射的userspace memory被標記NX，使ret2usr不可用(因為你就算能寫上shellcode到userspace，但跳上去也不能執行shellcode)</p>
+<p>知道了上述後來看有KPTI後會如何執行切換<br>詳細的可以去 <code>swapgs_restore_regs_and_return_to_usermode</code> 看</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0xffffffff81c00fb0</span> &lt;swapgs_restore_regs_and_return_to_usermode&gt;:	nop    DWORD PTR [rax+rax*<span class="number">1</span>+<span class="number">0x0</span>]</span><br><span class="line"><span class="number">0xffffffff81c00fb5</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">5</span>&gt;:	pop    r15</span><br><span class="line"><span class="number">0xffffffff81c00fb7</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">7</span>&gt;:	pop    r14</span><br><span class="line"><span class="number">0xffffffff81c00fb9</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">9</span>&gt;:	pop    r13</span><br><span class="line"><span class="number">0xffffffff81c00fbb</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">11</span>&gt;:	pop    r12</span><br><span class="line"><span class="number">0xffffffff81c00fbd</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">13</span>&gt;:	pop    rbp</span><br><span class="line"><span class="number">0xffffffff81c00fbe</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">14</span>&gt;:	pop    rbx</span><br><span class="line"><span class="number">0xffffffff81c00fbf</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">15</span>&gt;:	pop    r11</span><br><span class="line"><span class="number">0xffffffff81c00fc1</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">17</span>&gt;:	pop    r10</span><br><span class="line"><span class="number">0xffffffff81c00fc3</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">19</span>&gt;:	pop    r9</span><br><span class="line"><span class="number">0xffffffff81c00fc5</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">21</span>&gt;:	pop    r8</span><br><span class="line"><span class="number">0xffffffff81c00fc7</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">23</span>&gt;:	pop    rax</span><br><span class="line"><span class="number">0xffffffff81c00fc8</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">24</span>&gt;:	pop    rcx</span><br><span class="line"><span class="number">0xffffffff81c00fc9</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">25</span>&gt;:	pop    rdx</span><br><span class="line"><span class="number">0xffffffff81c00fca</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">26</span>&gt;:	pop    rsi</span><br><span class="line"><span class="number">0xffffffff81c00fcb</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">27</span>&gt;:	mov    rdi,rsp</span><br><span class="line"><span class="number">0xffffffff81c00fce</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">30</span>&gt;:	mov    rsp,QWORD PTR gs:<span class="number">0x6004</span></span><br><span class="line"><span class="number">0xffffffff81c00fd7</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">39</span>&gt;:	push   QWORD PTR [rdi+<span class="number">0x30</span>]</span><br><span class="line"><span class="number">0xffffffff81c00fda</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">42</span>&gt;:	push   QWORD PTR [rdi+<span class="number">0x28</span>]</span><br><span class="line"><span class="number">0xffffffff81c00fdd</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">45</span>&gt;:	push   QWORD PTR [rdi+<span class="number">0x20</span>]</span><br><span class="line"><span class="number">0xffffffff81c00fe0</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">48</span>&gt;:	push   QWORD PTR [rdi+<span class="number">0x18</span>]</span><br><span class="line"><span class="number">0xffffffff81c00fe3</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">51</span>&gt;:	push   QWORD PTR [rdi+<span class="number">0x10</span>]</span><br><span class="line"><span class="number">0xffffffff81c00fe6</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">54</span>&gt;:	push   QWORD PTR [rdi]</span><br><span class="line"><span class="number">0xffffffff81c00fe8</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">56</span>&gt;:	push   rax</span><br><span class="line"><span class="number">0xffffffff81c00fe9</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">57</span>&gt;:	xchg   ax,ax</span><br><span class="line"><span class="number">0xffffffff81c00feb</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">59</span>&gt;:	mov    rdi,cr3</span><br><span class="line"><span class="number">0xffffffff81c00fee</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">62</span>&gt;:	jmp    <span class="number">0xffffffff81c01024</span> </span><br><span class="line"></span><br><span class="line"><span class="number">0xffffffff81c01024</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">116</span>&gt;:	or     rdi,<span class="number">0x1000</span></span><br><span class="line"><span class="number">0xffffffff81c0102b</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">123</span>&gt;:	mov    cr3,rdi</span><br><span class="line"><span class="number">0xffffffff81c0102e</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">126</span>&gt;:	pop    rax</span><br><span class="line"><span class="number">0xffffffff81c0102f</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">127</span>&gt;:	pop    rdi</span><br><span class="line"><span class="number">0xffffffff81c01030</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">128</span>&gt;:	swapgs </span><br><span class="line"><span class="number">0xffffffff81c01033</span> &lt;swapgs_restore_regs_and_return_to_usermode+<span class="number">131</span>&gt;:	jmp    <span class="number">0xffffffff81c01060</span> &lt;native_iret&gt;</span><br><span class="line"></span><br><span class="line"><span class="number">0xffffffff81c01060</span> &lt;native_iret&gt;:	test   BYTE PTR [rsp+<span class="number">0x20</span>],<span class="number">0x4</span></span><br><span class="line"><span class="number">0xffffffff81c01065</span> &lt;native_iret+<span class="number">5</span>&gt;:	jne    <span class="number">0xffffffff81c01069</span> &lt;native_irq_return_ldt&gt;</span><br><span class="line"><span class="number">0xffffffff81c01067</span> &lt;native_irq_return_iret&gt;:	iretq </span><br></pre></td></tr></table></figure>
+<p>通過呼叫這function也能直接幫你修好cr3</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mov  rdi, cr3</span><br><span class="line">or rdi, <span class="number">0x1000</span>   #<span class="number">0b1000000000000</span></span><br><span class="line">mov  cr3, rdi</span><br><span class="line">pop rax</span><br><span class="line">pop rdi</span><br><span class="line">swapgs</span><br><span class="line">iretq</span><br></pre></td></tr></table></figure>
+
+<p>cr3 可以參考該docs的2.5(p.3069)<br><a target="_blank" rel="noopener" href="https://www.intel.com.tw/content/www/tw/zh/content-details/782158/intel-64-and-ia-32-architectures-software-developer-s-manual-combined-volumes-1-2a-2b-2c-2d-3a-3b-3c-3d-and-4.html">docs</a></p>
+<p>總之第十三位(cr3[12])紀錄當前是kernel or user mode page table(PGD address)</p>
+<p>為了實現快速切換，因此將kernel mode PGD跟user mode PGD緊鄰著(4kb + 4kb &#x3D; 8kb)，kernel PGD在low address，user在high address<br>通過去 or cr3[12]就可以快速操作</p>
+<p>cr3</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cr3[12]</span><br><span class="line">0  ---------------|</span><br><span class="line">1  -------------  |       </span><br><span class="line">               |  |</span><br><span class="line">+------------+ |  |</span><br><span class="line">|  user PGD  | -  |</span><br><span class="line">+------------+    |</span><br><span class="line">| kernel PGD |  ---</span><br><span class="line">+------------+</span><br></pre></td></tr></table></figure>
+
+<h2 id="after-all"><a href="#after-all" class="headerlink" title="after all"></a>after all</h2><p>不得不說網路上的文章真的很亂www<br>另外kernel文章真的很難寫，寫一寫很容易寫亂，所以應該不會像heap一樣一篇完成，而是拆成小篇小篇(不然我已經寫壞了4、5篇了)<br>總之有心力就寫吧 OwOb</p>
+
+            </div>
+
+            <!-- Post information -->
+            
+            
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+        <ul class="pagination d-block text-center">
+            
+            
+                <li class="next page-item d-inline"><a href="/2024/12/17/Windows-Kernel-Exploitation-Part1/" class="page-link float-right">Older  &rarr;</a></li>
+            
+        </ul>
+    </div>
+
+
+            
+                <!-- Comments -->
+                
+
+                
+
+            
+
+        </div>
+    </div>
+</article> 
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    <style>
+        #toc-content .toc-link::before {
+            background-color: transparent;
+            max-height: 25px;
+        }
+
+        #toc-content .toc-link.is-active-link::before {
+            background-color: #404040;
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <div class="ui-toc dropup scrollspy-body pull-right" style="right: 3%;">
+        <button type="button" class="toc-btn btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <i class="fas fa-list"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right p-2"  aria-labelledby="tocLabel">
+            <div class="toc-widget">
+                <div id="toc-content" class="text-truncate">
+                </div>
+            </div>
+            <div class="toc-menu pt-3 pl-4">
+                <a class="expand-toggle d-block py-1" href="#"><span class="expand-text">Expand all</span><span class="close-text" style="display: none;">Collapse all</span></a>
+                <a class="back-to-top d-block py-1" href="#">Back to top</a>
+                <a class="go-to-bottom d-block py-1" href="#">Go to bottom</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '#toc-content',
+            // Where to grab the headings to build the table of contents.
+            contentSelector: 'article',
+            // Which headings to grab inside of the contentSelector element.
+            headingSelector: 'h1, h2, h3',
+            // For headings inside relative or absolute positioned containers within content.
+            hasInnerContainers: true,
+        });
+    </script>
+
+
+    
+
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 text-center">
+                <ul class="list-inline">
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="https://github.com/Naupjjin" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+                        <li class="list-inline-item">
+                            <a rel="external" href="mailto:naup96721@gmail.com" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                </ul>
+                <ul class="copyright footer-menu list-inline">
+                    
+                    
+                        <li class="list-inline-item">
+                            
+                            
+                            <a href="/">
+                                
+                                    Home
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/archives">
+                                
+                                    Archives
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/tags">
+                                
+                                    Tags
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/categories">
+                                
+                                    Categories
+                                
+                            </a>
+                        </li>
+                    
+                        <li class="list-inline-item">
+                            
+                                <span class="copyright-split">&nbsp;|&nbsp;</span>
+                            
+                            
+                            <a href="/about">
+                                
+                                    About
+                                
+                            </a>
+                        </li>
+                    
+                </ul>
+                <p class="copyright footer-author">
+                    &copy; -2024 
+                    <a rel="external" class="copyright-link" href="" target="_blank">Naup堇姬</a><br/>
+                    Powered by <a rel="external" class="copyright-link" href="https://hexo.io/" target="_blank">Hexo</a>  
+                    <span class="copyright-split">&nbsp;|&nbsp;&nbsp;</span>
+                    Theme <a rel="external" class="copyright-link" href="https://github.com/luswdev/hexo-theme-clean.git" target="_blank">Clean</a>
+                    
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    <!-- jQuery -->
+<script src="//cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>
+
+<!-- For drop down -->
+<script src="//cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+<!-- Gallery -->
+<script src="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery-all.min.js"></script>
+<!-- Busuanzi -->
+
+
+<!-- Search script -->
+
+<script src="/js/search.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        searchFunc( '/search.xml' , 'searchInput', 'searchResult');
+    });
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+
+
+    <!-- Search Modal -->
+    <!-- Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content overflow-auto">
+            <div class="modal-header">
+                <input type="text" class="form-control" placeholder="Searching Keywords..." id="searchInput">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id="searchResult">
+                    <div class="search-empty text-center text-muted p-5">
+                        <i class="far fa-meh"></i>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
