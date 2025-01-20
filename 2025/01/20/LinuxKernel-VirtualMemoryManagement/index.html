@@ -1,0 +1,860 @@
+
+  <!DOCTYPE html>
+  <html lang="en"  >
+  <head>
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_bq08450reo';window.REIMU_CONFIG.clipboard_tips = {"success":"copy success(*^▽^*)","fail":"copy failed (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"Naup"}};window.REIMU_CONFIG.code_block = {"expand":true};</script>
+  
+  <title>
+    Linux Kernel - Virtual Memory Management |
+    
+    堇姬 Naup&#39;s Blog
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_bq08450reo.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="Linux Kernel - Virtual Memory management Author: 堇姬Naup  如果有更新這邊會比較及時https:&#x2F;&#x2F;hackmd.io&#x2F;@naup96321&#x2F;rkJwaqfIkx 前言當一個program被跑起後，就會變成process，每個process都有屬於自己的virtual memory，實際該process在操作時，也是通過虛擬記憶體來處理的這些p">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux Kernel - Virtual Memory Management">
+<meta property="og:url" content="http://example.com/2025/01/20/LinuxKernel-VirtualMemoryManagement/index.html">
+<meta property="og:site_name" content="堇姬 Naup&#39;s Blog">
+<meta property="og:description" content="Linux Kernel - Virtual Memory management Author: 堇姬Naup  如果有更新這邊會比較及時https:&#x2F;&#x2F;hackmd.io&#x2F;@naup96321&#x2F;rkJwaqfIkx 前言當一個program被跑起後，就會變成process，每個process都有屬於自己的virtual memory，實際該process在操作時，也是通過虛擬記憶體來處理的這些p">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/HJtX_LDLJl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BJOElwDL1l.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HJ4LpDPI1g.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Byso4Cw8yl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BkWjwCwUyx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BkXH90PL1e.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HkOcnZYU1e.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SyYujMFLJg.png">
+<meta property="article:published_time" content="2025-01-20T06:05:44.000Z">
+<meta property="article:modified_time" content="2025-01-20T06:10:56.004Z">
+<meta property="article:author" content="Naup堇姬">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/HJtX_LDLJl.png">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="堇姬 Naup's Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/fav.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css">
+
+  
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+
+  <body>
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      <div class="loading-word">Naup...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/">Home</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/archives">Archives</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/about">About</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed" target="_blank"></a>
+    
+    
+    
+  </nav>
+</div>
+<header id="header">
+  
+    <picture></picture>
+    <img fetchpriority="high" src="/images/posts_cover/LinuxKernel-VirtualMemoryManagement/LinuxKernel-VirtualMemoryManagement.webp" alt="Linux Kernel - Virtual Memory Management">
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">Linux Kernel - Virtual Memory Management</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  
+  <div class="sidebar-wrapper wrap-sticky">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux-Kernel-Virtual-Memory-management"><span class="toc-number">1.</span> <span class="toc-text">Linux Kernel - Virtual Memory management</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A9%E6%9C%9F%E8%A8%88%E7%AE%97%E6%A9%9F"><span class="toc-number">1.2.</span> <span class="toc-text">早期計算機</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Virtual-memory"><span class="toc-number">1.3.</span> <span class="toc-text">Virtual memory</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#32-bit-virtual-memory"><span class="toc-number">1.3.1.</span> <span class="toc-text">32 bit virtual memory</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#64-bit-virtual-memory"><span class="toc-number">1.3.2.</span> <span class="toc-text">64 bit virtual memory</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#process"><span class="toc-number">1.4.</span> <span class="toc-text">process</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Distinguish-between-userapce-and-kernel-space"><span class="toc-number">1.4.1.</span> <span class="toc-text">Distinguish between userapce and kernel space</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#descript-memory-segment-layout"><span class="toc-number">1.4.2.</span> <span class="toc-text">descript memory segment layout</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Virtual-Memory-Management"><span class="toc-number">1.5.</span> <span class="toc-text">Virtual Memory Management</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#vm-area-struct"><span class="toc-number">1.5.1.</span> <span class="toc-text">vm_area_struct</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#overall"><span class="toc-number">1.5.2.</span> <span class="toc-text">overall</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#load-ELF-segment-to-virtual-memory"><span class="toc-number">1.5.3.</span> <span class="toc-text">load ELF segment to virtual memory</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kernel-space-virtual-memory"><span class="toc-number">1.6.</span> <span class="toc-text">kernel space virtual memory</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#32bits"><span class="toc-number">1.6.1.</span> <span class="toc-text">32bits</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E6%98%A0%E5%B0%84%E5%8D%80-%E7%B7%9A%E6%80%A7%E6%98%A0%E5%B0%84%E5%8D%80"><span class="toc-number">1.6.1.1.</span> <span class="toc-text">直接映射區(線性映射區)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#VMalloc"><span class="toc-number">1.6.1.2.</span> <span class="toc-text">VMalloc</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B0%B8%E4%B9%85%E6%98%A0%E5%B0%84%E5%8D%80"><span class="toc-number">1.6.1.3.</span> <span class="toc-text">永久映射區</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BA%E5%AE%9A%E6%98%A0%E5%B0%84%E5%8D%80"><span class="toc-number">1.6.1.4.</span> <span class="toc-text">固定映射區</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%A8%E6%99%82%E6%98%A0%E5%B0%84%E5%8D%80"><span class="toc-number">1.6.1.5.</span> <span class="toc-text">臨時映射區</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#64-bits"><span class="toc-number">1.6.2.</span> <span class="toc-text">64 bits</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-ALL"><span class="toc-number">1.7.</span> <span class="toc-text">After ALL</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">56</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">4</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+      
+        <div class="sidebar-btn-wrapper" style="position:static">
+          <div class="sidebar-toc-btn current"></div>
+          <div class="sidebar-common-btn"></div>
+        </div>
+      
+    </div>
+  </div>
+
+  <div class="sidebar-widget">
+  
+  </div>
+</aside>
+
+          <section id="main"><article id="post-LinuxKernel-VirtualMemoryManagement" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <a href="/2025/01/20/LinuxKernel-VirtualMemoryManagement/" class="article-date-link" data-aos="zoom-in">
+    <time datetime="2025-01-20T06:05:44.000Z" itemprop="datePublished">2025-01-20</time>
+    <time style="display: none;" id="post-update-time">2025-01-20</time>
+  </a>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <h1 id="Linux-Kernel-Virtual-Memory-management"><a href="#Linux-Kernel-Virtual-Memory-management" class="headerlink" title="Linux Kernel - Virtual Memory management"></a>Linux Kernel - Virtual Memory management</h1><blockquote>
+<p>Author: 堇姬Naup</p>
+</blockquote>
+<p>如果有更新這邊會比較及時<br><a target="_blank" rel="noopener" href="https://hackmd.io/@naup96321/rkJwaqfIkx">https://hackmd.io/@naup96321/rkJwaqfIkx</a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>當一個program被跑起後，就會變成process，每個process都有屬於自己的virtual memory，實際該process在操作時，也是通過虛擬記憶體來處理的<br>這些process不管是在userspace或kernel space，看到的都是virtual memory，通過映射的方式來去對應到一塊實際的physical momory</p>
+<h2 id="早期計算機"><a href="#早期計算機" class="headerlink" title="早期計算機"></a>早期計算機</h2><p>早期的計算機會直接使用 Physical memory 這樣造成了一些問題</p>
+<ul>
+<li>每個process的memory不隔離，因為都是在一大塊的 Physical memory上，所以很容易造成汙染或越界</li>
+<li>因為沒有良好的memory管理機制，導致當有一個已經在run的process時，突然要run一個新的，需要先把舊的寫到硬碟中<br>這邊假設一下計算機有128 MB的記憶體，有三個program需求是</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>program</th>
+<th>需求</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>20 MB</td>
+</tr>
+<tr>
+<td>B</td>
+<td>100 MB</td>
+</tr>
+<tr>
+<td>C</td>
+<td>60 MB</td>
+</tr>
+</tbody></table>
+<p>現在正在run A跟B，我們想要run C需要現換出B(換出 A 空間仍不足)，之後放入 C，這樣其實蠻影響效率的</p>
+<ul>
+<li>地址不穩定，看上方的狀況就知道，程式所使用的地址是直接在Physical上運作的，需要運行而重新載入會導致位址不太一樣，這讓跳轉或重定位遇到許多麻煩</li>
+</ul>
+<h2 id="Virtual-memory"><a href="#Virtual-memory" class="headerlink" title="Virtual memory"></a>Virtual memory</h2><p>virtual memory通過映射方式來映射到實體記憶體(詳細映射方式寫在四層頁表)<br>來讓每隻process看起來有連續的記憶體<br>這種方式很好解決了不隔離的問題，只要看你給的address有沒有在Virtual address裡面就可以，頂多影響到自己process擁有的Physicsl address<br>也解決了跳轉問題，程式只需要跳轉到Virtual address，硬體會幫你映射到對應的Physical address<br>另外也解決了記憶體長期使用碎片化的問題</p>
+<p>看整個 virtual memory 長甚麼樣子</p>
+<h3 id="32-bit-virtual-memory"><a href="#32-bit-virtual-memory" class="headerlink" title="32 bit virtual memory"></a>32 bit virtual memory</h3><blockquote>
+<p>1 KB (KiloByte) &#x3D; 1024 Bytes<br>1 MB (MegaByte) &#x3D; 1024 KB<br>1 GB (GigaByte) &#x3D; 1024 MB</p>
+</blockquote>
+<p>2^32B &#x3D; 4294967296 B &#x3D; 4GB (0x0000 0000 ~ 0xFFFF FFFFF)</p>
+<p>其中virtual memory被分成兩個，user space(3GB，0x0000 0000~0xC000 0000)、kernel space(1GB，0xC000 0000 - 0xFFFF FFFFF)</p>
+<p>不過user space會有一塊保留區在最低的地址區段<br>實際上userspace從0x0804 8000開始</p>
+<p>並且virtual memory也被切分成不同的區段<br>PS: stack 跟 heap段中間我習慣在塞個匿名&amp;文件映射區，這區域就是使用mmap時會使用的，他是高往低增長<br><img src="https://hackmd.io/_uploads/HJtX_LDLJl.png" alt="image"></p>
+<h3 id="64-bit-virtual-memory"><a href="#64-bit-virtual-memory" class="headerlink" title="64 bit virtual memory"></a>64 bit virtual memory</h3><blockquote>
+<p>1 Byte &#x3D; 8 Bits<br>1 Kilobyte (KB) &#x3D; 1024 Bytes<br>1 Megabyte (MB) &#x3D; 1024 KB<br>1 Gigabyte (GB) &#x3D; 1024 MB<br>1 Terabyte (TB) &#x3D; 1024 GB<br>1 Petabyte (PB) &#x3D; 1024 TB<br>1 Exabyte (EB) &#x3D; 1024 PB<br>1 Zettabyte (ZB) &#x3D; 1024 EB<br>1 Yottabyte (YB) &#x3D; 1024 ZB</p>
+</blockquote>
+<p>2^64 B &#x3D; 18446744073709551616 B &#x3D; 16 EB<br>有夠大www，實際上根本用不到這麼多，也因此實際上64bits虛擬記憶體只會用到48位<br>2^48 B &#x3D; 281474976710656 B &#x3D; 256 TB</p>
+<p>其中virtual memory被分成兩個，user space(128 TB，0x0000 0000 0000 0000 ~ 0x0000 7FFF FFFF F000)、kernel space(128 TB，0xFFFF 8000 0000 0000 ~ 0xFFFF FFFF FFFF FFFF)</p>
+<p>0x0000 7FFF FFFF F000  -  0xFFFF 8000 0000 0000中間有一塊空洞，被稱作 canonical address<br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/25852367/x86-64-canonical-address">https://stackoverflow.com/questions/25852367/x86-64-canonical-address</a></p>
+<p>給張全圖(我找不到，自己畫了)<br><img src="https://hackmd.io/_uploads/BJOElwDL1l.png" alt="aaa"></p>
+<h2 id="process"><a href="#process" class="headerlink" title="process"></a>process</h2><p>談到virtual memory就必須得提process<br>每支process都有一個task_struct</p>
+<p>想知道process &amp; thread可以參考這篇<br><a target="_blank" rel="noopener" href="https://hackmd.io/@PIFOPlfSS3W_CehLxS3hBQ/S14tx4MqP">奔跑吧 CH 3.1 進程的誕生</a></p>
+<p>來看看task struct<br><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v6.12.6/source/include/linux/sched.h#L778">source code on &#x2F;linux&#x2F;v6.12.6&#x2F;source&#x2F;include&#x2F;linux&#x2F;sched.h#L778</a></p>
+<p>通過<br><code>	struct mm_struct		*mm;</code><br>可以來描述一個process自己的virtual memory</p>
+<p>mm_struct source code<br><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v6.12.6/source/include/linux/mm_types.h#L790">source code on &#x2F;linux&#x2F;v6.12.6&#x2F;source&#x2F;include&#x2F;linux&#x2F;mm_types.h#L790</a></p>
+<p>PS: 至於如何創建這些東西，我決定挖坑其他篇有機會說</p>
+<h3 id="Distinguish-between-userapce-and-kernel-space"><a href="#Distinguish-between-userapce-and-kernel-space" class="headerlink" title="Distinguish between userapce and kernel space"></a>Distinguish between userapce and kernel space</h3><p>首先，我們知道virtual memory區分了user和kernel<br>mm_struct裡也描述了這件事</p>
+<p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v6.12.6/source/include/linux/mm_types.h#L816">https://elixir.bootlin.com/linux/v6.12.6/source/include/linux/mm_types.h#L816</a><br><code>unsigned long task_size;	/* size of task vm space */</code></p>
+<p>該變數描述這件事<br>32 bits<br><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v6.12.6/source/arch/x86/include/asm/page_32_types.h#L44">source code about 32bits task size</a></p>
+<p>首先這邊說明了3 GB以及0xC0000000為界線</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * This handles the memory map.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * A __PAGE_OFFSET of 0xC0000000 means that the kernel has</span></span><br><span class="line"><span class="comment"> * a virtual address space of one gigabyte, which limits the</span></span><br><span class="line"><span class="comment"> * amount of physical memory you can use to about 950MB.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * If you want more physical memory than this then see the CONFIG_HIGHMEM4G</span></span><br><span class="line"><span class="comment"> * and CONFIG_HIGHMEM64G options in the kernel configuration.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __PAGE_OFFSET_BASE	_AC(CONFIG_PAGE_OFFSET, UL)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __PAGE_OFFSET		__PAGE_OFFSET_BASE</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * User space process size: 3GB (default).</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IA32_PAGE_OFFSET	__PAGE_OFFSET</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> TASK_SIZE		__PAGE_OFFSET</span></span><br></pre></td></tr></table></figure>
+
+
+<p>64 bits<br>為 1 &lt;&lt; 47 - 一個page(4KB)</p>
+<p>hex((1 &lt;&lt; 47)- 1024 * 4) &#x3D; 0x7ffffffff000</p>
+<p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v6.12.6/source/arch/x86/include/asm/page_64_types.h#L60">source code about 64bits task size</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> __VIRTUAL_MASK_SHIFT	47</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> task_size_max()		((_AC(1,UL) &lt;&lt; __VIRTUAL_MASK_SHIFT) - PAGE_SIZE)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="descript-memory-segment-layout"><a href="#descript-memory-segment-layout" class="headerlink" title="descript memory segment layout"></a>descript memory segment layout</h3><p>再來是描述virtual memory 區段</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">mm_struct</span> &#123;</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> task_size;    <span class="comment">/* size of task vm space */</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> start_code, end_code, start_data, end_data;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> start_brk, brk, start_stack;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> arg_start, arg_end, env_start, env_end;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> mmap_base;  <span class="comment">/* base of mmap area */</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> total_vm;    <span class="comment">/* Total pages mapped */</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> locked_vm;  <span class="comment">/* Pages that have PG_mlocked set */</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> pinned_vm;  <span class="comment">/* Refcount permanently increased */</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> data_vm;    <span class="comment">/* VM_WRITE &amp; ~VM_SHARED &amp; ~VM_STACK */</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> exec_vm;    <span class="comment">/* VM_EXEC &amp; ~VM_WRITE &amp; ~VM_STACK */</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> stack_vm;    <span class="comment">/* VM_STACK */</span></span><br><span class="line">    ...	</span><br><span class="line">&#125;	</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>arg_start、arg_end: 參數列表 (stack最高處)</li>
+<li>env_start、env_end: 環境變數列表 (stack最高處)</li>
+<li>total_vm: virtual page映射到的physical page總量</li>
+<li>locked_vm: 記憶體吃緊時不能換出的page總量</li>
+<li>pinned_vm: 記憶體吃緊時不能換出及移動的page總量</li>
+</ul>
+<p>剩下的看圖<br>PS: 又要自己畫圖了，總之畫張圖比較容易理解<br><img src="https://hackmd.io/_uploads/HJ4LpDPI1g.png" alt="abcdd"></p>
+<p>以上就是在process創建時會對virtual memory布局</p>
+<h2 id="Virtual-Memory-Management"><a href="#Virtual-Memory-Management" class="headerlink" title="Virtual Memory Management"></a>Virtual Memory Management</h2><p>接下來看kernel如何去管理virtual memory<br>管理VMA(virtual memory area)的struct是 vm_area_struct<br><code> * This struct describes a virtual memory area.</code></p>
+<p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v6.12.6/source/include/linux/mm_types.h#L667">source code on &#x2F;linux&#x2F;v6.12.6&#x2F;source&#x2F;include&#x2F;linux&#x2F;mm_types.h#L667</a></p>
+<p>這邊舊版跟新版kernel不太一樣，原本可以在task_struct中的mm_struct下找到<br><code>struct vm_area_struct *mmap;		/* list of VMAs */</code><br>但在新版kernel被移除了<br>這邊先基於舊版kernel來看(5.19.17)<br><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v5.19.17/source/include/linux/mm_types.h#L481">https://elixir.bootlin.com/linux/v5.19.17/source/include/linux/mm_types.h#L481</a></p>
+<p>這裡放一個參考資源<br><a target="_blank" rel="noopener" href="https://richardweiyang-2.gitbook.io/kernel-exploring/nei-cun-guan-li/00-index/05-vma">https://richardweiyang-2.gitbook.io/kernel-exploring/nei-cun-guan-li/00-index/05-vma</a></p>
+<p>接下來開始解釋吧(這邊會從vm_area_struct本身，往上到他與mm_struct連動，以及整個資料結構)</p>
+<h3 id="vm-area-struct"><a href="#vm-area-struct" class="headerlink" title="vm_area_struct"></a>vm_area_struct</h3><p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v5.19.17/source/include/linux/mm_types.h#L398">source code on &#x2F;linux&#x2F;v5.19.17&#x2F;source&#x2F;include&#x2F;linux&#x2F;mm_types.h#L398</a></p>
+<p>通過vm_area_struct來管理每個記憶體區段<br>PS: 簡單看一下就可以發現有rb tree的特徵，不過先不要想太複雜</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * This struct describes a virtual memory area. There is one of these</span></span><br><span class="line"><span class="comment"> * per VM-area/task. A VM area is any part of the process virtual memory</span></span><br><span class="line"><span class="comment"> * space that has a special rule for the page-fault handlers (ie a shared</span></span><br><span class="line"><span class="comment"> * library, the executable area etc).</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">vm_area_struct</span> &#123;</span></span><br><span class="line">	<span class="comment">/* The first cache line has the info for VMA tree walking. */</span></span><br><span class="line"></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> vm_start;		<span class="comment">/* Our start address within vm_mm. */</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> vm_end;		<span class="comment">/* The first byte after our end address</span></span><br><span class="line"><span class="comment">					   within vm_mm. */</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/* linked list of VM areas per task, sorted by address */</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">vm_area_struct</span> *<span class="title">vm_next</span>, *<span class="title">vm_prev</span>;</span></span><br><span class="line"></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">rb_node</span> <span class="title">vm_rb</span>;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 * Largest free memory gap in bytes to the left of this VMA.</span></span><br><span class="line"><span class="comment">	 * Either between this VMA and vma-&gt;vm_prev, or between one of the</span></span><br><span class="line"><span class="comment">	 * VMAs below us in the VMA rbtree and its -&gt;vm_prev. This helps</span></span><br><span class="line"><span class="comment">	 * get_unmapped_area find a free area of the right size.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> rb_subtree_gap;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Second cache line starts here. */</span></span><br><span class="line"></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">mm_struct</span> *<span class="title">vm_mm</span>;</span>	<span class="comment">/* The address space we belong to. */</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 * Access permissions of this VMA.</span></span><br><span class="line"><span class="comment">	 * See vmf_insert_mixed_prot() for discussion.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="type">pgprot_t</span> vm_page_prot;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> vm_flags;		<span class="comment">/* Flags, see mm.h. */</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 * For areas with an address space and backing store,</span></span><br><span class="line"><span class="comment">	 * linkage into the address_space-&gt;i_mmap interval tree.</span></span><br><span class="line"><span class="comment">	 *</span></span><br><span class="line"><span class="comment">	 * For private anonymous mappings, a pointer to a null terminated string</span></span><br><span class="line"><span class="comment">	 * containing the name given to the vma, or NULL if unnamed.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line"></span><br><span class="line">	<span class="class"><span class="keyword">union</span> &#123;</span></span><br><span class="line">		<span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">			<span class="class"><span class="keyword">struct</span> <span class="title">rb_node</span> <span class="title">rb</span>;</span></span><br><span class="line">			<span class="type">unsigned</span> <span class="type">long</span> rb_subtree_last;</span><br><span class="line">		&#125; shared;</span><br><span class="line">		<span class="comment">/*</span></span><br><span class="line"><span class="comment">		 * Serialized by mmap_sem. Never use directly because it is</span></span><br><span class="line"><span class="comment">		 * valid only when vm_file is NULL. Use anon_vma_name instead.</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		<span class="class"><span class="keyword">struct</span> <span class="title">anon_vma_name</span> *<span class="title">anon_name</span>;</span></span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 * A file&#x27;s MAP_PRIVATE vma can be in both i_mmap tree and anon_vma</span></span><br><span class="line"><span class="comment">	 * list, after a COW of one of the file pages.	A MAP_SHARED vma</span></span><br><span class="line"><span class="comment">	 * can only be in the i_mmap tree.  An anonymous MAP_PRIVATE, stack</span></span><br><span class="line"><span class="comment">	 * or brk vma (with NULL file) can only be in an anon_vma list.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">anon_vma_chain</span>;</span> <span class="comment">/* Serialized by mmap_lock &amp;</span></span><br><span class="line"><span class="comment">					  * page_table_lock */</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">anon_vma</span> *<span class="title">anon_vma</span>;</span>	<span class="comment">/* Serialized by page_table_lock */</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Function pointers to deal with this struct. */</span></span><br><span class="line">	<span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">vm_operations_struct</span> *<span class="title">vm_ops</span>;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Information about our backing store: */</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> vm_pgoff;		<span class="comment">/* Offset (within vm_file) in PAGE_SIZE</span></span><br><span class="line"><span class="comment">					   units */</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">file</span> * <span class="title">vm_file</span>;</span>		<span class="comment">/* File we map to (can be NULL). */</span></span><br><span class="line">	<span class="type">void</span> * vm_private_data;		<span class="comment">/* was vm_pte (shared mem) */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> CONFIG_SWAP</span></span><br><span class="line">	<span class="type">atomic_long_t</span> swap_readahead_info;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> CONFIG_MMU</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">vm_region</span> *<span class="title">vm_region</span>;</span>	<span class="comment">/* NOMMU mapping region */</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> CONFIG_NUMA</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">mempolicy</span> *<span class="title">vm_policy</span>;</span>	<span class="comment">/* NUMA policy for the VMA */</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">vm_userfaultfd_ctx</span> <span class="title">vm_userfaultfd_ctx</span>;</span></span><br><span class="line">&#125; __randomize_layout;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>首先是vm_start、vm_end，他標示了這個struct描述的區域範圍</li>
+<li><em>vm_next、</em>vm_prev、vm_rb等，等會會提到</li>
+<li>vm_page_prot 和 vm_flags則標示了該區段的權限及行為</li>
+<li>一個區段是由許多的page組成的，prot規範的偏向單一page的行為，flags則偏向規範整塊</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v5.19.17/source/include/linux/mm.h#L260">source code about vm_flags</a></p>
+<p>這邊列出一些常用的</p>
+<table>
+<thead>
+<tr>
+<th><strong>vm_flags</strong></th>
+<th><strong>訪問權限</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>VM_READ</code></td>
+<td>可讀</td>
+</tr>
+<tr>
+<td><code>VM_WRITE</code></td>
+<td>可寫</td>
+</tr>
+<tr>
+<td><code>VM_EXEC</code></td>
+<td>可執行</td>
+</tr>
+<tr>
+<td><code>VM_SHARED</code></td>
+<td>可多進程之間共享</td>
+</tr>
+<tr>
+<td><code>VM_IO</code></td>
+<td>可映射至設備 IO 空間</td>
+</tr>
+<tr>
+<td><code>VM_RESERVED</code></td>
+<td>記憶體區域不可被換出</td>
+</tr>
+<tr>
+<td><code>VM_SEQ_READ</code></td>
+<td>記憶體區域可能被順序訪問</td>
+</tr>
+<tr>
+<td><code>VM_RAND_READ</code></td>
+<td>記憶體區域可能被隨機訪問</td>
+</tr>
+</tbody></table>
+<ul>
+<li>vm_pgoff、vm_file與mmap有關，這邊先不詳細展開</li>
+<li>vm_ops則是存了VMA的操作函數指標(<a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v5.19.17/source/include/linux/mm.h#L536">source code about vm_operations_struct</a>)</li>
+</ul>
+<p>就以目前所知的，畫張圖(由於空間不夠，我省略了bss、data)</p>
+<p><img src="https://hackmd.io/_uploads/Byso4Cw8yl.png" alt="asdfawef"></p>
+<h3 id="overall"><a href="#overall" class="headerlink" title="overall"></a>overall</h3><p>現在來看所有結構的關聯<br>mm_struct的這個會把底下的vm_area_struct串成一個double linked list</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">vm_area_struct</span> *<span class="title">mmap</span>;</span> <span class="comment">/* list of VMAs */</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以在vm_area_struct看到next、prev</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* linked list of VM areas per task, sorted by address */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">vm_area_struct</span> *<span class="title">vm_next</span>, *<span class="title">vm_prev</span>;</span></span><br></pre></td></tr></table></figure>
+
+<p>並且vm_area_struct中的vm_mm會指回去mm_struct，標示該vma屬於哪個task</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">mm_struct</span> *<span class="title">vm_mm</span>;</span>	<span class="comment">/* The address space we belong to. */</span></span><br></pre></td></tr></table></figure>
+
+<p>所以現在長這樣<br><img src="https://hackmd.io/_uploads/BkWjwCwUyx.png" alt="agrargw"></p>
+<p>最後是紅黑樹<br>如果一支process的vm_area很多，那使用紅黑樹查值可以在O(log N)<br>vm_area_struct會存在一個double linklist，一個rb tree</p>
+<p>mm_struct中的mm_rb是root node</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">rb_root</span> <span class="title">mm_rb</span>;</span></span><br></pre></td></tr></table></figure>
+
+<p>vm_area_struct的vm_rb是節點</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">rb_node</span> <span class="title">vm_rb</span>;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/BkXH90PL1e.png" alt="shser"></p>
+<h3 id="load-ELF-segment-to-virtual-memory"><a href="#load-ELF-segment-to-virtual-memory" class="headerlink" title="load ELF segment to virtual memory"></a>load ELF segment to virtual memory</h3><p>load_elf_binary這個函數實現了初始化mm_struct、vm_area_struct及mmap ELF segment等事情 </p>
+<p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v6.12.5/source/fs/binfmt_elf.c#L819">https://elixir.bootlin.com/linux/v6.12.5/source/fs/binfmt_elf.c#L819</a></p>
+<h2 id="kernel-space-virtual-memory"><a href="#kernel-space-virtual-memory" class="headerlink" title="kernel space virtual memory"></a>kernel space virtual memory</h2><p>剛剛講完了userspace的virtual memory ，現在來打開kernel space的布局</p>
+<p>首先有兩個概念很重要</p>
+<ul>
+<li>每支process都有自己的virtual memory space，再透過映射方式映射到physical memory，所以說當process A、B、C去訪問usermode相同的virtual memory訪問到的是不同的東西。然而kernel mode的virtual memory，A、B、C訪問到的是一樣的，這就是重要的kernel mode virtual memory space是每個process共享的 (更詳細可以參考 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/669340141">這篇</a>)</li>
+<li>第二個是雖然kernel會去管理physical address，但是並非kernel 使用的是physical address，kernel仍舊是使用virtual address</li>
+</ul>
+<p>接下來來看 kernel virtual memory長怎樣(分32bits 64bits)</p>
+<h3 id="32bits"><a href="#32bits" class="headerlink" title="32bits"></a>32bits</h3><p>0xC000 0000 - 0xFFFF FFFF 是屬於kernel space範圍</p>
+<p>先上全圖<br><img src="https://hackmd.io/_uploads/HkOcnZYU1e.png" alt="argqr"></p>
+<h4 id="直接映射區-線性映射區"><a href="#直接映射區-線性映射區" class="headerlink" title="直接映射區(線性映射區)"></a>直接映射區(線性映射區)</h4><p>kernel space前面的896MB是直接映射區，這塊區域會直接映射到physical memory的 0~896MB上(virtual memory 減去 0xC000 0000其實就是physical address了)，雖說這塊直接映射，但實際使用仍是通過virtual address，另外也會建立page table</p>
+<p>該區塊的前 1M 在系統啟動時被占用，之後開始存放kernel的code、bss、data等，這些原本是存在ELF中，跑起來後放到記憶體。<br>另外 task_struct、vm_area_struct、mm_struct 也是在這裡(process被創建的資訊)<br>kernel為每個process創建的kernel stack(userspace 的stack可以動態調整，但kernel stack 容量小且固定大小)也在這</p>
+<p>這塊區域在32bits中被劃分成兩塊，前16M被稱為DMA (詳細DMA是啥以及為啥要分兩塊先挖個坑，有機會補，這跟硬體限制有關係)</p>
+<h4 id="VMalloc"><a href="#VMalloc" class="headerlink" title="VMalloc"></a>VMalloc</h4><p>Normal Mapping area最上面的位置是<code>high_memory</code><br><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v6.12.6/source/arch/x86/include/asm/pgtable_32_areas.h">https://elixir.bootlin.com/linux/v6.12.6/source/arch/x86/include/asm/pgtable_32_areas.h</a></p>
+<p>這段定義了VMalloc開始位置，就是Normal Mapping area + 8M位置(因此有8M空洞)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> VMALLOC_OFFSET	(8 * 1024 * 1024)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> VMALLOC_START	((unsigned long)high_memory + VMALLOC_OFFSET)</span></span><br></pre></td></tr></table></figure>
+
+<p>VMalloc END則是VMalloc區域結束</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifdef</span> CONFIG_HIGHMEM</span></span><br><span class="line"><span class="meta"># <span class="keyword">define</span> VMALLOC_END	(PKMAP_BASE - 2 * PAGE_SIZE)</span></span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="meta"># <span class="keyword">define</span> VMALLOC_END	(LDT_BASE_ADDR - 2 * PAGE_SIZE)</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>這一整塊區域通過動態映射的方式，映射記憶體到physical memory(與malloc原理一樣，只是這裡是vmalloc)<br>physical memory對應的vmalloc區段記憶體不一定是連續的，通過page table方式映射( physical page -&gt; Virtual page )</p>
+<h4 id="永久映射區"><a href="#永久映射區" class="headerlink" title="永久映射區"></a>永久映射區</h4><p>繼續往上，這塊區域用來建立長期映射關係<br>alloc_pages()、</p>
+<p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v6.12.6/source/arch/x86/include/asm/pgtable_32_areas.h">https://elixir.bootlin.com/linux/v6.12.6/source/arch/x86/include/asm/pgtable_32_areas.h</a></p>
+<p>一樣的地方也定義了該區域開始的地方<br>跟最多可以映射的page數，正常情況最多1024個</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> PKMAP_BASE		\</span></span><br><span class="line"><span class="meta">	((LDT_BASE_ADDR - PAGE_SIZE) &amp; PMD_MASK)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> CONFIG_X86_PAE</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LAST_PKMAP 512</span></span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LAST_PKMAP 1024</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<h4 id="固定映射區"><a href="#固定映射區" class="headerlink" title="固定映射區"></a>固定映射區</h4><p>FIXADDR_START 到 FIXADDR_TOP(常規是 0xFFFF F000) 定義固定映射區範圍<br>在source code裡面這段<br><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v6.12.6/source/arch/x86/include/asm/fixmap.h">https://elixir.bootlin.com/linux/v6.12.6/source/arch/x86/include/asm/fixmap.h</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">long</span> __FIXADDR_TOP = <span class="number">0xfffff000</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FIXADDR_TOP	((unsigned long)__FIXADDR_TOP)</span></span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FIXADDR_TOP	(round_up(VSYSCALL_ADDR + PAGE_SIZE, 1&lt;&lt;PMD_SHIFT) - \</span></span><br><span class="line"><span class="meta">			 PAGE_SIZE)</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FIXADDR_SIZE		(__end_of_permanent_fixed_addresses &lt;&lt; PAGE_SHIFT)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FIXADDR_START		(FIXADDR_TOP - FIXADDR_SIZE)</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="臨時映射區"><a href="#臨時映射區" class="headerlink" title="臨時映射區"></a>臨時映射區</h4><p>Buffered IO 在進行讀寫時或其他情況會需要臨時的文件映射，就會使用這區塊<br>使用 kmap_atomic</p>
+<p>以上就是32bits</p>
+<h3 id="64-bits"><a href="#64-bits" class="headerlink" title="64 bits"></a>64 bits</h3><p>相較於32bits 只有 1GB 空間，64bits則有 128 TB，也因此不需要如此精細的管理 (詳細精細化管理一樣先挖個坑之後補)，也因為virtual memory夠大，所以可以全部採用直接映射方式</p>
+<p>基本上以下區域的用途跟上面一樣，這邊放一些source code定義的範圍就好了 (為何64bits只有直接映射區跟上述的空間很大有關，先這樣知道就行了)<br><img src="https://hackmd.io/_uploads/SyYujMFLJg.png" alt="aew"></p>
+<p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v6.12.6/source/arch/x86/include/asm/page_64_types.h#L61">https://elixir.bootlin.com/linux/v6.12.6/source/arch/x86/include/asm/page_64_types.h#L61</a><br>首先是這裡 task_size_max() 的大小是 1 &lt;&lt; 47 - page_size 算出來就是 <code>0x7FFF FFFF F000</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> __VIRTUAL_MASK_SHIFT	47</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> task_size_max()		((_AC(1,UL) &lt;&lt; __VIRTUAL_MASK_SHIFT) - PAGE_SIZE)</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> TASK_SIZE_MAX		task_size_max()</span></span><br></pre></td></tr></table></figure>
+<p>將 64 bits virtual memory 割成kernel space、user space</p>
+<p>這部分</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> __PAGE_OFFSET_BASE      _AC(0xffff880000000000, UL)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __PAGE_OFFSET           __PAGE_OFFSET_BASE</span></span><br></pre></td></tr></table></figure>
+<p><code>__PAGE_OFFSET</code> 開始是直接映射區</p>
+<p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v6.12.6/source/arch/x86/include/asm/pgtable_64_types.h#L138">https://elixir.bootlin.com/linux/v6.12.6/source/arch/x86/include/asm/pgtable_64_types.h#L138</a><br>VMALLOC_START 跟 VMALLOC_END 界定出VMALLOC 區段範圍<br><code>&gt;&gt;&gt; hex(0xffffc90000000000+((32 &lt;&lt; 40))) = 0xffffe90000000000</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> __VMALLOC_BASE_L4	0xffffc90000000000UL</span></span><br><span class="line"><span class="meta"># <span class="keyword">define</span> VMALLOC_START		__VMALLOC_BASE_L4</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> VMALLOC_SIZE_TB_L4	32UL</span></span><br><span class="line"><span class="meta"># <span class="keyword">define</span> VMALLOC_SIZE_TB	VMALLOC_SIZE_TB_L4</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> VMEMORY_END		(VMALLOC_START + (VMALLOC_SIZE_TB &lt;&lt; 40) - 1)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> VMALLOC_END		VMEMORY_END</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v6.12.6/source/arch/x86/include/asm/pgtable_64_types.h#L130">https://elixir.bootlin.com/linux/v6.12.6/source/arch/x86/include/asm/pgtable_64_types.h#L130</a><br>接下來是 VMEMMAP_START</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> __VMEMMAP_BASE_L4	0xffffea0000000000UL</span></span><br><span class="line"><span class="meta"># <span class="keyword">define</span> VMEMMAP_START		__VMEMMAP_BASE_L4</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v6.12.6/source/arch/x86/include/asm/page_64_types.h#L50">https://elixir.bootlin.com/linux/v6.12.6/source/arch/x86/include/asm/page_64_types.h#L50</a><br>最後是Code段</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> __START_KERNEL_map	_AC(0xffffffff80000000, UL)</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://draveness.me/whys-the-design-linux-default-page/">https://draveness.me/whys-the-design-linux-default-page/</a><br><a target="_blank" rel="noopener" href="https://hackmd.io/@r34796/HJCjT8Krq">https://hackmd.io/@r34796/HJCjT8Krq</a></p>
+<h2 id="After-ALL"><a href="#After-ALL" class="headerlink" title="After ALL"></a>After ALL</h2><p>以上是針對virtual memory管理相關source code及機制的介紹</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+  <nav id="article-nav" data-aos="fade-up">
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        <img data-src="/images/posts_cover/Windows-kernel-exploitation/Windows-kernel-exploitation.webp" data-sizes="auto" alt="Windows Kernel Exploitation - Part 1" class="lazyload">
+      
+      <a href="/2025/01/20/Windows-Kernel-Exploitation-Part1/"></a>
+      <div class="article-nav-caption">Older</div>
+      <h3 class="article-nav-title">
+        
+          Windows Kernel Exploitation - Part 1
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+</article>
+
+
+
+
+
+
+</section>
+        </div>
+        
+        
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      2020-2025
+      <span class="footer-info-sep rotate"></span>
+      Naup堇姬
+    </div>
+    
+      <div>
+        Powered by&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        141k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        12:29
+      </div>
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">Number of visits&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">Number of visitors&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux-Kernel-Virtual-Memory-management"><span class="toc-number">1.</span> <span class="toc-text">Linux Kernel - Virtual Memory management</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A9%E6%9C%9F%E8%A8%88%E7%AE%97%E6%A9%9F"><span class="toc-number">1.2.</span> <span class="toc-text">早期計算機</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Virtual-memory"><span class="toc-number">1.3.</span> <span class="toc-text">Virtual memory</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#32-bit-virtual-memory"><span class="toc-number">1.3.1.</span> <span class="toc-text">32 bit virtual memory</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#64-bit-virtual-memory"><span class="toc-number">1.3.2.</span> <span class="toc-text">64 bit virtual memory</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#process"><span class="toc-number">1.4.</span> <span class="toc-text">process</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Distinguish-between-userapce-and-kernel-space"><span class="toc-number">1.4.1.</span> <span class="toc-text">Distinguish between userapce and kernel space</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#descript-memory-segment-layout"><span class="toc-number">1.4.2.</span> <span class="toc-text">descript memory segment layout</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Virtual-Memory-Management"><span class="toc-number">1.5.</span> <span class="toc-text">Virtual Memory Management</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#vm-area-struct"><span class="toc-number">1.5.1.</span> <span class="toc-text">vm_area_struct</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#overall"><span class="toc-number">1.5.2.</span> <span class="toc-text">overall</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#load-ELF-segment-to-virtual-memory"><span class="toc-number">1.5.3.</span> <span class="toc-text">load ELF segment to virtual memory</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kernel-space-virtual-memory"><span class="toc-number">1.6.</span> <span class="toc-text">kernel space virtual memory</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#32bits"><span class="toc-number">1.6.1.</span> <span class="toc-text">32bits</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E6%98%A0%E5%B0%84%E5%8D%80-%E7%B7%9A%E6%80%A7%E6%98%A0%E5%B0%84%E5%8D%80"><span class="toc-number">1.6.1.1.</span> <span class="toc-text">直接映射區(線性映射區)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#VMalloc"><span class="toc-number">1.6.1.2.</span> <span class="toc-text">VMalloc</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B0%B8%E4%B9%85%E6%98%A0%E5%B0%84%E5%8D%80"><span class="toc-number">1.6.1.3.</span> <span class="toc-text">永久映射區</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BA%E5%AE%9A%E6%98%A0%E5%B0%84%E5%8D%80"><span class="toc-number">1.6.1.4.</span> <span class="toc-text">固定映射區</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%A8%E6%99%82%E6%98%A0%E5%B0%84%E5%8D%80"><span class="toc-number">1.6.1.5.</span> <span class="toc-text">臨時映射區</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#64-bits"><span class="toc-number">1.6.2.</span> <span class="toc-text">64 bits</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-ALL"><span class="toc-number">1.7.</span> <span class="toc-text">After ALL</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">56</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">4</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+    
+  </div>
+  
+    <div class="sidebar-btn-wrapper">
+      <div class="sidebar-toc-btn current"></div>
+      <div class="sidebar-common-btn"></div>
+    </div>
+  
+</nav>
+
+    </div>
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.0.6/dist/index.umd.js" integrity="sha384-vkGvf25gm1C1PbcoD5dNfc137HzNL&#x2F;hr1RKA5HniJOaawtvUmH5lTVFgFAruE9Ge" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["#ff5252","#ff7c7c","#ffafaf","#ffd0d0"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["#ff0000"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "Naup堇姬",
+          title: "Linux Kernel - Virtual Memory Management",
+          url: "http://example.com/2025/01/20/LinuxKernel-VirtualMemoryManagement/",
+          excerpt: "",
+          description: "",
+          stripContent: "Linux Kernel - Virtual Memory management Author: 堇姬Naup  如果有更新這邊會比較及時https://hackmd.io/@naup96321/rkJwaqfIkx 前言當一個program被跑起後，就會變成process，每個process都有屬於自己的virtual memory，實際該process在操作時，也是通過虛擬記憶體來處理的這些process不管是在userspace或kernel space，看到的都是virtual memo",
+          date: "Mon Jan 20 2025 14:05:44 GMT+0800",
+          updated: "Mon Jan 20 2025 14:10:56 GMT+0800",
+          cover: "/images/posts_cover/LinuxKernel-VirtualMemoryManagement/LinuxKernel-VirtualMemoryManagement.webp",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+
+
+
+
+
+
+
+
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.3.0' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+  </body>
+  </html>
+
