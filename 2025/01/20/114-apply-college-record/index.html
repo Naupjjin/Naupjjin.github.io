@@ -12,7 +12,7 @@
   <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_bq08450reo';window.REIMU_CONFIG.clipboard_tips = {"success":"copy success(*^▽^*)","fail":"copy failed (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"Naup"}};window.REIMU_CONFIG.code_block = {"expand":true};</script>
   
   <title>
-    Pwn-heap note 2 |
+    114年資工系特殊選材心得 - by Naup |
     
     堇姬 Naup&#39;s Blog
   </title>
@@ -27,15 +27,15 @@
 
   
   
-    <meta name="description" content="會持續更新https:&#x2F;&#x2F;hackmd.io&#x2F;@naup96321&#x2F;ryDzdYbjA">
+    <meta name="description" content="114資工系特選心得-堇姬Naup Author: 堇姬Naup  結果   學校 初試 複試 結果    清大資工B組(資安組) 94.0 94.0 正取   交大資工資安組 97 93.33 正取   台大資工 83.7 83 沒上   備審大概就自傳、讀書計畫、申請動機、競賽經歷、活動經歷、社群經歷、教學經歷、其他連結 自傳基本上沒有像大家寫的那麼有故事，我把自傳當備審總結在寫得感覺，把整個">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Pwn-heap note 2">
-<meta property="og:url" content="http://example.com/2024/08/20/Pwn-heap-note-2/index.html">
+<meta property="og:title" content="114年資工系特殊選材心得 - by Naup">
+<meta property="og:url" content="http://example.com/2025/01/20/114-apply-college-record/index.html">
 <meta property="og:site_name" content="堇姬 Naup&#39;s Blog">
-<meta property="og:description" content="會持續更新https:&#x2F;&#x2F;hackmd.io&#x2F;@naup96321&#x2F;ryDzdYbjA">
+<meta property="og:description" content="114資工系特選心得-堇姬Naup Author: 堇姬Naup  結果   學校 初試 複試 結果    清大資工B組(資安組) 94.0 94.0 正取   交大資工資安組 97 93.33 正取   台大資工 83.7 83 沒上   備審大概就自傳、讀書計畫、申請動機、競賽經歷、活動經歷、社群經歷、教學經歷、其他連結 自傳基本上沒有像大家寫的那麼有故事，我把自傳當備審總結在寫得感覺，把整個">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-08-20T11:10:38.000Z">
-<meta property="article:modified_time" content="2024-08-20T11:11:12.369Z">
+<meta property="article:published_time" content="2025-01-20T10:57:44.000Z">
+<meta property="article:modified_time" content="2025-01-20T11:05:39.636Z">
 <meta property="article:author" content="Naup堇姬">
 <meta name="twitter:card" content="summary">
   
@@ -157,12 +157,8 @@
 </div>
 <header id="header">
   
-    <picture>
-      
-    </picture>
-    
-      <img fetchpriority="high" src="/images/banner.webp" alt="Pwn-heap note 2">
-    
+    <picture></picture>
+    <img fetchpriority="high" src="/images/posts_cover/Windows-kernel-exploitation/Windows-kernel-exploitation.webp" alt="114年資工系特殊選材心得 - by Naup">
   
   <div id="header-outer">
     <div id="header-title">
@@ -170,7 +166,7 @@
         
         
           <a href="/" id="logo">
-            <h1 data-aos="slide-up">Pwn-heap note 2</h1>
+            <h1 data-aos="slide-up">114年資工系特殊選材心得 - by Naup</h1>
           </a>
         
       
@@ -195,7 +191,7 @@
   <h3 class="toc-title">Contents</h3>
   <div class="sidebar-toc-wrapper toc-div-class" >
       
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#114%E8%B3%87%E5%B7%A5%E7%B3%BB%E7%89%B9%E9%81%B8%E5%BF%83%E5%BE%97-%E5%A0%87%E5%A7%ACNaup"><span class="toc-number">1.</span> <span class="toc-text">114資工系特選心得-堇姬Naup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B5%90%E6%9E%9C"><span class="toc-number">1.1.</span> <span class="toc-text">結果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%82%99%E5%AF%A9"><span class="toc-number">1.2.</span> <span class="toc-text">備審</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E9%81%B8%E5%BF%83%E5%BE%97"><span class="toc-number">1.3.</span> <span class="toc-text">特選心得</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%85%E5%A4%A7%E8%B3%87%E5%B7%A5"><span class="toc-number">1.4.</span> <span class="toc-text">清大資工</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%B0%E5%A4%A7%E8%B3%87%E5%B7%A5"><span class="toc-number">1.5.</span> <span class="toc-text">台大資工</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%A4%E5%A4%A7%E8%B3%87%E5%B7%A5"><span class="toc-number">1.6.</span> <span class="toc-text">交大資工</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#after-all"><span class="toc-number">1.7.</span> <span class="toc-text">after all</span></a></li></ol></li></ol>
       
   </div>
 </div>
@@ -275,13 +271,13 @@
   </div>
 </aside>
 
-          <section id="main"><article id="post-Pwn-heap-note-2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+          <section id="main"><article id="post-114-apply-college-record" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-inner" data-aos="fade-up">
     <div class="article-meta">
       <div class="article-date">
-  <a href="/2024/08/20/Pwn-heap-note-2/" class="article-date-link" data-aos="zoom-in">
-    <time datetime="2024-08-20T11:10:38.000Z" itemprop="datePublished">2024-08-20</time>
-    <time style="display: none;" id="post-update-time">2024-08-20</time>
+  <a href="/2025/01/20/114-apply-college-record/" class="article-date-link" data-aos="zoom-in">
+    <time datetime="2025-01-20T10:57:44.000Z" itemprop="datePublished">2025-01-20</time>
+    <time style="display: none;" id="post-update-time">2025-01-20</time>
   </a>
 </div>
 
@@ -294,7 +290,76 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
       
-        <p>會持續更新<br><a target="_blank" rel="noopener" href="https://hackmd.io/@naup96321/ryDzdYbjA">https://hackmd.io/@naup96321/ryDzdYbjA</a></p>
+        <h1 id="114資工系特選心得-堇姬Naup"><a href="#114資工系特選心得-堇姬Naup" class="headerlink" title="114資工系特選心得-堇姬Naup"></a>114資工系特選心得-堇姬Naup</h1><blockquote>
+<p>Author: 堇姬Naup</p>
+</blockquote>
+<h2 id="結果"><a href="#結果" class="headerlink" title="結果"></a>結果</h2><table>
+<thead>
+<tr>
+<th>學校</th>
+<th>初試</th>
+<th>複試</th>
+<th>結果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>清大資工B組(資安組)</td>
+<td>94.0</td>
+<td>94.0</td>
+<td>正取</td>
+</tr>
+<tr>
+<td>交大資工資安組</td>
+<td>97</td>
+<td>93.33</td>
+<td>正取</td>
+</tr>
+<tr>
+<td>台大資工</td>
+<td>83.7</td>
+<td>83</td>
+<td>沒上</td>
+</tr>
+</tbody></table>
+<h2 id="備審"><a href="#備審" class="headerlink" title="備審"></a>備審</h2><p>大概就自傳、讀書計畫、申請動機、競賽經歷、活動經歷、社群經歷、教學經歷、其他連結</p>
+<p>自傳基本上沒有像大家寫的那麼有故事，我把自傳當備審總結在寫得感覺，把整個內容都提了一遍<br>讀書計畫就未來想做啥寫啥<br>申請動機就寫你覺得這學校哪裡吸引你，如實寫就好了<br>競賽經歷之類的就是我blog about裡面的經歷，我是著重在我做了甚麼，達成了甚麼，沒寫反思或心得之類的太多(我覺得沒很重要)<br>其他連結就放了一些writeup或是辦比賽出的CTF題目等</p>
+<p>有需要的私訊我discord找我拿，我不一定會給就是了www<br>Discord ID: naup_sumire_hime</p>
+<h2 id="特選心得"><a href="#特選心得" class="headerlink" title="特選心得"></a>特選心得</h2><p>我是高二才正式確定想走資安這條路並認真開始打，在去年的一月左右(2024)才正式確定我想走特選，不過當時也不是特別說我一定要特選，就覺得資安好好玩，打CTF好好玩就一直到現在<br>至於特選壓力大不大嗎?老實說在特選前我覺得我台清交最差也會正取一間，所以我也不太擔心，不過還是會焦慮就是了。<br>不得不說特選其實蠻好玩的，不管是做書審或是面試<br>做書審有種回顧自己這一年多到底幹了啥，其實蠻有成就感的，面試的話跟教授聊天也都蠻有趣的www<br>最後特台清交資工，結果是清大和交大資工正取，那我會去交大資工</p>
+<p>真要我說特選有啥要注意的<br>大概就在校成績其實要顧(我沒唬爛，我特下來感覺是這樣，不是只有台大，台清交都一樣)<br>剩下的就順其自然的特就可以了，就當去跟教授聊天</p>
+<p>我其實沒有特別多想說的就簡單紀錄一下教授問我的問題吧(我也有點忘了)<br>我按照面試的順序 清大 台大 交大</p>
+<h2 id="清大資工"><a href="#清大資工" class="headerlink" title="清大資工"></a>清大資工</h2><ul>
+<li>自我介紹五分鐘，慢慢講我所有經歷跟細節</li>
+<li>你有打 pwnable.tw 喔，蠻高的耶，你有打哪些印象深刻的題目嗎</li>
+<li>CGGC跟金盾我蠻好奇的</li>
+<li>AIS3專題的router security</li>
+<li>後來教授跟我說高中生應該很少有跟你一樣強的後就問我未來規劃之類的，像是上大學想幹嘛之類的</li>
+<li>上清大資工後有沒有想轉去搞其他的領域</li>
+<li>你對編譯器或OS有興趣嗎，我們有專門搞這些的教授</li>
+<li>你台清交三間的排序怎麼排</li>
+<li>教授推銷清大資工資源</li>
+</ul>
+<p>清大是我面試感覺跟其他人差異最大的，好像有蠻多人被趕出去，跟被教授擺臉色往後躺之類的，但我覺得他們人超好的，沒有他們說的這樣www</p>
+<h2 id="台大資工"><a href="#台大資工" class="headerlink" title="台大資工"></a>台大資工</h2><ul>
+<li>自我介紹兩分鐘，快速講了我所有的經歷</li>
+<li>看到你有研究golang蠻特別的，講一下你研究了啥</li>
+<li>講一下RSA或ECC其中一種攻擊手法</li>
+<li>講一下Linux Kernel一種攻擊手法</li>
+<li>有沒有想往藍隊發展，另外有沒有研究藍隊相關的東西</li>
+<li>如果進台大怎麼運用台大資源</li>
+</ul>
+<p>面完感覺沒啥問題但就不知道為啥書審跟面試都超低</p>
+<h2 id="交大資工"><a href="#交大資工" class="headerlink" title="交大資工"></a>交大資工</h2><ul>
+<li>自我介紹一分鐘，主要講競賽</li>
+<li>講一下有關你golang的研究</li>
+<li>golang記憶體管理(TCMalloc、GC等)</li>
+<li>golang 研究你是怎麼學得</li>
+<li>非對稱加密跟對稱加密哪個比較安全，如何確保公鑰正確</li>
+<li>你研究這些底層有甚麼用，平時又用不到(這邊我有點講不太好)</li>
+<li>金盾獎為甚麼這屆好像都翻車了</li>
+<li>後來教授誇我技術力蠻強，要問我其他東西時時間就到了</li>
+</ul>
+<p>交大應該是我覺得應該是這三間我最有信心也是最穩的一間，也確實正取了，雖然面試給我的體感很怪www</p>
+<h2 id="after-all"><a href="#after-all" class="headerlink" title="after all"></a>after all</h2><p>最後感謝這段時間給我備審建議的 Curious、FlyDragon 以及學校老師跟輔導老師，也感謝老師幫我寫推薦信。<br>也謝謝這一年多陪我打比賽的隊友跟一起研究資安、玩資安的夥伴，以後我也會繼續在資安這條路上走下去</p>
 
       
     </div>
@@ -314,35 +379,16 @@
   
   <nav id="article-nav" data-aos="fade-up">
     
-      <div class="article-nav-link-wrap article-nav-link-left">
-        
-          
-          
-            <img data-src="/images/banner.webp" data-sizes="auto" alt="Python-interpreter" class="lazyload">
-          
-        
-        <a href="/2024/08/22/Python-interpreter/"></a>
-        <div class="article-nav-caption">Newer</div>
-        <h3 class="article-nav-title">
-          
-            Python-interpreter
-          
-        </h3>
-      </div>
-    
     
     <div class="article-nav-link-wrap article-nav-link-right">
       
-        
-        
-          <img data-src="/images/banner.webp" data-sizes="auto" alt="Pwnable.tw-hacknote" class="lazyload">
-        
+        <img data-src="/images/posts_cover/LinuxKernel-VirtualMemoryManagement/LinuxKernel-VirtualMemoryManagement.webp" data-sizes="auto" alt="Linux Kernel - Virtual Memory Management" class="lazyload">
       
-      <a href="/2024/08/20/Pwnable-hacknote/"></a>
+      <a href="/2025/01/20/LinuxKernel-VirtualMemoryManagement/"></a>
       <div class="article-nav-caption">Older</div>
       <h3 class="article-nav-title">
         
-          Pwnable.tw-hacknote
+          Linux Kernel - Virtual Memory Management
         
       </h3>
     </div>
@@ -417,7 +463,7 @@
   <h3 class="toc-title">Contents</h3>
   <div class="sidebar-toc-wrapper toc-div-class" >
       
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#114%E8%B3%87%E5%B7%A5%E7%B3%BB%E7%89%B9%E9%81%B8%E5%BF%83%E5%BE%97-%E5%A0%87%E5%A7%ACNaup"><span class="toc-number">1.</span> <span class="toc-text">114資工系特選心得-堇姬Naup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B5%90%E6%9E%9C"><span class="toc-number">1.1.</span> <span class="toc-text">結果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%82%99%E5%AF%A9"><span class="toc-number">1.2.</span> <span class="toc-text">備審</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E9%81%B8%E5%BF%83%E5%BE%97"><span class="toc-number">1.3.</span> <span class="toc-text">特選心得</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%85%E5%A4%A7%E8%B3%87%E5%B7%A5"><span class="toc-number">1.4.</span> <span class="toc-text">清大資工</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%B0%E5%A4%A7%E8%B3%87%E5%B7%A5"><span class="toc-number">1.5.</span> <span class="toc-text">台大資工</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%A4%E5%A4%A7%E8%B3%87%E5%B7%A5"><span class="toc-number">1.6.</span> <span class="toc-text">交大資工</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#after-all"><span class="toc-number">1.7.</span> <span class="toc-text">after all</span></a></li></ol></li></ol>
       
   </div>
 </div>
@@ -559,14 +605,14 @@
       <script data-pjax>
         window.REIMU_POST = {
           author: "Naup堇姬",
-          title: "Pwn-heap note 2",
-          url: "http://example.com/2024/08/20/Pwn-heap-note-2/",
+          title: "114年資工系特殊選材心得 - by Naup",
+          url: "http://example.com/2025/01/20/114-apply-college-record/",
           excerpt: "",
           description: "",
-          stripContent: "會持續更新https://hackmd.io/@naup96321/ryDzdYbjA ",
-          date: "Tue Aug 20 2024 19:10:38 GMT+0800",
-          updated: "Tue Aug 20 2024 19:11:12 GMT+0800",
-          cover: "/images/banner.webp",
+          stripContent: "114資工系特選心得-堇姬Naup Author: 堇姬Naup  結果   學校 初試 複試 結果    清大資工B組(資安組) 94.0 94.0 正取   交大資工資安組 97 93.33 正取   台大資工 83.7 83 沒上   備審大概就自傳、讀書計畫、申請動機、競賽經歷、活動經歷、社群經歷、教學經歷、其他連結 自傳基本上沒有像大家寫的那麼有故事，我把自傳當備審總結在寫得感覺，把整個內容都提了一遍讀書計畫就未來想做啥寫啥申請動機就寫你覺得這學校哪裡吸引你，如實寫就好了競賽經歷之類的",
+          date: "Mon Jan 20 2025 18:57:44 GMT+0800",
+          updated: "Mon Jan 20 2025 19:05:39 GMT+0800",
+          cover: "/images/posts_cover/Windows-kernel-exploitation/Windows-kernel-exploitation.webp",
         };
       </script>
        
