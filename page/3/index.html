@@ -266,10 +266,45 @@
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2024/09/20/Pwnable-seethefile/" aria-label="Pwnable.tw-seethefile"></a>
+      <a class="post-link" href="/2024/09/21/Pwnable-secretgarden/" aria-label="Pwnable.tw-secret garden"></a>
     
     
     <div class="post-cover-left">
+      
+        <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-secret garden" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-09-21</span>
+        <span><span class="icon-pencil"></span>4.7k words</span>
+        <span><span class="icon-clock"></span>27 mins</span>
+      </div>
+      <h2 class="post-title">Pwnable.tw-secret garden</h2>
+      <article class="post-article">
+        
+          Pwnable.tw-Secret Garden
+Author
+
+libcglibc all in one 中沒有 2.23-0ubuntu5所以去網路上找libchttps://launchpad.net/ubuntu/xenial/amd64/libc6/2.23-0ubuntu5
+把i386載下來
+1dpkg -X libc6_2.23-0ubuntu5_amd64.deb .
+在libs裡面就有ld跟libc了
+patchelf直接patch上去
+12patchelf --set-interpreter ld-2.23.so seethefilepatchelf --replace-n
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/09/20/Pwnable-seethefile/" aria-label="Pwnable.tw-seethefile"></a>
+    
+    
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-seethefile" class="lazyload">
       
@@ -299,12 +334,12 @@ patchelf直接patch上去
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/09/16/Pwnable-3x17/" aria-label="Pwnable.tw-3x17"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -333,12 +368,12 @@ start12345678910111213141516171819// positive sp value has been detected, the ou
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/09/11/Pwnable-tcachetear/" aria-label="Pwnable.tw-tcache tear"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -367,12 +402,12 @@ main1234567891011121314151617181920212223242526272829303132333435363738394041424
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/08/22/Python-interpreter/" aria-label="Python-interpreter"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -408,12 +443,12 @@ PRINT_ANSWER -&amp;gt; 印出stack最上方層並pop掉、無參數
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/08/20/Pwn-heap-note-2/" aria-label="Pwn-heap note 2"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -439,12 +474,12 @@ PRINT_ANSWER -&amp;gt; 印出stack最上方層並pop掉、無參數
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/08/20/Pwnable-hacknote/" aria-label="Pwnable.tw-hacknote"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -472,12 +507,12 @@ code analyzemain1234567891011121314151617181920212223242526272829303132333435363
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/08/19/AIS3-Junior-2024-command-injection-bypass-master/" aria-label="AIS3 Junior 2024-command injection bypass master"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -509,12 +544,12 @@ main
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/08/12/Pwn-SROP/" aria-label="Pwn-SROP"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -552,12 +587,12 @@ signal frame
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/08/06/pwnable-start/" aria-label="Pwnable.tw-start"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -578,46 +613,6 @@ signal frame
 Author: 堇姬Naup
 
 題目123456789101112131415161718192021220x08048060 &amp;lt;+0&amp;gt;:	push   esp0x08048061 &amp;lt;+1&amp;gt;:	push   0x804809d0x08048066 &amp;lt;+6&amp;gt;:	xor    eax,eax0x08048068 &amp;lt;+8&amp;gt;:	xor    ebx,ebx0x0804806a &amp;lt;+10&amp;gt;:	xor    ecx,ecx0x0804806c &amp;lt;+12&amp;gt;:	xor    edx,edx0x080480
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/08/05/AIS3-2024/" aria-label="AIS3 2024 - 專題研究成果"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        
-        
-          <img data-src="/images/banner.webp" data-sizes="auto" alt="AIS3 2024 - 專題研究成果" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-08-05</span>
-        <span><span class="icon-pencil"></span>1.3k words</span>
-        <span><span class="icon-clock"></span>6 mins</span>
-      </div>
-      <h2 class="post-title">AIS3 2024 - 專題研究成果</h2>
-      <article class="post-article">
-        
-          AIS3 2024 - 專題研究成果
-Author: 堇姬Naup
-
-專題我是網頁、IoT及軟體安全的A2。這次是做IoT的漏洞專題，這次是研究Tenda router，研究的型號是AC10、AC15兩個型號，並且嘗試從CVE付現到挖出漏洞，雖然沒有拿最佳專題，但我也學到很多。以下是研究內容
-AC10 CVE付現解firmware1binwalk -E US_AC10V1.0RTL_V15.03.06.23_multi_TD01.bin
-image
-看起來沒有加密
-直接
-1binwalk -e US_AC10V1.0RTL_V15.03.06.23_multi_TD01.bin
-
-模擬 qem
         
       </article>
     </div>
@@ -657,10 +652,10 @@ image
     
       <div>
         <span class="icon-brush"></span>
-        142.2k
+        149.8k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        12:33
+        13:10
       </div>
     
     
