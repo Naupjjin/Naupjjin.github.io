@@ -266,10 +266,42 @@
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2025/01/17/TSCCTF-2025-writeup/" aria-label="TSC CTF 2025 - writeup"></a>
+      <a class="post-link" href="/2025/01/20/Windows-Kernel-Exploitation-Part1/" aria-label="Windows Kernel Exploitation - Part 1"></a>
     
     
     <div class="post-cover-left">
+      
+        <img data-src="/images/posts_cover/Windows-kernel-exploitation/Windows-kernel-exploitation.webp" data-sizes="auto" alt="Windows Kernel Exploitation - Part 1" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2025-01-20</span>
+        <span><span class="icon-pencil"></span>6.1k words</span>
+        <span><span class="icon-clock"></span>30 mins</span>
+      </div>
+      <h2 class="post-title">Windows Kernel Exploitation - Part 1</h2>
+      <article class="post-article">
+        
+          Windows Kernel exploitation - Part 1
+Author: 堇姬Naup
+
+What is Kernelkernel位於application和hardware之間，是OS的core也負責溝通hadware和process負責了像是I&amp;#x2F;O、process、memory、driver managemet或是syscall 等事情
+kernel也提供了可以跑application的環境application是run在ring3，而kernel則是ring0
+123456789101112131415           +------------------
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2025/01/17/TSCCTF-2025-writeup/" aria-label="TSC CTF 2025 - writeup"></a>
+    
+    
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/TSCCTF-2025-writeup/TSCCTF_banner.webp" data-sizes="auto" alt="TSC CTF 2025 - writeup" class="lazyload">
       
@@ -297,12 +329,12 @@ Ranked 5th overall, solving 26 challenges. Since we solved quite a lot of challe
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2025/01/05/ASISCTF-2022-babyscan/" aria-label="ASIS CTF 2022 pwn - babyscan 1 &amp; babyscan 2"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/ASISCTF-2022-babyscan/ASISCTF-2022-babyscan.webp" data-sizes="auto" alt="ASIS CTF 2022 pwn - babyscan 1 &amp; babyscan 2" class="lazyload">
       
@@ -327,12 +359,12 @@ babyscan_1source code1234567891011121314151617181920212223242526272829303132#inc
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/12/31/2023-2024-all-record/" aria-label="2023 &amp; 2024 年度總結"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/2023and2024/2023and2024.webp" data-sizes="auto" alt="2023 &amp; 2024 年度總結" class="lazyload">
       
@@ -362,12 +394,12 @@ Author: 堇姬Naup
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/12/31/Pwn-heap-note/" aria-label="Pwn-heap note 1"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/Pwn-heap-note-1/pwn-heap-note1.webp" data-sizes="auto" alt="Pwn-heap note 1" class="lazyload">
       
@@ -396,12 +428,12 @@ heap note 2:https://hackmd.io/@naup96321/ryDzdYbjA
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/12/31/Kernel-mode-user-mode-switch/" aria-label="Kernel mode &amp; user mode switch"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/kernelmode_usermode_switch/kernelmode_usermode_switch.webp" data-sizes="auto" alt="Kernel mode &amp; user mode switch" class="lazyload">
       
@@ -425,34 +457,6 @@ call swapgs
 
 GS reg: 用途主要圍繞上下文切換、內核態與用戶態的切換以及訪問每個 CPU 的數據結構，在 64 位模式下，GS 指向一個base address，允許進行高效的offset訪問，例如通過gs:[offset] 訪問data。
 IA32_GS_BASE: 用於保存當前 GS base(
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/12/17/Windows-Kernel-Exploitation-Part1/" aria-label="Windows Kernel Exploitation"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        <img data-src="/images/posts_cover/Windows-kernel-exploitation/Windows-kernel-exploitation.webp" data-sizes="auto" alt="Windows Kernel Exploitation" class="lazyload">
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-12-17</span>
-        <span><span class="icon-pencil"></span>17 words</span>
-        <span><span class="icon-clock"></span>1 min</span>
-      </div>
-      <h2 class="post-title">Windows Kernel Exploitation</h2>
-      <article class="post-article">
-        
-          可以先參考這個，會即時更新https://hackmd.io/@naup96321/S1jjFnjEkx
-
         
       </article>
     </div>
@@ -636,10 +640,10 @@ webproxy這題基本上就是要你GET request $service 和 $port並且會從你
     
       <div>
         <span class="icon-brush"></span>
-        131.5k
+        137.6k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        11:45
+        12:14
       </div>
     
     
