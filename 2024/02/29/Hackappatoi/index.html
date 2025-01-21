@@ -229,11 +229,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">
@@ -324,15 +324,15 @@
 <h1 id="Pwn"><a href="#Pwn" class="headerlink" title="Pwn"></a>Pwn</h1><h2 id="Pizza-Spaghetti-Espresso"><a href="#Pizza-Spaghetti-Espresso" class="headerlink" title="Pizza Spaghetti Espresso"></a>Pizza Spaghetti Espresso</h2><blockquote>
 <p>[name&#x3D;whale120]  </p>
 </blockquote>
-<p>一個很<strong>另類</strong>的猜拳遊戲，而玩家必須完美十場全勝才可以拿shell<br>所有防護只有PARTIAL RELRO跟STACK CANARY不存在有弱點。<br>先把執行檔丟到ghidra：<br><div class="img-item" data-src="https://hackmd.io/_uploads/Sy27h1fUT.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/Sy27h1fUT.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div><br>此外，讀取的時候也都會乖乖只讀取十六個字元，也沒辦法利用前面說的弱點打Buffer Overflow之類的。<br>經過觀察，發現每次都是用時間作為種子產生<code>rand()</code>，這時就嘗試寫一個執行黨用相同方式產生亂數：</p>
+<p>一個很<strong>另類</strong>的猜拳遊戲，而玩家必須完美十場全勝才可以拿shell<br>所有防護只有PARTIAL RELRO跟STACK CANARY不存在有弱點。<br>先把執行檔丟到ghidra：<br><img src="https://hackmd.io/_uploads/Sy27h1fUT.png" alt="image"><br>此外，讀取的時候也都會乖乖只讀取十六個字元，也沒辦法利用前面說的弱點打Buffer Overflow之類的。<br>經過觀察，發現每次都是用時間作為種子產生<code>rand()</code>，這時就嘗試寫一個執行黨用相同方式產生亂數：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">hack</span><span class="params">(<span class="type">int</span> x)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(x==<span class="number">0</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;Pizza\n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(x==<span class="number">1</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;Espresso\n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(x==<span class="number">2</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;Spaghetti\n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// your code goes here</span></span><br><span class="line">        <span class="comment">//[&quot;Pizza&quot;, &quot;Espresso&quot;, &quot;Spaghetti&quot;];</span></span><br><span class="line">        <span class="type">time_t</span> t=time(<span class="number">0</span>);</span><br><span class="line">        srand(((<span class="type">unsigned</span> <span class="type">int</span>)t));</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)&#123;</span><br><span class="line">                hack((rand()+<span class="number">1</span>)%<span class="number">3</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>接著在本地同時執行：<br><code>./localpsehacker &amp;&amp; ./pse</code><br>可以成功預測到最後並get shell，最後丟<code>nc</code>，remote的時候<code>time_t</code>值我有加一因為會有執行檔結束到連線之間的時間差。<br><code>./psehacker &amp;&amp; nc 92.246.89.201 10001</code></p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/Sy_LBkQUa.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/Sy_LBkQUa.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><img src="https://hackmd.io/_uploads/Sy_LBkQUa.png" alt="image"></p>
 <h1 id="Reverse"><a href="#Reverse" class="headerlink" title="Reverse"></a>Reverse</h1><h2 id="Thefourhorseman"><a href="#Thefourhorseman" class="headerlink" title="Thefourhorseman"></a>Thefourhorseman</h2><blockquote>
 <p>[name&#x3D;FlyDragon]</p>
 </blockquote>
 <p>flag 就在 sub_11C9() 蠻無聊的</p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/H1-1noUU6.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/H1-1noUU6.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><img src="https://hackmd.io/_uploads/H1-1noUU6.png" alt="image"></p>
 <blockquote>
 <p>FLAG : <code>hctf&#123;youre_ready_to_stop_the_apocalypse&#125;</code></p>
 </blockquote>
@@ -355,7 +355,7 @@
 <p>[name&#x3D;FlyDragon]</p>
 </blockquote>
 <p>輸出的方式是 flag 拆成很多個 function，直接去偷</p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/BkwBAjILp.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BkwBAjILp.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><img src="https://hackmd.io/_uploads/BkwBAjILp.png" alt="image"></p>
 <blockquote>
 <p>FLAG: <code>hctf&#123;https://youtu.be/vXejrAXXmkU&#125;</code></p>
 </blockquote>
@@ -367,10 +367,10 @@
 <p>[name&#x3D;naup96321]</p>
 </blockquote>
 <p>他給了你一個Minecraft地圖檔，並且提敘說有人身體不好，然後他在那個位置有留下東西，所以我猜測他應該是要想辦法查出那個玩家的上次死亡座標。<br>如果要查到其他玩家上次的死亡座標的話可以使用<code>NBTExplorer</code><br><a target="_blank" rel="noopener" href="https://sourceforge.net/projects/nbtexplorer.mirror/">https://sourceforge.net/projects/nbtexplorer.mirror/</a></p>
-<p>你可以對該地圖檔進行操作，其中包括可以在<code>playerdata</code>中找到最新一次的死亡位置<br><div class="img-item" data-src="https://hackmd.io/_uploads/ByHIr0WL6.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/ByHIr0WL6.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>你可以對該地圖檔進行操作，其中包括可以在<code>playerdata</code>中找到最新一次的死亡位置<br><img src="https://hackmd.io/_uploads/ByHIr0WL6.png" alt="image"></p>
 <p>位置在<code>-1122 52 -340</code></p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/HkERBCWLa.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HkERBCWLa.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<p>直接走過去就可以拿到flag了<br><div class="img-item" data-src="https://hackmd.io/_uploads/HknxP0ZU6.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HknxP0ZU6.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><img src="https://hackmd.io/_uploads/HkERBCWLa.png" alt="image"></p>
+<p>直接走過去就可以拿到flag了<br><img src="https://hackmd.io/_uploads/HknxP0ZU6.png" alt="image"></p>
 <p><strong>這題我那時候用tp會讓告示牌被破壞，所以我是用走的，另外記得要開1.20.2</strong></p>
 <blockquote>
 <p>FLAG : HCTF{Th3_On3_P13c3_Is_R34l!!!}</p>
@@ -379,7 +379,7 @@
 <p>[name&#x3D;naup96321]</p>
 </blockquote>
 <p>他給了一個影片要我找這是哪間hotel<br><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=ugzma5lx910">https://www.youtube.com/watch?v=ugzma5lx910</a><br>透過他的影片跟提敘發現有3個線索，分別是Justin Bieber、Napoli跟這部影片 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=o9nrxDeUss4&t=428s">https://www.youtube.com/watch?v=o9nrxDeUss4&amp;t=428s</a></p>
-<p>之後我查到了新聞發現他在Grand Hotel Vesuvio。<br>另外也可以透過線索的影片找到他的名字<br><div class="img-item" data-src="https://hackmd.io/_uploads/ByL3iRW8T.jpg" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/ByL3iRW8T.jpg" alt="未命名"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">未命名</span></div></div></p>
+<p>之後我查到了新聞發現他在Grand Hotel Vesuvio。<br>另外也可以透過線索的影片找到他的名字<br><img src="https://hackmd.io/_uploads/ByL3iRW8T.jpg" alt="未命名"></p>
 <blockquote>
 <p>FLAG : hctf{Grand_Hotel_Vesuvio}</p>
 </blockquote>
@@ -387,8 +387,8 @@
 <p>[name&#x3D;naup96321]</p>
 </blockquote>
 <p>這題給了一個影片，要我找到這條街的名字<br><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=rNta7FLxq8s">https://www.youtube.com/watch?v=rNta7FLxq8s</a></p>
-<p>從中可以看到一個蠻明顯的線索<code>post italiane</code><br><div class="img-item" data-src="https://hackmd.io/_uploads/HJOuhCZ8a.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HJOuhCZ8a.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div><br>並且我嘗試尋找其他影片-&gt;關鍵字:Enzo Tommasi<br>找到了他在<code>Ostia</code><br><div class="img-item" data-src="https://hackmd.io/_uploads/SkL7T0Z86.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SkL7T0Z86.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<p>最後用google map 尋找Ostia的post italiane，用街景最終確定在Via Ferdinando Acton 44<br><div class="img-item" data-src="https://hackmd.io/_uploads/r1qaaCb8a.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/r1qaaCb8a.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>從中可以看到一個蠻明顯的線索<code>post italiane</code><br><img src="https://hackmd.io/_uploads/HJOuhCZ8a.png" alt="image"><br>並且我嘗試尋找其他影片-&gt;關鍵字:Enzo Tommasi<br>找到了他在<code>Ostia</code><br><img src="https://hackmd.io/_uploads/SkL7T0Z86.png" alt="image"></p>
+<p>最後用google map 尋找Ostia的post italiane，用街景最終確定在Via Ferdinando Acton 44<br><img src="https://hackmd.io/_uploads/r1qaaCb8a.png" alt="image"></p>
 <blockquote>
 <p>FLAG : hctf{Via_Ferdinando_Acton_44}</p>
 </blockquote>
@@ -419,17 +419,17 @@
 <h1 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h1><h2 id="Ghost-Image"><a href="#Ghost-Image" class="headerlink" title="Ghost Image"></a>Ghost Image</h2><blockquote>
 <p>[name&#x3D;naup96321]</p>
 </blockquote>
-<p>直接將他給的兩層CSS調透明度疊圖就可以看到flag了<br><div class="img-item" data-src="https://hackmd.io/_uploads/BkXS_3aLp.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BkXS_3aLp.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/Hy84d0bL6.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/Hy84d0bL6.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>直接將他給的兩層CSS調透明度疊圖就可以看到flag了<br><img src="https://hackmd.io/_uploads/BkXS_3aLp.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/Hy84d0bL6.png" alt="image"></p>
 <blockquote>
 <p>Flag : HCTF{M4MMAMIA_SO_M4NY_SHADOW8OXES_IN_TH1S_CSS}</p>
 </blockquote>
 <h2 id="Escape-from-italy"><a href="#Escape-from-italy" class="headerlink" title="Escape from italy"></a>Escape from italy</h2><blockquote>
 <p>[name&#x3D;naup96321]</p>
 </blockquote>
-<p>嘗試去看flag.txt他叫我們去讀key，去讀key後發現他輸出key是guera，然後她告訴我有東西在port 8889，所以我嘗試連過去<br><div class="img-item" data-src="https://hackmd.io/_uploads/ByrRd2TLp.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/ByrRd2TLp.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>嘗試去看flag.txt他叫我們去讀key，去讀key後發現他輸出key是guera，然後她告訴我有東西在port 8889，所以我嘗試連過去<br><img src="https://hackmd.io/_uploads/ByrRd2TLp.png" alt="image"></p>
 <p>首先他要我們輸入key，之後可以輸入command，但很多東西都被過濾掉了，所以我嘗試測試有哪些是可以用的</p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/rJNvuCbLp.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/rJNvuCbLp.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><img src="https://hackmd.io/_uploads/rJNvuCbLp.png" alt="image"></p>
 <p>最後發現可以用eval、數字、以及一些符號，所以我嘗試去研究ruby的一些特性(因為報錯是ruby的)，後來發現&lt;&lt;可以用來連接字串，且將數字寫入到字串會轉ASCII<br>最後我的payload</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eval(&#x27;&#x27;&lt;&lt;115&lt;&lt;121&lt;&lt;115&lt;&lt;116&lt;&lt;101&lt;&lt;109&lt;&lt;40&lt;&lt;39&lt;&lt;99&lt;&lt;97&lt;&lt;116&lt;&lt;32&lt;&lt;102&lt;&lt;108&lt;&lt;97&lt;&lt;103&lt;&lt;39&lt;&lt;41)</span><br></pre></td></tr></table></figure>
 
@@ -439,7 +439,7 @@
 <h2 id="Cornetto-Compression"><a href="#Cornetto-Compression" class="headerlink" title="Cornetto Compression"></a>Cornetto Compression</h2><blockquote>
 <p>[name&#x3D;naup96321]</p>
 </blockquote>
-<p>根據他的範例我知道了他用了特殊的方法將所有圖片疊成一張，只要使用stegonline就可以一張一張的分離出來，最後拼在一起就是<br><div class="img-item" data-src="https://hackmd.io/_uploads/S1qzuC-UT.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/S1qzuC-UT.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>根據他的範例我知道了他用了特殊的方法將所有圖片疊成一張，只要使用stegonline就可以一張一張的分離出來，最後拼在一起就是<br><img src="https://hackmd.io/_uploads/S1qzuC-UT.png" alt="image"></p>
 <blockquote>
 <p>Flag : HCTF{W3LL_DONE_M4TE_C1CCI0G4M3R_IS_PROUD_0F_YOU_N3XT_TIM3_BRING_M3_A_CORNETO_WITH_NUTELL4}</p>
 </blockquote>
@@ -530,7 +530,7 @@
     
       <div>
         <span class="icon-brush"></span>
-        149.8k
+        149.6k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
         13:10
@@ -582,11 +582,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">

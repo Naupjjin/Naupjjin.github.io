@@ -217,11 +217,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">
@@ -300,19 +300,18 @@
       
       
         <h1 id="pwnable-tw-orw"><a href="#pwnable-tw-orw" class="headerlink" title="pwnable.tw-orw"></a>pwnable.tw-orw</h1><h2 id="checksec"><a href="#checksec" class="headerlink" title="checksec"></a>checksec</h2><p>啥都沒開(Canary實際上沒開)，stack也可以執行</p>
-<div class="img-item" data-src="/2024/07/07/Pwnable-orw/pwnableorwchecksec.png" data-sub-html=".caption"><img src="/2024/07/07/Pwnable-orw/pwnableorwchecksec.png" class=""></div>
+<img src="/2024/07/07/Pwnable-orw/pwnableorwchecksec.png" class="">
 
-<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><div class="img-item" data-src="/2024/07/07/Pwnable-orw/pwnableorwdisassemble.png" data-sub-html=".caption"><img src="/2024/07/07/Pwnable-orw/pwnableorwdisassemble.png" class=""></div>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><img src="/2024/07/07/Pwnable-orw/pwnableorwdisassemble.png" class="">
 
 <p>給一個shellcode，然後會幫你執行，不過有seccomp，要ORW。</p>
-<div class="img-item" data-src="/2024/07/07/Pwnable-orw/pwnableorwseccomp.png" data-sub-html=".caption"><img src="/2024/07/07/Pwnable-orw/pwnableorwseccomp.png" class=""></div>
+<img src="/2024/07/07/Pwnable-orw/pwnableorwseccomp.png" class="">
 
 <h3 id="syscall-table"><a href="#syscall-table" class="headerlink" title="syscall table"></a>syscall table</h3><p><a target="_blank" rel="noopener" href="https://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md#x86-32_bit">https://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md#x86-32_bit</a></p>
-<div class="img-item" data-src="/2024/07/07/Pwnable-orw/pwnableorwsyscall.png" data-sub-html=".caption"><img src="/2024/07/07/Pwnable-orw/pwnableorwsyscall.png" class=""></div>
+<img src="/2024/07/07/Pwnable-orw/pwnableorwsyscall.png" class="">
 
 
-<h2 id="syscall"><a href="#syscall" class="headerlink" title="syscall"></a>syscall</h2><h3 id="sys-open"><a href="#sys-open" class="headerlink" title="sys_open"></a>sys_open</h3><div class="table-responsive">
-<table class="table table-bordered table-striped">
+<h2 id="syscall"><a href="#syscall" class="headerlink" title="syscall"></a>syscall</h2><h3 id="sys-open"><a href="#sys-open" class="headerlink" title="sys_open"></a>sys_open</h3><table>
 <thead>
 <tr>
 <th>暫存器</th>
@@ -336,8 +335,7 @@
 <td>0</td>
 </tr>
 </tbody></table>
-<h3 id="sys-read"><a href="#sys-read" class="headerlink" title="sys_read"></a>sys_read</h3><div class="table-responsive">
-<table class="table table-bordered table-striped">
+<h3 id="sys-read"><a href="#sys-read" class="headerlink" title="sys_read"></a>sys_read</h3><table>
 <thead>
 <tr>
 <th>暫存器</th>
@@ -361,8 +359,7 @@
 <td>讀取大小(size_t count)</td>
 </tr>
 </tbody></table>
-<h3 id="sys-write"><a href="#sys-write" class="headerlink" title="sys_write"></a>sys_write</h3><div class="table-responsive">
-<table class="table table-bordered table-striped">
+<h3 id="sys-write"><a href="#sys-write" class="headerlink" title="sys_write"></a>sys_write</h3><table>
 <thead>
 <tr>
 <th>暫存器</th>
@@ -476,7 +473,7 @@
     
       <div>
         <span class="icon-brush"></span>
-        149.8k
+        149.6k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
         13:10
@@ -528,11 +525,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">
@@ -657,7 +654,7 @@
           url: "http://example.com/2024/07/07/Pwnable-orw/",
           excerpt: "",
           description: "",
-          stripContent: "pwnable.tw-orwchecksec啥都沒開(Canary實際上沒開)，stack也可以執行   分析  給一個shellcode，然後會幫你執行，不過有seccomp，要ORW。   syscall tablehttps://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md#x86-32_bit    syscallsys_open    暫存器 值    eax 0x5   ebx fil",
+          stripContent: "pwnable.tw-orwchecksec啥都沒開(Canary實際上沒開)，stack也可以執行   分析  給一個shellcode，然後會幫你執行，不過有seccomp，要ORW。   syscall tablehttps://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md#x86-32_bit    syscallsys_open   暫存器 值    eax 0x5   ebx file",
           date: "Sun Jul 07 2024 10:16:00 GMT+0800",
           updated: "Tue Aug 20 2024 13:19:43 GMT+0800",
           cover: "/images/banner.webp",

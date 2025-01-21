@@ -27,12 +27,12 @@
 
   
   
-    <meta name="description" content="Python interpreter Author: 堇姬Naup  定義先定義一下何謂python interpreter，就是用來解釋code object的 image tiny interpreter首先要建立一個解釋器，需要給他一個指令集這邊先要求實現一件是，就是做加法需要有以下指令  LOAD_VALUE -&gt; 載入數字至stack上、參數是要載入到stack上的數字 ADD_T">
+    <meta name="description" content="Python interpreter Author: 堇姬Naup  定義先定義一下何謂python interpreter，就是用來解釋code object的  tiny interpreter首先要建立一個解釋器，需要給他一個指令集這邊先要求實現一件是，就是做加法需要有以下指令  LOAD_VALUE -&gt; 載入數字至stack上、參數是要載入到stack上的數字 ADD_TWO_VA">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python-interpreter">
 <meta property="og:url" content="http://example.com/2024/08/22/Python-interpreter/index.html">
 <meta property="og:site_name" content="堇姬 Naup&#39;s Blog">
-<meta property="og:description" content="Python interpreter Author: 堇姬Naup  定義先定義一下何謂python interpreter，就是用來解釋code object的 image tiny interpreter首先要建立一個解釋器，需要給他一個指令集這邊先要求實現一件是，就是做加法需要有以下指令  LOAD_VALUE -&gt; 載入數字至stack上、參數是要載入到stack上的數字 ADD_T">
+<meta property="og:description" content="Python interpreter Author: 堇姬Naup  定義先定義一下何謂python interpreter，就是用來解釋code object的  tiny interpreter首先要建立一個解釋器，需要給他一個指令集這邊先要求實現一件是，就是做加法需要有以下指令  LOAD_VALUE -&gt; 載入數字至stack上、參數是要載入到stack上的數字 ADD_TWO_VA">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://hackmd.io/_uploads/SyVmFu7jC.png">
 <meta property="og:image" content="https://hackmd.io/_uploads/H1uRoOQoA.png">
@@ -217,11 +217,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">
@@ -303,14 +303,14 @@
 <p>Author: 堇姬Naup</p>
 </blockquote>
 <h2 id="定義"><a href="#定義" class="headerlink" title="定義"></a>定義</h2><p>先定義一下何謂python interpreter，就是用來解釋code object的</p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/SyVmFu7jC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SyVmFu7jC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><img src="https://hackmd.io/_uploads/SyVmFu7jC.png" alt="image"></p>
 <h2 id="tiny-interpreter"><a href="#tiny-interpreter" class="headerlink" title="tiny interpreter"></a>tiny interpreter</h2><p>首先要建立一個解釋器，需要給他一個指令集<br>這邊先要求實現一件是，就是做加法<br>需要有以下指令</p>
 <ul>
 <li>LOAD_VALUE -&gt; 載入數字至stack上、參數是要載入到stack上的數字</li>
 <li>ADD_TWO_VALUES -&gt; 將stack最上層跟最上層-1 pop然後相加，將結果放到stack上、無參數</li>
 <li>PRINT_ANSWER -&gt; 印出stack最上方層並pop掉、無參數</li>
 </ul>
-<p>先將要加的兩個數字載入至stack上，相加後印出<br><div class="img-item" data-src="https://hackmd.io/_uploads/H1uRoOQoA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/H1uRoOQoA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>先將要加的兩個數字載入至stack上，相加後印出<br><img src="https://hackmd.io/_uploads/H1uRoOQoA.png" alt="image"></p>
 <p>並且加入<br>run_code()<br>循環執行每條指令及參數</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">what_to_execute = &#123;</span><br><span class="line">    <span class="string">&quot;instructions&quot;</span>: [(<span class="string">&quot;LOAD_VALUE&quot;</span>, <span class="number">0</span>),  <span class="comment"># the first number</span></span><br><span class="line">                     (<span class="string">&quot;LOAD_VALUE&quot;</span>, <span class="number">1</span>),  <span class="comment"># the second number</span></span><br><span class="line">                     (<span class="string">&quot;ADD_TWO_VALUES&quot;</span>, <span class="literal">None</span>),</span><br><span class="line">                     (<span class="string">&quot;PRINT_ANSWER&quot;</span>, <span class="literal">None</span>)],</span><br><span class="line">    <span class="string">&quot;numbers&quot;</span>: [<span class="number">7</span>, <span class="number">5</span>] &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Interpreter</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.stack = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">LOAD_VALUE</span>(<span class="params">self, number</span>):</span><br><span class="line">        self.stack.append(number)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">PRINT_ANSWER</span>(<span class="params">self</span>):</span><br><span class="line">        answer = self.stack.pop()</span><br><span class="line">        <span class="built_in">print</span>(answer)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">ADD_TWO_VALUES</span>(<span class="params">self</span>):</span><br><span class="line">        first_num = self.stack.pop()</span><br><span class="line">        second_num = self.stack.pop()</span><br><span class="line">        total = first_num + second_num</span><br><span class="line">        self.stack.append(total)</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">run_code</span>(<span class="params">self, what_to_execute</span>):</span><br><span class="line">        instructions = what_to_execute[<span class="string">&quot;instructions&quot;</span>]</span><br><span class="line">        numbers = what_to_execute[<span class="string">&quot;numbers&quot;</span>]</span><br><span class="line">        <span class="keyword">for</span> each_step <span class="keyword">in</span> instructions:</span><br><span class="line">            instruction, argument = each_step</span><br><span class="line">            <span class="keyword">if</span> instruction == <span class="string">&quot;LOAD_VALUE&quot;</span>:</span><br><span class="line">                number = numbers[argument]</span><br><span class="line">                self.LOAD_VALUE(number)</span><br><span class="line">            <span class="keyword">elif</span> instruction == <span class="string">&quot;ADD_TWO_VALUES&quot;</span>:</span><br><span class="line">                self.ADD_TWO_VALUES()</span><br><span class="line">            <span class="keyword">elif</span> instruction == <span class="string">&quot;PRINT_ANSWER&quot;</span>:</span><br><span class="line">                self.PRINT_ANSWER()</span><br><span class="line">                </span><br><span class="line">interpreter = Interpreter()</span><br><span class="line">interpreter.run_code(what_to_execute)</span><br></pre></td></tr></table></figure>
 
@@ -363,7 +363,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">bar</span>(<span class="params">y</span>):</span><br><span class="line">   z = y + <span class="number">3</span>   </span><br><span class="line">   <span class="keyword">return</span> z</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">foo</span>():</span><br><span class="line">    a = <span class="number">1</span></span><br><span class="line">    b = <span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> a + bar(b)</span><br><span class="line"></span><br><span class="line">foo()</span><br></pre></td></tr></table></figure>
 
 <p>現在共有三個frame，一但bar return就會把bar frame 從call stack pop掉</p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/SJkRif4iR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SJkRif4iR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><img src="https://hackmd.io/_uploads/SJkRif4iR.png" alt="image"></p>
 <p>由於python在frame被pop掉幾乎都會清掉data stack，所以其實所有frame共用一個data stack也是可以的(非生成器的情況)</p>
 <ul>
 <li>生成器的特殊性: 生成器的特性在於它可以暫停一個frame的執行，並在之後恢復到相同的狀態繼續執行，這要求每個frame必須有獨立的data stack</li>
@@ -392,7 +392,7 @@
 </ul>
 <p><a target="_blank" rel="noopener" href="https://github.com/nedbat/byterun">https://github.com/nedbat/byterun</a></p>
 <h2 id="VirtualMachine"><a href="#VirtualMachine" class="headerlink" title="VirtualMachine"></a>VirtualMachine</h2><p>python interpreter就是一個VirtualMachine<br>VirtualMachine 負責保存call stack、異常狀態，以及在 frame 中傳遞的返回值</p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/H1Yh-X4i0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/H1Yh-X4i0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><img src="https://hackmd.io/_uploads/H1Yh-X4i0.png" alt="image"></p>
 <p>編譯後的code object為參數，並且創建一個frame，這個frame可能會在增加或刪減更多的frame，call stack也隨之伸縮，當第一個frame return時就結束(跟之前學的幾乎一樣)</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">VirtualMachine</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.frames = []   <span class="comment"># 儲存調用棧的列表。</span></span><br><span class="line">        self.frame = <span class="literal">None</span>  <span class="comment"># 當前正在執行的 frame。</span></span><br><span class="line">        self.return_value = <span class="literal">None</span>  <span class="comment"># 儲存當前 frame 的返回值。</span></span><br><span class="line">        self.last_exception = <span class="literal">None</span>  <span class="comment"># 儲存最後一個異常狀態。</span></span><br><span class="line">        </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">run_code</span>(<span class="params">self, code, global_names=<span class="literal">None</span>, local_names=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot; An entry point to execute code using the virtual machine.&quot;&quot;&quot;</span></span><br><span class="line">        frame = self.make_frame(code, global_names=global_names, </span><br><span class="line">                                local_names=local_names)</span><br><span class="line">        self.run_frame(frame)</span><br></pre></td></tr></table></figure>
 
@@ -511,7 +511,7 @@
     
       <div>
         <span class="icon-brush"></span>
-        149.8k
+        149.6k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
         13:10
@@ -563,11 +563,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">
@@ -692,7 +692,7 @@
           url: "http://example.com/2024/08/22/Python-interpreter/",
           excerpt: "",
           description: "",
-          stripContent: "Python interpreter Author: 堇姬Naup  定義先定義一下何謂python interpreter，就是用來解釋code object的 image tiny interpreter首先要建立一個解釋器，需要給他一個指令集這邊先要求實現一件是，就是做加法需要有以下指令  LOAD_VALUE -&amp;gt; 載入數字至stack上、參數是要載入到stack上的數字 ADD_TWO_VALUES -&amp;gt; 將stack最上層跟最上層-1 pop然後相加，將結果放到stack",
+          stripContent: "Python interpreter Author: 堇姬Naup  定義先定義一下何謂python interpreter，就是用來解釋code object的  tiny interpreter首先要建立一個解釋器，需要給他一個指令集這邊先要求實現一件是，就是做加法需要有以下指令  LOAD_VALUE -&amp;gt; 載入數字至stack上、參數是要載入到stack上的數字 ADD_TWO_VALUES -&amp;gt; 將stack最上層跟最上層-1 pop然後相加，將結果放到stack上、無參數",
           date: "Thu Aug 22 2024 12:11:54 GMT+0800",
           updated: "Thu Aug 22 2024 13:17:10 GMT+0800",
           cover: "/images/banner.webp",

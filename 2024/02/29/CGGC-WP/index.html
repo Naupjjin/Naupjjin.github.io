@@ -12,7 +12,7 @@
   <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_bq08450reo';window.REIMU_CONFIG.clipboard_tips = {"success":"copy success(*^▽^*)","fail":"copy failed (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"Naup"}};window.REIMU_CONFIG.code_block = {"expand":true};</script>
   
   <title>
-    CGGC 網路守護者挑戰賽 Qual Writeup |
+    CGGC 2024 Qual Writeup |
     
     堇姬 Naup&#39;s Blog
   </title>
@@ -27,12 +27,12 @@
 
   
   
-    <meta name="description" content="Team: 芙莉熊Rank: 9th  Webbossti第一關是用jwt sign的登入頁面，把密鑰用john暴一下並修改參數登入就好：john jwt.txt --wordlist&#x3D;rockyou.txt --format&#x3D;HMAC-SHA256 image   image   登入後的畫面上方有個7*7，馬上想到SSTI，結合前面JWT帶有的參數hack就可以植入payload:&amp;#123">
+    <meta name="description" content="CGGC 2024 Qual writeup Team: 芙莉熊Rank: 9th  Webbossti第一關是用jwt sign的登入頁面，把密鑰用john暴一下並修改參數登入就好：john jwt.txt --wordlist&#x3D;rockyou.txt --format&#x3D;HMAC-SHA256       登入後的畫面上方有個7*7，馬上想到SSTI，結合前面JWT帶有的參數hack就可以植入p">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CGGC 網路守護者挑戰賽 Qual Writeup">
+<meta property="og:title" content="CGGC 2024 Qual Writeup">
 <meta property="og:url" content="http://example.com/2024/02/29/CGGC-WP/index.html">
 <meta property="og:site_name" content="堇姬 Naup&#39;s Blog">
-<meta property="og:description" content="Team: 芙莉熊Rank: 9th  Webbossti第一關是用jwt sign的登入頁面，把密鑰用john暴一下並修改參數登入就好：john jwt.txt --wordlist&#x3D;rockyou.txt --format&#x3D;HMAC-SHA256 image   image   登入後的畫面上方有個7*7，馬上想到SSTI，結合前面JWT帶有的參數hack就可以植入payload:&amp;#123">
+<meta property="og:description" content="CGGC 2024 Qual writeup Team: 芙莉熊Rank: 9th  Webbossti第一關是用jwt sign的登入頁面，把密鑰用john暴一下並修改參數登入就好：john jwt.txt --wordlist&#x3D;rockyou.txt --format&#x3D;HMAC-SHA256       登入後的畫面上方有個7*7，馬上想到SSTI，結合前面JWT帶有的參數hack就可以植入p">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://hackmd.io/_uploads/r1j-ZR_Hp.png">
 <meta property="og:image" content="https://hackmd.io/_uploads/SkJ2bAOSa.png">
@@ -43,8 +43,10 @@
 <meta property="og:image" content="https://hackmd.io/_uploads/H1NVsTdS6.png">
 <meta property="og:image" content="https://hackmd.io/_uploads/SysitT_rT.png">
 <meta property="article:published_time" content="2024-02-29T13:51:55.000Z">
-<meta property="article:modified_time" content="2024-02-29T13:55:16.464Z">
+<meta property="article:modified_time" content="2025-01-21T12:45:53.247Z">
 <meta property="article:author" content="Naup堇姬">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="writeup">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://hackmd.io/_uploads/r1j-ZR_Hp.png">
   
@@ -170,7 +172,7 @@
       
     </picture>
     
-      <img fetchpriority="high" src="/images/banner.webp" alt="CGGC 網路守護者挑戰賽 Qual Writeup">
+      <img fetchpriority="high" src="/images/banner.webp" alt="CGGC 2024 Qual Writeup">
     
   
   <div id="header-outer">
@@ -179,7 +181,7 @@
         
         
           <a href="/" id="logo">
-            <h1 data-aos="slide-up">CGGC 網路守護者挑戰賽 Qual Writeup</h1>
+            <h1 data-aos="slide-up">CGGC 2024 Qual Writeup</h1>
           </a>
         
       
@@ -204,7 +206,7 @@
   <h3 class="toc-title">Contents</h3>
   <div class="sidebar-toc-wrapper toc-div-class" >
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Web"><span class="toc-number">1.</span> <span class="toc-text">Web</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#bossti"><span class="toc-number">1.1.</span> <span class="toc-text">bossti</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#babyLFI-%E8%B3%BD%E5%BE%8C%E8%A7%A3"><span class="toc-number">1.2.</span> <span class="toc-text">babyLFI(賽後解)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reverse"><span class="toc-number">2.</span> <span class="toc-text">Reverse</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Gaoyi"><span class="toc-number">2.1.</span> <span class="toc-text">Gaoyi</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pwn"><span class="toc-number">3.</span> <span class="toc-text">Pwn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#gift"><span class="toc-number">3.1.</span> <span class="toc-text">gift</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E4%B8%8B%E4%BE%86%E6%88%91%E5%A0%86%E7%9A%84%E6%98%AF%E4%B9%9F%E5%B0%B1%E6%98%AFputs-putsgotplt-gets-buf1-%E9%80%99%E6%A8%A3%E5%B0%B1%E5%8F%AF%E4%BB%A5leak-libc-%E4%B8%A6%E4%B8%94%E9%81%94%E5%88%B0stack-migration%E7%B9%BC%E7%BA%8C%E9%96%8B%E9%BB%9E%E5%89%9B%E5%89%9B%E7%9A%84gets%E7%9A%84-downarrow-system-bin-sh-getshell"><span class="toc-number">4.</span> <span class="toc-text">接下來我堆的是12345678rdi,putspltputsgotpltrdibuf1getspltrsi_r13_r14_r15_retbuf1也就是puts(putsgotplt); gets(buf1)這樣就可以leak libc, 並且達到stack migration繼續開點剛剛的gets的$\downarrow$1234567&#x2F;bin&#x2F;sh00rdibuf1 ret &#x2F;&#x2F;this is for alignmentsystemsystem(&#x2F;bin&#x2F;sh)&gt; getshell</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#note"><span class="toc-number">4.1.</span> <span class="toc-text">note</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Misc"><span class="toc-number">5.</span> <span class="toc-text">Misc</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Space-game"><span class="toc-number">5.1.</span> <span class="toc-text">Space game</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CGGC-2024-Qual-writeup"><span class="toc-number">1.</span> <span class="toc-text">CGGC 2024 Qual writeup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Web"><span class="toc-number">1.1.</span> <span class="toc-text">Web</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#bossti"><span class="toc-number">1.1.1.</span> <span class="toc-text">bossti</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#babyLFI-%E8%B3%BD%E5%BE%8C%E8%A7%A3"><span class="toc-number">1.1.2.</span> <span class="toc-text">babyLFI(賽後解)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reverse"><span class="toc-number">1.2.</span> <span class="toc-text">Reverse</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Gaoyi"><span class="toc-number">1.2.1.</span> <span class="toc-text">Gaoyi</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pwn"><span class="toc-number">1.3.</span> <span class="toc-text">Pwn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#gift"><span class="toc-number">1.3.1.</span> <span class="toc-text">gift</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E4%B8%8B%E4%BE%86%E6%88%91%E5%A0%86%E7%9A%84%E6%98%AF%E4%B9%9F%E5%B0%B1%E6%98%AFputs-putsgotplt-gets-buf1-%E9%80%99%E6%A8%A3%E5%B0%B1%E5%8F%AF%E4%BB%A5leak-libc-%E4%B8%A6%E4%B8%94%E9%81%94%E5%88%B0stack-migration%E7%B9%BC%E7%BA%8C%E9%96%8B%E9%BB%9E%E5%89%9B%E5%89%9B%E7%9A%84gets%E7%9A%84-downarrow-system-bin-sh-getshell"><span class="toc-number">1.4.</span> <span class="toc-text">接下來我堆的是12345678rdi,putspltputsgotpltrdibuf1getspltrsi_r13_r14_r15_retbuf1也就是puts(putsgotplt); gets(buf1)這樣就可以leak libc, 並且達到stack migration繼續開點剛剛的gets的$\downarrow$1234567&#x2F;bin&#x2F;sh00rdibuf1 ret &#x2F;&#x2F;this is for alignmentsystemsystem(&#x2F;bin&#x2F;sh)&gt; getshell</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#note"><span class="toc-number">1.4.1.</span> <span class="toc-text">note</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Misc"><span class="toc-number">1.5.</span> <span class="toc-text">Misc</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Space-game"><span class="toc-number">1.5.1.</span> <span class="toc-text">Space game</span></a></li></ol></li></ol></li></ol>
       
   </div>
 </div>
@@ -221,11 +223,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">
@@ -290,7 +292,7 @@
       <div class="article-date">
   <a href="/2024/02/29/CGGC-WP/" class="article-date-link" data-aos="zoom-in">
     <time datetime="2024-02-29T13:51:55.000Z" itemprop="datePublished">2024-02-29</time>
-    <time style="display: none;" id="post-update-time">2024-02-29</time>
+    <time style="display: none;" id="post-update-time">2025-01-21</time>
   </a>
 </div>
 
@@ -303,25 +305,25 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
       
-        <blockquote>
+        <h1 id="CGGC-2024-Qual-writeup"><a href="#CGGC-2024-Qual-writeup" class="headerlink" title="CGGC 2024 Qual writeup"></a>CGGC 2024 Qual writeup</h1><blockquote>
 <p>Team: 芙莉熊<br>Rank: 9th</p>
 </blockquote>
 <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="bossti"><a href="#bossti" class="headerlink" title="bossti"></a>bossti</h3><p>第一關是用jwt sign的登入頁面，把密鑰用john暴一下並修改參數登入就好：<br><code>john jwt.txt --wordlist=rockyou.txt --format=HMAC-SHA256</code></p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/r1j-ZR_Hp.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/r1j-ZR_Hp.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div>  </p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/SkJ2bAOSa.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SkJ2bAOSa.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div>  </p>
+<p><img src="https://hackmd.io/_uploads/r1j-ZR_Hp.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/SkJ2bAOSa.png" alt="image">  </p>
 <p>登入後的畫面上方有個<code>7*7</code>，馬上想到SSTI，結合前面JWT帶有的參數hack就可以植入payload:<br><code>&#123;&#123;config.__class__.__init__.__globals__['os'].popen('cat Flag.txt').read()&#125;&#125;</code>  </p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/BJTzzA_B6.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BJTzzA_B6.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div><br>拿flag啦~</p>
+<p><img src="https://hackmd.io/_uploads/BJTzzA_B6.png" alt="image"><br>拿flag啦~</p>
 <h3 id="babyLFI-賽後解"><a href="#babyLFI-賽後解" class="headerlink" title="babyLFI(賽後解)"></a>babyLFI(賽後解)</h3><blockquote>
 <p>這題當下沒打出來是因為我在搞，100000打成1000000，結果噴錯說request太長，結果我就以為不是這樣做就沒做了</p>
 </blockquote>
 <p>首先他有一個網站以及他有給網站source code</p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/HJVuTLFra.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HJVuTLFra.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><img src="https://hackmd.io/_uploads/HJVuTLFra.png" alt="image"></p>
 <p>分析一下source code他用<code>$_REQUEST&#123;&#39;filename#&#39;&#125;</code>來接收使用者輸入，所以可以用<code>http://10.99.111.111:12345/index.php?filename%23=</code>這樣來接收輸入(記得#要urlencode，我忘記要用結果被卡了好幾個小時)</p>
 <p>並且他有過濾掉php:&#x2F;&#x2F;filter，要想辦法繞過，才能用php:&#x2F;&#x2F;filter嘗試拿flag</p>
-<p>另外注意到phpinfo在docker run 起來時就會被rm掉，所以可以自己架一個來看php info有沒有東西<br><div class="img-item" data-src="https://hackmd.io/_uploads/Hkoy1DYBa.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/Hkoy1DYBa.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<p>在觀察phpinfo時我注意到PRCE限制為100000(哭阿，我打1000000，那時候沒有把他架起來QQ)，所以我可以把payload填充到長度100000，繞過php:&#x2F;&#x2F;filter過濾。<br><div class="img-item" data-src="https://hackmd.io/_uploads/SJsb68Fr6.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SJsb68Fr6.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>另外注意到phpinfo在docker run 起來時就會被rm掉，所以可以自己架一個來看php info有沒有東西<br><img src="https://hackmd.io/_uploads/Hkoy1DYBa.png" alt="image"></p>
+<p>在觀察phpinfo時我注意到PRCE限制為100000(哭阿，我打1000000，那時候沒有把他架起來QQ)，所以我可以把payload填充到長度100000，繞過php:&#x2F;&#x2F;filter過濾。<br><img src="https://hackmd.io/_uploads/SJsb68Fr6.png" alt="image"></p>
 <p>繞過後直接用php:&#x2F;&#x2F;info構造payload就可以拿到flag</p>
-<h2 id="Reverse"><a href="#Reverse" class="headerlink" title="Reverse"></a>Reverse</h2><h3 id="Gaoyi"><a href="#Gaoyi" class="headerlink" title="Gaoyi"></a>Gaoyi</h3><p>把所有判斷都 Patch 掉，跳到輸出 flag 的部分就好<br><div class="img-item" data-src="https://hackmd.io/_uploads/H1NVsTdS6.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/H1NVsTdS6.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<h2 id="Reverse"><a href="#Reverse" class="headerlink" title="Reverse"></a>Reverse</h2><h3 id="Gaoyi"><a href="#Gaoyi" class="headerlink" title="Gaoyi"></a>Gaoyi</h3><p>把所有判斷都 Patch 掉，跳到輸出 flag 的部分就好<br><img src="https://hackmd.io/_uploads/H1NVsTdS6.png" alt="image"></p>
 <h2 id="Pwn"><a href="#Pwn" class="headerlink" title="Pwn"></a>Pwn</h2><blockquote>
 <p>[name&#x3D;Aukro]<br>腳本很醜 等修整好再丟上來</p>
 </blockquote>
@@ -362,7 +364,7 @@
 <p>getshell</p>
 </blockquote>
 <h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="Space-game"><a href="#Space-game" class="headerlink" title="Space game"></a>Space game</h3><p>在網頁上拿到 <code>game.gb</code> 檔案，再用 GameBoy Emulator 把遊戲跑起來，用 Cheat Engine 修改擊敗敵人的數量 (&gt;30) 抵達終點就會有 flag</p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/SysitT_rT.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SysitT_rT.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><img src="https://hackmd.io/_uploads/SysitT_rT.png" alt="image"></p>
 
       
     </div>
@@ -376,6 +378,8 @@
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/writeup/" rel="tag">writeup</a></li></ul>
+
 
     </footer>
   </div>
@@ -450,7 +454,7 @@
     
       <div>
         <span class="icon-brush"></span>
-        149.8k
+        149.6k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
         13:10
@@ -485,7 +489,7 @@
   <h3 class="toc-title">Contents</h3>
   <div class="sidebar-toc-wrapper toc-div-class" >
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Web"><span class="toc-number">1.</span> <span class="toc-text">Web</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#bossti"><span class="toc-number">1.1.</span> <span class="toc-text">bossti</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#babyLFI-%E8%B3%BD%E5%BE%8C%E8%A7%A3"><span class="toc-number">1.2.</span> <span class="toc-text">babyLFI(賽後解)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reverse"><span class="toc-number">2.</span> <span class="toc-text">Reverse</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Gaoyi"><span class="toc-number">2.1.</span> <span class="toc-text">Gaoyi</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pwn"><span class="toc-number">3.</span> <span class="toc-text">Pwn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#gift"><span class="toc-number">3.1.</span> <span class="toc-text">gift</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E4%B8%8B%E4%BE%86%E6%88%91%E5%A0%86%E7%9A%84%E6%98%AF%E4%B9%9F%E5%B0%B1%E6%98%AFputs-putsgotplt-gets-buf1-%E9%80%99%E6%A8%A3%E5%B0%B1%E5%8F%AF%E4%BB%A5leak-libc-%E4%B8%A6%E4%B8%94%E9%81%94%E5%88%B0stack-migration%E7%B9%BC%E7%BA%8C%E9%96%8B%E9%BB%9E%E5%89%9B%E5%89%9B%E7%9A%84gets%E7%9A%84-downarrow-system-bin-sh-getshell"><span class="toc-number">4.</span> <span class="toc-text">接下來我堆的是12345678rdi,putspltputsgotpltrdibuf1getspltrsi_r13_r14_r15_retbuf1也就是puts(putsgotplt); gets(buf1)這樣就可以leak libc, 並且達到stack migration繼續開點剛剛的gets的$\downarrow$1234567&#x2F;bin&#x2F;sh00rdibuf1 ret &#x2F;&#x2F;this is for alignmentsystemsystem(&#x2F;bin&#x2F;sh)&gt; getshell</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#note"><span class="toc-number">4.1.</span> <span class="toc-text">note</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Misc"><span class="toc-number">5.</span> <span class="toc-text">Misc</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Space-game"><span class="toc-number">5.1.</span> <span class="toc-text">Space game</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CGGC-2024-Qual-writeup"><span class="toc-number">1.</span> <span class="toc-text">CGGC 2024 Qual writeup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Web"><span class="toc-number">1.1.</span> <span class="toc-text">Web</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#bossti"><span class="toc-number">1.1.1.</span> <span class="toc-text">bossti</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#babyLFI-%E8%B3%BD%E5%BE%8C%E8%A7%A3"><span class="toc-number">1.1.2.</span> <span class="toc-text">babyLFI(賽後解)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reverse"><span class="toc-number">1.2.</span> <span class="toc-text">Reverse</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Gaoyi"><span class="toc-number">1.2.1.</span> <span class="toc-text">Gaoyi</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pwn"><span class="toc-number">1.3.</span> <span class="toc-text">Pwn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#gift"><span class="toc-number">1.3.1.</span> <span class="toc-text">gift</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E4%B8%8B%E4%BE%86%E6%88%91%E5%A0%86%E7%9A%84%E6%98%AF%E4%B9%9F%E5%B0%B1%E6%98%AFputs-putsgotplt-gets-buf1-%E9%80%99%E6%A8%A3%E5%B0%B1%E5%8F%AF%E4%BB%A5leak-libc-%E4%B8%A6%E4%B8%94%E9%81%94%E5%88%B0stack-migration%E7%B9%BC%E7%BA%8C%E9%96%8B%E9%BB%9E%E5%89%9B%E5%89%9B%E7%9A%84gets%E7%9A%84-downarrow-system-bin-sh-getshell"><span class="toc-number">1.4.</span> <span class="toc-text">接下來我堆的是12345678rdi,putspltputsgotpltrdibuf1getspltrsi_r13_r14_r15_retbuf1也就是puts(putsgotplt); gets(buf1)這樣就可以leak libc, 並且達到stack migration繼續開點剛剛的gets的$\downarrow$1234567&#x2F;bin&#x2F;sh00rdibuf1 ret &#x2F;&#x2F;this is for alignmentsystemsystem(&#x2F;bin&#x2F;sh)&gt; getshell</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#note"><span class="toc-number">1.4.1.</span> <span class="toc-text">note</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Misc"><span class="toc-number">1.5.</span> <span class="toc-text">Misc</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Space-game"><span class="toc-number">1.5.1.</span> <span class="toc-text">Space game</span></a></li></ol></li></ol></li></ol>
       
   </div>
 </div>
@@ -502,11 +506,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">
@@ -627,13 +631,13 @@
       <script data-pjax>
         window.REIMU_POST = {
           author: "Naup堇姬",
-          title: "CGGC 網路守護者挑戰賽 Qual Writeup",
+          title: "CGGC 2024 Qual Writeup",
           url: "http://example.com/2024/02/29/CGGC-WP/",
           excerpt: "",
           description: "",
-          stripContent: " Team: 芙莉熊Rank: 9th  Webbossti第一關是用jwt sign的登入頁面，把密鑰用john暴一下並修改參數登入就好：john jwt.txt --wordlist=rockyou.txt --format=HMAC-SHA256 image   image   登入後的畫面上方有個7*7，馬上想到SSTI，結合前面JWT帶有的參數hack就可以植入payload:&amp;#123;&amp;#123;config.__class__.__init__.__globals__[&#39;os&#39;]",
+          stripContent: "CGGC 2024 Qual writeup Team: 芙莉熊Rank: 9th  Webbossti第一關是用jwt sign的登入頁面，把密鑰用john暴一下並修改參數登入就好：john jwt.txt --wordlist=rockyou.txt --format=HMAC-SHA256       登入後的畫面上方有個7*7，馬上想到SSTI，結合前面JWT帶有的參數hack就可以植入payload:&amp;#123;&amp;#123;config.__class__.__init__.__glo",
           date: "Thu Feb 29 2024 21:51:55 GMT+0800",
-          updated: "Thu Feb 29 2024 21:55:16 GMT+0800",
+          updated: "Tue Jan 21 2025 20:45:53 GMT+0800",
           cover: "/images/banner.webp",
         };
       </script>

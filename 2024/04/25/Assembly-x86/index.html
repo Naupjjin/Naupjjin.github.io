@@ -27,12 +27,12 @@
 
   
   
-    <meta name="description" content="組合語言 Author:堇姬  電腦底層架構與程式執行相關硬體 CPU  實際運算硬體，配有暫存器，儲存運算資料  RAM  記憶體 指令集架構先設計好指令集架構再設計電路。 常見:  x86&#x2F;x86-64 ARM MIPS  大部分用的是intel x86&#x2F;x86-64架構 CPU暫存器隨設計而改變用途     名稱 意思    rax accumulator   rbx b">
+    <meta name="description" content="組合語言 Author:堇姬  電腦底層架構與程式執行相關硬體 CPU  實際運算硬體，配有暫存器，儲存運算資料  RAM  記憶體 指令集架構先設計好指令集架構再設計電路。 常見:  x86&#x2F;x86-64 ARM MIPS  大部分用的是intel x86&#x2F;x86-64架構 CPU暫存器隨設計而改變用途    名稱 意思    rax accumulator   rbx ba">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Assembly-x86">
 <meta property="og:url" content="http://example.com/2024/04/25/Assembly-x86/index.html">
 <meta property="og:site_name" content="堇姬 Naup&#39;s Blog">
-<meta property="og:description" content="組合語言 Author:堇姬  電腦底層架構與程式執行相關硬體 CPU  實際運算硬體，配有暫存器，儲存運算資料  RAM  記憶體 指令集架構先設計好指令集架構再設計電路。 常見:  x86&#x2F;x86-64 ARM MIPS  大部分用的是intel x86&#x2F;x86-64架構 CPU暫存器隨設計而改變用途     名稱 意思    rax accumulator   rbx b">
+<meta property="og:description" content="組合語言 Author:堇姬  電腦底層架構與程式執行相關硬體 CPU  實際運算硬體，配有暫存器，儲存運算資料  RAM  記憶體 指令集架構先設計好指令集架構再設計電路。 常見:  x86&#x2F;x86-64 ARM MIPS  大部分用的是intel x86&#x2F;x86-64架構 CPU暫存器隨設計而改變用途    名稱 意思    rax accumulator   rbx ba">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://hackmd.io/_uploads/HJ04szrWR.png">
 <meta property="og:image" content="https://hackmd.io/_uploads/BkJ6ZQBb0.png">
@@ -217,11 +217,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">
@@ -319,8 +319,7 @@
 </ul>
 <p>大部分用的是intel x86&#x2F;x86-64架構</p>
 <h2 id="CPU暫存器"><a href="#CPU暫存器" class="headerlink" title="CPU暫存器"></a>CPU暫存器</h2><p>隨設計而改變用途</p>
-<div class="table-responsive">
-<table class="table table-bordered table-striped">
+<table>
 <thead>
 <tr>
 <th>名稱</th>
@@ -345,8 +344,7 @@
 </tr>
 </tbody></table>
 <p>固定用途</p>
-<div class="table-responsive">
-<table class="table table-bordered table-striped">
+<table>
 <thead>
 <tr>
 <th>名稱</th>
@@ -378,9 +376,8 @@
 <li>同個暫存器可以用不同名稱來存取不同大小資料(RAX&#x2F;EAX&#x2F;AX&#x2F;AH&#x2F;AL是同個暫存器，只是大小不同)</li>
 </ul>
 <p>ex:<br>RAX&#x3D; 0x0102030405060708<br>EAX&#x3D; 0x05060708<br>AH &#x3D; 0x0506<br>AL &#x3D; 0x0708</p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/HJ04szrWR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/HJ04szrWR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<h2 id="Stack相關指令"><a href="#Stack相關指令" class="headerlink" title="Stack相關指令"></a>Stack相關指令</h2><div class="table-responsive">
-<table class="table table-bordered table-striped">
+<p><img src="https://hackmd.io/_uploads/HJ04szrWR.png" alt="image"></p>
+<h2 id="Stack相關指令"><a href="#Stack相關指令" class="headerlink" title="Stack相關指令"></a>Stack相關指令</h2><table>
 <thead>
 <tr>
 <th>指令</th>
@@ -408,8 +405,7 @@
 <h3 id="運算式指令"><a href="#運算式指令" class="headerlink" title="運算式指令"></a>運算式指令</h3><ul>
 <li>指令 &lt;Destination&gt;,&lt;source&gt;</li>
 </ul>
-<div class="table-responsive">
-<table class="table table-bordered table-striped">
+<table>
 <thead>
 <tr>
 <th>指令</th>
@@ -448,8 +444,7 @@
 <ul>
 <li>指令 &lt;Destination&gt;</li>
 </ul>
-<div class="table-responsive">
-<table class="table table-bordered table-striped">
+<table>
 <thead>
 <tr>
 <th>指令</th>
@@ -486,8 +481,7 @@
 <ul>
 <li>比較</li>
 </ul>
-<div class="table-responsive">
-<table class="table table-bordered table-striped">
+<table>
 <thead>
 <tr>
 <th>指令</th>
@@ -502,8 +496,7 @@
 <ul>
 <li>跳轉&lt;指令 ADDRESS&gt;</li>
 </ul>
-<div class="table-responsive">
-<table class="table table-bordered table-striped">
+<table>
 <thead>
 <tr>
 <th>指令</th>
@@ -543,14 +536,14 @@
 <td>跳轉</td>
 </tr>
 </tbody></table>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/BkJ6ZQBb0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BkJ6ZQBb0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/r16uf7BbA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/r16uf7BbA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><img src="https://hackmd.io/_uploads/BkJ6ZQBb0.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/r16uf7BbA.png" alt="image"></p>
 <h3 id="呼叫"><a href="#呼叫" class="headerlink" title="呼叫"></a>呼叫</h3><ul>
 <li>call ADDRESS</li>
 <li>參數(call前面)<br>64bits:rdi,rsi,rdx,rcx,r8,r9,stack<br>32bits:stack</li>
 <li>回傳值:rax<br>rdi -&gt; rsi -&gt; rdx -&gt; rcx -&gt; r8 -&gt; r9 -&gt; rsp -&gt; rsp+8</li>
 </ul>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/BkBmVmBb0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/BkBmVmBb0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><img src="https://hackmd.io/_uploads/BkBmVmBb0.png" alt="image"></p>
 
       
     </div>
@@ -638,7 +631,7 @@
     
       <div>
         <span class="icon-brush"></span>
-        149.8k
+        149.6k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
         13:10
@@ -690,11 +683,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">
@@ -819,7 +812,7 @@
           url: "http://example.com/2024/04/25/Assembly-x86/",
           excerpt: "",
           description: "",
-          stripContent: "組合語言 Author:堇姬  電腦底層架構與程式執行相關硬體 CPU  實際運算硬體，配有暫存器，儲存運算資料  RAM  記憶體 指令集架構先設計好指令集架構再設計電路。 常見:  x86&amp;#x2F;x86-64 ARM MIPS  大部分用的是intel x86&amp;#x2F;x86-64架構 CPU暫存器隨設計而改變用途     名稱 意思    rax accumulator   rbx base   rcx count   rdx data   固定用途     名稱 意思    rsi",
+          stripContent: "組合語言 Author:堇姬  電腦底層架構與程式執行相關硬體 CPU  實際運算硬體，配有暫存器，儲存運算資料  RAM  記憶體 指令集架構先設計好指令集架構再設計電路。 常見:  x86&amp;#x2F;x86-64 ARM MIPS  大部分用的是intel x86&amp;#x2F;x86-64架構 CPU暫存器隨設計而改變用途    名稱 意思    rax accumulator   rbx base   rcx count   rdx data   固定用途    名稱 意思    rsi s",
           date: "Thu Apr 25 2024 18:48:12 GMT+0800",
           updated: "Thu Apr 25 2024 18:48:40 GMT+0800",
           cover: "/images/banner.webp",

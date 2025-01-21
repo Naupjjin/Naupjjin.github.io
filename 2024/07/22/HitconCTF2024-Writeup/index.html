@@ -214,11 +214,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">
@@ -303,7 +303,7 @@
 <p>rank: 24th &amp; Taiwan 1st</p>
 </blockquote>
 <p>這次跟bamboofox &amp; starburst kiwawa &amp; b33f一起打，主要看we</p>
-<div class="img-item" data-src="/2024/07/22/HitconCTF2024-Writeup/rank.png" data-sub-html=".caption"><img src="/2024/07/22/HitconCTF2024-Writeup/rank.png" class=""></div>
+<img src="/2024/07/22/HitconCTF2024-Writeup/rank.png" class="">
 
 <h1 id="Echo-as-a-Service"><a href="#Echo-as-a-Service" class="headerlink" title="Echo as a Service"></a>Echo as a Service</h1><h2 id="source-code"><a href="#source-code" class="headerlink" title="source code"></a>source code</h2><p>Dockerfile</p>
 <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> oven/bun:<span class="number">1.1</span>.<span class="number">8</span>-slim</span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apt-get update &amp;&amp; apt-get install -y gcc</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> useradd -ms /bin/bash ctf</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /home/ctf/app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Setup challenge</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> ./src/index.js .</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">chown</span> -R ctf:ctf /home/ctf/app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Setup flag &amp; readflag</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> ./flag/readflag.c /readflag.c</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> ./flag/flag /flag</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">chmod</span> 0400 /flag &amp;&amp; <span class="built_in">chown</span> root:root /flag</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">chmod</span> 0444 /readflag.c &amp;&amp; gcc /readflag.c -o /readflag</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">chown</span> root:root /readflag &amp;&amp; <span class="built_in">chmod</span> 4555 /readflag</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">USER</span> ctf</span><br><span class="line"><span class="keyword">ENV</span> NODE_ENV=production</span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;bun&quot;</span>, <span class="string">&quot;index.js&quot;</span>]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -421,7 +421,7 @@
     
       <div>
         <span class="icon-brush"></span>
-        149.8k
+        149.6k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
         13:10
@@ -473,11 +473,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">

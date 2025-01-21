@@ -217,11 +217,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">
@@ -302,7 +302,7 @@
         <blockquote>
 <p>Author : 堇姬Naup<br>Team : 不屬於Kirito的星爆氣流斬<br>Rank : 4 (差一點第三，可惜)<br>Teammates : Curious、Itiscaleb、Aukro、ShallowFeather、Chumy、TWNWAKing、Vincent(感恩隊友們一起努力了兩天orz)</p>
 </blockquote>
-<h3 id="Final-scoreboard"><a href="#Final-scoreboard" class="headerlink" title="Final scoreboard"></a>Final scoreboard</h3><div class="img-item" data-src="/2024/03/10/AIS3-EOF-2024-Final/AIS3EOF-2024-finalscoreboard.png" data-sub-html=".caption"><img src="/2024/03/10/AIS3-EOF-2024-Final/AIS3EOF-2024-finalscoreboard.png" class=""></div>
+<h3 id="Final-scoreboard"><a href="#Final-scoreboard" class="headerlink" title="Final scoreboard"></a>Final scoreboard</h3><img src="/2024/03/10/AIS3-EOF-2024-Final/AIS3EOF-2024-finalscoreboard.png" class="">
 
 <h2 id="賽制"><a href="#賽制" class="headerlink" title="賽制"></a>賽制</h2><p>這次總共有163 round，每round是五分鐘，用積分去以百分比的方式去算分，這次總共有三種不同的類型。</p>
 <h3 id="Attack-Defense"><a href="#Attack-Defense" class="headerlink" title="Attack &amp; Defense"></a>Attack &amp; Defense</h3><ul>
@@ -321,12 +321,12 @@
 <li>Pwn2own</li>
 </ul>
 <h2 id="Day1"><a href="#Day1" class="headerlink" title="Day1"></a>Day1</h2><p>本次比賽我主要負責的是p0pp3r，順便有看了一下pwn2own跟hahamut，首先先說p0pp3r，看到這題目直覺先搞<strong>PHPGGC</strong><br><a target="_blank" rel="noopener" href="https://github.com/ambionics/phpggc">https://github.com/ambionics/phpggc</a><br>應該可以找出兩條chain，一條是Monolog、一條是Larvel&#x2F;Framework，不過手速太慢，開始解時已經被搶走了，之後就開始在找其他chain，首先可以用這個找網路上有的package<br><a target="_blank" rel="noopener" href="https://packagist.org/explore/">https://packagist.org/explore/</a></p>
-<div class="img-item" data-src="/2024/03/10/AIS3-EOF-2024-Final/0.png" data-sub-html=".caption"><img src="/2024/03/10/AIS3-EOF-2024-Final/0.png" class=""></div>
+<img src="/2024/03/10/AIS3-EOF-2024-Final/0.png" class="">
 <p>原本有找到WordPress&#x2F;PHPExcel，不過judge吃不到這個package</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:17:&quot;PHPExcel_RichText&quot;:1:&#123;s:36:&quot;PHPExcel_RichText_richTextElements&quot;;O:33:&quot;Requests_Utility_FilteredIterator&quot;:4:&#123;i:0;i:0;i:1;a:1:&#123;i:0;s:18:&quot;./@ --give-me-flag&quot;;&#125;i:2;a:1:&#123;s:11:&quot;*callback&quot;;s:10:&quot;p0pp3r_win&quot;;&#125;i:3;N;&#125;&#125;</span><br></pre></td></tr></table></figure>
 <p>另外有找到timber&#x2F;timber，但是最後送出去時因為版本問題judge沒辦法install下來QQ<br><a target="_blank" rel="noopener" href="https://github.com/timber/timber">https://github.com/timber/timber</a><br>偷偷爆個雷，結果在場有解的好像都用以前的gadget，好像沒人自己找www</p>
 <p>那時候有看了一下pwn2own，有看到這個command injection，不過隊友那時候已經在解了，所以就交給隊友處理這題了，我們也順利的firstblood。</p>
-<div class="img-item" data-src="/2024/03/10/AIS3-EOF-2024-Final/1.png" data-sub-html=".caption"><img src="/2024/03/10/AIS3-EOF-2024-Final/1.png" class=""></div>
+<img src="/2024/03/10/AIS3-EOF-2024-Final/1.png" class="">
 
 <p>hahamut那題主要是Itiscaleb在打的，不過也趁這次第一次接觸A&amp;D學會了怎麼上patch。</p>
 <h3 id="生成patch"><a href="#生成patch" class="headerlink" title="生成patch"></a>生成patch</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bsdiff [old_file] [new_file] [patch_file]</span><br></pre></td></tr></table></figure>
@@ -334,7 +334,7 @@
 
 <h2 id="Day2"><a href="#Day2" class="headerlink" title="Day2"></a>Day2</h2><p>第二天我就開始主攻p0pp3r，其他的就交給隊友<br>在過了四五個小時，整個king都沒人動過，整個狀況直到我找到了可以壓下一些byte的方法，搶下了king，超歡樂。(雖然有人撿漏把我的payload壓下了一個byte，一個回合就被搶走了，不過還是很讚)</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b&#x27;O:34:&quot;Predis\\Connection\\StreamConnection&quot;:1:&#123;s:10:&quot;parameters&quot;;O:28:&quot;Predis\\Configuration\\Options&quot;:3:&#123;s:7:&quot;options&quot;;a:0:&#123;&#125;s:5:&quot;input&quot;;a:1:&#123;s:10:&quot;persistent&quot;;a:2:&#123;i:0;O:35:&quot;Predis\\Cluster\\Distributor\\HashRing&quot;:2:&#123;s:16:&quot;nodeHashCallback&quot;;s:10:&quot;p0pp3r_win&quot;;s:5:&quot;nodes&quot;;a:1:&#123;i:0;a:2:&#123;s:6:&quot;weight&quot;;i:1;s:6:&quot;object&quot;;s:18:&quot;./@ --give-me-flag&quot;;&#125;&#125;&#125;i:1;s:7:&quot;getSlot&quot;;&#125;&#125;s:8:&quot;handlers&quot;;a:1:&#123;s:10:&quot;persistent&quot;;s:36:&quot;Predis\\Configuration\\Option\\Commands&quot;;&#125;&#125;&#x27;</span><br></pre></td></tr></table></figure>
-<div class="img-item" data-src="/2024/03/10/AIS3-EOF-2024-Final/2.png" data-sub-html=".caption"><img src="/2024/03/10/AIS3-EOF-2024-Final/2.png" class=""></div>
+<img src="/2024/03/10/AIS3-EOF-2024-Final/2.png" class="">
 
 <p>最後差900分左右就可以殺進第三，不過我們有拿到麵包超人獎(潛力獎)。</p>
 <h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><ul>
@@ -430,7 +430,7 @@
     
       <div>
         <span class="icon-brush"></span>
-        149.8k
+        149.6k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
         13:10
@@ -482,11 +482,11 @@
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">0</div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">0</div>
+    <div class="sidebar-state-number">16</div>
   </div>
 </div>
 <div class="sidebar-social">
