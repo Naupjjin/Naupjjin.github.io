@@ -34,16 +34,16 @@
 <meta property="og:site_name" content="堇姬 Naup&#39;s Blog">
 <meta property="og:description" content="Linux Kernel Pwn - Environment Author: 堇姬Naup  前言如果想把一個 kernel 跑起來，理論上是不能直接在你的 VM 跑起來啦，想想蠻合理的我們必須要將整個環境都模擬起來，並指定我們想要的 kernel image 作為整個環境的 kernel另外還需要 file system本篇主要說明如何  編譯 kernel  打包一個 file system">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://hackmd.io/_uploads/ryYgwKkOke.png">
-<meta property="og:image" content="https://hackmd.io/_uploads/Sktxvdx_1g.png">
-<meta property="og:image" content="https://hackmd.io/_uploads/Hk7Kv_edkl.png">
-<meta property="og:image" content="https://hackmd.io/_uploads/BJfUXagO1l.png">
-<meta property="og:image" content="https://hackmd.io/_uploads/Hk96m6xuJe.png">
+<meta property="og:image" content="http://example.com/2025/02/05/Linux-Kernel-Pwn-Environment/1.png">
+<meta property="og:image" content="http://example.com/2025/02/05/Linux-Kernel-Pwn-Environment/2.png">
+<meta property="og:image" content="http://example.com/2025/02/05/Linux-Kernel-Pwn-Environment/3.png">
+<meta property="og:image" content="http://example.com/2025/02/05/Linux-Kernel-Pwn-Environment/4.png">
+<meta property="og:image" content="http://example.com/2025/02/05/Linux-Kernel-Pwn-Environment/5.png">
 <meta property="article:published_time" content="2025-02-05T09:00:02.000Z">
-<meta property="article:modified_time" content="2025-02-05T09:03:12.036Z">
+<meta property="article:modified_time" content="2025-02-05T09:11:56.306Z">
 <meta property="article:author" content="Naup堇姬">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://hackmd.io/_uploads/ryYgwKkOke.png">
+<meta name="twitter:image" content="http://example.com/2025/02/05/Linux-Kernel-Pwn-Environment/1.png">
   
   
     <link rel="alternate" href="/atom.xml" title="堇姬 Naup's Blog" type="application/atom+xml">
@@ -351,7 +351,8 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 \</span><br><span class="line">    -m 128M \</span><br><span class="line">    -nographic \</span><br><span class="line">    -kernel ./arch/x86/boot/bzImage \</span><br><span class="line">    -initrd  ./rootfs.img \</span><br><span class="line">    -append &quot;root=/dev/ram rw console=ttyS0 oops=panic panic=0 nokaslr&quot; \</span><br><span class="line">    -smp cores=2,threads=1 \</span><br><span class="line">    -cpu kvm64</span><br></pre></td></tr></table></figure>
 
 <p>看到這樣就表示啟動成功了<br>這邊我們把 ASLR 關掉，方便 debug</p>
-<p><img src="https://hackmd.io/_uploads/ryYgwKkOke.png" alt="image"></p>
+<img src="/2025/02/05/Linux-Kernel-Pwn-Environment/1.png" class="">
+
 <h2 id="kernel-driver"><a href="#kernel-driver" class="headerlink" title="kernel driver"></a>kernel driver</h2><p>建一個資料夾後先寫個測試的 kernel driver<br><code>naupdriver.c</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/init.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/module.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/kernel.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">MODULE_LICENSE(<span class="string">&quot;Dual BSD/GPL&quot;</span>);</span><br><span class="line">MODULE_AUTHOR(<span class="string">&quot;Naup&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">naup_init</span><span class="params">(<span class="type">void</span>)</span> </span><br><span class="line">&#123;</span><br><span class="line">    printk(<span class="string">&quot;kernel driver start!!!\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">naup_exit</span><span class="params">(<span class="type">void</span>)</span> </span><br><span class="line">&#123;</span><br><span class="line">    printk(<span class="string">&quot;Bye~ \n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line">module_init(naup_init);</span><br><span class="line">module_exit(naup_exit);</span><br></pre></td></tr></table></figure>
 
@@ -359,12 +360,16 @@
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">obj-m += naupdriver.o</span><br><span class="line"></span><br><span class="line">KDIR =/home/naup96321/Desktop/mykernel/linux-5.11</span><br><span class="line"></span><br><span class="line"><span class="section">all:</span></span><br><span class="line">	<span class="variable">$(MAKE)</span> -C <span class="variable">$(KDIR)</span> M=<span class="variable">$(PWD)</span> modules</span><br><span class="line"></span><br><span class="line"><span class="section">clean:</span></span><br><span class="line">	rm -rf *.o *.ko *.mod.* *.symvers *.order</span><br></pre></td></tr></table></figure>
 
 <p>執行完就出現 .ko 了</p>
-<p><img src="https://hackmd.io/_uploads/Sktxvdx_1g.png" alt="image"></p>
+<img src="/2025/02/05/Linux-Kernel-Pwn-Environment/2.png" class="">
+
+
 <p>之後我們將我們 .ko 貼到 busybox 內，包進去 rootfs.img<br>另外需要調整 init ，讓我們在啟動時載入我們的 kernel module</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">naup96321@naup96321-virtual-machine:~/Desktop/mykernel/linux-5.11/busybox-1.34.1/_install$ <span class="built_in">cat</span> init </span><br><span class="line"><span class="comment">#!/bin/sh</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;INIT SCRIPT&quot;</span></span><br><span class="line"><span class="built_in">mkdir</span> /tmp</span><br><span class="line">mount -t proc none /proc</span><br><span class="line">mount -t sysfs none /sys</span><br><span class="line">mount -t devtmpfs none /dev</span><br><span class="line">mount -t debugfs none /sys/kernel/debug</span><br><span class="line">mount -t tmpfs none /tmp</span><br><span class="line">insmod /naupdriver.ko <span class="comment"># load kernel module</span></span><br><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;Boot took <span class="subst">$(cut -d&#x27; &#x27; -f1 /proc/uptime)</span> seconds&quot;</span></span><br><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;Hi, Naup!!! :)&quot;</span></span><br><span class="line">setsid /bin/cttyhack setuidgid 0 /bin/sh</span><br><span class="line">poweroff -f <span class="comment"># when you close shell, power off your qemu</span></span><br></pre></td></tr></table></figure>
 
 <p>如果看到 kernel driver start 代表你的 kernel driver 啟動成功<br>lsmod 可以看到載入了 kernel driver</p>
-<p><img src="https://hackmd.io/_uploads/Hk7Kv_edkl.png" alt="image"></p>
+<img src="/2025/02/05/Linux-Kernel-Pwn-Environment/3.png" class="">
+
+
 <h2 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h2><p>最後一步驟是 debug</p>
 <p>首先是 attach 到 qemu<br>修改 start.sh ，加入 <code>-gdb tcp::1234</code> 在 1234 port 開啟一個 gdb，加入 <code>-S</code> 他啟動時就會卡住，等待 gdb 連上去</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 \</span><br><span class="line">    -m 128M \</span><br><span class="line">    -nographic \</span><br><span class="line">    -kernel ./arch/x86/boot/bzImage \</span><br><span class="line">    -initrd  ./rootfs.img \</span><br><span class="line">    -append &quot;root=/dev/ram rw console=ttyS0 oops=panic panic=0 nokaslr&quot; \</span><br><span class="line">    -smp cores=2,threads=1 \</span><br><span class="line">    -cpu kvm64 \</span><br><span class="line">    -gdb tcp::1234 \</span><br><span class="line">    -S</span><br></pre></td></tr></table></figure>
@@ -380,9 +385,12 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">add-symbol-file MyDriver/naupdriver.ko 0xffffffffc0002000 \</span><br><span class="line">-s .rodata.str1.1 0xffffffffc000303c \</span><br><span class="line">-s .symtab 0xffffffffc0007000 \</span><br><span class="line">-s .text.unlikely 0xffffffffc0002000</span><br></pre></td></tr></table></figure>
 
 <p>把 symbol load 進去<br>之後 <code>b naup_init</code> 下斷點在 naup_init 的地方<br><code>b naup_exit</code> 下斷點在結束的地方</p>
-<p>c 之後就會看到卡住了<br><img src="https://hackmd.io/_uploads/BJfUXagO1l.png" alt="image"></p>
+<p>c 之後就會看到卡住了</p>
+<img src="/2025/02/05/Linux-Kernel-Pwn-Environment/4.png" class="">
+
 <p>之後在 qemu 內下 rmmod naupdriver.ko 後<br>他會去卸下 kernel driver<br>此時 gdb 會卡在 naup_exit</p>
-<p><img src="https://hackmd.io/_uploads/Hk96m6xuJe.png" alt="image"></p>
+<img src="/2025/02/05/Linux-Kernel-Pwn-Environment/5.png" class="">
+
 <p>總之通過此種方式就可以 debug kernel driver 了</p>
 <h2 id="after-all"><a href="#after-all" class="headerlink" title="after all"></a>after all</h2><p>以上就是 kernel pwn 環境的部分，接下來就可以把上述概念用來打題目了</p>
 
@@ -636,7 +644,7 @@
           description: "",
           stripContent: "Linux Kernel Pwn - Environment Author: 堇姬Naup  前言如果想把一個 kernel 跑起來，理論上是不能直接在你的 VM 跑起來啦，想想蠻合理的我們必須要將整個環境都模擬起來，並指定我們想要的 kernel image 作為整個環境的 kernel另外還需要 file system本篇主要說明如何  編譯 kernel  打包一個 file system  Qemu 模擬起來  kernel driver gdb debug  我使用的環境是 VMwar",
           date: "Wed Feb 05 2025 17:00:02 GMT+0800",
-          updated: "Wed Feb 05 2025 17:03:12 GMT+0800",
+          updated: "Wed Feb 05 2025 17:11:56 GMT+0800",
           cover: "/images/posts_cover/CGGC-2024-Qual-writeup/CGGC-2024-Qual-writeup.webp",
         };
       </script>
