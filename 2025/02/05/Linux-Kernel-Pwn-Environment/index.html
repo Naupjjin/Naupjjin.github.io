@@ -1,0 +1,734 @@
+
+  <!DOCTYPE html>
+  <html lang="en"  >
+  <head>
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_bq08450reo';window.REIMU_CONFIG.clipboard_tips = {"success":"copy success(*^▽^*)","fail":"copy failed (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"Naup"}};window.REIMU_CONFIG.code_block = {"expand":true};</script>
+  
+  <title>
+    Linux Kernel Pwn - Environment |
+    
+    堇姬 Naup&#39;s Blog
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_bq08450reo.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="Linux Kernel Pwn - Environment Author: 堇姬Naup  前言如果想把一個 kernel 跑起來，理論上是不能直接在你的 VM 跑起來啦，想想蠻合理的我們必須要將整個環境都模擬起來，並指定我們想要的 kernel image 作為整個環境的 kernel另外還需要 file system本篇主要說明如何  編譯 kernel  打包一個 file system">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux Kernel Pwn - Environment">
+<meta property="og:url" content="http://example.com/2025/02/05/Linux-Kernel-Pwn-Environment/index.html">
+<meta property="og:site_name" content="堇姬 Naup&#39;s Blog">
+<meta property="og:description" content="Linux Kernel Pwn - Environment Author: 堇姬Naup  前言如果想把一個 kernel 跑起來，理論上是不能直接在你的 VM 跑起來啦，想想蠻合理的我們必須要將整個環境都模擬起來，並指定我們想要的 kernel image 作為整個環境的 kernel另外還需要 file system本篇主要說明如何  編譯 kernel  打包一個 file system">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/ryYgwKkOke.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Sktxvdx_1g.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Hk7Kv_edkl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BJfUXagO1l.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Hk96m6xuJe.png">
+<meta property="article:published_time" content="2025-02-05T09:00:02.000Z">
+<meta property="article:modified_time" content="2025-02-05T09:03:12.036Z">
+<meta property="article:author" content="Naup堇姬">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/ryYgwKkOke.png">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="堇姬 Naup's Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/fav.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css">
+
+  
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+
+  <body>
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      <div class="loading-word">Naup...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/">Home</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/archives">Archives</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/about">About</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed" target="_blank"></a>
+    
+    
+    
+  </nav>
+</div>
+<header id="header">
+  
+    <picture></picture>
+    <img fetchpriority="high" src="/images/posts_cover/CGGC-2024-Qual-writeup/CGGC-2024-Qual-writeup.webp" alt="Linux Kernel Pwn - Environment">
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">Linux Kernel Pwn - Environment</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  
+  <div class="sidebar-wrapper wrap-sticky">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux-Kernel-Pwn-Environment"><span class="toc-number">1.</span> <span class="toc-text">Linux Kernel Pwn - Environment</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B7%A8%E8%AD%AF-kernel"><span class="toc-number">1.2.</span> <span class="toc-text">編譯 kernel</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#make-1-No-rule-to-make-target-%E2%80%98debian-canonical-certs-pem%E2%80%99-needed-by-%E2%80%98certs-x509-certificate-list%E2%80%99-Stop-make-Makefile-1809-certs-Error-2"><span class="toc-number">1.2.1.</span> <span class="toc-text">make[1]: *** No rule to make target ‘debian&#x2F;canonical-certs.pem’, needed by ‘certs&#x2F;x509_certificate_list’.  Stop. make: *** [Makefile:1809: certs] Error 2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BTFIDS-vmlinux-FAILED-load-BTF-from-vmlinux-Invalid-argument-make-Makefile-1165-vmlinux-Error-255"><span class="toc-number">1.2.2.</span> <span class="toc-text">BTFIDS  vmlinux FAILED: load BTF from vmlinux: Invalid argument make: *** [Makefile:1165: vmlinux] Error 255</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#buzybox"><span class="toc-number">1.3.</span> <span class="toc-text">buzybox</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Qemu-%E6%A8%A1%E6%93%AC"><span class="toc-number">1.4.</span> <span class="toc-text">Qemu 模擬</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kernel-driver"><span class="toc-number">1.5.</span> <span class="toc-text">kernel driver</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#debug"><span class="toc-number">1.6.</span> <span class="toc-text">debug</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#after-all"><span class="toc-number">1.7.</span> <span class="toc-text">after all</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">58</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">16</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+      
+        <div class="sidebar-btn-wrapper" style="position:static">
+          <div class="sidebar-toc-btn current"></div>
+          <div class="sidebar-common-btn"></div>
+        </div>
+      
+    </div>
+  </div>
+
+  <div class="sidebar-widget">
+  
+  </div>
+</aside>
+
+          <section id="main"><article id="post-Linux-Kernel-Pwn-Environment" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <a href="/2025/02/05/Linux-Kernel-Pwn-Environment/" class="article-date-link" data-aos="zoom-in">
+    <time datetime="2025-02-05T09:00:02.000Z" itemprop="datePublished">2025-02-05</time>
+    <time style="display: none;" id="post-update-time">2025-02-05</time>
+  </a>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <h1 id="Linux-Kernel-Pwn-Environment"><a href="#Linux-Kernel-Pwn-Environment" class="headerlink" title="Linux Kernel Pwn - Environment"></a>Linux Kernel Pwn - Environment</h1><blockquote>
+<p>Author: 堇姬Naup</p>
+</blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>如果想把一個 kernel 跑起來，理論上是不能直接在你的 VM 跑起來啦，想想蠻合理的<br>我們必須要將整個環境都模擬起來，並指定我們想要的 kernel image 作為整個環境的 kernel<br>另外還需要 file system<br>本篇主要說明如何</p>
+<ul>
+<li>編譯 kernel </li>
+<li>打包一個 file system </li>
+<li>Qemu 模擬起來 </li>
+<li>kernel driver</li>
+<li>gdb debug</li>
+</ul>
+<p>我使用的環境是 VMware + Ubuntu 22.04</p>
+<h2 id="編譯-kernel"><a href="#編譯-kernel" class="headerlink" title="編譯 kernel"></a>編譯 kernel</h2><p>這步驟常常遇到超多問題 www<br>先安裝一些依賴</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install git fakeroot build-essential ncurses-dev xz-utils qemu flex libncurses5-dev libssl-dev bc bison libglib2.0-dev libfdt-dev libpixman-1-dev zlib1g-dev libelf-dev dwarves zstd</span><br></pre></td></tr></table></figure>
+
+<p>這上面有 kernel source code，可以下載下來編譯<br><a target="_blank" rel="noopener" href="https://www.kernel.org/">https://www.kernel.org/</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.11.tar.xz</span><br></pre></td></tr></table></figure>
+
+<p>下載下來後，進到資料夾設定東西</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf linux-5.11.tar.xz</span><br><span class="line">cd linux-5.11.1/</span><br><span class="line">make menuconfig</span><br></pre></td></tr></table></figure>
+
+<p>之後直接 <code>make -j$(nproc) bzImage</code><br>接下來會遇到一些問題</p>
+<h3 id="make-1-No-rule-to-make-target-‘debian-canonical-certs-pem’-needed-by-‘certs-x509-certificate-list’-Stop-make-Makefile-1809-certs-Error-2"><a href="#make-1-No-rule-to-make-target-‘debian-canonical-certs-pem’-needed-by-‘certs-x509-certificate-list’-Stop-make-Makefile-1809-certs-Error-2" class="headerlink" title="make[1]: *** No rule to make target ‘debian&#x2F;canonical-certs.pem’, needed by ‘certs&#x2F;x509_certificate_list’.  Stop. make: *** [Makefile:1809: certs] Error 2"></a>make[1]: *** No rule to make target ‘debian&#x2F;canonical-certs.pem’, needed by ‘certs&#x2F;x509_certificate_list’.  Stop. make: *** [Makefile:1809: certs] Error 2</h3><p><code>sed -i &#39;s|CONFIG_SYSTEM_TRUSTED_KEYS=&quot;debian/canonical-certs.pem&quot;|CONFIG_SYSTEM_TRUSTED_KEYS=&quot;&quot;|&#39; .config</code></p>
+<h3 id="BTFIDS-vmlinux-FAILED-load-BTF-from-vmlinux-Invalid-argument-make-Makefile-1165-vmlinux-Error-255"><a href="#BTFIDS-vmlinux-FAILED-load-BTF-from-vmlinux-Invalid-argument-make-Makefile-1165-vmlinux-Error-255" class="headerlink" title="BTFIDS  vmlinux FAILED: load BTF from vmlinux: Invalid argument make: *** [Makefile:1165: vmlinux] Error 255"></a>BTFIDS  vmlinux FAILED: load BTF from vmlinux: Invalid argument make: *** [Makefile:1165: vmlinux] Error 255</h3><p><code>sed -i &#39;s/CONFIG_DEBUG_INFO_BTF=y/CONFIG_DEBUG_INFO_BTF=n/&#39; .config</code></p>
+<p>我們就得到了 bzimage (在 &#x2F;arch&#x2F;x86&#x2F;boot 底下)<br>當前目錄則有 vmlinux</p>
+<ul>
+<li>vmlinux: 原始 kernel </li>
+<li>bzimage: 壓縮 kernel</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/Vmlinux">https://zh.wikipedia.org/zh-tw/Vmlinux</a></p>
+<p>btw，若多次編譯導致你的空間被占滿可以用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo rm -rf /tmp/*</span><br><span class="line">sudo apt-get clean</span><br></pre></td></tr></table></figure>
+
+<h2 id="buzybox"><a href="#buzybox" class="headerlink" title="buzybox"></a>buzybox</h2><p><a target="_blank" rel="noopener" href="https://busybox.net/">https://busybox.net/</a></p>
+<p>接下來為我們的環境打包一個 file system，這邊選擇 buzybox，另外 buzybox 有提供常用的 Unix 指令</p>
+<p>這邊將 busybox source code 載下來，之後 <code>make menuconfig</code> 配置 makefile 後一樣 <code>make -j 8</code> 編譯</p>
+<p>配置時將 Build static binary (no shared libs) 打勾，因為 kernel 沒有 libc</p>
+<p>PS: 這邊版本用 1.34.1，我試了其他版本用這方法會出問題</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://busybox.net/downloads/busybox-1.34.1.tar.bz2</span><br><span class="line">tar -jxf busybox-1.34.1.tar.bz2</span><br></pre></td></tr></table></figure>
+
+<p>之後建立 _install 資料夾，進去裡面建立我們需要的根目錄</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">make install</span><br><span class="line">cd _install</span><br><span class="line">mkdir -p proc sys dev etc/init.d</span><br></pre></td></tr></table></figure>
+
+<p>之後編寫 init ，並給他執行權限 <code>chmod +x init</code></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;INIT SCRIPT&quot;</span></span><br><span class="line"><span class="built_in">mkdir</span> /tmp</span><br><span class="line">mount -t proc none /proc</span><br><span class="line">mount -t sysfs none /sys</span><br><span class="line">mount -t devtmpfs none /dev</span><br><span class="line">mount -t debugfs none /sys/kernel/debug</span><br><span class="line">mount -t tmpfs none /tmp</span><br><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;Boot took <span class="subst">$(cut -d&#x27; &#x27; -f1 /proc/uptime)</span> seconds&quot;</span></span><br><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;Hi, Naup!!! :)&quot;</span></span><br><span class="line">setsid /bin/cttyhack setuidgid 0 /bin/sh</span><br><span class="line"><span class="comment">#setsid /bin/cttyhack setuidgid 1000 /bin/sh</span></span><br></pre></td></tr></table></figure>
+
+<p>現在已經建構好完整的 file system 了<br>通過這兩種方式打包和解包 roots file system</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打包命令</span></span><br><span class="line">find . | cpio -o --format=newc &gt; ../../rootfs.img</span><br><span class="line"><span class="comment"># 解包命令</span></span><br><span class="line">cpio -idmv &lt; rootfs.img</span><br></pre></td></tr></table></figure>
+
+<h2 id="Qemu-模擬"><a href="#Qemu-模擬" class="headerlink" title="Qemu 模擬"></a>Qemu 模擬</h2><p>最後就使用 kernel image、roots file system 來模擬整個環境</p>
+<p><code>sudo apt install qemu-system-x86</code></p>
+<p>編寫 <code>start.sh</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 \</span><br><span class="line">    -m 128M \</span><br><span class="line">    -nographic \</span><br><span class="line">    -kernel ./arch/x86/boot/bzImage \</span><br><span class="line">    -initrd  ./rootfs.img \</span><br><span class="line">    -append &quot;root=/dev/ram rw console=ttyS0 oops=panic panic=0 nokaslr&quot; \</span><br><span class="line">    -smp cores=2,threads=1 \</span><br><span class="line">    -cpu kvm64</span><br></pre></td></tr></table></figure>
+
+<p>看到這樣就表示啟動成功了<br>這邊我們把 ASLR 關掉，方便 debug</p>
+<p><img src="https://hackmd.io/_uploads/ryYgwKkOke.png" alt="image"></p>
+<h2 id="kernel-driver"><a href="#kernel-driver" class="headerlink" title="kernel driver"></a>kernel driver</h2><p>建一個資料夾後先寫個測試的 kernel driver<br><code>naupdriver.c</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/init.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/module.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/kernel.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">MODULE_LICENSE(<span class="string">&quot;Dual BSD/GPL&quot;</span>);</span><br><span class="line">MODULE_AUTHOR(<span class="string">&quot;Naup&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">naup_init</span><span class="params">(<span class="type">void</span>)</span> </span><br><span class="line">&#123;</span><br><span class="line">    printk(<span class="string">&quot;kernel driver start!!!\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">naup_exit</span><span class="params">(<span class="type">void</span>)</span> </span><br><span class="line">&#123;</span><br><span class="line">    printk(<span class="string">&quot;Bye~ \n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line">module_init(naup_init);</span><br><span class="line">module_exit(naup_exit);</span><br></pre></td></tr></table></figure>
+
+<p>以及 makefile</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">obj-m += naupdriver.o</span><br><span class="line"></span><br><span class="line">KDIR =/home/naup96321/Desktop/mykernel/linux-5.11</span><br><span class="line"></span><br><span class="line"><span class="section">all:</span></span><br><span class="line">	<span class="variable">$(MAKE)</span> -C <span class="variable">$(KDIR)</span> M=<span class="variable">$(PWD)</span> modules</span><br><span class="line"></span><br><span class="line"><span class="section">clean:</span></span><br><span class="line">	rm -rf *.o *.ko *.mod.* *.symvers *.order</span><br></pre></td></tr></table></figure>
+
+<p>執行完就出現 .ko 了</p>
+<p><img src="https://hackmd.io/_uploads/Sktxvdx_1g.png" alt="image"></p>
+<p>之後我們將我們 .ko 貼到 busybox 內，包進去 rootfs.img<br>另外需要調整 init ，讓我們在啟動時載入我們的 kernel module</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">naup96321@naup96321-virtual-machine:~/Desktop/mykernel/linux-5.11/busybox-1.34.1/_install$ <span class="built_in">cat</span> init </span><br><span class="line"><span class="comment">#!/bin/sh</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;INIT SCRIPT&quot;</span></span><br><span class="line"><span class="built_in">mkdir</span> /tmp</span><br><span class="line">mount -t proc none /proc</span><br><span class="line">mount -t sysfs none /sys</span><br><span class="line">mount -t devtmpfs none /dev</span><br><span class="line">mount -t debugfs none /sys/kernel/debug</span><br><span class="line">mount -t tmpfs none /tmp</span><br><span class="line">insmod /naupdriver.ko <span class="comment"># load kernel module</span></span><br><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;Boot took <span class="subst">$(cut -d&#x27; &#x27; -f1 /proc/uptime)</span> seconds&quot;</span></span><br><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;Hi, Naup!!! :)&quot;</span></span><br><span class="line">setsid /bin/cttyhack setuidgid 0 /bin/sh</span><br><span class="line">poweroff -f <span class="comment"># when you close shell, power off your qemu</span></span><br></pre></td></tr></table></figure>
+
+<p>如果看到 kernel driver start 代表你的 kernel driver 啟動成功<br>lsmod 可以看到載入了 kernel driver</p>
+<p><img src="https://hackmd.io/_uploads/Hk7Kv_edkl.png" alt="image"></p>
+<h2 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h2><p>最後一步驟是 debug</p>
+<p>首先是 attach 到 qemu<br>修改 start.sh ，加入 <code>-gdb tcp::1234</code> 在 1234 port 開啟一個 gdb，加入 <code>-S</code> 他啟動時就會卡住，等待 gdb 連上去</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 \</span><br><span class="line">    -m 128M \</span><br><span class="line">    -nographic \</span><br><span class="line">    -kernel ./arch/x86/boot/bzImage \</span><br><span class="line">    -initrd  ./rootfs.img \</span><br><span class="line">    -append &quot;root=/dev/ram rw console=ttyS0 oops=panic panic=0 nokaslr&quot; \</span><br><span class="line">    -smp cores=2,threads=1 \</span><br><span class="line">    -cpu kvm64 \</span><br><span class="line">    -gdb tcp::1234 \</span><br><span class="line">    -S</span><br></pre></td></tr></table></figure>
+<p>將 qemu 跑起來</p>
+<p>之後開啟下 <code>gdb -q -ex &quot;target remote localhost:1234&quot;</code><br>開 gdb 連上去</p>
+<p>在 gdb 內先<br><code>add-symbol-file vmlinux</code> 載入 kernel 的 symbol<br><code>b start_kernel</code> 下斷點在啟動 kernel<br><code>c</code> 繼續執行就會卡在 qemu 啟動畫面</p>
+<p>在按下一次 c 就會一直跑了</p>
+<p>再來是 attach drivers </p>
+<p><code>grep &quot;0x&quot; /sys/module/naupdriver/sections/.*</code> 印出 kernel driver 每個區段的 address</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/sys/module/naupdriver/sections/.gnu.linkonce.this_module:0xffffffffc0004000</span><br><span class="line">/sys/module/naupdriver/sections/.note.Linux:0xffffffffc0003024</span><br><span class="line">/sys/module/naupdriver/sections/.note.gnu.build-id:0xffffffffc0003000</span><br><span class="line">/sys/module/naupdriver/sections/.rodata.str1.1:0xffffffffc000303c</span><br><span class="line">/sys/module/naupdriver/sections/.strtab:0xffffffffc00073c0</span><br><span class="line">/sys/module/naupdriver/sections/.symtab:0xffffffffc0007000</span><br><span class="line">/sys/module/naupdriver/sections/.text.unlikely:0xffffffffc0002000</span><br></pre></td></tr></table></figure>
+
+<p>抓出來，進gdb 下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">add-symbol-file MyDriver/naupdriver.ko 0xffffffffc0002000 \</span><br><span class="line">-s .rodata.str1.1 0xffffffffc000303c \</span><br><span class="line">-s .symtab 0xffffffffc0007000 \</span><br><span class="line">-s .text.unlikely 0xffffffffc0002000</span><br></pre></td></tr></table></figure>
+
+<p>把 symbol load 進去<br>之後 <code>b naup_init</code> 下斷點在 naup_init 的地方<br><code>b naup_exit</code> 下斷點在結束的地方</p>
+<p>c 之後就會看到卡住了<br><img src="https://hackmd.io/_uploads/BJfUXagO1l.png" alt="image"></p>
+<p>之後在 qemu 內下 rmmod naupdriver.ko 後<br>他會去卸下 kernel driver<br>此時 gdb 會卡在 naup_exit</p>
+<p><img src="https://hackmd.io/_uploads/Hk96m6xuJe.png" alt="image"></p>
+<p>總之通過此種方式就可以 debug kernel driver 了</p>
+<h2 id="after-all"><a href="#after-all" class="headerlink" title="after all"></a>after all</h2><p>以上就是 kernel pwn 環境的部分，接下來就可以把上述概念用來打題目了</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+  <nav id="article-nav" data-aos="fade-up">
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        <img data-src="/images/posts_cover/Windows-kernel-exploitation/Windows-kernel-exploitation.webp" data-sizes="auto" alt="114年資工系特殊選材心得 - by Naup" class="lazyload">
+      
+      <a href="/2025/01/20/114-apply-college-record/"></a>
+      <div class="article-nav-caption">Older</div>
+      <h3 class="article-nav-title">
+        
+          114年資工系特殊選材心得 - by Naup
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+</article>
+
+
+
+
+
+
+</section>
+        </div>
+        
+        
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      2020-2025
+      <span class="footer-info-sep rotate"></span>
+      Naup堇姬
+    </div>
+    
+      <div>
+        Powered by&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        151k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        13:16
+      </div>
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">Number of visits&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">Number of visitors&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux-Kernel-Pwn-Environment"><span class="toc-number">1.</span> <span class="toc-text">Linux Kernel Pwn - Environment</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B7%A8%E8%AD%AF-kernel"><span class="toc-number">1.2.</span> <span class="toc-text">編譯 kernel</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#make-1-No-rule-to-make-target-%E2%80%98debian-canonical-certs-pem%E2%80%99-needed-by-%E2%80%98certs-x509-certificate-list%E2%80%99-Stop-make-Makefile-1809-certs-Error-2"><span class="toc-number">1.2.1.</span> <span class="toc-text">make[1]: *** No rule to make target ‘debian&#x2F;canonical-certs.pem’, needed by ‘certs&#x2F;x509_certificate_list’.  Stop. make: *** [Makefile:1809: certs] Error 2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BTFIDS-vmlinux-FAILED-load-BTF-from-vmlinux-Invalid-argument-make-Makefile-1165-vmlinux-Error-255"><span class="toc-number">1.2.2.</span> <span class="toc-text">BTFIDS  vmlinux FAILED: load BTF from vmlinux: Invalid argument make: *** [Makefile:1165: vmlinux] Error 255</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#buzybox"><span class="toc-number">1.3.</span> <span class="toc-text">buzybox</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Qemu-%E6%A8%A1%E6%93%AC"><span class="toc-number">1.4.</span> <span class="toc-text">Qemu 模擬</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kernel-driver"><span class="toc-number">1.5.</span> <span class="toc-text">kernel driver</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#debug"><span class="toc-number">1.6.</span> <span class="toc-text">debug</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#after-all"><span class="toc-number">1.7.</span> <span class="toc-text">after all</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">58</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">16</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+    
+  </div>
+  
+    <div class="sidebar-btn-wrapper">
+      <div class="sidebar-toc-btn current"></div>
+      <div class="sidebar-common-btn"></div>
+    </div>
+  
+</nav>
+
+    </div>
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.0.6/dist/index.umd.js" integrity="sha384-vkGvf25gm1C1PbcoD5dNfc137HzNL&#x2F;hr1RKA5HniJOaawtvUmH5lTVFgFAruE9Ge" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["#ff5252","#ff7c7c","#ffafaf","#ffd0d0"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["#ff0000"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "Naup堇姬",
+          title: "Linux Kernel Pwn - Environment",
+          url: "http://example.com/2025/02/05/Linux-Kernel-Pwn-Environment/",
+          excerpt: "",
+          description: "",
+          stripContent: "Linux Kernel Pwn - Environment Author: 堇姬Naup  前言如果想把一個 kernel 跑起來，理論上是不能直接在你的 VM 跑起來啦，想想蠻合理的我們必須要將整個環境都模擬起來，並指定我們想要的 kernel image 作為整個環境的 kernel另外還需要 file system本篇主要說明如何  編譯 kernel  打包一個 file system  Qemu 模擬起來  kernel driver gdb debug  我使用的環境是 VMwar",
+          date: "Wed Feb 05 2025 17:00:02 GMT+0800",
+          updated: "Wed Feb 05 2025 17:03:12 GMT+0800",
+          cover: "/images/posts_cover/CGGC-2024-Qual-writeup/CGGC-2024-Qual-writeup.webp",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+
+
+
+
+
+
+
+
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.3.0' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+  </body>
+  </html>
+
