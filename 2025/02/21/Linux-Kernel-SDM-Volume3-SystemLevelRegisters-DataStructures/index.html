@@ -1,0 +1,819 @@
+
+  <!DOCTYPE html>
+  <html lang="en"  >
+  <head>
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_bq08450reo';window.REIMU_CONFIG.clipboard_tips = {"success":"copy success(*^▽^*)","fail":"copy failed (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"Naup"}};window.REIMU_CONFIG.code_block = {"expand":true};</script>
+  
+  <title>
+    SDM Volume 3 Figure 2-1. IA-32 System-Level Registers and Data Structures |
+    
+    堇姬 Naup&#39;s Blog
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_bq08450reo.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="Linux Kernel - SDM Volume 3 Figure 2-1. IA-32 System-Level Registers and Data Structures Author: 堇姬Naup  圍繞這張圖來展開(SDM Volume 3中的Figure 2-1. IA-32 System-Level Registers and Data Structures) 第 63 頁http">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SDM Volume 3 Figure 2-1. IA-32 System-Level Registers and Data Structures">
+<meta property="og:url" content="http://example.com/2025/02/21/Linux-Kernel-SDM-Volume3-SystemLevelRegisters-DataStructures/index.html">
+<meta property="og:site_name" content="堇姬 Naup&#39;s Blog">
+<meta property="og:description" content="Linux Kernel - SDM Volume 3 Figure 2-1. IA-32 System-Level Registers and Data Structures Author: 堇姬Naup  圍繞這張圖來展開(SDM Volume 3中的Figure 2-1. IA-32 System-Level Registers and Data Structures) 第 63 頁http">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/Syxrv-VcJx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/r16wUH491e.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rkDnMbEcyg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1aBS-45Je.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BkOC7MEcke.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HkYaqMVckx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ByyjMnBq1l.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HkYjhxN9kx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/B12amkL5ye.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rkCMuJIqyg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BkI3d1Lcye.png">
+<meta property="article:published_time" content="2025-02-21T12:18:39.000Z">
+<meta property="article:modified_time" content="2025-02-21T12:21:35.025Z">
+<meta property="article:author" content="Naup堇姬">
+<meta property="article:tag" content="Kernel">
+<meta property="article:tag" content="interrupt">
+<meta property="article:tag" content="segment">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/Syxrv-VcJx.png">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="堇姬 Naup's Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/fav.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css">
+
+  
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+
+  <body>
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      <div class="loading-word">Naup...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/">Home</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/archives">Archives</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/about">About</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed" target="_blank"></a>
+    
+    
+    
+  </nav>
+</div>
+<header id="header">
+  
+    <picture></picture>
+    <img fetchpriority="high" src="/images/posts_cover/kernelmode_usermode_switch/kernelmode_usermode_switch.webp" alt="SDM Volume 3 Figure 2-1. IA-32 System-Level Registers and Data Structures">
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">SDM Volume 3 Figure 2-1. IA-32 System-Level Registers and Data Structures</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  
+  <div class="sidebar-wrapper wrap-sticky">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux-Kernel-SDM-Volume-3-Figure-2-1-IA-32-System-Level-Registers-and-Data-Structures"><span class="toc-number">1.</span> <span class="toc-text">Linux Kernel - SDM Volume 3 Figure 2-1. IA-32 System-Level Registers and Data Structures</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#privilege-level"><span class="toc-number">1.1.</span> <span class="toc-text">privilege level</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Segment-Selector-%E5%92%8C-Segment-Register"><span class="toc-number">1.2.</span> <span class="toc-text">Segment Selector 和 Segment Register</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Segment-Descriptor"><span class="toc-number">1.3.</span> <span class="toc-text">Segment Descriptor</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GDT-Global-Description-Table"><span class="toc-number">1.4.</span> <span class="toc-text">GDT (Global Description Table)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#TSS"><span class="toc-number">1.4.1.</span> <span class="toc-text">TSS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GDTR"><span class="toc-number">1.4.2.</span> <span class="toc-text">GDTR</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LDT-Local-Description-Table"><span class="toc-number">1.5.</span> <span class="toc-text">LDT (Local Description Table)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LDTR"><span class="toc-number">1.5.1.</span> <span class="toc-text">LDTR</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Access-GDT-or-LDT-way"><span class="toc-number">1.6.</span> <span class="toc-text">Access GDT or LDT way</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Interrupt"><span class="toc-number">1.7.</span> <span class="toc-text">Interrupt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#More-information-about-Privilege-Level"><span class="toc-number">1.8.</span> <span class="toc-text">More information about Privilege Level</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Interrupt-Descriptor-Table-IDT"><span class="toc-number">1.9.</span> <span class="toc-text">Interrupt Descriptor Table (IDT)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gate"><span class="toc-number">1.10.</span> <span class="toc-text">Gate</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gate-Descriptor"><span class="toc-number">1.11.</span> <span class="toc-text">Gate Descriptor</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%88%89%E4%BE%8B"><span class="toc-number">1.12.</span> <span class="toc-text">舉例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LDT-GDT-IDT"><span class="toc-number">1.13.</span> <span class="toc-text">LDT &amp; GDT &amp; IDT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#anothor-resource"><span class="toc-number">1.14.</span> <span class="toc-text">anothor resource</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#after-all"><span class="toc-number">1.15.</span> <span class="toc-text">after all</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">59</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">19</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+      
+        <div class="sidebar-btn-wrapper" style="position:static">
+          <div class="sidebar-toc-btn current"></div>
+          <div class="sidebar-common-btn"></div>
+        </div>
+      
+    </div>
+  </div>
+
+  <div class="sidebar-widget">
+  
+  </div>
+</aside>
+
+          <section id="main"><article id="post-Linux-Kernel-SDM-Volume3-SystemLevelRegisters-DataStructures" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <a href="/2025/02/21/Linux-Kernel-SDM-Volume3-SystemLevelRegisters-DataStructures/" class="article-date-link" data-aos="zoom-in">
+    <time datetime="2025-02-21T12:18:39.000Z" itemprop="datePublished">2025-02-21</time>
+    <time style="display: none;" id="post-update-time">2025-02-21</time>
+  </a>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <h1 id="Linux-Kernel-SDM-Volume-3-Figure-2-1-IA-32-System-Level-Registers-and-Data-Structures"><a href="#Linux-Kernel-SDM-Volume-3-Figure-2-1-IA-32-System-Level-Registers-and-Data-Structures" class="headerlink" title="Linux Kernel - SDM Volume 3 Figure 2-1. IA-32 System-Level Registers and Data Structures"></a>Linux Kernel - SDM Volume 3 Figure 2-1. IA-32 System-Level Registers and Data Structures</h1><blockquote>
+<p>Author: 堇姬Naup</p>
+</blockquote>
+<p>圍繞這張圖來展開(SDM Volume 3中的Figure 2-1. IA-32 System-Level Registers and Data Structures)<br><img src="https://hackmd.io/_uploads/Syxrv-VcJx.png" alt="image"></p>
+<p>第 63 頁<br><a target="_blank" rel="noopener" href="https://www.intel.com/content/dam/www/public/us/en/documents/manuals/64-ia-32-architectures-software-developer-vol-3a-part-1-manual.pdf">https://www.intel.com/content/dam/www/public/us/en/documents/manuals/64-ia-32-architectures-software-developer-vol-3a-part-1-manual.pdf</a></p>
+<h2 id="privilege-level"><a href="#privilege-level" class="headerlink" title="privilege level"></a>privilege level</h2><p>這邊簡單展開一下 privilege level (<a target="_blank" rel="noopener" href="https://blog.csdn.net/Gyc8787/article/details/121879012">https://blog.csdn.net/Gyc8787/article/details/121879012</a>)</p>
+<ul>
+<li>Current Privilege Level (CPL): CPL 儲存在目前執行的 CS 暫存器的選擇器中。它表示目前執行任務的特權等級（PL）</li>
+<li>Descriptor Privilege Level (DPL): 當前任務試圖存取的物件的 PL</li>
+<li>Requestor Privilege Level (RPL): 用於 segment 的訪問控制</li>
+<li>I&#x2F;O Privilege Level(IOPL): 對 I&#x2F;O 操作進行控制</li>
+</ul>
+<p>IOPL<br><img src="https://hackmd.io/_uploads/r16wUH491e.png" alt="image"></p>
+<h2 id="Segment-Selector-和-Segment-Register"><a href="#Segment-Selector-和-Segment-Register" class="headerlink" title="Segment Selector 和 Segment Register"></a>Segment Selector 和 Segment Register</h2><p>這邊繼續展開 Segment Selector 和 Segment Register<br>分段暫存器是存放 segment selector 的，共有六個分段暫存器：CS、DS、ES、FS、GS、和 SS<br><a target="_blank" rel="noopener" href="https://www.csie.ntu.edu.tw/~wcchen/asm98/asm/proj/b85506061/chap2/segment.html">https://www.csie.ntu.edu.tw/~wcchen/asm98/asm/proj/b85506061/chap2/segment.html</a></p>
+<table>
+<thead>
+<tr>
+<th><strong>register</strong></th>
+<th><strong>name</strong></th>
+<th><strong>用途</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>CS</strong>（Code Segment）</td>
+<td><strong>程式碼段暫存器</strong></td>
+<td>儲存程式碼段（<code>.text</code> 段）的基底位置，負責指令存取。</td>
+</tr>
+<tr>
+<td><strong>DS</strong>（Data Segment）</td>
+<td><strong>資料段暫存器</strong></td>
+<td>儲存變數的預設位置（<code>.data</code> 段），負責資料存取。</td>
+</tr>
+<tr>
+<td><strong>ES</strong>（Extra Segment）</td>
+<td><strong>額外段暫存器</strong></td>
+<td>用於字串操作（<code>MOVS</code>、<code>LODS</code>、<code>STOS</code> 等指令）。</td>
+</tr>
+<tr>
+<td><strong>SS</strong>（Stack Segment）</td>
+<td><strong>堆疊段暫存器</strong></td>
+<td>儲存堆疊段的基底位置，與 <code>ESP</code>（堆疊指標）和 <code>EBP</code>（基底指標）相關。</td>
+</tr>
+<tr>
+<td><strong>FS</strong>（Extra Segment）</td>
+<td><strong>額外段暫存器</strong></td>
+<td>額外的段暫存器，常用於特殊用途（如 Windows TEB、Linux TLS）。</td>
+</tr>
+<tr>
+<td><strong>GS</strong>（Extra Segment）</td>
+<td><strong>額外段暫存器</strong></td>
+<td>額外的段暫存器，常用於特殊用途（如 Linux TLS）。</td>
+</tr>
+</tbody></table>
+<p><a target="_blank" rel="noopener" href="https://0xinfection.github.io/reversing/pages/part-11-segment-registers.html">about segment register</a></p>
+<p>接著繼續看 segment selector 的樣子<br><code>A segment selector provides the software that uses it with an index into the GDT or LDT (the offset of its associated segment descriptor), a global/local flag (determines whether the selector points to the GDT or the LDT), and access rights information</code></p>
+<p><img src="https://hackmd.io/_uploads/rkDnMbEcyg.png" alt="image"></p>
+<table>
+<thead>
+<tr>
+<th><strong>字段</strong></th>
+<th><strong>bits</strong></th>
+<th><strong>說明</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Index</strong></td>
+<td><strong>13 bits</strong></td>
+<td>索引值，用於定位 GDT 或 LDT 中的段描述符。</td>
+</tr>
+<tr>
+<td><strong>TI（Table Indicator）</strong></td>
+<td><strong>1 bits</strong></td>
+<td><strong>表指示器</strong>，0 代表 <strong>GDT</strong>，1 代表 <strong>LDT</strong>。</td>
+</tr>
+<tr>
+<td><strong>RPL（Requested Privilege Level）</strong></td>
+<td><strong>2 bits</strong></td>
+<td><strong>請求特權級</strong>，範圍 <strong>0~3</strong>，表示請求者希望以哪個特權級訪問該段。</td>
+</tr>
+</tbody></table>
+<ol>
+<li>CPU 從段暫存器（如 CS）讀取 Segment Selector。</li>
+<li>根據 TI 位 確定是從 GDT 還是 LDT 讀取段描述符。</li>
+<li>用 Index 查找對應的 Segment Descriptor。</li>
+<li>根據 段描述符內的屬性（Base、Limit、DPL 等） 確定如何存取該段</li>
+</ol>
+<h2 id="Segment-Descriptor"><a href="#Segment-Descriptor" class="headerlink" title="Segment Descriptor"></a>Segment Descriptor</h2><p>存放在 GDT、LDT 中，是描述一個 segment 的資料結構，每一個 segment descriptor 都是 8 bytes<br><img src="https://hackmd.io/_uploads/B1aBS-45Je.png" alt="image"></p>
+<p>接下來看 GDT、LDT</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lizongti/article/details/138668202">https://blog.csdn.net/lizongti/article/details/138668202</a></p>
+<p>每個 Descriptor Table 可以存放 8192 個 Segment Descriptors<br>GDT、LDT 是 x86 架構用來描述 segment 權限的兩張表，用於定義 segment 屬性及權限<br>GDT 可以被所有的程式和工作（task）所使用，而一個程式可能會有自己的 LDT</p>
+<p>型態是指<br><img src="https://hackmd.io/_uploads/BkOC7MEcke.png" alt="image"></p>
+<h2 id="GDT-Global-Description-Table"><a href="#GDT-Global-Description-Table" class="headerlink" title="GDT (Global Description Table)"></a>GDT (Global Description Table)</h2><p>GDT（全域描述表）主要存放作業系統和各個任務共用的描述符，例如共用的數據段和代碼段描述符、各個任務的 TSS（任務狀態段）描述符 以及 LDT（區域描述表）描述符。<br>一個系統一定要有一張 GDT<br>（TSS，即任務狀態段，用於存放每個任務的私有運行狀態信息描述符。）</p>
+<p>代碼段（Code Segment）<br>數據段（Data Segment）<br>堆疊段（Stack Segment）<br>TSS（Task State Segment，任務狀態段）<br>LDT 描述符（LDT Descriptor）</p>
+<h3 id="TSS"><a href="#TSS" class="headerlink" title="TSS"></a>TSS</h3><p>TSS 是儲存一個工作的狀態的系統 segment<br><a target="_blank" rel="noopener" href="https://www.csie.ntu.edu.tw/~wcchen/asm98/asm/proj/b85506061/chap5/tss.html">TSS resource</a></p>
+<h3 id="GDTR"><a href="#GDTR" class="headerlink" title="GDTR"></a>GDTR</h3><p>GDTR 就是 CPU 如何知道 GDT 在哪的 register<br>結構是 (2^16 &#x3D; 65536 &#x2F;&#x2F; 8 &#x3D; GDTsize &#x2F;&#x2F; SegmentDescriptorSize &#x3D; 8192)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">47(64 bits = 79)   15      0</span><br><span class="line">+------------------+-------+</span><br><span class="line">| GDT base address | Limit |</span><br><span class="line">+------------------+-------+</span><br></pre></td></tr></table></figure>
+
+<p>PS: GDT 的基底位址存放在 GDTR 中，是一個線性位址，也就是說，GDT 不算是一個 segment</p>
+<h2 id="LDT-Local-Description-Table"><a href="#LDT-Local-Description-Table" class="headerlink" title="LDT (Local Description Table)"></a>LDT (Local Description Table)</h2><p>每個 task 可以有一張，LDT（區域描述表）主要存放各個 task 的私有描述符，例如該任務的 代碼段描述符 和 數據段描述符等</p>
+<h3 id="LDTR"><a href="#LDTR" class="headerlink" title="LDTR"></a>LDTR</h3><p>LDTR 本質上是個 Segment Selector(可以參考上面的 segment selector 長相)<br>因為 LDT 是個 segment</p>
+<h2 id="Access-GDT-or-LDT-way"><a href="#Access-GDT-or-LDT-way" class="headerlink" title="Access GDT or LDT way"></a>Access GDT or LDT way</h2><p>這邊舉例<br><img src="https://hackmd.io/_uploads/HkYaqMVckx.png" alt="image"></p>
+<p>假設要訪問一個 Code Segment<br>先去 CS 挖，這邊假設是 0x1c<br>0x1c 是一個 description selector，為 16 bits 拆開來看</p>
+<p>0x1c &#x3D; 0b11 1 00<br>IT &#x3D; 1 為 LDT，00 是RPL，0b11 &#x3D; 3 是 index(代表其位於 LDT 第3個 Description)</p>
+<p>所以要去 access LDT，不過我們不知道 LDT 位子<br>接下來去看 LDTR，他是 0x8<br>0x8 &#x3D; 0b 1 0 00<br>TI &#x3D; 0 是 GDT，1 是 index (代表其位於 GDT 第1個 Description)<br>因此去 access GDT</p>
+<p>GDT 不知道位子去看 GDTR<br>GDTR &#x3D; 0xC00000 FFFF<br>0xC00000 代表 GDT 的 base address，之後找到第 1 個 description<br>第一個 description 是 0x800000 FFFF<br>0x800000 是 LDT base address<br>找到 LDT 上述 CS register 所述的第三個 descriptor </p>
+<p>其值為 0x400000 00FF<br>0x400000 為 segment base address<br>這樣就成功找到要找的 code segment 了</p>
+<p>這篇有詳細的計算方法及注意事項，懶人包可以看這個:<br><a target="_blank" rel="noopener" href="https://medium.com/@cousin3516/%E8%99%95%E7%90%86%E5%99%A8%E4%B8%AD%E7%9A%84%E8%A8%98%E6%86%B6%E9%AB%94%E5%88%86%E6%AE%B5-memory-segmentation-b28bc10b437">https://medium.com/@cousin3516/%E8%99%95%E7%90%86%E5%99%A8%E4%B8%AD%E7%9A%84%E8%A8%98%E6%86%B6%E9%AB%94%E5%88%86%E6%AE%B5-memory-segmentation-b28bc10b437</a></p>
+<p>通過這個實際例子可以更了解 LDT 跟 GDT 在幹嘛 </p>
+<p>你問我知道這可以幹嘛，起源是因為當初在玩 windows kernel EoP 時，寫 shellcode 用了 token stealing 的方式，需要通過 gs register 來去找 EPROCESS，windbg 下 r gs看的時候我蠻矇的，因為噴出來的是 gs &#x3D; 0x2b 之類的數值，通過上述的理解可以知道 0x2b 是怎麼轉換成一個線性 address 的</p>
+<p>這也是為啥寫 shellcode 時不是用 gs + 0x188 而是 gs:[0x188]<br>總之超酷</p>
+<p>整個 segment 相關的機制已經差不多了，接下來開始講這張圖 Interrput 的部分</p>
+<h2 id="Interrupt"><a href="#Interrupt" class="headerlink" title="Interrupt"></a>Interrupt</h2><p>首先先了解一個重要的概念 interrupt<br>翻成中文”中斷”，可以直觀的理解成去中斷一個正常的執行流程，這件事可以藉由 CPU 或 hardware 來產生</p>
+<p><code>An interrupt is an event that alters the normal execution flow of a program and can be generated by hardware devices or even by the CPU itself.</code></p>
+<h2 id="More-information-about-Privilege-Level"><a href="#More-information-about-Privilege-Level" class="headerlink" title="More information about Privilege Level"></a>More information about Privilege Level</h2><p>根據上述，可以知道 segment 是有區分權限的，也就是熟知 ring 0 ~ ring 3，常用的只有 ring 0、ring 3(有特別需要，也可以使用權力介於 ring 0 和 ring 3 之間的 ring 1 和 ring 2)</p>
+<p>可以理解，低權限的程式不能去執行高權限程式<br>但其實高權限也不能直接執行低權限程式，必須經由 call gate 來呼叫<br>這件事有例外情況，回顧一下 Privilege Level 有以下這些 CPL、DPL、RPL (這三個比較重要)</p>
+<p>這邊更詳細的展開</p>
+<ul>
+<li>目前特權等級（Current Privilege Level，CPL）：目前執行的程式或工作的特權等級，存放在 CS 和 SS 的第 0 和第 1 位元，一般情形下，CPL 會和目前程式所在的 segment 的特權等級（即 DPL）相同。而在轉移控制權時（例如，用 JMP 或 CALL 命令跳到另一 segment 中），CPL 會改變為新的 segment 的 DPL</li>
+<li>分段特權等級（Descriptor Privilege Level，DPL）：一個 segment（或 gate）的特權等級，存放在 segment descriptor 中的 DPL 位元<br><img src="https://hackmd.io/_uploads/ByyjMnBq1l.png" alt="image"></li>
+</ul>
+<p>一段程式在存取一個 segment 或 gate 會根據 CPL、DPL、RPL 來有不一樣的操作</p>
+<ul>
+<li>data segment 的 DPL 指出存取該 segment 所需要的最低特權等級，一段 segment descriptor 裡面的 DPL，我們去 access 這塊時，若為 2，代表 CPL 為 0、1、2 可以存取</li>
+<li>Call gate 和 TSS 的 DPL 指出存取該 gate 所需要的最低特權等級</li>
+<li>Non-conforming 程式的 segment </li>
+<li>經由 call gate 呼叫程式 segment 時，其 DPL 指出呼叫者所容許的最高的特權等級，若一程式 segment 的 DPL 為 2，則只有 CPL 為 2 和 3 的程式才能透過 call gate 呼叫它</li>
+</ul>
+<h2 id="Interrupt-Descriptor-Table-IDT"><a href="#Interrupt-Descriptor-Table-IDT" class="headerlink" title="Interrupt Descriptor Table (IDT)"></a>Interrupt Descriptor Table (IDT)</h2><p><a target="_blank" rel="noopener" href="https://www.csie.ntu.edu.tw/~wcchen/asm98/asm/proj/b85506061/chap4/idt.html">https://www.csie.ntu.edu.tw/~wcchen/asm98/asm/proj/b85506061/chap4/idt.html</a><br>被稱作中斷描述表，被存在 memory 中<br>一張表可以存 256 個，每個每個被稱作 entry，也是一條 interrupt vector，每條 16 bytes</p>
+<p>CPU 需要知道這張表存在哪，所以有個暫存器 IDTR 用來存 IDT 相關資訊<br><img src="https://hackmd.io/_uploads/HkYjhxN9kx.png" alt="image"></p>
+<p>前半段是 IDT 起始 address，後半段是 IDT 有多長 (找第 52 條 vector &#x3D; IDTR.idt_base_address + 16 * 52)</p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/67586556/understand-idtr-register">https://stackoverflow.com/questions/67586556/understand-idtr-register</a></p>
+<p>LIDT 指令可以把記憶體中的值載入到 IDTR 中，而用 SIDT 指令可以把 IDTR 中的位址存到記憶體中</p>
+<h2 id="Gate"><a href="#Gate" class="headerlink" title="Gate"></a>Gate</h2><p>根據 2.1.2 System Segments, Segment Descriptors, and Gates<br>所述</p>
+<p>架構還定義了一組特殊的描述符，稱為門（Gate），包括：</p>
+<ul>
+<li>呼叫門（Call Gate）</li>
+<li>中斷門（Interrupt Gate）</li>
+<li>陷阱門（Trap Gate）</li>
+<li>任務門（Task Gate）</li>
+</ul>
+<p>這些門提供了受保護的機制，允許存取與應用程式或一般程序不同權限等級（privilege level）的系統程序與處理程序</p>
+<p><code>The architecture also defines a set of special descriptors called gates (call gates, interrupt gates, trap gates, and task gates). These provide protected gateways to system procedures and handlers that may operate at a different privilege level than application programs and most procedures. </code></p>
+<p>這些 descriptor 被存在 IDT 中<br>一個重要的概念，可以描述整個 IDT 運作原理</p>
+<p><code>CPU 在執行下一條指令之前，會先檢查當前是否發生了中斷或異常。若有發生，則會判斷中斷或異常的 vector number，在完成一系列的檢查與保護工作後，CPU 會執行 IDT 中對應該 vector number 的處理函式</code></p>
+<h2 id="Gate-Descriptor"><a href="#Gate-Descriptor" class="headerlink" title="Gate Descriptor"></a>Gate Descriptor</h2><p>現在開始來看 IDT entry 內的 Interrupt descriptor 樣子，一個 16 bytes<br><img src="https://hackmd.io/_uploads/B12amkL5ye.png" alt="image"></p>
+<ul>
+<li>Interrupt-gate descriptor: 用於 Interrupt</li>
+<li>Trap-gate descriptor: 處理異常，用於 syscall</li>
+<li>Task-gate descriptor &amp; Call-gate descriptor: 用於 task 切換</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/ZZHinclude/article/details/117771884">https://blog.csdn.net/ZZHinclude/article/details/117771884</a><br><a target="_blank" rel="noopener" href="https://wiki.osdev.org/Interrupt_Descriptor_Table">https://wiki.osdev.org/Interrupt_Descriptor_Table</a></p>
+<h2 id="舉例"><a href="#舉例" class="headerlink" title="舉例"></a>舉例</h2><p>最後一樣通過流程更清楚了解運作原理<br>首先先通過 IDTR 去尋址 IDT address<br>Vector Number 代表的是 Interrupt 的類型，通過當前 CPU 觸發的 Interrupt 來去 IDT 找對應的 Interrupt Descriptor<br>從 Interrupt Description 中可以找到 offset，另外也可以找到一個 segment Selector，通過他來去 GDT 或 LDT 中找到對應的 segment address base<br>segment address base + offset 就可以找到對應的 ISR address，來去處理 Interrupt</p>
+<p><img src="https://hackmd.io/_uploads/rkCMuJIqyg.png" alt="image"></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/iBinary/p/13325316.html#%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E7%AC%AC%E5%85%AD%E8%AE%B2-idt%E8%A1%A8-%E4%B8%AD%E6%96%AD%E9%97%A8-%E9%99%B7%E9%98%B1%E9%97%A8-%E4%BB%BB%E5%8A%A1%E9%97%A8">https://www.cnblogs.com/iBinary/p/13325316.html#%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E7%AC%AC%E5%85%AD%E8%AE%B2-idt%E8%A1%A8-%E4%B8%AD%E6%96%AD%E9%97%A8-%E9%99%B7%E9%98%B1%E9%97%A8-%E4%BB%BB%E5%8A%A1%E9%97%A8</a></p>
+<p>More Information about Interrupt Vector:<br><a target="_blank" rel="noopener" href="https://www.csie.ntu.edu.tw/~wcchen/asm98/asm/proj/b85506061/chap4/overview.html">https://www.csie.ntu.edu.tw/~wcchen/asm98/asm/proj/b85506061/chap4/overview.html</a></p>
+<h2 id="LDT-GDT-IDT"><a href="#LDT-GDT-IDT" class="headerlink" title="LDT &amp; GDT &amp; IDT"></a>LDT &amp; GDT &amp; IDT</h2><p><img src="https://hackmd.io/_uploads/BkI3d1Lcye.png" alt="image"></p>
+<p>這邊說回最上面這張圖<br>這張圖大致描述了 分段機制（Segmentation） 和 中斷處理（Interrupt Handling）</p>
+<p>首先是 IDT，IDT 會負責處理 Interrupt 相關事項，通過當前 CPU 的 Interrupt Vector 可以到 IDT 中(CPU 藉由 IDTR 知道 IDT base address)找到對應的 Interrupt Descriptor<br>而一個 IDT Descriptor 內對應到一個 segment selector ，另外也存有 offset，通過 segment selector 來去 access 到對應的 segment 並加上對應的 offset，來找到對應的 Interrupt Handler<br>而 GDT、LDT 不只是對應處理 IDT 而已，對於很多需要去 access 到 segment 的通過 GDT LDT 轉址，可以找到對應的 segment，另外 CPU 通過 GDTR、LDTR 可以知道 LDT GDT address</p>
+<p>當然左上角還有一些相關的 register 之後可以詳細展開講<br>另外聽說 long mode 有些東西不太一樣，可能要在研究<br>一些 long mode 資料(收集中…)<br><a target="_blank" rel="noopener" href="http://blog.chinaunix.net/uid-587665-id-2732930.html">http://blog.chinaunix.net/uid-587665-id-2732930.html</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/ProgrammingRing/article/details/7425445">https://blog.csdn.net/ProgrammingRing/article/details/7425445</a></p>
+<h2 id="anothor-resource"><a href="#anothor-resource" class="headerlink" title="anothor resource"></a>anothor resource</h2><p><a target="_blank" rel="noopener" href="https://github.com/therealdreg/cgaty">https://github.com/therealdreg/cgaty</a><br><a target="_blank" rel="noopener" href="https://liujunming.top/2020/01/18/%E6%B5%85%E8%B0%88tss/">https://liujunming.top/2020/01/18/%E6%B5%85%E8%B0%88tss/</a><br><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v6.13.3/source/arch/x86/kernel/idt.c">https://elixir.bootlin.com/linux/v6.13.3/source/arch/x86/kernel/idt.c</a></p>
+<h2 id="after-all"><a href="#after-all" class="headerlink" title="after all"></a>after all</h2><p>需要一些對 kernel 有研究的人，對於這些機制如果有深入了解的可以聯繫我</p>
+<p>I need some people who have researched the kernel. If you have an in-depth understanding of these mechanisms, please contact me.</p>
+<p>Discord: naup_sumire_hime<br>Gmail: <a href="mailto:&#x6e;&#97;&#x75;&#112;&#x39;&#54;&#55;&#x32;&#x31;&#x40;&#103;&#109;&#x61;&#x69;&#x6c;&#x2e;&#99;&#111;&#109;">&#x6e;&#97;&#x75;&#112;&#x39;&#54;&#55;&#x32;&#x31;&#x40;&#103;&#109;&#x61;&#x69;&#x6c;&#x2e;&#99;&#111;&#109;</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/Kernel/" rel="tag">Kernel</a></li><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/interrupt/" rel="tag">interrupt</a></li><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/segment/" rel="tag">segment</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+  <nav id="article-nav" data-aos="fade-up">
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        <img data-src="/images/posts_cover/CGGC-2024-Qual-writeup/CGGC-2024-Qual-writeup.webp" data-sizes="auto" alt="Linux Kernel Pwn - Environment" class="lazyload">
+      
+      <a href="/2025/02/05/Linux-Kernel-Pwn-Environment/"></a>
+      <div class="article-nav-caption">Older</div>
+      <h3 class="article-nav-title">
+        
+          Linux Kernel Pwn - Environment
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+</article>
+
+
+
+
+
+
+</section>
+        </div>
+        
+        
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      2020-2025
+      <span class="footer-info-sep rotate"></span>
+      Naup堇姬
+    </div>
+    
+      <div>
+        Powered by&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        153.9k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        13:28
+      </div>
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">Number of visits&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">Number of visitors&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux-Kernel-SDM-Volume-3-Figure-2-1-IA-32-System-Level-Registers-and-Data-Structures"><span class="toc-number">1.</span> <span class="toc-text">Linux Kernel - SDM Volume 3 Figure 2-1. IA-32 System-Level Registers and Data Structures</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#privilege-level"><span class="toc-number">1.1.</span> <span class="toc-text">privilege level</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Segment-Selector-%E5%92%8C-Segment-Register"><span class="toc-number">1.2.</span> <span class="toc-text">Segment Selector 和 Segment Register</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Segment-Descriptor"><span class="toc-number">1.3.</span> <span class="toc-text">Segment Descriptor</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GDT-Global-Description-Table"><span class="toc-number">1.4.</span> <span class="toc-text">GDT (Global Description Table)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#TSS"><span class="toc-number">1.4.1.</span> <span class="toc-text">TSS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GDTR"><span class="toc-number">1.4.2.</span> <span class="toc-text">GDTR</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LDT-Local-Description-Table"><span class="toc-number">1.5.</span> <span class="toc-text">LDT (Local Description Table)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LDTR"><span class="toc-number">1.5.1.</span> <span class="toc-text">LDTR</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Access-GDT-or-LDT-way"><span class="toc-number">1.6.</span> <span class="toc-text">Access GDT or LDT way</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Interrupt"><span class="toc-number">1.7.</span> <span class="toc-text">Interrupt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#More-information-about-Privilege-Level"><span class="toc-number">1.8.</span> <span class="toc-text">More information about Privilege Level</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Interrupt-Descriptor-Table-IDT"><span class="toc-number">1.9.</span> <span class="toc-text">Interrupt Descriptor Table (IDT)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gate"><span class="toc-number">1.10.</span> <span class="toc-text">Gate</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gate-Descriptor"><span class="toc-number">1.11.</span> <span class="toc-text">Gate Descriptor</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%88%89%E4%BE%8B"><span class="toc-number">1.12.</span> <span class="toc-text">舉例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LDT-GDT-IDT"><span class="toc-number">1.13.</span> <span class="toc-text">LDT &amp; GDT &amp; IDT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#anothor-resource"><span class="toc-number">1.14.</span> <span class="toc-text">anothor resource</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#after-all"><span class="toc-number">1.15.</span> <span class="toc-text">after all</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">59</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">19</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+    
+  </div>
+  
+    <div class="sidebar-btn-wrapper">
+      <div class="sidebar-toc-btn current"></div>
+      <div class="sidebar-common-btn"></div>
+    </div>
+  
+</nav>
+
+    </div>
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.0.6/dist/index.umd.js" integrity="sha384-vkGvf25gm1C1PbcoD5dNfc137HzNL&#x2F;hr1RKA5HniJOaawtvUmH5lTVFgFAruE9Ge" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["#ff5252","#ff7c7c","#ffafaf","#ffd0d0"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["#ff0000"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "Naup堇姬",
+          title: "SDM Volume 3 Figure 2-1. IA-32 System-Level Registers and Data Structures",
+          url: "http://example.com/2025/02/21/Linux-Kernel-SDM-Volume3-SystemLevelRegisters-DataStructures/",
+          excerpt: "",
+          description: "",
+          stripContent: "Linux Kernel - SDM Volume 3 Figure 2-1. IA-32 System-Level Registers and Data Structures Author: 堇姬Naup  圍繞這張圖來展開(SDM Volume 3中的Figure 2-1. IA-32 System-Level Registers and Data Structures) 第 63 頁https://www.intel.com/content/dam/www/public/us/en/doc",
+          date: "Fri Feb 21 2025 20:18:39 GMT+0800",
+          updated: "Fri Feb 21 2025 20:21:35 GMT+0800",
+          cover: "/images/posts_cover/kernelmode_usermode_switch/kernelmode_usermode_switch.webp",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+
+
+
+
+
+
+
+
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.3.0' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+  </body>
+  </html>
+
