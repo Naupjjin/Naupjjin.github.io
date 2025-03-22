@@ -198,7 +198,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">61</div>
+    <div class="sidebar-state-number">62</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
@@ -266,10 +266,69 @@
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2024/03/31/MATH-Lucas-Sequence/" aria-label="Lucas-Sequence"></a>
+      <a class="post-link" href="/2024/04/25/ROP-chall-1/" aria-label="ROP-chall-1"></a>
     
     
     <div class="post-cover-left">
+      
+        
+        
+          <img data-src="https://i.imgur.com/OjUqWVO.jpeg" data-sizes="auto" alt="ROP-chall-1" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-04-25</span>
+        <span><span class="icon-pencil"></span>306 words</span>
+        <span><span class="icon-clock"></span>1 min</span>
+      </div>
+      <h2 class="post-title">ROP-chall-1</h2>
+      <article class="post-article">
+        
+          ROP-chall
+Author:堇姬
+
+題目來源ICED的pwn題目https://ctf.nicewhite.xyz/
+確認保護看到有開Stack canary，但溢出後卻沒有報stack canary的錯誤，所以應該是沒開。另外他有開NX，所以沒辦法寫shellcode
+分析ASM有gets 可以BOF，不過沒有其他function可以return過去，所以應該是要ROP
+堆ROP
+execve(‘bin&amp;#x2F;sh’)
+
+
+
+
+暫存器
+值
+
+
+
+rax
+0x3b
+
+
+rdi
+要執行的參數值(&amp;#x2F;bin&amp;#x2F;sh)
+
+
+rsi
+argv(這裡&amp;#x3D;0)
+
+
+rdx
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/03/31/MATH-Lucas-Sequence/" aria-label="Lucas-Sequence"></a>
+    
+    
+    <div class="post-cover-right">
       
         
         
@@ -298,12 +357,12 @@ Author:堇姬
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/03/30/VishwaCTF-2024-WP/" aria-label="VishwaCTF-2024-Writeup"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -332,12 +391,12 @@ WebSave The City1234567DESCRIPTIONThe RAW Has Got An Input That ISIS Has Planted
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/03/10/AIS3-EOF-2024-Final/" aria-label="AIS3-EOF-2024-Final"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -375,12 +434,12 @@ rush-p0pp3r
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/03/10/pearlCTF-2024-WP/" aria-label="pearlCTF-2024-WP"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -410,12 +469,12 @@ Weblearn HTTP題目是一個web service，會把使用者丟進去的get參數�
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/02/29/QuantumCTF-CLASS/" aria-label="量子密碼學(QuantumCTF初探與解題)"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -444,12 +503,12 @@ Author:堇姬Naup
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/02/29/AIS3-EOF-2024-Qual-WP/" aria-label="AIS3 EOF 2024 Qual Writeup"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -483,12 +542,12 @@ stateful幸好我都使用工人智慧把式子抓出來有Correct!!!跟WRONG!!!
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/02/29/CGGC-WP/" aria-label="CGGC 2024 Qual Writeup"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -519,12 +578,12 @@ Webbossti第一關是用jwt sign的登入頁面，把密鑰用john暴一下並�
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/02/29/Cake-CTF-2023-WP/" aria-label="Cake CTF 2023 Writeup"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -555,12 +614,12 @@ An exam web application which would generate some strange sentences with unknow 
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/02/29/Hackappatoi/" aria-label="Hackappatoi CTF&#39;23 CakeisTheFake Writeup"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -585,44 +644,6 @@ WebForza napolia
 
 一個網站，分為兩部分，一個是回報連結然後會檢查是否來自他們的host，另一個則是可以透過url參數做查詢，有xss防護。source:  
 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748const bot = require(&amp;quot;../bot&amp;quot;);function isValidUrl(url
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/02/29/sun-shine-CTF-WP/" aria-label="Sunshine CTF 2023 Writeup"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        
-        
-          <img data-src="https://i.imgur.com/OjUqWVO.jpeg" data-sizes="auto" alt="Sunshine CTF 2023 Writeup" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-02-29</span>
-        <span><span class="icon-pencil"></span>2.8k words</span>
-        <span><span class="icon-clock"></span>17 mins</span>
-      </div>
-      <h2 class="post-title">Sunshine CTF 2023 Writeup</h2>
-      <article class="post-article">
-        
-          
-Team: WANRank: 74&amp;#x2F;821
-
-WEBBeepBoop Blog
-Slover: 堇姬naup
-You can observe a suspicious URL, which has patterns.You can get something by using different numbers after the URL path /post/https://beepboop.web.2023.sunshinectf.games/post/1
-
-I guess the flag may be hidden in one of the paths.
-Solve Sc
         
       </article>
     </div>
@@ -665,7 +686,7 @@ Solve Sc
         156.9k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        13:43
+        13:44
       </div>
     
     
@@ -701,7 +722,7 @@ Solve Sc
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">61</div>
+    <div class="sidebar-state-number">62</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>

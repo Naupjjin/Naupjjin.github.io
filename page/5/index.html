@@ -198,7 +198,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">61</div>
+    <div class="sidebar-state-number">62</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
@@ -266,10 +266,81 @@
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2024/06/30/AIS3-pre-exam-2024-Writeup/" aria-label="AIS3-pre-exam-2024-Writeup"></a>
+      <a class="post-link" href="/2024/07/07/Pwnable-orw/" aria-label="Pwnable.tw-orw"></a>
     
     
     <div class="post-cover-left">
+      
+        
+        
+          <img data-src="https://i.imgur.com/OjUqWVO.jpeg" data-sizes="auto" alt="Pwnable.tw-orw" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-07-07</span>
+        <span><span class="icon-pencil"></span>280 words</span>
+        <span><span class="icon-clock"></span>1 min</span>
+      </div>
+      <h2 class="post-title">Pwnable.tw-orw</h2>
+      <article class="post-article">
+        
+          pwnable.tw-orwchecksec啥都沒開(Canary實際上沒開)，stack也可以執行
+
+
+分析
+
+給一個shellcode，然後會幫你執行，不過有seccomp，要ORW。
+
+
+syscall tablehttps://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md#x86-32_bit
+
+
+
+syscallsys_open
+
+
+暫存器
+值
+
+
+
+eax
+0x5
+
+
+ebx
+filename位置的address
+
+
+ecx
+0
+
+
+edx
+0
+
+
+sys_read
+
+
+暫存器
+值
+
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/06/30/AIS3-pre-exam-2024-Writeup/" aria-label="AIS3-pre-exam-2024-Writeup"></a>
+    
+    
+    <div class="post-cover-right">
       
         
         
@@ -313,12 +384,12 @@ Quantum Nim Heist
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/06/24/Fixed-Size-Migration/" aria-label="Fixed Size Migration"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -353,12 +424,12 @@ leave
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/06/22/cryptoCTF2024-Writeup/" aria-label="cryptoCTF2024-Writeup"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -393,12 +464,12 @@ Easy 😁Alibossource code123456789101112131415161718192021222324252627282930fro
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/06/14/CryptoHack-ECC/" aria-label="CryptoHack-ECC"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -425,12 +496,12 @@ https://hackmd.io/@naup96321/rkV3ELFRT
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/05/21/Stack-Migration/" aria-label="Stack-Migration"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -471,12 +542,12 @@ return address填入leave;ret 的gadget
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/05/17/ROP-EZROP/" aria-label="ROP-EZROP(b33f adv_pwn)"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -514,12 +585,12 @@ source coderead的buffer overflow一樣給好給滿
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/05/05/THJCC-office-Writeup/" aria-label="THJCC-official-Writeup"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -548,12 +619,12 @@ CryptoJPG^PNG&amp;#x3D;?source1234567891011121314from itertools import cycledef 
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/04/27/Intigriti-August-XSS-challenge/" aria-label="Intigriti-August-XSS-challenge"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -582,12 +653,12 @@ Source code123456789101112131415161718192021222324252627282930313233343536373839
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/04/25/Assembly-x86/" aria-label="Assembly-x86"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -673,65 +744,6 @@ base poi
   </div>
 </div>
   
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/04/25/ROP-chall-1/" aria-label="ROP-chall-1"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        
-        
-          <img data-src="https://i.imgur.com/OjUqWVO.jpeg" data-sizes="auto" alt="ROP-chall-1" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-04-25</span>
-        <span><span class="icon-pencil"></span>306 words</span>
-        <span><span class="icon-clock"></span>1 min</span>
-      </div>
-      <h2 class="post-title">ROP-chall-1</h2>
-      <article class="post-article">
-        
-          ROP-chall
-Author:堇姬
-
-題目來源ICED的pwn題目https://ctf.nicewhite.xyz/
-確認保護看到有開Stack canary，但溢出後卻沒有報stack canary的錯誤，所以應該是沒開。另外他有開NX，所以沒辦法寫shellcode
-分析ASM有gets 可以BOF，不過沒有其他function可以return過去，所以應該是要ROP
-堆ROP
-execve(‘bin&amp;#x2F;sh’)
-
-
-
-
-暫存器
-值
-
-
-
-rax
-0x3b
-
-
-rdi
-要執行的參數值(&amp;#x2F;bin&amp;#x2F;sh)
-
-
-rsi
-argv(這裡&amp;#x3D;0)
-
-
-rdx
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
 
 
   <nav id="page-nav" data-aos="fade-up">
@@ -768,7 +780,7 @@ rdx
         156.9k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        13:43
+        13:44
       </div>
     
     
@@ -804,7 +816,7 @@ rdx
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">61</div>
+    <div class="sidebar-state-number">62</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
