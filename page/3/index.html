@@ -198,7 +198,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">68</div>
+    <div class="sidebar-state-number">69</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
@@ -266,10 +266,46 @@
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2024/12/15/THJCC-CTF-2024-Winter-Official-writeup/" aria-label="THJCC CTF 2024 Winter - official writeup"></a>
+      <a class="post-link" href="/2024/12/31/Kernel-mode-user-mode-switch/" aria-label="Kernel mode &amp; user mode switch"></a>
     
     
     <div class="post-cover-left">
+      
+        <img data-src="/images/posts_cover/kernelmode_usermode_switch/kernelmode_usermode_switch.webp" data-sizes="auto" alt="Kernel mode &amp; user mode switch" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-12-31</span>
+        <span><span class="icon-pencil"></span>1.6k words</span>
+        <span><span class="icon-clock"></span>8 mins</span>
+      </div>
+      <h2 class="post-title">Kernel mode &amp; user mode switch</h2>
+      <article class="post-article">
+        
+          Kernel mode &amp;amp; user mode switch
+Author: 堇姬Naup
+
+Usermode to Kernel mode
+call swapgs
+
+這裡先解釋幾個東西GS register、IA32_GS_BASE、IA32_KERNEL_GS_BASE、swapgs 是甚麼
+
+GS reg: 用途主要圍繞上下文切換、內核態與用戶態的切換以及訪問每個 CPU 的數據結構，在 64 位模式下，GS 指向一個base address，允許進行高效的offset訪問，例如通過gs:[offset] 訪問data。
+IA32_GS_BASE: 用於保存當前 GS base(
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/12/15/THJCC-CTF-2024-Winter-Official-writeup/" aria-label="THJCC CTF 2024 Winter - official writeup"></a>
+    
+    
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/THJCC-2024-winter-writeup/THJCC-2024-winter-writeup.webp" data-sizes="auto" alt="THJCC CTF 2024 Winter - official writeup" class="lazyload">
       
@@ -297,12 +333,12 @@ IDA分析我沒有拔掉debug symbol(因為我發現拔掉好像會太難逆)以
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/11/13/FlareOn-11/" aria-label="Flare-On CTF 11-writeup"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/FlareOn11-writeup/FlareOn11-writeup.webp" data-sizes="auto" alt="Flare-On CTF 11-writeup" class="lazyload">
       
@@ -335,12 +371,12 @@ Author: 堇姬Naup
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/11/11/HITCON-CTF-Final-2024/" aria-label="HITCON CTF Final 2024 record"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/HITCON-CTF-Final-2024/HITCON-CTF-Final-2024.webp" data-sizes="auto" alt="HITCON CTF Final 2024 record" class="lazyload">
       
@@ -376,12 +412,12 @@ Day1第一天一開始主辦方infra貌似直接燒起來，延後了半
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/11/05/2024-CGGC-writeup/" aria-label="2024-CGGC-Qual-writeup"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/CGGC-2024-Qual-writeup/CGGC-2024-Qual-writeup.webp" data-sizes="auto" alt="2024-CGGC-Qual-writeup" class="lazyload">
       
@@ -408,12 +444,12 @@ webproxy這題基本上就是要你GET request $service 和 $port並且會從你
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/10/27/Kernel-pwn-CISCON-2017-babydriver/" aria-label="Kernel Pwn-CISCN 2017 baby driver"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/kernelmode_usermode_switch/kernelmode_usermode_switch.webp" data-sizes="auto" alt="Kernel Pwn-CISCN 2017 baby driver" class="lazyload">
       
@@ -444,12 +480,12 @@ Author: 堇姬Naup
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/10/24/Pwnable-unexploitable/" aria-label="Pwnable.tw-unexploitable"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-unexploitable" class="lazyload">
       
@@ -477,12 +513,12 @@ IDA分析1234567int __fastcall main(int argc, const char **argv, const char **en
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/10/22/sunshineCTF-2024-writeup/" aria-label="SunshineCTF 2024 writeup-by.naup96321"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -515,12 +551,12 @@ can get git.
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/10/02/Pwnable-bookwriter/" aria-label="Pwnable.tw-BookWriter"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-BookWriter" class="lazyload">
       
@@ -550,12 +586,12 @@ patchelf直接patch上去
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/09/25/Pwnable-secret-of-my-heart/" aria-label="Pwnable.tw-Secret Of My Heart"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-Secret Of My Heart" class="lazyload">
       
@@ -578,41 +614,6 @@ libcglibc all in one 中沒有 2.23-0ubuntu5所以去網路上找libchttps://lau
 在libs裡面就有ld跟libc了
 patchelf直接patch上去
 12patchelf --set-interpreter ld-2.23.so secret_of_my_hear
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/09/23/Pwnable-dubble/" aria-label="Pwnable.tw-Dubblesort"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-Dubblesort" class="lazyload">
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-09-23</span>
-        <span><span class="icon-pencil"></span>1k words</span>
-        <span><span class="icon-clock"></span>5 mins</span>
-      </div>
-      <h2 class="post-title">Pwnable.tw-Dubblesort</h2>
-      <article class="post-article">
-        
-          Pwnable.tw-Dubblesort
-Author: 堇姬Naup
-
-libcglibc all in one 中沒有 2.23-0ubuntu5所以去網路上找libchttps://launchpad.net/ubuntu/xenial/i386/libc6/2.23-0ubuntu5
-把i386載下來
-1dpkg -X libc6_2.23-0ubuntu5_i386.deb .
-在libs裡面就有ld跟libc了
-patchelf直接patch上去
-12patchelf --set-interpreter ld-2.23.so dubblesortpatchelf --replac
         
       </article>
     </div>
@@ -655,7 +656,7 @@ patchelf直接patch上去
         174.2k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        15:16
+        15:17
       </div>
     
     
@@ -691,7 +692,7 @@ patchelf直接patch上去
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">68</div>
+    <div class="sidebar-state-number">69</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
