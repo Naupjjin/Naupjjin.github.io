@@ -198,7 +198,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">69</div>
+    <div class="sidebar-state-number">70</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
@@ -266,10 +266,50 @@
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2024/06/22/cryptoCTF2024-Writeup/" aria-label="cryptoCTF2024-Writeup"></a>
+      <a class="post-link" href="/2024/06/24/Fixed-Size-Migration/" aria-label="Fixed Size Migration"></a>
     
     
     <div class="post-cover-left">
+      
+        
+        
+          <img data-src="https://i.imgur.com/OjUqWVO.jpeg" data-sizes="auto" alt="Fixed Size Migration" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-06-24</span>
+        <span><span class="icon-pencil"></span>681 words</span>
+        <span><span class="icon-clock"></span>3 mins</span>
+      </div>
+      <h2 class="post-title">Fixed Size Migration</h2>
+      <article class="post-article">
+        
+          Fixed Size Migration
+Author: 堇姬Naup
+
+Why
+不能控制輸入長度時，就只能使用原本main function  read 來多次輸入 ROP chain假設現在空間只夠輸入一個gadget1payload (2*8 bytes) + rbp + return address(8bytes)
+觀察一下會發現 main_read 其實會將輸入存到 rbp-0x10，可以利用這個特性來寫入 ROP chain123readleaveret
+
+leave
+12mov rsp rbppop rbp
+
+原理1234空間(8bytes)空間(8bytes)old rbpre
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/06/22/cryptoCTF2024-Writeup/" aria-label="cryptoCTF2024-Writeup"></a>
+    
+    
+    <div class="post-cover-right">
       
         
         
@@ -304,12 +344,12 @@ Easy 😁Alibossource code123456789101112131415161718192021222324252627282930fro
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/06/14/CryptoHack-ECC/" aria-label="CryptoHack-ECC"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -336,12 +376,12 @@ https://hackmd.io/@naup96321/rkV3ELFRT
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/05/21/Stack-Migration/" aria-label="Stack-Migration"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -382,12 +422,12 @@ return address填入leave;ret 的gadget
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/05/17/ROP-EZROP/" aria-label="ROP-EZROP(b33f adv_pwn)"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -425,12 +465,12 @@ source coderead的buffer overflow一樣給好給滿
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/05/05/THJCC-office-Writeup/" aria-label="THJCC-official-Writeup"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -459,12 +499,12 @@ CryptoJPG^PNG&amp;#x3D;?source1234567891011121314from itertools import cycledef 
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/04/27/Intigriti-August-XSS-challenge/" aria-label="Intigriti-August-XSS-challenge"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -493,12 +533,12 @@ Source code123456789101112131415161718192021222324252627282930313233343536373839
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/04/25/Assembly-x86/" aria-label="Assembly-x86"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -585,12 +625,12 @@ base poi
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/04/25/ROP-chall-1/" aria-label="ROP-chall-1"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -644,12 +684,12 @@ rdx
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/03/31/MATH-Lucas-Sequence/" aria-label="Lucas-Sequence"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -671,40 +711,6 @@ Author:堇姬
 
 先看這個連結(還在處理LaTeX問題QQ)https://hackmd.io/@naup96321/B1Y7vqUyC
 
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/03/30/VishwaCTF-2024-WP/" aria-label="VishwaCTF-2024-Writeup"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        
-        
-          <img data-src="https://i.imgur.com/OjUqWVO.jpeg" data-sizes="auto" alt="VishwaCTF-2024-Writeup" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-03-30</span>
-        <span><span class="icon-pencil"></span>4.5k words</span>
-        <span><span class="icon-clock"></span>25 mins</span>
-      </div>
-      <h2 class="post-title">VishwaCTF-2024-Writeup</h2>
-      <article class="post-article">
-        
-          VishwaCTF 2024 writeup
-Team: CakeisTheFake(單人)Rank: 31&amp;#x2F;1039Author: Naup堇姬
-
-MiscWho am I?
-WebSave The City1234567DESCRIPTIONThe RAW Has Got An Input That ISIS Has Planted a Bomb Somewhere In The Pune! Fortunetly, RAW Has Infiltratrated The Internet Activity of One Suspect And They Found This Lin
         
       </article>
     </div>
@@ -744,10 +750,10 @@ WebSave The City1234567DESCRIPTIONThe RAW Has Got An Input That ISIS Has Planted
     
       <div>
         <span class="icon-brush"></span>
-        174.2k
+        175.9k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        15:17
+        15:25
       </div>
     
     
@@ -783,7 +789,7 @@ WebSave The City1234567DESCRIPTIONThe RAW Has Got An Input That ISIS Has Planted
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">69</div>
+    <div class="sidebar-state-number">70</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
