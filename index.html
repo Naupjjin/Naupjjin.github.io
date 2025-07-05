@@ -198,7 +198,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">73</div>
+    <div class="sidebar-state-number">74</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
@@ -266,10 +266,51 @@
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2025/06/30/Linux-Kernel-Patched-exec-remove-legacy-custom-binfmt-modules-autoloading/" aria-label="Linux Kernel Patched - exec remove legacy custom binfmt modules autoloading"></a>
+      <a class="post-link" href="/2025/07/05/2025-Google-CTF-writeup/" aria-label="2025 Google CTF - writeup"></a>
     
     
     <div class="post-cover-left">
+      
+        <img data-src="/images/posts_cover/googlectf/googlectf.png" data-sizes="auto" alt="2025 Google CTF - writeup" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2025-07-05</span>
+        <span><span class="icon-pencil"></span>3k words</span>
+        <span><span class="icon-clock"></span>16 mins</span>
+      </div>
+      <h2 class="post-title">2025 Google CTF - writeup</h2>
+      <article class="post-article">
+        
+          GoogleCTF 2025 - writeup
+Author: 堇姬 Naup
+
+
+
+
+
+
+Pwnmulti-arch 2一題 VM pwn第一題是 Reverse 第二題是 pwn這份 writeup 只有寫 pwn
+analyze IDA沒有 debug symbol，所以要修這台 VM 自定義了一個 masm 的檔案格式整個 masm 檔案格式就是
+
+4 bytes MASM 作為 magic number
+被 load 進去後共有 3 個 segments，code、data、stack
+檔案 header 有三段，分別是 code、data、arch_table
+每段的 heade
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2025/06/30/Linux-Kernel-Patched-exec-remove-legacy-custom-binfmt-modules-autoloading/" aria-label="Linux Kernel Patched - exec remove legacy custom binfmt modules autoloading"></a>
+    
+    
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/LinuxKernelPwn/linuxkernel.png" data-sizes="auto" alt="Linux Kernel Patched - exec remove legacy custom binfmt modules autoloading" class="lazyload">
       
@@ -291,12 +332,12 @@
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2025/05/31/2025-AIS3-pre-exam-MFC-official-writeup/" aria-label="2025 AIS3 pre-exam &amp; My First CTF - official writeup"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/Rana/rana.jpg" data-sizes="auto" alt="2025 AIS3 pre-exam &amp; My First CTF - official writeup" class="lazyload">
       
@@ -328,12 +369,12 @@ source cod
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2025/05/30/alpacahack-round-11-web-writeup/" aria-label="alpacahack round 11 web - Jackpot &amp; Tiny Note"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/alpacahack/alpacahack.png" data-sizes="auto" alt="alpacahack round 11 web - Jackpot &amp; Tiny Note" class="lazyload">
       
@@ -359,12 +400,12 @@ Jackpot1234567891011121314151617181920212223242526272829303132333435363738394041
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2025/05/22/page-fault-handle-on-userspace-userfaultfd/" aria-label="Page Fault handle on userspace - Userfaultfd"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/os-arch/126727093_p0_master1200.jpg" data-sizes="auto" alt="Page Fault handle on userspace - Userfaultfd" class="lazyload">
       
@@ -390,12 +431,12 @@ https://chromium.googlesource.com/chromiumos/docs
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2025/05/19/Linux-Kernel-2025-TRX-CTF-devmem-part2/" aria-label="2025 TRX CTF - /dev/mem - part 2"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/trxctf/TRXCTF.png" data-sizes="auto" alt="2025 TRX CTF - /dev/mem - part 2" class="lazyload">
       
@@ -417,12 +458,12 @@ https://chromium.googlesource.com/chromiumos/docs
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2025/05/14/XHLJ-2021-easykernel-writeup/" aria-label="XHLJ 2021-easykernel - writeup"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/LinuxKernelPwn/linuxkernel.png" data-sizes="auto" alt="XHLJ 2021-easykernel - writeup" class="lazyload">
       
@@ -454,12 +495,12 @@ analyze一樣的題目給了三個文件
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2025/05/12/San-Diego-CTF-2025-writeup/" aria-label="San Diego CTF 2025 - all pwn challenge"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/San-Diego-CTF-2025/SDCTF.png" data-sizes="auto" alt="San Diego CTF 2025 - all pwn challenge" class="lazyload">
       
@@ -490,12 +531,12 @@ It let you input shellcode (shellcode need to &amp;lt; 0x19
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2025/04/18/Linux-Kernel-Traversal-of-CPUandPhysical-memory-management/" aria-label="Linux Kernel - Traversal of CPU and physical memory management"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/Linux-Kernel-CPU-and-physical-memory/Archlinux_chan.png" data-sizes="auto" alt="Linux Kernel - Traversal of CPU and physical memory management" class="lazyload">
       
@@ -517,12 +558,12 @@ It let you input shellcode (shellcode need to &amp;lt; 0x19
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2025/04/11/Linux-Kernel-2025-TRX-CTF-devmem/" aria-label="2025 TRX CTF - /dev/mem"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/trxctf/TRXCTF.png" data-sizes="auto" alt="2025 TRX CTF - /dev/mem" class="lazyload">
       
@@ -544,39 +585,6 @@ Author : 堇姬 Naup
 把 cpio 解壓後，先把 pack.sh 寫好
 之後來修 run.sh
 123456789101112131415161718192021222324252627282930313233naup@naup-virtual-machine:~/Desktop/pwn/devmem$ cat run.sh #!/bin/
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2025/04/04/Linux-Kernel-modprobe-EoP-and-2021-3kctf-echo-nerf/" aria-label="Linux Kernel - EoP by modprobe &amp; 2021 3kCTF echo nerf"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        <img data-src="/images/posts_cover/LinuxKernelPwn/linuxkernel.png" data-sizes="auto" alt="Linux Kernel - EoP by modprobe &amp; 2021 3kCTF echo nerf" class="lazyload">
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2025-04-04</span>
-        <span><span class="icon-pencil"></span>1.7k words</span>
-        <span><span class="icon-clock"></span>9 mins</span>
-      </div>
-      <h2 class="post-title">Linux Kernel - EoP by modprobe &amp; 2021 3kCTF echo nerf</h2>
-      <article class="post-article">
-        
-          Linux Kernel - EoP by modprobe &amp;amp; 2021 3kCTF echo nerf
-Author: 堇姬Naup
-
-前言一個酷酷的 kernel pwn 萬解 www
-調用鏈當你去執行一個檔案時會有以下調用鏈
-do_execve第一步去 call do_execvehttps://elixir.bootlin.com/linux/v6.13.7/source/fs/exec.c#L2040
-12345678static int do_execve(struct filename *filename,	const char __user *const __user
         
       </article>
     </div>
@@ -616,10 +624,10 @@ do_execve第一步去 call do_execvehttps://elixir.bootlin.com/linux/v6.13.7/sou
     
       <div>
         <span class="icon-brush"></span>
-        183.1k
+        186k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        16:02
+        16:18
       </div>
     
     
@@ -655,7 +663,7 @@ do_execve第一步去 call do_execvehttps://elixir.bootlin.com/linux/v6.13.7/sou
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">73</div>
+    <div class="sidebar-state-number">74</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>

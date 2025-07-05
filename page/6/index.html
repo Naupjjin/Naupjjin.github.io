@@ -198,7 +198,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">73</div>
+    <div class="sidebar-state-number">74</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
@@ -266,10 +266,50 @@
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2024/07/08/Pwn-Fastbin-Dup-1/" aria-label="Pwn-Fastbin-Dup-1(Glibc 2.23)"></a>
+      <a class="post-link" href="/2024/07/09/Pwn-Tcache-bin-dup-Glibc-2-27/" aria-label="Pwn-Tcache-bin-dup(Glibc 2.27)"></a>
     
     
     <div class="post-cover-left">
+      
+        
+        
+          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Pwn-Tcache-bin-dup(Glibc 2.27)" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-07-09</span>
+        <span><span class="icon-pencil"></span>1.1k words</span>
+        <span><span class="icon-clock"></span>5 mins</span>
+      </div>
+      <h2 class="post-title">Pwn-Tcache-bin-dup(Glibc 2.27)</h2>
+      <article class="post-article">
+        
+          Pwn-Tcache bin dup Glibc 2.27基本上跟Fastbin dup很像，但換成了Tcache
+Glibc 2.27沒有檢查鍊表上第一個是不是現在要free掉的chunk，所以可以直接連續free兩次chunk不會有問題
+另外注意，chunk fd指的是data
+如果是glibc 2.28後加入了key會被寫成Tcache相關東西
+流程1Chunk 1(malloc)
+
+free掉chunk 1
+1Tcache -&amp;gt; Chunk 1
+再free一次
+1Tcache -&amp;gt; Chunk 1 -&amp;gt; Chunk 1 -&amp;gt; Chunk 1 -&amp;gt; ...
+
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/07/08/Pwn-Fastbin-Dup-1/" aria-label="Pwn-Fastbin-Dup-1(Glibc 2.23)"></a>
+    
+    
+    <div class="post-cover-right">
       
         
         
@@ -297,12 +337,12 @@ source code123456789101112131415161718192021222324252627282930313233343536373839
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/07/07/Pwnable-orw/" aria-label="Pwnable.tw-orw"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -368,12 +408,12 @@ sys_read
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/06/30/AIS3-pre-exam-2024-Writeup/" aria-label="AIS3-pre-exam-2024-Writeup"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -417,12 +457,12 @@ Quantum Nim Heist
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/06/24/Fixed-Size-Migration/" aria-label="Fixed Size Migration"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -457,12 +497,12 @@ leave
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/06/22/cryptoCTF2024-Writeup/" aria-label="cryptoCTF2024-Writeup"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -497,12 +537,12 @@ Easy 😁Alibossource code123456789101112131415161718192021222324252627282930fro
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/06/14/CryptoHack-ECC/" aria-label="CryptoHack-ECC"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -529,12 +569,12 @@ https://hackmd.io/@naup96321/rkV3ELFRT
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/05/21/Stack-Migration/" aria-label="Stack-Migration"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -575,12 +615,12 @@ return address填入leave;ret 的gadget
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/05/17/ROP-EZROP/" aria-label="ROP-EZROP(b33f adv_pwn)"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -618,12 +658,12 @@ source coderead的buffer overflow一樣給好給滿
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/05/05/THJCC-office-Writeup/" aria-label="THJCC-official-Writeup"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -645,40 +685,6 @@ Author:堇姬Naup
 
 Source Code : https://github.com/Naupjjin/THJCC-CTF-source-code
 CryptoJPG^PNG&amp;#x3D;?source1234567891011121314from itertools import cycledef xor(a, b):    return [i^j for i, j in zip(a, cycle(b))]KEY= open(&amp;quot;key.png&amp;quot;, &amp;quot;rb&amp;quot;).read()FLAG = ope
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/04/27/Intigriti-August-XSS-challenge/" aria-label="Intigriti-August-XSS-challenge"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        
-        
-          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Intigriti-August-XSS-challenge" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-04-27</span>
-        <span><span class="icon-pencil"></span>2.6k words</span>
-        <span><span class="icon-clock"></span>14 mins</span>
-      </div>
-      <h2 class="post-title">Intigriti-August-XSS-challenge</h2>
-      <article class="post-article">
-        
-          Intigriti’s August XSS challenge
-Author:堇姬Naup
-
-題目https://challenge-0823.intigriti.io/有一個計算機可以輸入東西，只要有執行alert(document.domain)就可以過了
-Source code1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283
         
       </article>
     </div>
@@ -718,10 +724,10 @@ Source code123456789101112131415161718192021222324252627282930313233343536373839
     
       <div>
         <span class="icon-brush"></span>
-        183.1k
+        186k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        16:02
+        16:18
       </div>
     
     
@@ -757,7 +763,7 @@ Source code123456789101112131415161718192021222324252627282930313233343536373839
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">73</div>
+    <div class="sidebar-state-number">74</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>

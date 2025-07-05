@@ -198,7 +198,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">73</div>
+    <div class="sidebar-state-number">74</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
@@ -266,10 +266,46 @@
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2024/10/24/Pwnable-unexploitable/" aria-label="Pwnable.tw-unexploitable"></a>
+      <a class="post-link" href="/2024/10/27/Kernel-pwn-CISCON-2017-babydriver/" aria-label="Kernel Pwn-CISCN 2017 baby driver"></a>
     
     
     <div class="post-cover-left">
+      
+        <img data-src="/images/posts_cover/kernelmode_usermode_switch/kernelmode_usermode_switch.webp" data-sizes="auto" alt="Kernel Pwn-CISCN 2017 baby driver" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-10-27</span>
+        <span><span class="icon-pencil"></span>1.5k words</span>
+        <span><span class="icon-clock"></span>7 mins</span>
+      </div>
+      <h2 class="post-title">Kernel Pwn-CISCN 2017 baby driver</h2>
+      <article class="post-article">
+        
+          Kernel Pwn-CISCN 2017 baby driver
+Author: 堇姬Naup
+
+基本題，當作入門的第一道題(雖然已經過時了)
+前置處理babydriver.tar 先解壓縮
+1tar -xvf babydriver.tar
+
+裡面有三個文件boot.sh : 啟動腳本bzImage : kernel映像檔rootfs.cpio : 文件系統
+文件系統先extract文件系統，將cpio提取到sysfile底下
+1234mkdir -p sysfilemv ./rootfs.cpio ./rootfs.cpio.gzgunzip rootfs.cpio.gzcpio -idm
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/10/24/Pwnable-unexploitable/" aria-label="Pwnable.tw-unexploitable"></a>
+    
+    
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-unexploitable" class="lazyload">
       
@@ -297,12 +333,12 @@ IDA分析1234567int __fastcall main(int argc, const char **argv, const char **en
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/10/22/sunshineCTF-2024-writeup/" aria-label="SunshineCTF 2024 writeup-by.naup96321"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -335,12 +371,12 @@ can get git.
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/10/02/Pwnable-bookwriter/" aria-label="Pwnable.tw-BookWriter"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-BookWriter" class="lazyload">
       
@@ -370,12 +406,12 @@ patchelf直接patch上去
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/09/25/Pwnable-secret-of-my-heart/" aria-label="Pwnable.tw-Secret Of My Heart"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-Secret Of My Heart" class="lazyload">
       
@@ -405,12 +441,12 @@ patchelf直接patch上去
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/09/23/Pwnable-dubble/" aria-label="Pwnable.tw-Dubblesort"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-Dubblesort" class="lazyload">
       
@@ -440,12 +476,12 @@ patchelf直接patch上去
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/09/23/Pwnable-realloc/" aria-label="Pwnable.tw-Re-alloc"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-Re-alloc" class="lazyload">
       
@@ -474,12 +510,12 @@ env他的版本是 Ubuntu GLIBC 2.29-0ubuntu2glibc all in one載下 libc跟ld
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/09/21/Pwnable-secretgarden/" aria-label="Pwnable.tw-secret garden"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-secret garden" class="lazyload">
       
@@ -509,12 +545,12 @@ patchelf直接patch上去
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/09/20/Pwnable-seethefile/" aria-label="Pwnable.tw-seethefile"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-seethefile" class="lazyload">
       
@@ -544,12 +580,12 @@ patchelf直接patch上去
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/09/16/Pwnable-3x17/" aria-label="Pwnable.tw-3x17"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -571,40 +607,6 @@ Author: 堇姬Naup
 
 分析一樣IDA開逆這題把debug symbol全部拔掉，我們先定位main在哪裡
 start12345678910111213141516171819// positive sp value has been detected, the output may be wrong!void __fastcall __noreturn start(__int64 a1, __int64 a2, __int64 a3)&amp;#123;  __int64 v3; // rax  unsigned int v4; // esi  __int64
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/09/11/Pwnable-tcachetear/" aria-label="Pwnable.tw-tcache tear"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        
-        
-          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Pwnable.tw-tcache tear" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-09-11</span>
-        <span><span class="icon-pencil"></span>1.9k words</span>
-        <span><span class="icon-clock"></span>11 mins</span>
-      </div>
-      <h2 class="post-title">Pwnable.tw-tcache tear</h2>
-      <article class="post-article">
-        
-          Pwnable.tw-tcache tear
-Author: 堇姬Naup
-
-analyze code先IDA逆一波，把函數重新命名
-main123456789101112131415161718192021222324252627282930313233343536373839404142434445void __fastcall __noreturn main(__int64 a1, char **a2, char **a3)&amp;#123;  __int64 choice; // rax  unsigned int free_chunk_cnt; // [rsp+Ch] [rbp-4h]  
         
       </article>
     </div>
@@ -644,10 +646,10 @@ main1234567891011121314151617181920212223242526272829303132333435363738394041424
     
       <div>
         <span class="icon-brush"></span>
-        183.1k
+        186k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        16:02
+        16:18
       </div>
     
     
@@ -683,7 +685,7 @@ main1234567891011121314151617181920212223242526272829303132333435363738394041424
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">73</div>
+    <div class="sidebar-state-number">74</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
