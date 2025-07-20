@@ -198,7 +198,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">74</div>
+    <div class="sidebar-state-number">76</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
@@ -262,6 +262,75 @@
 
           <section id="main">
   
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-left" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/09/20/Pwnable-seethefile/" aria-label="Pwnable.tw-seethefile"></a>
+    
+    
+    <div class="post-cover-left">
+      
+        <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-seethefile" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-09-20</span>
+        <span><span class="icon-pencil"></span>2.3k words</span>
+        <span><span class="icon-clock"></span>13 mins</span>
+      </div>
+      <h2 class="post-title">Pwnable.tw-seethefile</h2>
+      <article class="post-article">
+        
+          Pwnable.tw-seethefile
+Author: 堇姬Naup
+
+libcglibc all in one 中沒有 2.23-0ubuntu5所以去網路上找libchttps://launchpad.net/ubuntu/xenial/i386/libc6/2.23-0ubuntu5
+把i386載下來
+1dpkg -X libc6_2.23-0ubuntu5_i386.deb .
+在libs裡面就有ld跟libc了
+patchelf直接patch上去
+12patchelf --set-interpreter ld-2.23.so seethefilepatchelf --replac
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/09/16/Pwnable-3x17/" aria-label="Pwnable.tw-3x17"></a>
+    
+    
+    <div class="post-cover-right">
+      
+        
+        
+          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Pwnable.tw-3x17" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-09-16</span>
+        <span><span class="icon-pencil"></span>1.6k words</span>
+        <span><span class="icon-clock"></span>8 mins</span>
+      </div>
+      <h2 class="post-title">Pwnable.tw-3x17</h2>
+      <article class="post-article">
+        
+          Pwnable.tw-3x17
+Author: 堇姬Naup
+
+分析一樣IDA開逆這題把debug symbol全部拔掉，我們先定位main在哪裡
+start12345678910111213141516171819// positive sp value has been detected, the output may be wrong!void __fastcall __noreturn start(__int64 a1, __int64 a2, __int64 a3)&amp;#123;  __int64 v3; // rax  unsigned int v4; // esi  __int64
+        
+      </article>
+    </div>
+  </div>
+</div>
   
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
@@ -555,77 +624,6 @@ AC10 CVE付現解firmware1binwalk -E US_AC10V1.0RTL_V15.03.06.23_multi_TD01.bin
   </div>
 </div>
   
-    <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/07/26/Pwn-File-Structure-note/" aria-label="Pwn-File Structure note"></a>
-    
-    
-    <div class="post-cover-left">
-      
-        
-        
-          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Pwn-File Structure note" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-07-26</span>
-        <span><span class="icon-pencil"></span>19 words</span>
-        <span><span class="icon-clock"></span>1 min</span>
-      </div>
-      <h2 class="post-title">Pwn-File Structure note</h2>
-      <article class="post-article">
-        
-          一樣因為會更新所以先記錄在這https://hackmd.io/@naup96321/SyvhbZWYR
-
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/07/22/HitconCTF2024-Writeup/" aria-label="HITCON CTF 2024 Writeup"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        
-        
-          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="HITCON CTF 2024 Writeup" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-07-22</span>
-        <span><span class="icon-pencil"></span>697 words</span>
-        <span><span class="icon-clock"></span>3 mins</span>
-      </div>
-      <h2 class="post-title">HITCON CTF 2024 Writeup</h2>
-      <article class="post-article">
-        
-          HITCON CTF 2024
-Author: 堇姬Naup
-
-
-rank: 24th &amp;amp; Taiwan 1st
-
-這次跟bamboofox &amp;amp; starburst kiwawa &amp;amp; b33f一起打，主要看we
-
-
-Echo as a Servicesource codeDockerfile
-12345678910111213141516171819202122FROM oven/bun:1.1.8-slimRUN apt-get update &amp;amp;&amp;amp; apt-get install -y gccRUN useradd -ms /bin/bash ctfW
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
 
 
   <nav id="page-nav" data-aos="fade-up">
@@ -659,10 +657,10 @@ Echo as a Servicesource codeDockerfile
     
       <div>
         <span class="icon-brush"></span>
-        188.1k
+        189.2k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        16:27
+        16:34
       </div>
     
     
@@ -698,7 +696,7 @@ Echo as a Servicesource codeDockerfile
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">74</div>
+    <div class="sidebar-state-number">76</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>

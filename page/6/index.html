@@ -198,7 +198,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">74</div>
+    <div class="sidebar-state-number">76</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
@@ -262,6 +262,77 @@
 
           <section id="main">
   
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-left" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/07/26/Pwn-File-Structure-note/" aria-label="Pwn-File Structure note"></a>
+    
+    
+    <div class="post-cover-left">
+      
+        
+        
+          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Pwn-File Structure note" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-07-26</span>
+        <span><span class="icon-pencil"></span>19 words</span>
+        <span><span class="icon-clock"></span>1 min</span>
+      </div>
+      <h2 class="post-title">Pwn-File Structure note</h2>
+      <article class="post-article">
+        
+          一樣因為會更新所以先記錄在這https://hackmd.io/@naup96321/SyvhbZWYR
+
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/07/22/HitconCTF2024-Writeup/" aria-label="HITCON CTF 2024 Writeup"></a>
+    
+    
+    <div class="post-cover-right">
+      
+        
+        
+          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="HITCON CTF 2024 Writeup" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-07-22</span>
+        <span><span class="icon-pencil"></span>697 words</span>
+        <span><span class="icon-clock"></span>3 mins</span>
+      </div>
+      <h2 class="post-title">HITCON CTF 2024 Writeup</h2>
+      <article class="post-article">
+        
+          HITCON CTF 2024
+Author: 堇姬Naup
+
+
+rank: 24th &amp;amp; Taiwan 1st
+
+這次跟bamboofox &amp;amp; starburst kiwawa &amp;amp; b33f一起打，主要看we
+
+
+Echo as a Servicesource codeDockerfile
+12345678910111213141516171819202122FROM oven/bun:1.1.8-slimRUN apt-get update &amp;amp;&amp;amp; apt-get install -y gccRUN useradd -ms /bin/bash ctfW
+        
+      </article>
+    </div>
+  </div>
+</div>
   
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
@@ -614,83 +685,6 @@ return address填入leave;ret 的gadget
   </div>
 </div>
   
-    <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/05/17/ROP-EZROP/" aria-label="ROP-EZROP(b33f adv_pwn)"></a>
-    
-    
-    <div class="post-cover-left">
-      
-        
-        
-          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="ROP-EZROP(b33f adv_pwn)" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-05-17</span>
-        <span><span class="icon-pencil"></span>787 words</span>
-        <span><span class="icon-clock"></span>4 mins</span>
-      </div>
-      <h2 class="post-title">ROP-EZROP(b33f adv_pwn)</h2>
-      <article class="post-article">
-        
-          ROP-EZROP(b33f adv_pwn)
-Author:堇姬
-
-確認保護
-
-開NX沒辦法寫shellcode，另外他開了canary，但其實沒開(沒有check canary的判斷式)
-
-
-如果有開會有這個
-
-
-
-source coderead的buffer overflow一樣給好給滿
-12345678910#include &amp;lt;stdio.h&amp;gt;int main()&amp;#123;    char buf[0x40];    setvbuf(stdin,0,_IONBF,0);        setvbuf(stdout,0,_IONBF,0);    printf(&amp;quot;
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/05/05/THJCC-office-Writeup/" aria-label="THJCC-official-Writeup"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        
-        
-          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="THJCC-official-Writeup" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-05-05</span>
-        <span><span class="icon-pencil"></span>1.8k words</span>
-        <span><span class="icon-clock"></span>8 mins</span>
-      </div>
-      <h2 class="post-title">THJCC-official-Writeup</h2>
-      <article class="post-article">
-        
-          THJCC CTF official writeup
-Author:堇姬Naup
-
-Source Code : https://github.com/Naupjjin/THJCC-CTF-source-code
-CryptoJPG^PNG&amp;#x3D;?source1234567891011121314from itertools import cycledef xor(a, b):    return [i^j for i, j in zip(a, cycle(b))]KEY= open(&amp;quot;key.png&amp;quot;, &amp;quot;rb&amp;quot;).read()FLAG = ope
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
 
 
   <nav id="page-nav" data-aos="fade-up">
@@ -724,10 +718,10 @@ CryptoJPG^PNG&amp;#x3D;?source1234567891011121314from itertools import cycledef 
     
       <div>
         <span class="icon-brush"></span>
-        188.1k
+        189.2k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        16:27
+        16:34
       </div>
     
     
@@ -763,7 +757,7 @@ CryptoJPG^PNG&amp;#x3D;?source1234567891011121314from itertools import cycledef 
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">74</div>
+    <div class="sidebar-state-number">76</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>

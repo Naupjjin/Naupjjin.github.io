@@ -198,7 +198,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">74</div>
+    <div class="sidebar-state-number">76</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
@@ -262,6 +262,81 @@
 
           <section id="main">
   
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-left" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/02/29/AIS3-EOF-2024-Qual-WP/" aria-label="AIS3 EOF 2024 Qual Writeup"></a>
+    
+    
+    <div class="post-cover-left">
+      
+        
+        
+          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="AIS3 EOF 2024 Qual Writeup" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-02-29</span>
+        <span><span class="icon-pencil"></span>2.9k words</span>
+        <span><span class="icon-clock"></span>15 mins</span>
+      </div>
+      <h2 class="post-title">AIS3 EOF 2024 Qual Writeup</h2>
+      <article class="post-article">
+        
+          
+Author:堇姬NaupRank : 42
+
+
+MiscWelcome簽到 DC就有
+
+reverseFlag Generator題目會把這坨Block寫進flag.exe(原本看了一陣子，不是很理解她在幹嘛www，後來我突然看懂了那一坨東西我根本不用理解她在幹嘛)
+
+直接用x64gdb抓參數，看他把甚麼寫進去就行了把寫了甚麼截下來，然後包回.exe就行了
+stateful幸好我都使用工人智慧把式子抓出來有Correct!!!跟WRONG!!!，直接去state_machine()看dest怎麼產生。你會看到50個state，他會經過一堆運算來一個一個呼叫，所以要先搞清楚他到底怎麼呼叫，可
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/02/29/CGGC-WP/" aria-label="CGGC 2024 Qual Writeup"></a>
+    
+    
+    <div class="post-cover-right">
+      
+        
+        
+          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="CGGC 2024 Qual Writeup" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-02-29</span>
+        <span><span class="icon-pencil"></span>1.2k words</span>
+        <span><span class="icon-clock"></span>5 mins</span>
+      </div>
+      <h2 class="post-title">CGGC 2024 Qual Writeup</h2>
+      <article class="post-article">
+        
+          CGGC 2024 Qual writeup
+Team: 芙莉熊Rank: 9th
+
+Webbossti第一關是用jwt sign的登入頁面，把密鑰用john暴一下並修改參數登入就好：john jwt.txt --wordlist=rockyou.txt --format=HMAC-SHA256
+  
+  
+登入後的畫面上方有個7*7，馬上想到SSTI，結合前面JWT帶有的參數hack就可以植入payload:&amp;#123;&amp;#123;config.__class__.__init__.__globals__[&#39;os&#39;].popen(&#39;cat Flag.txt&#39;).read()&amp;#125;&amp;#1
+        
+      </article>
+    </div>
+  </div>
+</div>
   
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
@@ -440,10 +515,10 @@ Solve Sc
     
       <div>
         <span class="icon-brush"></span>
-        188.1k
+        189.2k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        16:27
+        16:34
       </div>
     
     
@@ -479,7 +554,7 @@ Solve Sc
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">74</div>
+    <div class="sidebar-state-number">76</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
