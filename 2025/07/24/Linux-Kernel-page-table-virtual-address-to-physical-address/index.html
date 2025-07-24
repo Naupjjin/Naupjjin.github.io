@@ -1,0 +1,833 @@
+
+  <!DOCTYPE html>
+  <html lang="en"  >
+  <head>
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_bq08450reo';window.REIMU_CONFIG.clipboard_tips = {"success":"copy success(*^▽^*)","fail":"copy failed (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"Naup"}};window.REIMU_CONFIG.code_block = {"expand":true};</script>
+  
+  <title>
+    Linux Kernel - Page Table - Virtual address to physical address |
+    
+    堇姬 Naup&#39;s Blog
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_bq08450reo.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="Page Table - Virtual address to physical address Author: 堇姬Naup  前言把之前寫到一半的完善好了，丟上來https:&#x2F;&#x2F;hackmd.io&#x2F;@naup96321&#x2F;H1gx5xJDle     qemu monitorhttps:&#x2F;&#x2F;qemu-project.gitlab.io&#x2F;qemu&#x2F;system&#x2F;monitor.html可以用他來讀">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux Kernel - Page Table - Virtual address to physical address">
+<meta property="og:url" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/index.html">
+<meta property="og:site_name" content="堇姬 Naup&#39;s Blog">
+<meta property="og:description" content="Page Table - Virtual address to physical address Author: 堇姬Naup  前言把之前寫到一半的完善好了，丟上來https:&#x2F;&#x2F;hackmd.io&#x2F;@naup96321&#x2F;H1gx5xJDle     qemu monitorhttps:&#x2F;&#x2F;qemu-project.gitlab.io&#x2F;qemu&#x2F;system&#x2F;monitor.html可以用他來讀">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_cf8615e8179000b81143df85d58035e8.jpg">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_04a2ec68503a66269684b8c8b2f8a045.jpg">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_24e252316be1daf87c8f427a80be7772.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_3c4a0a7a52e69a3551c8a59c61ef04b3.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_cf8615e8179000b81143df85d58035e8.jpg">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_04a2ec68503a66269684b8c8b2f8a045.jpg">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/cr3.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_9ab716a3c39f52a55d08758ad51bad9c.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_709f9a649b4d2be3de625c0cebdaae0d.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/PML4E.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_a3cb8e7bafd84e12fe190c2f10120732.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_0e717adc982d7f995c2ee92f9593e0a8.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/PDPE.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_9f41950a4f99f41f1ab0223a95e4a404.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_6413286019a43ba4c215176c9afa83cb.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/PDE4k.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/PDE2MB.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/PDEbits.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_9fd44888984f3e69b1b6a9ab8d123cee.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/PTE.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_29d817fc22b8aba3b1fdbd5522982678.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_206219e5e5d4282cb106ae39f78a6106.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/cr3.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_83af9e2b2cedf10b128d06dfd7fde5a3.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/PML4E.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_3bd79a2a9c323fe5c86189a2b04896f6.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/PDPE.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_c04c05d4225d5ae4836eef26b05c6639.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/PDE4k.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/PDE2MB.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/PDEbits.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_4e6bc581e52ae3c83275d5d75b3e22c5.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/PTE.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_b620356049930012412411e8500b2266.png">
+<meta property="og:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_9f40042dad26d36670331fd43224f185.png">
+<meta property="og:image" content="https://i.postimg.cc/xdQTyB0f/image.gif">
+<meta property="article:published_time" content="2025-07-24T11:53:46.000Z">
+<meta property="article:modified_time" content="2025-07-24T12:29:07.436Z">
+<meta property="article:author" content="Naup堇姬">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_cf8615e8179000b81143df85d58035e8.jpg">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="堇姬 Naup's Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/fav.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css">
+
+  
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+
+  <body>
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      <div class="loading-word">Naup...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/">Home</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/archives">Archives</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/about">About</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed" target="_blank"></a>
+    
+    
+    
+  </nav>
+</div>
+<header id="header">
+  
+    <picture></picture>
+    <img fetchpriority="high" src="/images/posts_cover/Three-level-pagetable/x86-3-level-page-tb.png" alt="Linux Kernel - Page Table - Virtual address to physical address">
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">Linux Kernel - Page Table - Virtual address to physical address</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  
+  <div class="sidebar-wrapper wrap-sticky">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Page-Table-Virtual-address-to-physical-address"><span class="toc-number">1.</span> <span class="toc-text">Page Table - Virtual address to physical address</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qemu-monitor"><span class="toc-number">1.2.</span> <span class="toc-text">qemu monitor</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-number">1.3.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gdb-2MB-page"><span class="toc-number">1.4.</span> <span class="toc-text">gdb (2MB page)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#cr3-to-PML4"><span class="toc-number">1.4.1.</span> <span class="toc-text">cr3 to PML4</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PML4-to-PDP"><span class="toc-number">1.4.2.</span> <span class="toc-text">PML4 to PDP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PDP-2-PD"><span class="toc-number">1.4.3.</span> <span class="toc-text">PDP 2 PD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PD-find-any"><span class="toc-number">1.4.4.</span> <span class="toc-text">PD find any</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#page-frame-offset"><span class="toc-number">1.4.5.</span> <span class="toc-text">page frame + offset</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gdb-4KB-page"><span class="toc-number">1.5.</span> <span class="toc-text">gdb (4KB page)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#cr3-to-PML4-1"><span class="toc-number">1.5.1.</span> <span class="toc-text">cr3 to PML4</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PML4-to-PDP-1"><span class="toc-number">1.5.2.</span> <span class="toc-text">PML4 to PDP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PDP-2-PD-1"><span class="toc-number">1.5.3.</span> <span class="toc-text">PDP 2 PD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PD-find-PT"><span class="toc-number">1.5.4.</span> <span class="toc-text">PD find PT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PT-to-physical-page-frame"><span class="toc-number">1.5.5.</span> <span class="toc-text">PT to physical page frame</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#page-frame-offset-1"><span class="toc-number">1.5.6.</span> <span class="toc-text">page frame + offset</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#after-all"><span class="toc-number">1.6.</span> <span class="toc-text">after all</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">77</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">21</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+      
+        <div class="sidebar-btn-wrapper" style="position:static">
+          <div class="sidebar-toc-btn current"></div>
+          <div class="sidebar-common-btn"></div>
+        </div>
+      
+    </div>
+  </div>
+
+  <div class="sidebar-widget">
+  
+  </div>
+</aside>
+
+          <section id="main"><article id="post-Linux-Kernel-page-table-virtual-address-to-physical-address" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <a href="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/" class="article-date-link" data-aos="zoom-in">
+    <time datetime="2025-07-24T11:53:46.000Z" itemprop="datePublished">2025-07-24</time>
+    <time style="display: none;" id="post-update-time">2025-07-24</time>
+  </a>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <h1 id="Page-Table-Virtual-address-to-physical-address"><a href="#Page-Table-Virtual-address-to-physical-address" class="headerlink" title="Page Table - Virtual address to physical address"></a>Page Table - Virtual address to physical address</h1><blockquote>
+<p>Author: 堇姬Naup</p>
+</blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>把之前寫到一半的完善好了，丟上來<br><a target="_blank" rel="noopener" href="https://hackmd.io/@naup96321/H1gx5xJDle">https://hackmd.io/@naup96321/H1gx5xJDle</a></p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_cf8615e8179000b81143df85d58035e8.jpg" class="">
+
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_04a2ec68503a66269684b8c8b2f8a045.jpg" class="">
+
+<h2 id="qemu-monitor"><a href="#qemu-monitor" class="headerlink" title="qemu monitor"></a>qemu monitor</h2><p><a target="_blank" rel="noopener" href="https://qemu-project.gitlab.io/qemu/system/monitor.html">https://qemu-project.gitlab.io/qemu/system/monitor.html</a><br>可以用他來讀寫物理記憶體或是做很多事情<br>把 Qemu 加上 <code>-monitor unix:/tmp/qemu-monitor.sock,server,nowait</code></p>
+<p>後 load 這支<br><a target="_blank" rel="noopener" href="https://github.com/Naupjjin/slub-gdbext/tree/main">https://github.com/Naupjjin/slub-gdbext/tree/main</a><br>就可以通過 socket，來去操作 qemu monitor<br><code>qemu_monitor &#39;monitor_command_string&#39;</code></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">QemuMonitorCommand</span>(<span class="title class_ inherited__">GenericCommand</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">	Send a command to QEMU monitor via UNIX socket.</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    -monitor unix:/tmp/qemu-monitor.sock,server,nowait</span></span><br><span class="line"><span class="string">	by. naup</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    _cmdline_ = <span class="string">&quot;qemu_monitor&quot;</span></span><br><span class="line">    _syntax_  = <span class="string">&quot;qemu_monitor &#x27;monitor_command_string&#x27;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>(QemuMonitorCommand, self).__init__(self._cmdline_, gdb.COMMAND_OBSCURE)</span><br><span class="line">        self.monitor_path = <span class="string">&quot;/tmp/qemu-monitor.sock&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">do_invoke</span>(<span class="params">self, argv</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> argv:</span><br><span class="line">            err(<span class="string">&quot;Usage: qemu_monitor &#x27;command&#x27;&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">        cmd = <span class="string">&quot; &quot;</span>.join(argv) + <span class="string">&quot;\n&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">with</span> socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) <span class="keyword">as</span> sock:</span><br><span class="line">                sock.connect(self.monitor_path)</span><br><span class="line">                sock.sendall(cmd.encode())</span><br><span class="line">                sock.settimeout(<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line">                response = <span class="string">b&quot;&quot;</span></span><br><span class="line">                <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">                    <span class="keyword">try</span>:</span><br><span class="line">                        data = sock.recv(<span class="number">4096</span>)</span><br><span class="line">                        <span class="keyword">if</span> <span class="keyword">not</span> data:</span><br><span class="line">                            <span class="keyword">break</span></span><br><span class="line">                        response += data</span><br><span class="line">                    <span class="keyword">except</span> socket.timeout:</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">                <span class="built_in">print</span>(response.decode(errors=<span class="string">&quot;ignore&quot;</span>).strip())</span><br><span class="line"></span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            err(<span class="string">f&quot;Failed to connect to QEMU monitor: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">QemuMonitorCommand()</span><br></pre></td></tr></table></figure>
+
+<p>實際用起來長這樣</p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_24e252316be1daf87c8f427a80be7772.png" class="">
+
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>Virtual address 對應的就是 page table offset<br>通過他來查表可以查出 physical address</p>
+<p>VA 實際上只會用到 48 bits，其餘是 Sign Extension<br>9 bits PML4I (Page-Map Level-4 Index)<br>9 bits PDPI (Page Directory Pointer Index)<br>9 bits PDI (Page Directory Index)<br>9 bits PTI (Page Table Index)<br>12 bits Physical Page Offset</p>
+<p><code>0xffffffff82b6a3a0</code></p>
+<p>Unused (bits 63–48) : 0xffff (65535)<br>PML4 Index          : 0x1ff (511)<br>PDPT Index          : 0x1fe (510)<br>PD Index            : 0x15 (21)<br>PT Index            : 0x16a (362)<br>Offset              : 0x3a0 (928)</p>
+<p>參考該docs的2.5(p.3069)<br><a target="_blank" rel="noopener" href="https://www.intel.com.tw/content/www/tw/zh/content-details/782158/intel-64-and-ia-32-architectures-software-developer-s-manual-combined-volumes-1-2a-2b-2c-2d-3a-3b-3c-3d-and-4.html">Intel® 64 and IA-32 Architectures Software Developer’s Manual Combined Volumes: 1, 2A, 2B, 2C, 2D, 3A, 3B, 3C, 3D, and 4</a></p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_3c4a0a7a52e69a3551c8a59c61ef04b3.png" class="">
+
+<p>CR3 register contains the base address of the page-directorypointer table. With 4-level paging and 5-level paging, the CR3 register contains the base address of the PML4 table and PML5 table</p>
+<p>0	PWT（Page-level Write-Through）<br>1	PCD（Page-level Cache Disable）<br>11:2	保留<br>63:12	Page table base address（PML4 physical address）</p>
+<p>可以從 cr3 來找到 Page table 最上層<br>只要把最低 12 bits mask 掉，就是 page table physical address，把他轉為 virtual address 來看比較方便</p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_cf8615e8179000b81143df85d58035e8.jpg" class="">
+
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_04a2ec68503a66269684b8c8b2f8a045.jpg" class="">
+
+<p>每一個 Table 為 1 Page (4 KB)<br>每一個 Entry 為 8 Bytes<br>因此每一個 Table 含有 512 個 Entries (分別就對應 9 bits, 2^9 &#x3D; 512)</p>
+<p>高四個 page table 找到想找的 page 後<br>通過最後低位 12 bits<br>找到該 page 具體位置</p>
+<p>就是個先映射到實際 page，在從該 page 找實際位置的轉換方式</p>
+<p>cr3 找到第一個頁表的位置後，就可以通過 VA 算出的第一個值，找 offset，以此類推</p>
+<p><code>512**4*0x1000-1 = 0xffffffffffff</code> 就是 48 bits</p>
+<h2 id="gdb-2MB-page"><a href="#gdb-2MB-page" class="headerlink" title="gdb (2MB page)"></a>gdb (2MB page)</h2><p>目標將</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gef&gt; p &amp;slab_caches</span><br><span class="line">$3 = (struct list_head *) 0xffffffff82b6a3a0 &lt;slab_caches&gt;</span><br><span class="line">gef&gt; v2p 0xffffffff82b6a3a0</span><br><span class="line">Virt: 0xffffffff82b6a3a0 -&gt; Phys: 0x2b6a3a0</span><br></pre></td></tr></table></figure>
+<p>手動轉成 physical address<br>這邊不知道他是 2MB 還是 4KB，不過前三張找法是一樣的</p>
+<p>Unused (bits 63–48) : 0xffff (65535)<br>PML4 Index          : 0x1ff (511)<br>PDPT Index          : 0x1fe (510)<br>PD Index            : 0x15 (21)</p>
+<h3 id="cr3-to-PML4"><a href="#cr3-to-PML4" class="headerlink" title="cr3 to PML4"></a>cr3 to PML4</h3><img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/cr3.png" class="">
+
+<p>先找 cr3</p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_9ab716a3c39f52a55d08758ad51bad9c.png" class="">
+
+<p><code>0x0000000004866000 &amp; ~0xfff = 0x0000000004866000</code></p>
+<p>這樣就找到 PML4 base (PA) &#x3D; 0x0000000004866000<br>VA &#x3D; 0xffff888004866000</p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_709f9a649b4d2be3de625c0cebdaae0d.png" class="">
+
+
+
+<h3 id="PML4-to-PDP"><a href="#PML4-to-PDP" class="headerlink" title="PML4 to PDP"></a>PML4 to PDP</h3><p>PML4，Linux Kernel 的 PGD (Page Global Directory)</p>
+<p>PML4 entry 長這樣，整張 PML4 頁表共有 512 個</p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/PML4E.png" class="">
+
+<p>高 9 bits 轉 offset，找到對應 PML4E</p>
+<p><code>0xffff888004866000 + 511 * 8 = 0xffff888004866ff8</code></p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_a3cb8e7bafd84e12fe190c2f10120732.png" class="">
+
+<p>根據 PML4E 去掉低 12 bits，跟高 1 bits<br><code>0x0000000002a33067  &amp; ~0xfff = 0x2a33000</code></p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_0e717adc982d7f995c2ee92f9593e0a8.png" class="">
+
+
+<p>這樣就找到 PDP base (PA) &#x3D; 0x2a33000<br>VA &#x3D; 0xffff888002a33000</p>
+<h3 id="PDP-2-PD"><a href="#PDP-2-PD" class="headerlink" title="PDP 2 PD"></a>PDP 2 PD</h3><p>PDP， Linux Kernel 的 PUD (Page Upper Directory)<br>接下來從 PDP 找出 PD base<br>PDPE 長這樣</p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/PDPE.png" class="">
+
+
+<p>算 offset 找到<br><code>0xffff888002a33000 + 510 * 8 = 0xffff888002a33ff0</code></p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_9f41950a4f99f41f1ab0223a95e4a404.png" class="">
+
+
+<p>根據 PDPE 去掉低 12 bits，跟高 1 bits<br><code>0x0000000002a34063 &amp; ~0xfff = 0x2a34000</code></p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_6413286019a43ba4c215176c9afa83cb.png" class="">
+
+
+<p>這樣就找到 PD base (PA) &#x3D; 0x2a34000<br>VA &#x3D; 0xffff888002a34000</p>
+<h3 id="PD-find-any"><a href="#PD-find-any" class="headerlink" title="PD find any"></a>PD find any</h3><p>PD，Linux Kernel 的 PMD (Page Middle Directory)<br>PDE 長這樣</p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/PDE4k.png" class="">
+
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/PDE2MB.png" class="">
+
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/PDEbits.png" class="">
+
+
+<p>算 offset 找到<br><code>0xffff888002a34000 + 0x15 * 8 = 0xffff888002a340a8</code></p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_9fd44888984f3e69b1b6a9ab8d123cee.png" class="">
+
+<p>找到的 PDE 長這樣<br><code>0x8000000002a000e3</code><br><code>0b1000000000000000000000000000000000000010101000000000000011100011</code></p>
+<p>這邊跟先前的不太一樣<br>可以關注到這邊的 PDE 有兩種形式<br>在 2 MB &#x2F; 4 KB Page Size 的情況結構不同<br>會根據 PS 來標示是哪種<br>1 的話是 2 MB<br>4KB 找到的是 PT base<br>在 2MB 狀況下沒有 PT，是直接找到該 physical page frame</p>
+<p>所以轉換一下<br><code>0x0000000002a000e3 &amp; ~0xfffff = 0x2a00000</code></p>
+<p>PS: 這邊附上 PT 的 PTE</p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/PTE.png" class="">
+
+<h3 id="page-frame-offset"><a href="#page-frame-offset" class="headerlink" title="page frame + offset"></a>page frame + offset</h3><p>所以前面的重新計算一下</p>
+<p>2MB:<br>Unused (bits 63–48) : 0xffff (65535)<br>PML4 Index          : 0x1ff (511)<br>PDPT Index          : 0x1fe (510)<br>PD Index            : 0x15 (21)<br>Offset (2MB page)   : 0x16a3a0 (1483680)</p>
+<p>physical page frame &#x3D; 0x2a00000<br>加上 offset <code>0x16a3a0</code></p>
+<p><code>0x2a00000 + 0x16a3a0 = 0x2b6a3a0</code><br>這樣就找到 physical adress 啦</p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_29d817fc22b8aba3b1fdbd5522982678.png" class="">
+
+<h2 id="gdb-4KB-page"><a href="#gdb-4KB-page" class="headerlink" title="gdb (4KB page)"></a>gdb (4KB page)</h2><p>這次把 kaslr 打開來，並搭配 monitor<br>要找 0xffffffff8538adc0</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">gef&gt; x/6xg 0xffffffff8538adc0</span><br><span class="line">0xffffffff8538adc0:	0x89482775c38948ff	0x8948000011e2e8ef</span><br><span class="line">0xffffffff8538add0:	0x8948fffff7bae8ef	0x8548000012c2e8ef</span><br><span class="line">0xffffffff8538ade0:	0x5d5bfb230f0374db	0x0fc031ccccccccc3</span><br><span class="line">gef&gt; v2p 0xffffffff8538adc0</span><br><span class="line">Virt: 0xffffffff8538adc0 -&gt; Phys: 0x1478adc0</span><br></pre></td></tr></table></figure>
+
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_206219e5e5d4282cb106ae39f78a6106.png" class="">
+
+<h3 id="cr3-to-PML4-1"><a href="#cr3-to-PML4-1" class="headerlink" title="cr3 to PML4"></a>cr3 to PML4</h3><img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/cr3.png" class="">
+
+<p>先找 cr3</p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_83af9e2b2cedf10b128d06dfd7fde5a3.png" class="">
+
+<p><code>0x2068000 &amp; ~0xfff = 0x2068000</code></p>
+<p>這樣就找到 PML4 base (PA): 0x2068000</p>
+<h3 id="PML4-to-PDP-1"><a href="#PML4-to-PDP-1" class="headerlink" title="PML4 to PDP"></a>PML4 to PDP</h3><p>PML4，Linux Kernel 的 PGD (Page Global Directory)</p>
+<p>PML4 entry 長這樣，整張 PML4 頁表共有 512 個</p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/PML4E.png" class="">
+
+<p>高 9 bits 轉 offset，找到對應 PML4E</p>
+<p><code>0x2068000 + 511 * 8 = 0x2068ff8</code></p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_3bd79a2a9c323fe5c86189a2b04896f6.png" class="">
+
+
+<p>根據 PML4E 去掉低 12 bits，跟高 1 bits<br><code>0x0000000015033067  &amp; ~0xfff = 0x15033000</code></p>
+<p>這樣就找到 PDP base (PA) &#x3D; 0x15033000</p>
+<h3 id="PDP-2-PD-1"><a href="#PDP-2-PD-1" class="headerlink" title="PDP 2 PD"></a>PDP 2 PD</h3><p>PDP， Linux Kernel 的 PUD (Page Upper Directory)<br>接下來從 PDP 找出 PD base<br>PDPE 長這樣</p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/PDPE.png" class="">
+
+<p>算 offset 找到<br><code>0x15033000 + 510 * 8 = 0x15033ff0</code></p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_c04c05d4225d5ae4836eef26b05c6639.png" class="">
+
+
+<p>根據 PDPE 去掉低 12 bits，跟高 1 bits<br><code>0x0000000015034063 &amp; ~0xfff = 0x15034000</code></p>
+<p>這樣就找到 PD base (PA) &#x3D; 0x15034000</p>
+<h3 id="PD-find-PT"><a href="#PD-find-PT" class="headerlink" title="PD find PT"></a>PD find PT</h3><p>PD，Linux Kernel 的 PMD (Page Middle Directory)<br>PDE 長這樣</p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/PDE4k.png" class="">
+
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/PDE2MB.png" class="">
+
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/PDEbits.png" class="">
+
+
+<p>算 offset 找到<br><code>0x15034000 + 0x29 * 8 = 0x15034148</code></p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_4e6bc581e52ae3c83275d5d75b3e22c5.png" class="">
+
+<p>0x000000000240e063 &#x3D; 0b10010000001110000001100011<br>第 7 個是 0，是 4 KB，有 PT</p>
+<p><code>0x000000000240e063 &amp; ~0xfff = 0x240e000</code></p>
+<p>這樣就找到 PT base (PA) &#x3D; 0x240e000</p>
+<h3 id="PT-to-physical-page-frame"><a href="#PT-to-physical-page-frame" class="headerlink" title="PT to physical page frame"></a>PT to physical page frame</h3><p>PT<br>PTE 長這樣</p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/PTE.png" class="">
+
+<p><code>0x240e000 + 0x18a * 8 = 0x240ec50</code></p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_b620356049930012412411e8500b2266.png" class="">
+
+<p><code>0x000000001478a021 &amp; ~0xfff = 0x1478a000</code></p>
+<p>這樣就找到那張 page 了<br>page base 是 0x1478a000</p>
+<h3 id="page-frame-offset-1"><a href="#page-frame-offset-1" class="headerlink" title="page frame + offset"></a>page frame + offset</h3><p><code>0x1478a000 + 0xdc0 = 0x1478adc0</code></p>
+<p>長的一模一樣，找到了</p>
+<img src="/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/upload_9f40042dad26d36670331fd43224f185.png" class="">
+
+<h2 id="after-all"><a href="#after-all" class="headerlink" title="after all"></a>after all</h2><p>以上就是如何轉換<br>終於寫完了<br><img src="https://i.postimg.cc/xdQTyB0f/image.gif"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+  <nav id="article-nav" data-aos="fade-up">
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        <img data-src="/images/posts_cover/Downunder2025/2a922627fb21f5626d8bbd926ccdf797.png" data-sizes="auto" alt="2025-downunderCTF-writeup" class="lazyload">
+      
+      <a href="/2025/07/20/2025-downunderCTF-writeup/"></a>
+      <div class="article-nav-caption">Older</div>
+      <h3 class="article-nav-title">
+        
+          2025-downunderCTF-writeup
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+</article>
+
+
+
+
+
+
+</section>
+        </div>
+        
+        
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      2020-2025
+      <span class="footer-info-sep rotate"></span>
+      Naup堇姬
+    </div>
+    
+      <div>
+        Powered by&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        190.5k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        16:40
+      </div>
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">Number of visits&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">Number of visitors&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Page-Table-Virtual-address-to-physical-address"><span class="toc-number">1.</span> <span class="toc-text">Page Table - Virtual address to physical address</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qemu-monitor"><span class="toc-number">1.2.</span> <span class="toc-text">qemu monitor</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-number">1.3.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gdb-2MB-page"><span class="toc-number">1.4.</span> <span class="toc-text">gdb (2MB page)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#cr3-to-PML4"><span class="toc-number">1.4.1.</span> <span class="toc-text">cr3 to PML4</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PML4-to-PDP"><span class="toc-number">1.4.2.</span> <span class="toc-text">PML4 to PDP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PDP-2-PD"><span class="toc-number">1.4.3.</span> <span class="toc-text">PDP 2 PD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PD-find-any"><span class="toc-number">1.4.4.</span> <span class="toc-text">PD find any</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#page-frame-offset"><span class="toc-number">1.4.5.</span> <span class="toc-text">page frame + offset</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gdb-4KB-page"><span class="toc-number">1.5.</span> <span class="toc-text">gdb (4KB page)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#cr3-to-PML4-1"><span class="toc-number">1.5.1.</span> <span class="toc-text">cr3 to PML4</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PML4-to-PDP-1"><span class="toc-number">1.5.2.</span> <span class="toc-text">PML4 to PDP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PDP-2-PD-1"><span class="toc-number">1.5.3.</span> <span class="toc-text">PDP 2 PD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PD-find-PT"><span class="toc-number">1.5.4.</span> <span class="toc-text">PD find PT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PT-to-physical-page-frame"><span class="toc-number">1.5.5.</span> <span class="toc-text">PT to physical page frame</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#page-frame-offset-1"><span class="toc-number">1.5.6.</span> <span class="toc-text">page frame + offset</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#after-all"><span class="toc-number">1.6.</span> <span class="toc-text">after all</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">77</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">21</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+    
+  </div>
+  
+    <div class="sidebar-btn-wrapper">
+      <div class="sidebar-toc-btn current"></div>
+      <div class="sidebar-common-btn"></div>
+    </div>
+  
+</nav>
+
+    </div>
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.0.6/dist/index.umd.js" integrity="sha384-vkGvf25gm1C1PbcoD5dNfc137HzNL&#x2F;hr1RKA5HniJOaawtvUmH5lTVFgFAruE9Ge" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["#ff5252","#ff7c7c","#ffafaf","#ffd0d0"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["#ff0000"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "Naup堇姬",
+          title: "Linux Kernel - Page Table - Virtual address to physical address",
+          url: "http://example.com/2025/07/24/Linux-Kernel-page-table-virtual-address-to-physical-address/",
+          excerpt: "",
+          description: "",
+          stripContent: "Page Table - Virtual address to physical address Author: 堇姬Naup  前言把之前寫到一半的完善好了，丟上來https://hackmd.io/@naup96321/H1gx5xJDle     qemu monitorhttps://qemu-project.gitlab.io/qemu/system/monitor.html可以用他來讀寫物理記憶體或是做很多事情把 Qemu 加上 -monitor unix:/tmp/qemu-mon",
+          date: "Thu Jul 24 2025 19:53:46 GMT+0800",
+          updated: "Thu Jul 24 2025 20:29:07 GMT+0800",
+          cover: "/images/posts_cover/Three-level-pagetable/x86-3-level-page-tb.png",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+
+
+
+
+
+
+
+
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.3.0' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+  </body>
+  </html>
+

