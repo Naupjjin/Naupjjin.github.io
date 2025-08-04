@@ -35,6 +35,8 @@
 <meta property="og:description" content="AIS3 2025 - 助教 &amp; KoH 出題心得 Author: 堇姬Naup  目前已經 open source 了 KoH，各位可以載下來玩https:&#x2F;&#x2F;github.com&#x2F;Naupjjin&#x2F;2025-AIS3-KoH AD &amp; KoH 直播https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v&#x3D;y3PbmYq9bcQhttps:&#x2F;&#x2F;www.youtube.com">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2025/08/04/AIS3-2025-KoH-and-TA/upload_65c88191dc497ef9322de5b586ebfb4c.png">
+<meta property="og:image" content="http://example.com/2025/08/04/AIS3-2025-KoH-and-TA/character-1.png">
+<meta property="og:image" content="http://example.com/2025/08/04/AIS3-2025-KoH-and-TA/chest.png">
 <meta property="og:image" content="http://example.com/2025/08/04/AIS3-2025-KoH-and-TA/upload_1c176c6ed765c4ea01780bff9f24a982.png">
 <meta property="og:image" content="http://example.com/2025/08/04/AIS3-2025-KoH-and-TA/upload_b704fd62919687361cd377f9b85f1c54.png">
 <meta property="og:image" content="http://example.com/2025/08/04/AIS3-2025-KoH-and-TA/upload_d26dd0f5ede1b57378be504e6c8dd8d2.png">
@@ -53,7 +55,7 @@
 <meta property="og:image" content="http://example.com/2025/08/04/AIS3-2025-KoH-and-TA/upload_4f19d53af50fa6948af7194331ffe3c6.png">
 <meta property="og:image" content="http://example.com/2025/08/04/AIS3-2025-KoH-and-TA/upload_0704b1eb900e10623ccdc16a38a2887d.jpg">
 <meta property="article:published_time" content="2025-08-04T12:06:37.000Z">
-<meta property="article:modified_time" content="2025-08-04T12:42:05.085Z">
+<meta property="article:modified_time" content="2025-08-04T12:54:35.125Z">
 <meta property="article:author" content="Naup堇姬">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2025/08/04/AIS3-2025-KoH-and-TA/upload_65c88191dc497ef9322de5b586ebfb4c.png">
@@ -323,6 +325,9 @@
 <p>每 turn 都會去執行同一個 player_kernel 內的同一段程式碼，所以可以通過寫分支來讓他做出不一樣的行為</p>
 <p>這時候就發想出了，可以讓總共八組的學員 (第九組是助教、第十組是 NPC)上傳自己的 <code>player_kernel</code> 邏輯<br>丟到同一個地圖上，然後去打架XD</p>
 <p>不過，如果說要讓他們上傳 <code>player_kernel</code> 並且想達到想要的效果，就一定要寫個完善的 python sandbox，因此我們決定寫一台 VM </p>
+<p>另外還有 caleb 頂級繪師</p>
+<img src="/2025/08/04/AIS3-2025-KoH-and-TA/character-1.png" class=""> <img src="/2025/08/04/AIS3-2025-KoH-and-TA/chest.png" class="">
+
 <h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a>題目</h2><p>先來介紹一下題目的架構<br>首先是我們有 AD 跟 KoH，所以需要一個總控制的地方，可以自動去計算時間，並且去戳 AD、KoH 的 API，來控制 round 數的開始與結束<br>而 KoH 會有以下組件</p>
 <ul>
 <li>dashboard: API、與 DB 互動、與 player 互動</li>
@@ -952,7 +957,7 @@
           description: "",
           stripContent: "AIS3 2025 - 助教 &amp;amp; KoH 出題心得 Author: 堇姬Naup  目前已經 open source 了 KoH，各位可以載下來玩https://github.com/Naupjjin/2025-AIS3-KoH AD &amp;amp; KoH 直播https://www.youtube.com/watch?v=y3PbmYq9bcQhttps://www.youtube.com/live/nNU9_lUObsMhttps://www.youtube.com/live/vXpJ",
           date: "Mon Aug 04 2025 20:06:37 GMT+0800",
-          updated: "Mon Aug 04 2025 20:42:05 GMT+0800",
+          updated: "Mon Aug 04 2025 20:54:35 GMT+0800",
           cover: "/images/posts_cover/2025-AIS3/AIS3.jpg",
         };
       </script>
