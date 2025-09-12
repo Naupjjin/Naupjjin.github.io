@@ -277,13 +277,22 @@
     <div class="post-info">
       <div class="post-meta">
         <span><span class="icon-calendar"></span>2025-05-19</span>
-        <span><span class="icon-pencil"></span>6 words</span>
-        <span><span class="icon-clock"></span>1 min</span>
+        <span><span class="icon-pencil"></span>1.5k words</span>
+        <span><span class="icon-clock"></span>7 mins</span>
       </div>
       <h2 class="post-title">2025 TRX CTF - /dev/mem - part 2</h2>
       <article class="post-article">
         
-          Here&#39;s something encrypted, password is required to continue reading.
+          2025 TRX CTF - &amp;#x2F;dev&amp;#x2F;mem - part 2
+Author : 堇姬 Naup
+
+前言繼承上一篇https://naupjjin.github.io/2025/04/11/Linux-Kernel-2025-TRX-CTF-devmem/
+這邊來講講另一個思想
+analyze這次主要針對 &amp;#x2F;usr&amp;#x2F;sbin&amp;#x2F;chall，先放一下他的保護機制，沒有開 PIE並且他是 static linking
+
+
+再來去檢查這個 binary 發現他有 SUID 
+12~ # ls -l /usr/sbin/chall-rwsr-x--x 
         
       </article>
     </div>
@@ -622,10 +631,10 @@ inboundoob 寫 GOT 成 win function
     
       <div>
         <span class="icon-brush"></span>
-        196k
+        197.5k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        17:06
+        17:12
       </div>
     
     
