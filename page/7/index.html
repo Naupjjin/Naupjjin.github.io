@@ -198,7 +198,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">79</div>
+    <div class="sidebar-state-number">84</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
@@ -266,10 +266,243 @@
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2024/06/22/cryptoCTF2024-Writeup/" aria-label="cryptoCTF2024-Writeup"></a>
+      <a class="post-link" href="/2024/07/09/Pwn-Tcache-bin-dup-Glibc-2-27/" aria-label="Pwn-Tcache-bin-dup(Glibc 2.27)"></a>
     
     
     <div class="post-cover-left">
+      
+        
+        
+          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Pwn-Tcache-bin-dup(Glibc 2.27)" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-07-09</span>
+        <span><span class="icon-pencil"></span>1.1k words</span>
+        <span><span class="icon-clock"></span>5 mins</span>
+      </div>
+      <h2 class="post-title">Pwn-Tcache-bin-dup(Glibc 2.27)</h2>
+      <article class="post-article">
+        
+          Pwn-Tcache bin dup Glibc 2.27基本上跟Fastbin dup很像，但換成了Tcache
+Glibc 2.27沒有檢查鍊表上第一個是不是現在要free掉的chunk，所以可以直接連續free兩次chunk不會有問題
+另外注意，chunk fd指的是data
+如果是glibc 2.28後加入了key會被寫成Tcache相關東西
+流程1Chunk 1(malloc)
+
+free掉chunk 1
+1Tcache -&amp;gt; Chunk 1
+再free一次
+1Tcache -&amp;gt; Chunk 1 -&amp;gt; Chunk 1 -&amp;gt; Chunk 1 -&amp;gt; ...
+
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/07/08/Pwn-Fastbin-Dup-1/" aria-label="Pwn-Fastbin-Dup-1(Glibc 2.23)"></a>
+    
+    
+    <div class="post-cover-right">
+      
+        
+        
+          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Pwn-Fastbin-Dup-1(Glibc 2.23)" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-07-08</span>
+        <span><span class="icon-pencil"></span>1.8k words</span>
+        <span><span class="icon-clock"></span>9 mins</span>
+      </div>
+      <h2 class="post-title">Pwn-Fastbin-Dup-1(Glibc 2.23)</h2>
+      <article class="post-article">
+        
+          Pwn-Fastbin Dup 1(Glibc 2.23)
+Author: 堇姬Naup
+
+source code123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-left" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/07/07/Pwnable-orw/" aria-label="Pwnable.tw-orw"></a>
+    
+    
+    <div class="post-cover-left">
+      
+        
+        
+          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Pwnable.tw-orw" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-07-07</span>
+        <span><span class="icon-pencil"></span>280 words</span>
+        <span><span class="icon-clock"></span>1 min</span>
+      </div>
+      <h2 class="post-title">Pwnable.tw-orw</h2>
+      <article class="post-article">
+        
+          pwnable.tw-orwchecksec啥都沒開(Canary實際上沒開)，stack也可以執行
+
+
+分析
+
+給一個shellcode，然後會幫你執行，不過有seccomp，要ORW。
+
+
+syscall tablehttps://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md#x86-32_bit
+
+
+
+syscallsys_open
+
+
+暫存器
+值
+
+
+
+eax
+0x5
+
+
+ebx
+filename位置的address
+
+
+ecx
+0
+
+
+edx
+0
+
+
+sys_read
+
+
+暫存器
+值
+
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/06/30/AIS3-pre-exam-2024-Writeup/" aria-label="AIS3-pre-exam-2024-Writeup"></a>
+    
+    
+    <div class="post-cover-right">
+      
+        
+        
+          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="AIS3-pre-exam-2024-Writeup" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-06-30</span>
+        <span><span class="icon-pencil"></span>9.3k words</span>
+        <span><span class="icon-clock"></span>53 mins</span>
+      </div>
+      <h2 class="post-title">AIS3-pre-exam-2024-Writeup</h2>
+      <article class="post-article">
+        
+          AIS3 pre exam 2024 - writeup
+Author:堇姬Naup
+
+
+Rank 4th
+
+
+MiscWelcomectrl+c ctrl+v
+
+AIS3{Welc0me_to_AIS3_PreExam_2o24!}
+
+Three Dimensional Secret看封包然後這個看起來很像3D GCode，直接用線上工具化出來
+
+
+
+AIS3{b4d1y_tun3d_PriN73r}
+
+Quantum Nim Heist
+
+這題我其實不知道怎麼做的，就亂按，choose那邊在第一次後，如果你不輸入任何東西，或是0 1 2也可以過(回去看了source code發現那邊少寫了
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-left" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/06/24/Fixed-Size-Migration/" aria-label="Fixed Size Migration"></a>
+    
+    
+    <div class="post-cover-left">
+      
+        
+        
+          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Fixed Size Migration" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-06-24</span>
+        <span><span class="icon-pencil"></span>681 words</span>
+        <span><span class="icon-clock"></span>3 mins</span>
+      </div>
+      <h2 class="post-title">Fixed Size Migration</h2>
+      <article class="post-article">
+        
+          Fixed Size Migration
+Author: 堇姬Naup
+
+Why
+不能控制輸入長度時，就只能使用原本main function  read 來多次輸入 ROP chain假設現在空間只夠輸入一個gadget1payload (2*8 bytes) + rbp + return address(8bytes)
+觀察一下會發現 main_read 其實會將輸入存到 rbp-0x10，可以利用這個特性來寫入 ROP chain123readleaveret
+
+leave
+12mov rsp rbppop rbp
+
+原理1234空間(8bytes)空間(8bytes)old rbpre
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/06/22/cryptoCTF2024-Writeup/" aria-label="cryptoCTF2024-Writeup"></a>
+    
+    
+    <div class="post-cover-right">
       
         
         
@@ -304,12 +537,12 @@ Easy 😁Alibossource code123456789101112131415161718192021222324252627282930fro
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/06/14/CryptoHack-ECC/" aria-label="CryptoHack-ECC"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -336,12 +569,12 @@ https://hackmd.io/@naup96321/rkV3ELFRT
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/05/21/Stack-Migration/" aria-label="Stack-Migration"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -382,12 +615,12 @@ return address填入leave;ret 的gadget
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/05/17/ROP-EZROP/" aria-label="ROP-EZROP(b33f adv_pwn)"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -425,12 +658,12 @@ source coderead的buffer overflow一樣給好給滿
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/05/05/THJCC-office-Writeup/" aria-label="THJCC-official-Writeup"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -458,264 +691,11 @@ CryptoJPG^PNG&amp;#x3D;?source1234567891011121314from itertools import cycledef 
   </div>
 </div>
   
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/04/27/Intigriti-August-XSS-challenge/" aria-label="Intigriti-August-XSS-challenge"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        
-        
-          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Intigriti-August-XSS-challenge" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-04-27</span>
-        <span><span class="icon-pencil"></span>2.6k words</span>
-        <span><span class="icon-clock"></span>14 mins</span>
-      </div>
-      <h2 class="post-title">Intigriti-August-XSS-challenge</h2>
-      <article class="post-article">
-        
-          Intigriti’s August XSS challenge
-Author:堇姬Naup
-
-題目https://challenge-0823.intigriti.io/有一個計算機可以輸入東西，只要有執行alert(document.domain)就可以過了
-Source code1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/04/25/Assembly-x86/" aria-label="Assembly-x86"></a>
-    
-    
-    <div class="post-cover-left">
-      
-        
-        
-          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Assembly-x86" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-04-25</span>
-        <span><span class="icon-pencil"></span>479 words</span>
-        <span><span class="icon-clock"></span>2 mins</span>
-      </div>
-      <h2 class="post-title">Assembly-x86</h2>
-      <article class="post-article">
-        
-          組合語言
-Author:堇姬
-
-電腦底層架構與程式執行相關硬體
-CPU
-
-實際運算硬體，配有暫存器，儲存運算資料
-
-RAM
-
-記憶體
-指令集架構先設計好指令集架構再設計電路。
-常見:
-
-x86&amp;#x2F;x86-64
-ARM
-MIPS
-
-大部分用的是intel x86&amp;#x2F;x86-64架構
-CPU暫存器隨設計而改變用途
-
-
-
-名稱
-意思
-
-
-
-rax
-accumulator
-
-
-rbx
-base
-
-
-rcx
-count
-
-
-rdx
-data
-
-
-固定用途
-
-
-
-名稱
-意思
-
-
-
-rsi
-source index
-
-
-rdi
-destination index
-
-
-rbp
-base poi
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/04/25/ROP-chall-1/" aria-label="ROP-chall-1"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        
-        
-          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="ROP-chall-1" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-04-25</span>
-        <span><span class="icon-pencil"></span>306 words</span>
-        <span><span class="icon-clock"></span>1 min</span>
-      </div>
-      <h2 class="post-title">ROP-chall-1</h2>
-      <article class="post-article">
-        
-          ROP-chall
-Author:堇姬
-
-題目來源ICED的pwn題目https://ctf.nicewhite.xyz/
-確認保護看到有開Stack canary，但溢出後卻沒有報stack canary的錯誤，所以應該是沒開。另外他有開NX，所以沒辦法寫shellcode
-分析ASM有gets 可以BOF，不過沒有其他function可以return過去，所以應該是要ROP
-堆ROP
-execve(‘bin&amp;#x2F;sh’)
-
-
-
-
-暫存器
-值
-
-
-
-rax
-0x3b
-
-
-rdi
-要執行的參數值(&amp;#x2F;bin&amp;#x2F;sh)
-
-
-rsi
-argv(這裡&amp;#x3D;0)
-
-
-rdx
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/03/31/MATH-Lucas-Sequence/" aria-label="Lucas-Sequence"></a>
-    
-    
-    <div class="post-cover-left">
-      
-        
-        
-          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Lucas-Sequence" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-03-31</span>
-        <span><span class="icon-pencil"></span>28 words</span>
-        <span><span class="icon-clock"></span>1 min</span>
-      </div>
-      <h2 class="post-title">Lucas-Sequence</h2>
-      <article class="post-article">
-        
-          Lucas Sequence 盧卡斯數列
-Author:堇姬
-
-先看這個連結(還在處理LaTeX問題QQ)https://hackmd.io/@naup96321/B1Y7vqUyC
-
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/03/30/VishwaCTF-2024-WP/" aria-label="VishwaCTF-2024-Writeup"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        
-        
-          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="VishwaCTF-2024-Writeup" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-03-30</span>
-        <span><span class="icon-pencil"></span>4.5k words</span>
-        <span><span class="icon-clock"></span>25 mins</span>
-      </div>
-      <h2 class="post-title">VishwaCTF-2024-Writeup</h2>
-      <article class="post-article">
-        
-          VishwaCTF 2024 writeup
-Team: CakeisTheFake(單人)Rank: 31&amp;#x2F;1039Author: Naup堇姬
-
-MiscWho am I?
-WebSave The City1234567DESCRIPTIONThe RAW Has Got An Input That ISIS Has Planted a Bomb Somewhere In The Pune! Fortunetly, RAW Has Infiltratrated The Internet Activity of One Suspect And They Found This Lin
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
 
 
   <nav id="page-nav" data-aos="fade-up">
     
-    <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
   </nav>
 
 
@@ -744,10 +724,10 @@ WebSave The City1234567DESCRIPTIONThe RAW Has Got An Input That ISIS Has Planted
     
       <div>
         <span class="icon-brush"></span>
-        197.5k
+        201.8k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        17:12
+        17:40
       </div>
     
     
@@ -783,7 +763,7 @@ WebSave The City1234567DESCRIPTIONThe RAW Has Got An Input That ISIS Has Planted
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">79</div>
+    <div class="sidebar-state-number">84</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>

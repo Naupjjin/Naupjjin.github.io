@@ -198,7 +198,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">79</div>
+    <div class="sidebar-state-number">84</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
@@ -266,10 +266,175 @@
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2025/03/02/Linux-Kernel-Pwn-EBH/" aria-label="Linux-Kernel-Pwn-EBH"></a>
+      <a class="post-link" href="/2025/04/04/Linux-Kernel-modprobe-EoP-and-2021-3kctf-echo-nerf/" aria-label="Linux Kernel - EoP by modprobe &amp; 2021 3kCTF echo nerf"></a>
     
     
     <div class="post-cover-left">
+      
+        <img data-src="/images/posts_cover/LinuxKernelPwn/linuxkernel.png" data-sizes="auto" alt="Linux Kernel - EoP by modprobe &amp; 2021 3kCTF echo nerf" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2025-04-04</span>
+        <span><span class="icon-pencil"></span>1.7k words</span>
+        <span><span class="icon-clock"></span>9 mins</span>
+      </div>
+      <h2 class="post-title">Linux Kernel - EoP by modprobe &amp; 2021 3kCTF echo nerf</h2>
+      <article class="post-article">
+        
+          Linux Kernel - EoP by modprobe &amp;amp; 2021 3kCTF echo nerf
+Author: 堇姬Naup
+
+前言一個酷酷的 kernel pwn 萬解 www
+調用鏈當你去執行一個檔案時會有以下調用鏈
+do_execve第一步去 call do_execvehttps://elixir.bootlin.com/linux/v6.13.7/source/fs/exec.c#L2040
+12345678static int do_execve(struct filename *filename,	const char __user *const __user
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2025/04/02/Windows-Kernel-Exploitation-Part1/" aria-label="Windows Kernel exploitation - Part 1"></a>
+    
+    
+    <div class="post-cover-right">
+      
+        <img data-src="/images/posts_cover/Windows-kernel-exploitation/Windows-kernel-exploitation.webp" data-sizes="auto" alt="Windows Kernel exploitation - Part 1" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2025-04-02</span>
+        <span><span class="icon-pencil"></span>8.8k words</span>
+        <span><span class="icon-clock"></span>46 mins</span>
+      </div>
+      <h2 class="post-title">Windows Kernel exploitation - Part 1</h2>
+      <article class="post-article">
+        
+          Windows Kernel exploitation - Part 1
+Author: 堇姬Naup
+
+What is Kernelkernel位於application和hardware之間，是OS的core也負責溝通hadware和process負責了像是I&amp;#x2F;O、process、memory、driver managemet或是syscall 等事情
+kernel也提供了可以跑application的環境application是run在ring3，而kernel則是ring0
+123456789101112131415           +------------------
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-left" data-aos="fade-up">
+    
+      <a class="post-link" href="/2025/03/27/AIS3-EOF-2025-Final/" aria-label="AIS3 EOF Final 2025 - Record"></a>
+    
+    
+    <div class="post-cover-left">
+      
+        <img data-src="/images/posts_cover/EOF/EOF.png" data-sizes="auto" alt="AIS3 EOF Final 2025 - Record" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2025-03-27</span>
+        <span><span class="icon-pencil"></span>2k words</span>
+        <span><span class="icon-clock"></span>10 mins</span>
+      </div>
+      <h2 class="post-title">AIS3 EOF Final 2025 - Record</h2>
+      <article class="post-article">
+        
+          AIS3 EOF Final 2025 - Record
+Author: 堇姬Naup
+
+前言
+Team: CakeisTheFakeRank: r.k.2 &amp;amp; 炸彈超人獎
+
+遲來的 EOF 心得 www
+先感謝 CakeisTheFake 的所有隊友，一起奮戰了兩天，這邊簡單記錄這次比賽
+
+
+
+Day 1一開始先釋出了 BOMBE、game 兩題 KoH先來說說 BOMBE每隊都要上傳 malware 及 EDRmalware 要做三件事
+
+從 &amp;#x2F;home&amp;#x2F;bogay1450&amp;#x2F;.ssh&amp;#x2F;id_ed25519 檔案內容取得 flag
+從 proc
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2025/03/22/Pwnable-printable/" aria-label="Pwnable.tw - printable"></a>
+    
+    
+    <div class="post-cover-right">
+      
+        <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw - printable" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2025-03-22</span>
+        <span><span class="icon-pencil"></span>6 words</span>
+        <span><span class="icon-clock"></span>1 min</span>
+      </div>
+      <h2 class="post-title">Pwnable.tw - printable</h2>
+      <article class="post-article">
+        
+          Here&#39;s something encrypted, password is required to continue reading.
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-left" data-aos="fade-up">
+    
+      <a class="post-link" href="/2025/03/06/alpacahack-round6-pwn-writeup/" aria-label="AlpacaHack Round 6 (Pwn) - writeup"></a>
+    
+    
+    <div class="post-cover-left">
+      
+        <img data-src="/images/posts_cover/alpacahack/alpacahack.png" data-sizes="auto" alt="AlpacaHack Round 6 (Pwn) - writeup" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2025-03-06</span>
+        <span><span class="icon-pencil"></span>1.1k words</span>
+        <span><span class="icon-clock"></span>5 mins</span>
+      </div>
+      <h2 class="post-title">AlpacaHack Round 6 (Pwn) - writeup</h2>
+      <article class="post-article">
+        
+          AlpacaHack Round 6 (Pwn) - writeup
+Author: 堇姬Naup
+
+最近看到來賽後挑戰一下，除了第三題外都有打出來簡單記錄一下
+inboundoob 寫 GOT 成 win function 
+1234567891011121314151617181920212223from pwn import *r=process(&amp;quot;./inbound&amp;quot;)r=remote(&amp;quot;34.170.146.252&amp;quot;, 39404)win = 0x4011d6debug = input(&amp;quot;(Y/N)&amp;quot;)if debug ==
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2025/03/02/Linux-Kernel-Pwn-EBH/" aria-label="Linux-Kernel-Pwn-EBH"></a>
+    
+    
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/LinuxKernelPwn/linuxkernel.png" data-sizes="auto" alt="Linux-Kernel-Pwn-EBH" class="lazyload">
       
@@ -297,12 +462,12 @@ analyze source code12naup@naup-virtual-machine:~/Desktop/chal/challenge$ lsbzIma
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2025/02/21/Linux-Kernel-SDM-Volume3-SystemLevelRegisters-DataStructures/" aria-label="SDM Volume 3 Figure 2-1. IA-32 System-Level Registers and Data Structures"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/kernelmode_usermode_switch/kernelmode_usermode_switch.webp" data-sizes="auto" alt="SDM Volume 3 Figure 2-1. IA-32 System-Level Registers and Data Structures" class="lazyload">
       
@@ -328,12 +493,12 @@ Author: 堇姬Naup
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2025/02/05/Linux-Kernel-Pwn-Environment/" aria-label="Linux Kernel Pwn - Environment"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/CGGC-2024-Qual-writeup/CGGC-2024-Qual-writeup.webp" data-sizes="auto" alt="Linux Kernel Pwn - Environment" class="lazyload">
       
@@ -368,12 +533,12 @@ gdb debug
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2025/01/20/114-apply-college-record/" aria-label="114年資工系特殊選材心得 - by Naup"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/Windows-kernel-exploitation/Windows-kernel-exploitation.webp" data-sizes="auto" alt="114年資工系特殊選材心得 - by Naup" class="lazyload">
       
@@ -427,12 +592,12 @@ Author: 堇姬Naup
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2025/01/20/LinuxKernel-VirtualMemoryManagement/" aria-label="Linux Kernel - Virtual Memory Management"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/LinuxKernel-VirtualMemoryManagement/LinuxKernel-VirtualMemoryManagement.webp" data-sizes="auto" alt="Linux Kernel - Virtual Memory Management" class="lazyload">
       
@@ -458,181 +623,11 @@ Author: 堇姬Naup
   </div>
 </div>
   
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2025/01/20/Pwn-Stack-based-attack/" aria-label="Pwn-Stack-based-attack"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        <img data-src="/images/posts_cover/HITCON-CTF-Final-2024/HITCON-CTF-Final-2024.webp" data-sizes="auto" alt="Pwn-Stack-based-attack" class="lazyload">
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2025-01-20</span>
-        <span><span class="icon-pencil"></span>7.6k words</span>
-        <span><span class="icon-clock"></span>38 mins</span>
-      </div>
-      <h2 class="post-title">Pwn-Stack-based-attack</h2>
-      <article class="post-article">
-        
-          Pwn-Stack based attack
-Author:堇姬
-
-我用的debug環境
-Pwndbg+pwngdb
-r2
-IDA or Ghidra
-local debug12345tmuxcontext.log_level = &amp;#x27;debug&amp;#x27;context.terminal = [&amp;#x27;tmux&amp;#x27;, &amp;#x27;splitw&amp;#x27;, &amp;#x27;-h&amp;#x27;]gdb.attach(r)
-
-What is Pwn?二進制程式檔滲透，其實就是找尋程式中的漏洞，或是取得伺服器權限，使用伺服器 shell 偷取檔案、修改資料等等。
-
-看原始碼、組合語言
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
-    
-      <a class="post-link" href="/2025/01/17/TSCCTF-2025-writeup/" aria-label="TSC CTF 2025 - writeup"></a>
-    
-    
-    <div class="post-cover-left">
-      
-        <img data-src="/images/posts_cover/TSCCTF-2025-writeup/TSCCTF_banner.webp" data-sizes="auto" alt="TSC CTF 2025 - writeup" class="lazyload">
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2025-01-17</span>
-        <span><span class="icon-pencil"></span>5.7k words</span>
-        <span><span class="icon-clock"></span>33 mins</span>
-      </div>
-      <h2 class="post-title">TSC CTF 2025 - writeup</h2>
-      <article class="post-article">
-        
-          TSC CTF 2025 - writeup
-Author: 堇姬NaupRank: 5th
-
-
-
-總排名第五名，解了26題，這場解的題目有點多，這邊只簡單寫一些有趣的題目，Pwn我應該會全寫
-Ranked 5th overall, solving 26 challenges. Since we solved quite a lot of challenges in this competition, I’ll only briefly write about some interesting ones here. But I should write all the Pwn challeng
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2025/01/05/ASISCTF-2022-babyscan/" aria-label="ASIS CTF 2022 pwn - babyscan 1 &amp; babyscan 2"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        <img data-src="/images/posts_cover/ASISCTF-2022-babyscan/ASISCTF-2022-babyscan.webp" data-sizes="auto" alt="ASIS CTF 2022 pwn - babyscan 1 &amp; babyscan 2" class="lazyload">
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2025-01-05</span>
-        <span><span class="icon-pencil"></span>1.7k words</span>
-        <span><span class="icon-clock"></span>8 mins</span>
-      </div>
-      <h2 class="post-title">ASIS CTF 2022 pwn - babyscan 1 &amp; babyscan 2</h2>
-      <article class="post-article">
-        
-          ASIS CTF 2022 pwn - babyscan 1 &amp;amp; babyscan 2
-Author: 堇姬Naup
-
-babyscan_1source code1234567891011121314151617181920212223242526272829303132#include &amp;lt;ctype.h&amp;gt;#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;stdlib.h&amp;gt;#include &amp;lt;unistd.h&amp;gt;int main() &amp;#123;  char size[16], fmt[8], *buf;  printf(&amp;quot;
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/12/31/2023-2024-all-record/" aria-label="2023 &amp; 2024 年度總結"></a>
-    
-    
-    <div class="post-cover-left">
-      
-        <img data-src="/images/posts_cover/2023and2024/2023and2024.webp" data-sizes="auto" alt="2023 &amp; 2024 年度總結" class="lazyload">
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-12-31</span>
-        <span><span class="icon-pencil"></span>865 words</span>
-        <span><span class="icon-clock"></span>3 mins</span>
-      </div>
-      <h2 class="post-title">2023 &amp; 2024 年度總結</h2>
-      <article class="post-article">
-        
-          2023 &amp;amp; 2024 年度總結
-Author: 堇姬Naup
-
-感覺有很多想說的，入坑資安這一年多了，很慶幸當時意外得知CTF跟資安這個領域，這一年來過的十分充實，也認識了很多資安領域的朋友跟大佬們，非常感謝這一年來的陪伴
-這篇主要紀錄2023年~2024年的紀錄
-2023:
-
-七月~十月: 開始認真投入在資安，當時就刷刷pico、LoTuX，看一看網路文章學一學，主要認真研究web、crypto，另外十月時有跟WAN打了第一場比賽sunshineCTF，打了74名，之後的2024年也revenge一波www
-十一月: 這個月打了三場比賽，AIOT製聯感測全國聯賽(銅獎，btw這跟資
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/12/31/Pwn-heap-note/" aria-label="Pwn-heap note 1"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        <img data-src="/images/posts_cover/Pwn-heap-note-1/pwn-heap-note1.webp" data-sizes="auto" alt="Pwn-heap note 1" class="lazyload">
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-12-31</span>
-        <span><span class="icon-pencil"></span>14.4k words</span>
-        <span><span class="icon-clock"></span>75 mins</span>
-      </div>
-      <h2 class="post-title">Pwn-heap note 1</h2>
-      <article class="post-article">
-        
-          Pwn-heap note 1
-Author:堇姬
-
-筆記連結heap note 1:https://hackmd.io/@naup96321/S1knTRjVR
-heap note 2:https://hackmd.io/@naup96321/ryDzdYbjA
-版本問題解決首先，在老舊版本ubuntu18.04、16.04，要把環境架起來很奇怪。
-可以用這個docker image來用https://hub.docker.com/r/roderickchan/debug_pwn_env/tags
-12docker run -i -t --name ubuntu1804 2e99549a13
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
 
 
   <nav id="page-nav" data-aos="fade-up">
     
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
   </nav>
 
 
@@ -661,10 +656,10 @@ heap note 2:https://hackmd.io/@naup96321/ryDzdYbjA
     
       <div>
         <span class="icon-brush"></span>
-        197.5k
+        201.8k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        17:12
+        17:40
       </div>
     
     
@@ -700,7 +695,7 @@ heap note 2:https://hackmd.io/@naup96321/ryDzdYbjA
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">79</div>
+    <div class="sidebar-state-number">84</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>

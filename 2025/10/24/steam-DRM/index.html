@@ -1,0 +1,663 @@
+
+  <!DOCTYPE html>
+  <html lang="en"  >
+  <head>
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_bq08450reo';window.REIMU_CONFIG.clipboard_tips = {"success":"copy success(*^▽^*)","fail":"copy failed (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"Naup"}};window.REIMU_CONFIG.code_block = {"expand":true};</script>
+  
+  <title>
+    steam-DRM |
+    
+    堇姬 Naup&#39;s Blog
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_bq08450reo.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="Here&#39;s something encrypted, password is required to continue reading.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="steam-DRM">
+<meta property="og:url" content="http://example.com/2025/10/24/steam-DRM/index.html">
+<meta property="og:site_name" content="堇姬 Naup&#39;s Blog">
+<meta property="og:description" content="Here&#39;s something encrypted, password is required to continue reading.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-10-24T02:17:02.000Z">
+<meta property="article:modified_time" content="2025-10-24T02:20:45.094Z">
+<meta property="article:author" content="Naup堇姬">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="堇姬 Naup's Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/fav.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css">
+
+  
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+
+  <body>
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      <div class="loading-word">Naup...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/">Home</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/archives">Archives</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/about">About</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed" target="_blank"></a>
+    
+    
+    
+  </nav>
+</div>
+<header id="header">
+  
+    <picture></picture>
+    <img fetchpriority="high" src="/images/posts_cover/steam/STEAM.jpg" alt="steam-DRM">
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">steam-DRM</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  
+  <div class="sidebar-wrapper wrap-sticky">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" style="display: none" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Steam-DRM"><span class="toc-number">1.</span> <span class="toc-text">Steam DRM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%81%B2%E6%98%8E"><span class="toc-number">1.1.</span> <span class="toc-text">聲明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#steam-DRM"><span class="toc-number">1.2.</span> <span class="toc-text">steam DRM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Steamless"><span class="toc-number">1.3.</span> <span class="toc-text">Steamless</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#goldberg-emulator"><span class="toc-number">1.4.</span> <span class="toc-text">goldberg_emulator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#demo"><span class="toc-number">1.5.</span> <span class="toc-text">demo</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">84</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">21</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+      
+        <div class="sidebar-btn-wrapper" style="position:static">
+          <div class="sidebar-toc-btn current"></div>
+          <div class="sidebar-common-btn"></div>
+        </div>
+      
+    </div>
+  </div>
+
+  <div class="sidebar-widget">
+  
+  </div>
+</aside>
+
+          <section id="main"><article id="post-steam-DRM" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <a href="/2025/10/24/steam-DRM/" class="article-date-link" data-aos="zoom-in">
+    <time datetime="2025-10-24T02:17:02.000Z" itemprop="datePublished">2025-10-24</time>
+    <time style="display: none;" id="post-update-time">2025-10-24</time>
+  </a>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="e7363b4ef5e1a6458457c1034284e7a3d0bc87b62a41dfa4c6a91acc26c70c62">9e65f0e87755658b13a1f5bd38ebae8e75198fa86863eb750bc3ae1fb70caaefd3a7af86a2cee4d7a5d29059d5a6ccc3a8b36cdcbd81aaadd0add0702bfed374277da3bab7a7d9ef3eaa68ec426c1dd0e29629735e982d9d1cd0a65391d86987713db32034944cae984cb7a17159273de2c77700a797a315fee27c7543b04dbde2c06e45b0b711f9d3a39cda0997b2e5267f18b5cc20027f3e424049c3e8d96f1c19ca6aec83289ddb89adafc23294391d1b5eb95d6ee644eb3cf49ff8d27491ec8d4a2e8f923b3159907daf75dcea58e14bbf8c005e2ca7d52cad0704d11520676f66542f9d89d8bd0259f121292ba1f79029089d5d2550ce4a1ee73c6bc38e2997492240fbccd78157061d298a7c54ef6972b0c23232cd093119ebf5e49d130aaca0a510a97be6dea54d88cc053735e7d125cb187832a0c6dd764643f7aaba9dfa77a6dce66dcb3300efc139de0afd3ff1ef62927ac625450c192182bd6814e3561fa28f7f31cb2f02213ac137069012b26b34c5838462a3bdf22271e932dc57eed090ade9f4262aee3d5bc15fab4cd246b2217ac878f1ef609984bf171adb8dc510d6dcf70be530c545b0f0191b9ddfb242dd07293a1ac95f06378a0e0f58d6cae0c67f598a05599a462f84476660a8daf479d25e2fe36a5530a430d5d2e0e37fb2ef3b5d8f70543a66d52340a78ea41ea475ce467bb1c7e473e43c99c767b6db2287901cbe3a38aff42bcb619dfe3ca9b315130bc85c6c85d7264cf902f6148efd47bdf1bb016e0c4a963c226c9020f845928548a016d168ae261f7fad3c4884e2bb6eac5500e8211e48ad9ba5bfbc5a04396fba1b1f99eb928d2356ef49065806d8582467ee984bea61b83fc417ee4ae9ca21a31e6774e44271e2d5207779ba82aacce903a2e79c69fbfc733c012eb7131aedcfccf12a1bd93738904de5c9a7e56c889bd78bf1886caf044dd1e9037420a37395f5f91cb81a15eb142c38dec6744fdd5e276a78e2164e5f5ea717fc05377796438105f0d2564e3fbe5a88f009bc42f26f59ef343e0898ec1733685c3b749ee927df9f8c57ed572c07923569081b8e8b92ab887c66af2a964aee475aca038f2ede5d610edc90042ed87aada69929fbdb62308667520ae071c934d0819e36de01c3ef4545b4b919eea4b20467cd24ad4592697afc2d67101fcd6bc12214d05dcc51d72a2742e694de24b4ccbd29b63b2497c1ec760b6be1befb4846f5f5f257c0713d8c8f3df9589ed4740607dce716ca6af608182c3f2ffb518c34a7a86a12261959c9911bfb1cc33c69235b8be07d163960b6cfcc205a782991d05749fc848e433a9886a4168afeb203dcf5acb04dd80ff459c1535f1c900608fa39b3ebf2ce704d05ec34da1efca6ec7d80e60dee204662538d2fb7bf4f7a2b4900f09664eb891d558593165af81b55adf1c005c7a8da9b63026b58d311ff9cce354c7e6c7d943605d62dccbb97bb473bb259c4135f2723af53083adca253ac405819f38ac6bae96da4a4b88a2350af837fdf65b65e32e8e924ed27976c9cb3327d8ce0a09b7f9d55d60105d1aae9804160d71480252084d6ccd103af53d367f643453c343b722a10f4a6f830d5a2a515933c23d84933ef70a761c6bd98638503774423531771f98845008e161337278c5a1277598bac58dc71542c4f66d22a0d468cb3f445041abb2e34c771049c5a0bbec3d61352edd2bea3b1f4f053ec5dabe6dbcc21e911272c4dc8cf197ba5a1c17764eaf720f76da30e6932961a63c35c4914bbebdd17cbfeb473d95e928b9b4fb58ea59b057abf4dd79505c248fcc011c1a292143a2b98f4d8da0ed072d482bc72126249fb3a90c6fdbfef6e76b5a96a9a2905dd4eb83ee4a93e1c442875a18f78e4a17d96f40f76914a72fa4961ea88901dbcfe6224f41736b77babcef82f00ef70063925038f42029ffaf44d6c0796a1e27a55bc334fd807a9348e2c3236dc08e0f6635bfb9264475592c5d02d1f91193bf123b3fb2023db85a7953c6a2d4bc820c48dc64a72a9940d17b9caf47014e6c841d731a7a5b29723af1532f75485b820235272f8311402b69ed771ca8c979af157004cde17917e63598c7f724728af0455e941e7a38457ea8780547c305da84c4cb98177e255bce65f3938ae0e406f3e1633b7528e3d57544c56355dcb160c4baea0aa78ad0a69391b3959783a8492a5aa05f146248cefe9844789bbfc0370669f8670ac21617ffb1b0ee69ceed4481e5edf5a1ca094cf083a5d613d9ab46e44126061f6d703237e0d69403252bb5c558577db8abb356477869889002558cbb38be19bdbec04bef50e77f7bbc7d66063fbe51f65c315b6f4b9af2efd6eba401350f8dcc2b64ddef8d7622622048324f2aa29489a70b8781b1ddcb3d62e82f84602e6c3cfe1e2731165344c9ab0030316b627ed932d6c269ecf22cf76b1e51e06151d6b05b0de6572e31b62a83302712a4eaf91612b1a3b2c38b1088331df7c8e6dbf1c81d4ac25b223c9ab877941ae04164814ff345d9c83b66c3ab67e2bf42dbe36bfe7af366a3b9a758926bbbbb7389ac2b32e7b5e883428aea71bb82b4fed5f965019af97b08412a0f48ef474ceb5db005065ea7b261662f74bc71dcfa0b1f494eba46d89720f9e217a532d7679d417010a57a86e0f61a489f6f55e0d48c643d61aebaaa8219298b7f2e37e9b68db87d8017279d310dd535cde7d5451b70df2c47705b43708bc290d3817570e01007d6f0041c4c14384eb05b04020410487bfc30359fa4ea10b113aa871874ee383ea8f31d97937842aaa637a95e1f708c24f3d714782fc134e2fa3110afb23459d9963e4bf3942e1645f717b2223db7965623158b3913de0f284e211f8fb4c7224b36446bfa9530c8fba04a07357f189352eca266b19f28f332b159100e95b81188098fe9ab9a55e699e855342912ddaeb00db6bc8f591e96ecb33cc63791e09e61ced01cb544cb318f96195049786774ee9a7d480c550539ecc2ad4ca414543dc4bdcac5ebe31355cf7046e7c3c0b40612eb7e793d4b735f9a9b26071663bdcbce94eed4c7f5fbd247b1a7fc8bde3c510145b001aa895f715ed083b22ba9a128410f25c8fd474c1243397320786a4217fb1f3898fa44551a67c71a129bea1d46a5645fee53fa2d819018d76af507b529106b9446e1e43195a1b597eea3b58cfc27304b7441c298d78c187264cae0118d616c080c367ba6ee5b00913f2fc8542efffbb73ae69ee0034056f9ddbc1d01b3ef031749e3343fc54fbe7ab93af3becbb3259592a51fa330e0c23ac718e1556eeb12d1bbe1de80e942dcce7be81fa85f4dcfd60b694c1a40c671644512a2f899bb2e4137827009f07bc19c629db7ae9f68c3b739ca3ee9f1b0d9cec2a1bf45c71f0556df1ace31fe64dbafd3c1a852e37fdc1ddff75b959a4d61fa7dee7755b422b8f595e49bc87c254b820277c7bb7d0ce2547443b9a81b6af29843ddbcab600815614a218247d2e2b5c56c9d3113895eac859108e2017518a1260764ed3c8643e3b4adbeede1bab54a93de194ccd7221a789aadfc2fa6a0d90f01d43930289ce865adfff2a39aab60d18d9c9858c63d7262b5b155abb36785b74490e333a01fe84107d7b7bdcd6984d2af05a42bfbeb42ed277d3589502af16cfe6bc6c228730eaf5aa1ddfc2358e1b8906a9de8eb710f198443e1633b22f64a8a3a5c5efef5ef1f3328e2e9074ea294fea41dba</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+  <nav id="article-nav" data-aos="fade-up">
+    
+      <div class="article-nav-link-wrap article-nav-link-left">
+        
+          <img data-src="/images/posts_cover/LinuxKernelPwn/linuxkernel.png" data-sizes="auto" alt="Linux-Kernel-analyze-pipe" class="lazyload">
+        
+        <a href="/2025/10/24/Linux-Kernel-analyze-pipe/"></a>
+        <div class="article-nav-caption">Newer</div>
+        <h3 class="article-nav-title">
+          
+            Linux-Kernel-analyze-pipe
+          
+        </h3>
+      </div>
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        <img data-src="/images/posts_cover/os-arch/126727093_p0_master1200.jpg" data-sizes="auto" alt="speed-run-r1rn-kernel-challenge" class="lazyload">
+      
+      <a href="/2025/10/24/speed-run-r1rn-kernel-challenge/"></a>
+      <div class="article-nav-caption">Older</div>
+      <h3 class="article-nav-title">
+        
+          speed-run-r1rn-kernel-challenge
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+</article>
+
+
+
+
+
+
+</section>
+        </div>
+        
+        
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      2020-2025
+      <span class="footer-info-sep rotate"></span>
+      Naup堇姬
+    </div>
+    
+      <div>
+        Powered by&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        201.8k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        17:40
+      </div>
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">Number of visits&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">Number of visitors&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" style="display: none" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Steam-DRM"><span class="toc-number">1.</span> <span class="toc-text">Steam DRM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%81%B2%E6%98%8E"><span class="toc-number">1.1.</span> <span class="toc-text">聲明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#steam-DRM"><span class="toc-number">1.2.</span> <span class="toc-text">steam DRM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Steamless"><span class="toc-number">1.3.</span> <span class="toc-text">Steamless</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#goldberg-emulator"><span class="toc-number">1.4.</span> <span class="toc-text">goldberg_emulator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#demo"><span class="toc-number">1.5.</span> <span class="toc-text">demo</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">84</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">21</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+    
+  </div>
+  
+    <div class="sidebar-btn-wrapper">
+      <div class="sidebar-toc-btn current"></div>
+      <div class="sidebar-common-btn"></div>
+    </div>
+  
+</nav>
+
+    </div>
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.0.6/dist/index.umd.js" integrity="sha384-vkGvf25gm1C1PbcoD5dNfc137HzNL&#x2F;hr1RKA5HniJOaawtvUmH5lTVFgFAruE9Ge" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["#ff5252","#ff7c7c","#ffafaf","#ffd0d0"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["#ff0000"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "Naup堇姬",
+          title: "steam-DRM",
+          url: "http://example.com/2025/10/24/steam-DRM/",
+          excerpt: "Here&#39;s something encrypted, password is required to continue reading.",
+          description: "",
+          stripContent: "   9e65f0e87755658b13a1f5bd38ebae8e75198fa86863eb750bc3ae1fb70caaefd3a7af86a2cee4d7a5d29059d5a6ccc3a8b36cdcbd81aaadd0add0702bfed374277da3bab7a7d9ef3eaa68ec426c1dd0e29629735e982d9d1cd0a65391d86987713db32034944cae984cb7a17159273de2c77700a797a315fee27c7",
+          date: "Fri Oct 24 2025 10:17:02 GMT+0800",
+          updated: "Fri Oct 24 2025 10:20:45 GMT+0800",
+          cover: "/images/posts_cover/steam/STEAM.jpg",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+
+
+
+
+
+
+
+
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.3.0' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+  </body>
+  </html>
+

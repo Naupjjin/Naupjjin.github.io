@@ -198,7 +198,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">79</div>
+    <div class="sidebar-state-number">84</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
@@ -266,10 +266,186 @@
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2024/08/12/Pwn-SROP/" aria-label="Pwn-SROP"></a>
+      <a class="post-link" href="/2024/09/11/Pwnable-tcachetear/" aria-label="Pwnable.tw-tcache tear"></a>
     
     
     <div class="post-cover-left">
+      
+        
+        
+          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Pwnable.tw-tcache tear" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-09-11</span>
+        <span><span class="icon-pencil"></span>1.9k words</span>
+        <span><span class="icon-clock"></span>11 mins</span>
+      </div>
+      <h2 class="post-title">Pwnable.tw-tcache tear</h2>
+      <article class="post-article">
+        
+          Pwnable.tw-tcache tear
+Author: 堇姬Naup
+
+analyze code先IDA逆一波，把函數重新命名
+main123456789101112131415161718192021222324252627282930313233343536373839404142434445void __fastcall __noreturn main(__int64 a1, char **a2, char **a3)&amp;#123;  __int64 choice; // rax  unsigned int free_chunk_cnt; // [rsp+Ch] [rbp-4h]  
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/08/22/Python-interpreter/" aria-label="Python-interpreter"></a>
+    
+    
+    <div class="post-cover-right">
+      
+        
+        
+          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Python-interpreter" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-08-22</span>
+        <span><span class="icon-pencil"></span>4.8k words</span>
+        <span><span class="icon-clock"></span>22 mins</span>
+      </div>
+      <h2 class="post-title">Python-interpreter</h2>
+      <article class="post-article">
+        
+          Python interpreter
+Author: 堇姬Naup
+
+定義先定義一下何謂python interpreter，就是用來解釋code object的
+
+tiny interpreter首先要建立一個解釋器，需要給他一個指令集這邊先要求實現一件是，就是做加法需要有以下指令
+
+LOAD_VALUE -&amp;gt; 載入數字至stack上、參數是要載入到stack上的數字
+ADD_TWO_VALUES -&amp;gt; 將stack最上層跟最上層-1 pop然後相加，將結果放到stack上、無參數
+PRINT_ANSWER -&amp;gt; 印出stack最上方層並pop掉、無參數
+
+先將要加的兩個數
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-left" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/08/20/Pwn-heap-note-2/" aria-label="Pwn-heap note 2"></a>
+    
+    
+    <div class="post-cover-left">
+      
+        
+        
+          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Pwn-heap note 2" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-08-20</span>
+        <span><span class="icon-pencil"></span>10 words</span>
+        <span><span class="icon-clock"></span>1 min</span>
+      </div>
+      <h2 class="post-title">Pwn-heap note 2</h2>
+      <article class="post-article">
+        
+          會持續更新https://hackmd.io/@naup96321/ryDzdYbjA
+
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/08/20/Pwnable-hacknote/" aria-label="Pwnable.tw-hacknote"></a>
+    
+    
+    <div class="post-cover-right">
+      
+        
+        
+          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Pwnable.tw-hacknote" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-08-20</span>
+        <span><span class="icon-pencil"></span>1.4k words</span>
+        <span><span class="icon-clock"></span>8 mins</span>
+      </div>
+      <h2 class="post-title">Pwnable.tw-hacknote</h2>
+      <article class="post-article">
+        
+          pwnable.tw-hacknote
+Author: 堇姬Naup
+
+code analyzemain123456789101112131415161718192021222324252627282930313233343536373839404142434445void __cdecl __noreturn main()&amp;#123;  int v0; // eax  int v1; // [esp-Ch] [ebp-24h]  int v2; // [esp-8h] [ebp-20h]  int v3; // [esp-4h] [ebp-1Ch]  char v4[4]; // [esp+
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-left" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/08/19/AIS3-Junior-2024-command-injection-bypass-master/" aria-label="AIS3 Junior 2024-command injection bypass master"></a>
+    
+    
+    <div class="post-cover-left">
+      
+        
+        
+          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="AIS3 Junior 2024-command injection bypass master" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-08-19</span>
+        <span><span class="icon-pencil"></span>1.7k words</span>
+        <span><span class="icon-clock"></span>8 mins</span>
+      </div>
+      <h2 class="post-title">AIS3 Junior 2024-command injection bypass master</h2>
+      <article class="post-article">
+        
+          AIS3 Junior 2024-command injection bypass master
+Author: 堇姬Naup
+
+前言這次去AIS3 junior當了助教，也是我第一次當助教，這次跟vincent一起擔任A組的助教，本篇記錄了一些我們學員專題題目，我的解題及vincent的解題方法
+學員的專題這次A組的學員挑的專題是針對command injection加入了更多黑名單bypass的方法，他們出完很開心的拿來給我跟vincent玩，結果我們問他們有沒有官解他們說沒有www，不過這題是真的出的很好
+先看source code吧
+main
+123456789101112131415
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/08/12/Pwn-SROP/" aria-label="Pwn-SROP"></a>
+    
+    
+    <div class="post-cover-right">
       
         
         
@@ -307,12 +483,12 @@ signal frame
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/08/06/pwnable-start/" aria-label="Pwnable.tw-start"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -340,12 +516,12 @@ Author: 堇姬Naup
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/08/05/AIS3-2024/" aria-label="AIS3 2024 - 專題研究成果"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -380,12 +556,12 @@ AC10 CVE付現解firmware1binwalk -E US_AC10V1.0RTL_V15.03.06.23_multi_TD01.bin
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/07/26/Pwn-File-Structure-note/" aria-label="Pwn-File Structure note"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -411,12 +587,12 @@ AC10 CVE付現解firmware1binwalk -E US_AC10V1.0RTL_V15.03.06.23_multi_TD01.bin
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/07/22/HitconCTF2024-Writeup/" aria-label="HITCON CTF 2024 Writeup"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -450,244 +626,11 @@ Echo as a Servicesource codeDockerfile
   </div>
 </div>
   
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/07/09/Pwn-Tcache-bin-dup-Glibc-2-27/" aria-label="Pwn-Tcache-bin-dup(Glibc 2.27)"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        
-        
-          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Pwn-Tcache-bin-dup(Glibc 2.27)" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-07-09</span>
-        <span><span class="icon-pencil"></span>1.1k words</span>
-        <span><span class="icon-clock"></span>5 mins</span>
-      </div>
-      <h2 class="post-title">Pwn-Tcache-bin-dup(Glibc 2.27)</h2>
-      <article class="post-article">
-        
-          Pwn-Tcache bin dup Glibc 2.27基本上跟Fastbin dup很像，但換成了Tcache
-Glibc 2.27沒有檢查鍊表上第一個是不是現在要free掉的chunk，所以可以直接連續free兩次chunk不會有問題
-另外注意，chunk fd指的是data
-如果是glibc 2.28後加入了key會被寫成Tcache相關東西
-流程1Chunk 1(malloc)
-
-free掉chunk 1
-1Tcache -&amp;gt; Chunk 1
-再free一次
-1Tcache -&amp;gt; Chunk 1 -&amp;gt; Chunk 1 -&amp;gt; Chunk 1 -&amp;gt; ...
-
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/07/08/Pwn-Fastbin-Dup-1/" aria-label="Pwn-Fastbin-Dup-1(Glibc 2.23)"></a>
-    
-    
-    <div class="post-cover-left">
-      
-        
-        
-          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Pwn-Fastbin-Dup-1(Glibc 2.23)" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-07-08</span>
-        <span><span class="icon-pencil"></span>1.8k words</span>
-        <span><span class="icon-clock"></span>9 mins</span>
-      </div>
-      <h2 class="post-title">Pwn-Fastbin-Dup-1(Glibc 2.23)</h2>
-      <article class="post-article">
-        
-          Pwn-Fastbin Dup 1(Glibc 2.23)
-Author: 堇姬Naup
-
-source code123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/07/07/Pwnable-orw/" aria-label="Pwnable.tw-orw"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        
-        
-          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Pwnable.tw-orw" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-07-07</span>
-        <span><span class="icon-pencil"></span>280 words</span>
-        <span><span class="icon-clock"></span>1 min</span>
-      </div>
-      <h2 class="post-title">Pwnable.tw-orw</h2>
-      <article class="post-article">
-        
-          pwnable.tw-orwchecksec啥都沒開(Canary實際上沒開)，stack也可以執行
-
-
-分析
-
-給一個shellcode，然後會幫你執行，不過有seccomp，要ORW。
-
-
-syscall tablehttps://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md#x86-32_bit
-
-
-
-syscallsys_open
-
-
-暫存器
-值
-
-
-
-eax
-0x5
-
-
-ebx
-filename位置的address
-
-
-ecx
-0
-
-
-edx
-0
-
-
-sys_read
-
-
-暫存器
-值
-
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/06/30/AIS3-pre-exam-2024-Writeup/" aria-label="AIS3-pre-exam-2024-Writeup"></a>
-    
-    
-    <div class="post-cover-left">
-      
-        
-        
-          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="AIS3-pre-exam-2024-Writeup" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-06-30</span>
-        <span><span class="icon-pencil"></span>9.3k words</span>
-        <span><span class="icon-clock"></span>53 mins</span>
-      </div>
-      <h2 class="post-title">AIS3-pre-exam-2024-Writeup</h2>
-      <article class="post-article">
-        
-          AIS3 pre exam 2024 - writeup
-Author:堇姬Naup
-
-
-Rank 4th
-
-
-MiscWelcomectrl+c ctrl+v
-
-AIS3{Welc0me_to_AIS3_PreExam_2o24!}
-
-Three Dimensional Secret看封包然後這個看起來很像3D GCode，直接用線上工具化出來
-
-
-
-AIS3{b4d1y_tun3d_PriN73r}
-
-Quantum Nim Heist
-
-這題我其實不知道怎麼做的，就亂按，choose那邊在第一次後，如果你不輸入任何東西，或是0 1 2也可以過(回去看了source code發現那邊少寫了
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/06/24/Fixed-Size-Migration/" aria-label="Fixed Size Migration"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        
-        
-          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Fixed Size Migration" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-06-24</span>
-        <span><span class="icon-pencil"></span>681 words</span>
-        <span><span class="icon-clock"></span>3 mins</span>
-      </div>
-      <h2 class="post-title">Fixed Size Migration</h2>
-      <article class="post-article">
-        
-          Fixed Size Migration
-Author: 堇姬Naup
-
-Why
-不能控制輸入長度時，就只能使用原本main function  read 來多次輸入 ROP chain假設現在空間只夠輸入一個gadget1payload (2*8 bytes) + rbp + return address(8bytes)
-觀察一下會發現 main_read 其實會將輸入存到 rbp-0x10，可以利用這個特性來寫入 ROP chain123readleaveret
-
-leave
-12mov rsp rbppop rbp
-
-原理1234空間(8bytes)空間(8bytes)old rbpre
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
 
 
   <nav id="page-nav" data-aos="fade-up">
     
-    <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
   </nav>
 
 
@@ -716,10 +659,10 @@ leave
     
       <div>
         <span class="icon-brush"></span>
-        197.5k
+        201.8k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        17:12
+        17:40
       </div>
     
     
@@ -755,7 +698,7 @@ leave
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">79</div>
+    <div class="sidebar-state-number">84</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>

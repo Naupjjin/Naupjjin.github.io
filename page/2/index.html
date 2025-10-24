@@ -198,7 +198,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">79</div>
+    <div class="sidebar-state-number">84</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
@@ -266,10 +266,181 @@
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2025/05/19/Linux-Kernel-2025-TRX-CTF-devmem-part2/" aria-label="2025 TRX CTF - /dev/mem - part 2"></a>
+      <a class="post-link" href="/2025/07/05/2025-Google-CTF-writeup/" aria-label="2025 Google CTF - writeup"></a>
     
     
     <div class="post-cover-left">
+      
+        <img data-src="/images/posts_cover/googlectf/googlectf.png" data-sizes="auto" alt="2025 Google CTF - writeup" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2025-07-05</span>
+        <span><span class="icon-pencil"></span>3k words</span>
+        <span><span class="icon-clock"></span>16 mins</span>
+      </div>
+      <h2 class="post-title">2025 Google CTF - writeup</h2>
+      <article class="post-article">
+        
+          GoogleCTF 2025 - writeup
+Author: 堇姬 Naup
+
+
+
+
+
+
+Pwnmulti-arch 2一題 VM pwn第一題是 Reverse 第二題是 pwn這份 writeup 只有寫 pwn
+analyze IDA沒有 debug symbol，所以要修這台 VM 自定義了一個 masm 的檔案格式整個 masm 檔案格式就是
+
+4 bytes MASM 作為 magic number
+被 load 進去後共有 3 個 segments，code、data、stack
+檔案 header 有三段，分別是 code、data、arch_table
+每段的 heade
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2025/06/30/Linux-Kernel-Patched-exec-remove-legacy-custom-binfmt-modules-autoloading/" aria-label="Linux Kernel Patched - exec remove legacy custom binfmt modules autoloading"></a>
+    
+    
+    <div class="post-cover-right">
+      
+        <img data-src="/images/posts_cover/LinuxKernelPwn/linuxkernel.png" data-sizes="auto" alt="Linux Kernel Patched - exec remove legacy custom binfmt modules autoloading" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2025-06-30</span>
+        <span><span class="icon-pencil"></span>2k words</span>
+        <span><span class="icon-clock"></span>10 mins</span>
+      </div>
+      <h2 class="post-title">Linux Kernel Patched - exec remove legacy custom binfmt modules autoloading</h2>
+      <article class="post-article">
+        
+          Linux Kernel Patched - exec: remove legacy custom binfmt modules autoloading
+Author : 堇姬 Naup
+
+Patchedhttps://web.git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=fa1bdca98d74472dcdb79cb948b54f63b5886c04
+搜尋執行檔處理器（binary handler）的邏輯中，包含了遺留下來的舊程式碼，用來在系統遇到不支援的執行檔格式時，自動載入對應的核心模組。這段邏
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-left" data-aos="fade-up">
+    
+      <a class="post-link" href="/2025/05/31/2025-AIS3-pre-exam-MFC-official-writeup/" aria-label="2025 AIS3 pre-exam &amp; My First CTF - official writeup"></a>
+    
+    
+    <div class="post-cover-left">
+      
+        <img data-src="/images/posts_cover/Rana/rana.jpg" data-sizes="auto" alt="2025 AIS3 pre-exam &amp; My First CTF - official writeup" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2025-05-31</span>
+        <span><span class="icon-pencil"></span>5.6k words</span>
+        <span><span class="icon-clock"></span>28 mins</span>
+      </div>
+      <h2 class="post-title">2025 AIS3 pre-exam &amp; My First CTF - official writeup</h2>
+      <article class="post-article">
+        
+          2025 AIS3 pre-exam &amp;amp; My First CTF official writeup
+Author: 堇姬Naup
+
+前言這次在 AIS3 出了 4 題，分別是 1 web、1 misc、2 pwn分別是
+
+Tomorin db 🐧 (web, 282&amp;#x2F;473 solve)
+♖ PyWars ♖ (Misc, 1&amp;#x2F;473 solve)
+MyGO schedule manager α (Pwn, 12&amp;#x2F;473 solve)
+MyGO schedule manager β (Pwn, 0&amp;#x2F;473 solve)
+
+source cod
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2025/05/30/alpacahack-round-11-web-writeup/" aria-label="alpacahack round 11 web - Jackpot &amp; Tiny Note"></a>
+    
+    
+    <div class="post-cover-right">
+      
+        <img data-src="/images/posts_cover/alpacahack/alpacahack.png" data-sizes="auto" alt="alpacahack round 11 web - Jackpot &amp; Tiny Note" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2025-05-30</span>
+        <span><span class="icon-pencil"></span>1.6k words</span>
+        <span><span class="icon-clock"></span>8 mins</span>
+      </div>
+      <h2 class="post-title">alpacahack round 11 web - Jackpot &amp; Tiny Note</h2>
+      <article class="post-article">
+        
+          alpacahack round 11 web - Jackpot &amp;amp; Tiny Note
+Author : 堇姬 Naup
+
+前言那天在忙，只打了第一題，這篇順便補另外一題 (窩不會 XSS)
+Jackpot12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758from flask import Flask, request, render_template, jsonifyfrom werkzeug.exceptions i
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-left" data-aos="fade-up">
+    
+      <a class="post-link" href="/2025/05/22/page-fault-handle-on-userspace-userfaultfd/" aria-label="Page Fault handle on userspace - Userfaultfd"></a>
+    
+    
+    <div class="post-cover-left">
+      
+        <img data-src="/images/posts_cover/os-arch/126727093_p0_master1200.jpg" data-sizes="auto" alt="Page Fault handle on userspace - Userfaultfd" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2025-05-22</span>
+        <span><span class="icon-pencil"></span>1.6k words</span>
+        <span><span class="icon-clock"></span>8 mins</span>
+      </div>
+      <h2 class="post-title">Page Fault handle on userspace - Userfaultfd</h2>
+      <article class="post-article">
+        
+          Page Fault handle on userspace - Userfaultfd
+Author : 堇姬 Naup
+
+What is userfaultfduserfaultfd 是一種 syscall (syscall table rax &amp;#x3D; 388)user 可以去自訂 user pagefault handler 來去處理 userspace 的缺頁異常 (https://zh.wikipedia.org/wiki/%E9%A1%B5%E7%BC%BA%E5%A4%B1)
+https://chromium.googlesource.com/chromiumos/docs
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2025/05/19/Linux-Kernel-2025-TRX-CTF-devmem-part2/" aria-label="2025 TRX CTF - /dev/mem - part 2"></a>
+    
+    
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/trxctf/TRXCTF.png" data-sizes="auto" alt="2025 TRX CTF - /dev/mem - part 2" class="lazyload">
       
@@ -300,12 +471,12 @@ analyze這次主要針對 &amp;#x2F;usr&amp;#x2F;sbin&amp;#x2F;chall，先放一
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2025/05/14/XHLJ-2021-easykernel-writeup/" aria-label="XHLJ 2021-easykernel - writeup"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/LinuxKernelPwn/linuxkernel.png" data-sizes="auto" alt="XHLJ 2021-easykernel - writeup" class="lazyload">
       
@@ -337,12 +508,12 @@ analyze一樣的題目給了三個文件
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2025/05/12/San-Diego-CTF-2025-writeup/" aria-label="San Diego CTF 2025 - all pwn challenge"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/San-Diego-CTF-2025/SDCTF.png" data-sizes="auto" alt="San Diego CTF 2025 - all pwn challenge" class="lazyload">
       
@@ -373,12 +544,12 @@ It let you input shellcode (shellcode need to &amp;lt; 0x19
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2025/04/18/Linux-Kernel-Traversal-of-CPUandPhysical-memory-management/" aria-label="Linux Kernel - Traversal of CPU and physical memory management"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/Linux-Kernel-CPU-and-physical-memory/Archlinux_chan.png" data-sizes="auto" alt="Linux Kernel - Traversal of CPU and physical memory management" class="lazyload">
       
@@ -400,12 +571,12 @@ It let you input shellcode (shellcode need to &amp;lt; 0x19
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2025/04/11/Linux-Kernel-2025-TRX-CTF-devmem/" aria-label="2025 TRX CTF - /dev/mem"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/trxctf/TRXCTF.png" data-sizes="auto" alt="2025 TRX CTF - /dev/mem" class="lazyload">
       
@@ -433,176 +604,11 @@ Author : 堇姬 Naup
   </div>
 </div>
   
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2025/04/04/Linux-Kernel-modprobe-EoP-and-2021-3kctf-echo-nerf/" aria-label="Linux Kernel - EoP by modprobe &amp; 2021 3kCTF echo nerf"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        <img data-src="/images/posts_cover/LinuxKernelPwn/linuxkernel.png" data-sizes="auto" alt="Linux Kernel - EoP by modprobe &amp; 2021 3kCTF echo nerf" class="lazyload">
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2025-04-04</span>
-        <span><span class="icon-pencil"></span>1.7k words</span>
-        <span><span class="icon-clock"></span>9 mins</span>
-      </div>
-      <h2 class="post-title">Linux Kernel - EoP by modprobe &amp; 2021 3kCTF echo nerf</h2>
-      <article class="post-article">
-        
-          Linux Kernel - EoP by modprobe &amp;amp; 2021 3kCTF echo nerf
-Author: 堇姬Naup
-
-前言一個酷酷的 kernel pwn 萬解 www
-調用鏈當你去執行一個檔案時會有以下調用鏈
-do_execve第一步去 call do_execvehttps://elixir.bootlin.com/linux/v6.13.7/source/fs/exec.c#L2040
-12345678static int do_execve(struct filename *filename,	const char __user *const __user
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
-    
-      <a class="post-link" href="/2025/04/02/Windows-Kernel-Exploitation-Part1/" aria-label="Windows Kernel exploitation - Part 1"></a>
-    
-    
-    <div class="post-cover-left">
-      
-        <img data-src="/images/posts_cover/Windows-kernel-exploitation/Windows-kernel-exploitation.webp" data-sizes="auto" alt="Windows Kernel exploitation - Part 1" class="lazyload">
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2025-04-02</span>
-        <span><span class="icon-pencil"></span>8.8k words</span>
-        <span><span class="icon-clock"></span>46 mins</span>
-      </div>
-      <h2 class="post-title">Windows Kernel exploitation - Part 1</h2>
-      <article class="post-article">
-        
-          Windows Kernel exploitation - Part 1
-Author: 堇姬Naup
-
-What is Kernelkernel位於application和hardware之間，是OS的core也負責溝通hadware和process負責了像是I&amp;#x2F;O、process、memory、driver managemet或是syscall 等事情
-kernel也提供了可以跑application的環境application是run在ring3，而kernel則是ring0
-123456789101112131415           +------------------
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2025/03/27/AIS3-EOF-2025-Final/" aria-label="AIS3 EOF Final 2025 - Record"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        <img data-src="/images/posts_cover/EOF/EOF.png" data-sizes="auto" alt="AIS3 EOF Final 2025 - Record" class="lazyload">
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2025-03-27</span>
-        <span><span class="icon-pencil"></span>2k words</span>
-        <span><span class="icon-clock"></span>10 mins</span>
-      </div>
-      <h2 class="post-title">AIS3 EOF Final 2025 - Record</h2>
-      <article class="post-article">
-        
-          AIS3 EOF Final 2025 - Record
-Author: 堇姬Naup
-
-前言
-Team: CakeisTheFakeRank: r.k.2 &amp;amp; 炸彈超人獎
-
-遲來的 EOF 心得 www
-先感謝 CakeisTheFake 的所有隊友，一起奮戰了兩天，這邊簡單記錄這次比賽
-
-
-
-Day 1一開始先釋出了 BOMBE、game 兩題 KoH先來說說 BOMBE每隊都要上傳 malware 及 EDRmalware 要做三件事
-
-從 &amp;#x2F;home&amp;#x2F;bogay1450&amp;#x2F;.ssh&amp;#x2F;id_ed25519 檔案內容取得 flag
-從 proc
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
-    
-      <a class="post-link" href="/2025/03/22/Pwnable-printable/" aria-label="Pwnable.tw - printable"></a>
-    
-    
-    <div class="post-cover-left">
-      
-        <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw - printable" class="lazyload">
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2025-03-22</span>
-        <span><span class="icon-pencil"></span>6 words</span>
-        <span><span class="icon-clock"></span>1 min</span>
-      </div>
-      <h2 class="post-title">Pwnable.tw - printable</h2>
-      <article class="post-article">
-        
-          Here&#39;s something encrypted, password is required to continue reading.
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2025/03/06/alpacahack-round6-pwn-writeup/" aria-label="AlpacaHack Round 6 (Pwn) - writeup"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        <img data-src="/images/posts_cover/alpacahack/alpacahack.png" data-sizes="auto" alt="AlpacaHack Round 6 (Pwn) - writeup" class="lazyload">
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2025-03-06</span>
-        <span><span class="icon-pencil"></span>1.1k words</span>
-        <span><span class="icon-clock"></span>5 mins</span>
-      </div>
-      <h2 class="post-title">AlpacaHack Round 6 (Pwn) - writeup</h2>
-      <article class="post-article">
-        
-          AlpacaHack Round 6 (Pwn) - writeup
-Author: 堇姬Naup
-
-最近看到來賽後挑戰一下，除了第三題外都有打出來簡單記錄一下
-inboundoob 寫 GOT 成 win function 
-1234567891011121314151617181920212223from pwn import *r=process(&amp;quot;./inbound&amp;quot;)r=remote(&amp;quot;34.170.146.252&amp;quot;, 39404)win = 0x4011d6debug = input(&amp;quot;(Y/N)&amp;quot;)if debug ==
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
 
 
   <nav id="page-nav" data-aos="fade-up">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
   </nav>
 
 
@@ -631,10 +637,10 @@ inboundoob 寫 GOT 成 win function
     
       <div>
         <span class="icon-brush"></span>
-        197.5k
+        201.8k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        17:12
+        17:40
       </div>
     
     
@@ -670,7 +676,7 @@ inboundoob 寫 GOT 成 win function
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">79</div>
+    <div class="sidebar-state-number">84</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
