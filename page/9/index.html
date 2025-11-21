@@ -198,7 +198,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">84</div>
+    <div class="sidebar-state-number">85</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
@@ -266,10 +266,46 @@
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2024/02/29/Cake-CTF-2023-WP/" aria-label="Cake CTF 2023 Writeup"></a>
+      <a class="post-link" href="/2024/02/29/CGGC-WP/" aria-label="CGGC 2024 Qual Writeup"></a>
     
     
     <div class="post-cover-left">
+      
+        
+        
+          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="CGGC 2024 Qual Writeup" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-02-29</span>
+        <span><span class="icon-pencil"></span>1.2k words</span>
+        <span><span class="icon-clock"></span>5 mins</span>
+      </div>
+      <h2 class="post-title">CGGC 2024 Qual Writeup</h2>
+      <article class="post-article">
+        
+          CGGC 2024 Qual writeup
+Team: 芙莉熊Rank: 9th
+
+Webbossti第一關是用jwt sign的登入頁面，把密鑰用john暴一下並修改參數登入就好：john jwt.txt --wordlist=rockyou.txt --format=HMAC-SHA256
+  
+  
+登入後的畫面上方有個7*7，馬上想到SSTI，結合前面JWT帶有的參數hack就可以植入payload:&amp;#123;&amp;#123;config.__class__.__init__.__globals__[&#39;os&#39;].popen(&#39;cat Flag.txt&#39;).read()&amp;#125;&amp;#1
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/02/29/Cake-CTF-2023-WP/" aria-label="Cake CTF 2023 Writeup"></a>
+    
+    
+    <div class="post-cover-right">
       
         
         
@@ -300,12 +336,12 @@ An exam web application which would generate some strange sentences with unknow 
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/02/29/Hackappatoi/" aria-label="Hackappatoi CTF&#39;23 CakeisTheFake Writeup"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -337,12 +373,12 @@ WebForza napolia
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/02/29/sun-shine-CTF-WP/" aria-label="Sunshine CTF 2023 Writeup"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -375,12 +411,12 @@ Solve Sc
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/02/29/hello-world/" aria-label="建完blog的第一篇文章"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -440,10 +476,10 @@ Solve Sc
     
       <div>
         <span class="icon-brush"></span>
-        201.8k
+        205.9k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        17:40
+        18:01
       </div>
     
     
@@ -479,7 +515,7 @@ Solve Sc
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">84</div>
+    <div class="sidebar-state-number">85</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
