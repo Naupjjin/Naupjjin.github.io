@@ -1,0 +1,673 @@
+
+  <!DOCTYPE html>
+  <html lang="en"  >
+  <head>
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_bq08450reo';window.REIMU_CONFIG.clipboard_tips = {"success":"copy success(*^▽^*)","fail":"copy failed (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"Naup"}};window.REIMU_CONFIG.code_block = {"expand":true};</script>
+  
+  <title>
+    Analyse linux kernel rust first cve |
+    
+    堇姬 Naup&#39;s Blog
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_bq08450reo.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="Analyse linux kernel rust first cve Author: 堇姬Naup  前言聽起來噱頭很大，來看一下是甚麼樣的洞雖然只寫過一點 Rust 對 rust 不熟，如果有錯誤歡迎私訊我更正 Binder &amp; death recipient這次出問題的地方是在 binder 的地方，他是 android 的一個 IPC 機制，可以用於兩個 process 間的相互通">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Analyse linux kernel rust first cve">
+<meta property="og:url" content="http://example.com/2025/12/30/analyze-linux-kernel-rust-first-cve/index.html">
+<meta property="og:site_name" content="堇姬 Naup&#39;s Blog">
+<meta property="og:description" content="Analyse linux kernel rust first cve Author: 堇姬Naup  前言聽起來噱頭很大，來看一下是甚麼樣的洞雖然只寫過一點 Rust 對 rust 不熟，如果有錯誤歡迎私訊我更正 Binder &amp; death recipient這次出問題的地方是在 binder 的地方，他是 android 的一個 IPC 機制，可以用於兩個 process 間的相互通">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-12-30T08:58:54.000Z">
+<meta property="article:modified_time" content="2025-12-30T09:04:25.130Z">
+<meta property="article:author" content="Naup堇姬">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="堇姬 Naup's Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/fav.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css">
+
+  
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+
+  <body>
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      <div class="loading-word">Naup...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/">Home</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/archives">Archives</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/about">About</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed" target="_blank"></a>
+    
+    
+    
+  </nav>
+</div>
+<header id="header">
+  
+    <picture></picture>
+    <img fetchpriority="high" src="/images/posts_cover/rust/rust05_sea_urchin-min.png" alt="Analyse linux kernel rust first cve">
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">Analyse linux kernel rust first cve</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  
+  <div class="sidebar-wrapper wrap-sticky">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Analyse-linux-kernel-rust-first-cve"><span class="toc-number">1.</span> <span class="toc-text">Analyse linux kernel rust first cve</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Binder-death-recipient"><span class="toc-number">1.2.</span> <span class="toc-text">Binder &amp; death recipient</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.3.</span> <span class="toc-text">漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#after-all"><span class="toc-number">1.4.</span> <span class="toc-text">after all</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">86</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">21</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+      
+        <div class="sidebar-btn-wrapper" style="position:static">
+          <div class="sidebar-toc-btn current"></div>
+          <div class="sidebar-common-btn"></div>
+        </div>
+      
+    </div>
+  </div>
+
+  <div class="sidebar-widget">
+  
+  </div>
+</aside>
+
+          <section id="main"><article id="post-analyze-linux-kernel-rust-first-cve" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <a href="/2025/12/30/analyze-linux-kernel-rust-first-cve/" class="article-date-link" data-aos="zoom-in">
+    <time datetime="2025-12-30T08:58:54.000Z" itemprop="datePublished">2025-12-30</time>
+    <time style="display: none;" id="post-update-time">2025-12-30</time>
+  </a>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <h1 id="Analyse-linux-kernel-rust-first-cve"><a href="#Analyse-linux-kernel-rust-first-cve" class="headerlink" title="Analyse linux kernel rust first cve"></a>Analyse linux kernel rust first cve</h1><blockquote>
+<p>Author: 堇姬Naup</p>
+</blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>聽起來噱頭很大，來看一下是甚麼樣的洞<br>雖然只寫過一點 Rust 對 rust 不熟，如果有錯誤歡迎私訊我更正</p>
+<h2 id="Binder-death-recipient"><a href="#Binder-death-recipient" class="headerlink" title="Binder &amp; death recipient"></a>Binder &amp; death recipient</h2><p>這次出問題的地方是在 binder 的地方，他是 android 的一個 IPC 機制，可以用於兩個 process 間的相互通訊<br>Binder 的詳細原理在以下文章有詳敘<br><a target="_blank" rel="noopener" href="https://hackmd.io/@AlienHackMd/S1qm0vmK5#Binder---Native-Binder-%E5%8E%9F%E7%90%86">https://hackmd.io/@AlienHackMd/S1qm0vmK5#Binder---Native-Binder-%E5%8E%9F%E7%90%86</a></p>
+<p>這次出問題的地方是在 binder 中負責 DeathRecipient 的部分有關<br>Binder 是一個有 server-client 概念的東西，當 server 發生意外掛掉的狀況，所有依賴於該 server 的 client 就會收到通知</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// https://elixir.bootlin.com/linux/v6.18-rc1/source/drivers/android/binder/node.rs#L168</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/// List of processes to deliver a notification to when this node is destroyed (usually due to</span></span><br><span class="line">    <span class="comment">/// the process dying).</span></span><br><span class="line">    death_list: List&lt;DTRWrap&lt;NodeDeath&gt;, <span class="number">1</span>&gt;,</span><br></pre></td></tr></table></figure>
+
+<p><code>death_list</code> 是一個 link list，其中會友許多 <code>NodeDeath</code>，這個結構就是表示了通知本身，這個 link list 儲存了所有須要通知的東西</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// https://elixir.bootlin.com/linux/v6.18-rc1/source/drivers/android/binder/node.rs#L896</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/// Used to deliver notifications when a process dies.</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">/// A process can request to be notified when a process dies using `BC_REQUEST_DEATH_NOTIFICATION`.</span></span><br><span class="line"><span class="comment">/// This will make the driver send a `BR_DEAD_BINDER` to userspace when the process dies (or</span></span><br><span class="line"><span class="comment">/// immediately if it is already dead). Userspace is supposed to respond with `BC_DEAD_BINDER_DONE`</span></span><br><span class="line"><span class="comment">/// once it has processed the notification.</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">/// Userspace can unregister from death notifications using the `BC_CLEAR_DEATH_NOTIFICATION`</span></span><br><span class="line"><span class="comment">/// command. In this case, the kernel will respond with `BR_CLEAR_DEATH_NOTIFICATION_DONE` once the</span></span><br><span class="line"><span class="comment">/// notification has been removed. Note that if the remote process dies before the kernel has</span></span><br><span class="line"><span class="comment">/// responded with `BR_CLEAR_DEATH_NOTIFICATION_DONE`, then the kernel will still send a</span></span><br><span class="line"><span class="comment">/// `BR_DEAD_BINDER`, which userspace must be able to process. In this case, the kernel will wait</span></span><br><span class="line"><span class="comment">/// for the `BC_DEAD_BINDER_DONE` command before it sends `BR_CLEAR_DEATH_NOTIFICATION_DONE`.</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">/// Note that even if the kernel sends a `BR_DEAD_BINDER`, this does not remove the death</span></span><br><span class="line"><span class="comment">/// notification. Userspace must still remove it manually using `BC_CLEAR_DEATH_NOTIFICATION`.</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">/// If a process uses `BC_RELEASE` to destroy its last refcount on a node that has an active death</span></span><br><span class="line"><span class="comment">/// registration, then the death registration is immediately deleted (we implement this using the</span></span><br><span class="line"><span class="comment">/// `aborted` field). However, userspace is not supposed to delete a `NodeRef` without first</span></span><br><span class="line"><span class="comment">/// deregistering death notifications, so this codepath is not executed under normal circumstances.</span></span><br><span class="line"><span class="meta">#[pin_data]</span></span><br><span class="line"><span class="title function_ invoke__">pub</span>(<span class="keyword">crate</span>) <span class="keyword">struct</span> <span class="title class_">NodeDeath</span> &#123;</span><br><span class="line">    node: DArc&lt;Node&gt;,</span><br><span class="line">    process: Arc&lt;Process&gt;,</span><br><span class="line">    <span class="title function_ invoke__">pub</span>(<span class="keyword">crate</span>) cookie: <span class="type">u64</span>,</span><br><span class="line">    <span class="meta">#[pin]</span></span><br><span class="line">    links_track: AtomicTracker&lt;<span class="number">0</span>&gt;,</span><br><span class="line">    <span class="comment">/// Used by the owner `Node` to store a list of registered death notifications.</span></span><br><span class="line">    <span class="comment">///</span></span><br><span class="line">    <span class="comment">/// # Invariants</span></span><br><span class="line">    <span class="comment">///</span></span><br><span class="line">    <span class="comment">/// Only ever used with the `death_list` list of `self.node`.</span></span><br><span class="line">    <span class="meta">#[pin]</span></span><br><span class="line">    death_links: ListLinks&lt;<span class="number">1</span>&gt;,</span><br><span class="line">    <span class="comment">/// Used by the process to keep track of the death notifications for which we have sent a</span></span><br><span class="line">    <span class="comment">/// `BR_DEAD_BINDER` but not yet received a `BC_DEAD_BINDER_DONE`.</span></span><br><span class="line">    <span class="comment">///</span></span><br><span class="line">    <span class="comment">/// # Invariants</span></span><br><span class="line">    <span class="comment">///</span></span><br><span class="line">    <span class="comment">/// Only ever used with the `delivered_deaths` list of `self.process`.</span></span><br><span class="line">    <span class="meta">#[pin]</span></span><br><span class="line">    delivered_links: ListLinks&lt;<span class="number">2</span>&gt;,</span><br><span class="line">    <span class="meta">#[pin]</span></span><br><span class="line">    delivered_links_track: AtomicTracker&lt;<span class="number">2</span>&gt;,</span><br><span class="line">    <span class="meta">#[pin]</span></span><br><span class="line">    inner: SpinLock&lt;NodeDeathInner&gt;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一支 process 可以通過 <code>BC_REQUEST_DEATH_NOTIFICATION</code> 來註冊一個 <code>NodeDeath</code>，並掛到 <code>death_list</code> 中<br>可以在這裡觀察到</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// https://elixir.bootlin.com/linux/v6.18-rc1/source/drivers/android/binder/process.rs#L1152</span></span><br><span class="line"></span><br><span class="line">    <span class="title function_ invoke__">pub</span>(<span class="keyword">crate</span>) <span class="keyword">fn</span> <span class="title function_">request_death</span>(</span><br><span class="line">        <span class="keyword">self</span>: &amp;Arc&lt;<span class="keyword">Self</span>&gt;,</span><br><span class="line">        reader: &amp;<span class="keyword">mut</span> UserSliceReader,</span><br><span class="line">        thread: &amp;Thread,</span><br><span class="line">    ) <span class="punctuation">-&gt;</span> <span class="type">Result</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> <span class="variable">handle</span>: <span class="type">u32</span> = reader.<span class="title function_ invoke__">read</span>()?;</span><br><span class="line">        <span class="keyword">let</span> <span class="variable">cookie</span>: <span class="type">u64</span> = reader.<span class="title function_ invoke__">read</span>()?;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Queue BR_ERROR if we can&#x27;t allocate memory for the death notification.</span></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">death</span> = UniqueArc::<span class="title function_ invoke__">new_uninit</span>(GFP_KERNEL).<span class="title function_ invoke__">inspect_err</span>(|_| &#123;</span><br><span class="line">            thread.<span class="title function_ invoke__">push_return_work</span>(BR_ERROR);</span><br><span class="line">        &#125;)?;</span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">refs</span> = <span class="keyword">self</span>.node_refs.<span class="title function_ invoke__">lock</span>();</span><br><span class="line">        <span class="keyword">let</span> <span class="variable">Some</span>(info) = refs.by_handle.<span class="title function_ invoke__">get_mut</span>(&amp;handle) <span class="keyword">else</span> &#123;</span><br><span class="line">            pr_warn!(<span class="string">&quot;BC_REQUEST_DEATH_NOTIFICATION invalid ref &#123;handle&#125;\n&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_ invoke__">Ok</span>(());</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Nothing to do if there is already a death notification request for this handle.</span></span><br><span class="line">        <span class="keyword">if</span> info.<span class="title function_ invoke__">death</span>().<span class="title function_ invoke__">is_some</span>() &#123;</span><br><span class="line">            pr_warn!(<span class="string">&quot;BC_REQUEST_DEATH_NOTIFICATION death notification already set\n&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_ invoke__">Ok</span>(());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">death</span> = &#123;</span><br><span class="line">            <span class="keyword">let</span> <span class="variable">death_init</span> = NodeDeath::<span class="title function_ invoke__">new</span>(info.<span class="title function_ invoke__">node_ref</span>().node.<span class="title function_ invoke__">clone</span>(), <span class="keyword">self</span>.<span class="title function_ invoke__">clone</span>(), cookie);</span><br><span class="line">            <span class="keyword">match</span> death.<span class="title function_ invoke__">pin_init_with</span>(death_init) &#123;</span><br><span class="line">                <span class="title function_ invoke__">Ok</span>(death) =&gt; death,</span><br><span class="line">                <span class="comment">// error is infallible</span></span><br><span class="line">                <span class="title function_ invoke__">Err</span>(err) =&gt; <span class="keyword">match</span> err &#123;&#125;,</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Register the death notification.</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">let</span> <span class="variable">owner</span> = info.<span class="title function_ invoke__">node_ref2</span>().node.owner.<span class="title function_ invoke__">clone</span>();</span><br><span class="line">            <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">owner_inner</span> = owner.inner.<span class="title function_ invoke__">lock</span>();</span><br><span class="line">            <span class="keyword">if</span> owner_inner.is_dead &#123;</span><br><span class="line">                <span class="keyword">let</span> <span class="variable">death</span> = Arc::<span class="title function_ invoke__">from</span>(death);</span><br><span class="line">                *info.<span class="title function_ invoke__">death</span>() = <span class="title function_ invoke__">Some</span>(death.<span class="title function_ invoke__">clone</span>());</span><br><span class="line">                <span class="title function_ invoke__">drop</span>(owner_inner);</span><br><span class="line">                death.<span class="title function_ invoke__">set_dead</span>();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">let</span> <span class="variable">death</span> = ListArc::<span class="title function_ invoke__">from</span>(death);</span><br><span class="line">                *info.<span class="title function_ invoke__">death</span>() = <span class="title function_ invoke__">Some</span>(death.<span class="title function_ invoke__">clone_arc</span>());</span><br><span class="line">                info.<span class="title function_ invoke__">node_ref</span>().node.<span class="title function_ invoke__">add_death</span>(death, &amp;<span class="keyword">mut</span> owner_inner);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="title function_ invoke__">Ok</span>(())</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>add_death</code> 就會將 node 加入至 linklist</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// https://elixir.bootlin.com/linux/v6.18-rc1/source/drivers/android/binder/node.rs#L323</span></span><br><span class="line"></span><br><span class="line">    <span class="title function_ invoke__">pub</span>(<span class="keyword">crate</span>) <span class="keyword">fn</span> <span class="title function_">add_death</span>(</span><br><span class="line">        &amp;<span class="keyword">self</span>,</span><br><span class="line">        death: ListArc&lt;DTRWrap&lt;NodeDeath&gt;, <span class="number">1</span>&gt;,</span><br><span class="line">        guard: &amp;<span class="keyword">mut</span> Guard&lt;<span class="symbol">&#x27;_</span>, ProcessInner, SpinLockBackend&gt;,</span><br><span class="line">    ) &#123;</span><br><span class="line">        <span class="keyword">self</span>.inner.<span class="title function_ invoke__">access_mut</span>(guard).death_list.<span class="title function_ invoke__">push_back</span>(death);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>當完成通知或有其他需要移除 node 會在這裡實現，他會將 node 本身傳入並 remove</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// https://elixir.bootlin.com/linux/v6.18-rc1/source/drivers/android/binder/node.rs#L976</span></span><br><span class="line"></span><br><span class="line">    <span class="title function_ invoke__">pub</span>(<span class="keyword">crate</span>) <span class="keyword">fn</span> <span class="title function_">set_cleared</span>(<span class="keyword">self</span>: &amp;DArc&lt;<span class="keyword">Self</span>&gt;, abort: <span class="type">bool</span>) <span class="punctuation">-&gt;</span> <span class="type">bool</span> &#123;</span><br><span class="line">	...</span><br><span class="line">            <span class="comment">// SAFETY: A `NodeDeath` is never inserted into the death list of any node other than</span></span><br><span class="line">            <span class="comment">// its owner, so it is either in this death list or in no death list.</span></span><br><span class="line">            <span class="keyword">unsafe</span> &#123; node_inner.death_list.<span class="title function_ invoke__">remove</span>(<span class="keyword">self</span>) &#125;;</span><br><span class="line">        &#125;</span><br><span class="line">        needs_queueing</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="漏洞"><a href="#漏洞" class="headerlink" title="漏洞"></a>漏洞</h2><p><a target="_blank" rel="noopener" href="https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=3e0ae02ba831da2b707905f4e602e43f8507b8cc">https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=3e0ae02ba831da2b707905f4e602e43f8507b8cc</a></p>
+<p>rust 的編譯器在編譯階段會進行相當多的檢查，基本上有編譯通過，可以說明理論上不會有如 overflow、data race condition、dangling pointer 之類的問題<br>然而編譯器靜態分析的能力是有限的，並不是所有操作都可以在編譯階段驗證是否正確，而 rust 的準則是，若編譯器檢查了，開發者需要主動的通過 <code>unsafe</code> 來去向編譯器說我驗證過這是安全的，並且在開發社群上，你也需要撰寫 SAFETY 的註解來說明為何是安全的，安全前提條件是甚麼</p>
+<p>這次出問題的段落，安全的前提是，NodeDeath 這個節點只可能被插進「它自己的 owner 的 death_list」，所以 NodeDeath 要馬在自己的 death_list，要馬不在<br>然而出問題的原因就是這件事沒有滿足了</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SAFETY: A `NodeDeath` is never inserted into the death list of any node other than</span></span><br><span class="line"><span class="comment">// its owner, so it is either in this death list or in no death list.</span></span><br><span class="line"><span class="keyword">unsafe</span> &#123; node_inner.death_list.<span class="title function_ invoke__">remove</span>(<span class="keyword">self</span>) &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>原因在 release 功能上<br>他首先先將 death_list move 到了 stack 上<br>並且解鎖，然後遍歷這個在 stack 上的臨時鏈表來 set_death</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// https://elixir.bootlin.com/linux/v6.18-rc1/source/drivers/android/binder/node.rs#L536</span></span><br><span class="line"></span><br><span class="line">    <span class="title function_ invoke__">pub</span>(<span class="keyword">crate</span>) <span class="keyword">fn</span> <span class="title function_">release</span>(&amp;<span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">guard</span> = <span class="keyword">self</span>.owner.inner.<span class="title function_ invoke__">lock</span>();</span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">let</span> <span class="variable">Some</span>(work) = <span class="keyword">self</span>.inner.<span class="title function_ invoke__">access_mut</span>(&amp;<span class="keyword">mut</span> guard).oneway_todo.<span class="title function_ invoke__">pop_front</span>() &#123;</span><br><span class="line">            <span class="title function_ invoke__">drop</span>(guard);</span><br><span class="line">            work.<span class="title function_ invoke__">into_arc</span>().<span class="title function_ invoke__">cancel</span>();</span><br><span class="line">            guard = <span class="keyword">self</span>.owner.inner.<span class="title function_ invoke__">lock</span>();</span><br><span class="line">        &#125;</span><br><span class="line">		</span><br><span class="line">        <span class="keyword">let</span> <span class="variable">death_list</span> = core::mem::<span class="title function_ invoke__">take</span>(&amp;<span class="keyword">mut</span> <span class="keyword">self</span>.inner.<span class="title function_ invoke__">access_mut</span>(&amp;<span class="keyword">mut</span> guard).death_list);</span><br><span class="line">        <span class="title function_ invoke__">drop</span>(guard);</span><br><span class="line">        <span class="keyword">for</span> <span class="variable">death</span> <span class="keyword">in</span> death_list &#123;</span><br><span class="line">            death.<span class="title function_ invoke__">into_arc</span>().<span class="title function_ invoke__">set_dead</span>();</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>問題就很明顯了，原本聲稱 Node 只會存在在自己的 death_list 中，但現在卻存在在 stack 上的臨時 linklist<br>也就是說當有兩個線程<br>線程 1 正在遍歷這個臨時 linklist<br>線程 2 去對原始 linklist 做 remove<br>這兩個線程會同時操作到同一塊記憶體的 prev&#x2F;next pointer<br>就會破壞這整個 linklist，導致線程 1 戳到不合法 prev&#x2F;next pointer 而 crash</p>
+<p>Patch 的方法也很單純<br>原本是一次性 mem::take 搬到 stack 上，並解鎖遍歷<br>改成每次 pop 前都上鎖，pop 後再解鎖<br>這確保了在遍歷時，list 本身不會被其他線程修改</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="deletion">-        let death_list = core::mem::take(&amp;mut self.inner.access_mut(&amp;mut guard).death_list);</span></span><br><span class="line"><span class="deletion">-        drop(guard);</span></span><br><span class="line"><span class="deletion">-        for death in death_list &#123;</span></span><br><span class="line"><span class="addition">+        while let Some(death) = self.inner.access_mut(&amp;mut guard).death_list.pop_front() &#123;</span></span><br><span class="line"><span class="addition">+            drop(guard);</span></span><br><span class="line">             death.into_arc().set_dead();</span><br><span class="line"><span class="addition">+            guard = self.owner.inner.lock();</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="after-all"><a href="#after-all" class="headerlink" title="after all"></a>after all</h2><p>快速 review 完後其實可以發現，由於作業系統需要與硬體、driver 或其他用 C 寫的部分，往往需要更底層的細緻操作，而這是 rust 在編譯期間無法檢查的，也因此需要通過 unsafe 並通過開發者的保證來去確保寫出來的 code 安全性<br>前陣子看到有蠻多人在吹噓 rust 的，確實他對於 linux kernel 或是其他開發的 project 在安全性上都有相當多的保證，但當遇到編譯器難以保證其安全性時，就需要出動人工來去審視<br>另外，Rust 雖然在 Linux kernel 中有第一個 CVE，不過這次其實相比起之前 review 其他 CVE，脈絡是相當乾淨的，原因在於一段 unsafe code，會有一個開發者，必須要去承諾這段 code 的安全性，並敘述清楚這段 code 安全的前提，這使得讓這個洞的危害降到最小範圍，並且後續追蹤上，能快速的去定位到問題原因，我認為這也是 Rust 一個相當好的地方<br>近期嘗試寫了一些 Rust 的 code，體趕上我認為 rust 引入 Linux Kernel 會有其他的問題，不過這邊先不多贅述了，總之這是個很好的例子來去觀察及學習 Rust 在 Linux kernel 中的應用及在安全性設計上與 C 的不同<br>好玩 ~</p>
+<p>最後我要抱怨一件事<br>就是 <a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux">https://elixir.bootlin.com/linux</a><br>這網站我覺得拿來看 code 相當清楚，但是他的 rust code 沒有辦法用 xref 呀XD</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+  <nav id="article-nav" data-aos="fade-up">
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        <img data-src="/images/posts_cover/ubuntu-apparmor/noble-numbat.png" data-sizes="auto" alt="Analyze AppArmor and Ubuntu’s Unprivileged Namespace Restriction bypass" class="lazyload">
+      
+      <a href="/2025/11/21/Ubuntu-Unprivileged-user-namespace-and-apparmor/"></a>
+      <div class="article-nav-caption">Older</div>
+      <h3 class="article-nav-title">
+        
+          Analyze AppArmor and Ubuntu’s Unprivileged Namespace Restriction bypass
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+</article>
+
+
+
+
+
+
+</section>
+        </div>
+        
+        
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      2020-2025
+      <span class="footer-info-sep rotate"></span>
+      Naup堇姬
+    </div>
+    
+      <div>
+        Powered by&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        207.9k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        18:10
+      </div>
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">Number of visits&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">Number of visitors&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Analyse-linux-kernel-rust-first-cve"><span class="toc-number">1.</span> <span class="toc-text">Analyse linux kernel rust first cve</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Binder-death-recipient"><span class="toc-number">1.2.</span> <span class="toc-text">Binder &amp; death recipient</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.3.</span> <span class="toc-text">漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#after-all"><span class="toc-number">1.4.</span> <span class="toc-text">after all</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">86</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">21</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+    
+  </div>
+  
+    <div class="sidebar-btn-wrapper">
+      <div class="sidebar-toc-btn current"></div>
+      <div class="sidebar-common-btn"></div>
+    </div>
+  
+</nav>
+
+    </div>
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.0.6/dist/index.umd.js" integrity="sha384-vkGvf25gm1C1PbcoD5dNfc137HzNL&#x2F;hr1RKA5HniJOaawtvUmH5lTVFgFAruE9Ge" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["#ff5252","#ff7c7c","#ffafaf","#ffd0d0"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["#ff0000"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "Naup堇姬",
+          title: "Analyse linux kernel rust first cve",
+          url: "http://example.com/2025/12/30/analyze-linux-kernel-rust-first-cve/",
+          excerpt: "",
+          description: "",
+          stripContent: "Analyse linux kernel rust first cve Author: 堇姬Naup  前言聽起來噱頭很大，來看一下是甚麼樣的洞雖然只寫過一點 Rust 對 rust 不熟，如果有錯誤歡迎私訊我更正 Binder &amp;amp; death recipient這次出問題的地方是在 binder 的地方，他是 android 的一個 IPC 機制，可以用於兩個 process 間的相互通訊Binder 的詳細原理在以下文章有詳敘https://hackmd.io/@AlienHackM",
+          date: "Tue Dec 30 2025 16:58:54 GMT+0800",
+          updated: "Tue Dec 30 2025 17:04:25 GMT+0800",
+          cover: "/images/posts_cover/rust/rust05_sea_urchin-min.png",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+
+
+
+
+
+
+
+
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.3.0' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+  </body>
+  </html>
+
