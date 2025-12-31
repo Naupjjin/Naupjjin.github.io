@@ -198,7 +198,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">86</div>
+    <div class="sidebar-state-number">87</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
@@ -266,10 +266,50 @@
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2025/01/20/114-apply-college-record/" aria-label="114年資工系特殊選材心得 - by Naup"></a>
+      <a class="post-link" href="/2025/02/05/Linux-Kernel-Pwn-Environment/" aria-label="Linux Kernel Pwn - Environment"></a>
     
     
     <div class="post-cover-left">
+      
+        <img data-src="/images/posts_cover/CGGC-2024-Qual-writeup/CGGC-2024-Qual-writeup.webp" data-sizes="auto" alt="Linux Kernel Pwn - Environment" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2025-02-05</span>
+        <span><span class="icon-pencil"></span>1.4k words</span>
+        <span><span class="icon-clock"></span>6 mins</span>
+      </div>
+      <h2 class="post-title">Linux Kernel Pwn - Environment</h2>
+      <article class="post-article">
+        
+          Linux Kernel Pwn - Environment
+Author: 堇姬Naup
+
+前言如果想把一個 kernel 跑起來，理論上是不能直接在你的 VM 跑起來啦，想想蠻合理的我們必須要將整個環境都模擬起來，並指定我們想要的 kernel image 作為整個環境的 kernel另外還需要 file system本篇主要說明如何
+
+編譯 kernel 
+打包一個 file system 
+Qemu 模擬起來 
+kernel driver
+gdb debug
+
+我使用的環境是 VMware + Ubuntu 22.04
+編譯 kernel這步驟常常遇到超多問題 www先安裝一些依賴
+1
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2025/01/20/114-apply-college-record/" aria-label="114年資工系特殊選材心得 - by Naup"></a>
+    
+    
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/Windows-kernel-exploitation/Windows-kernel-exploitation.webp" data-sizes="auto" alt="114年資工系特殊選材心得 - by Naup" class="lazyload">
       
@@ -323,12 +363,12 @@ Author: 堇姬Naup
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2025/01/20/LinuxKernel-VirtualMemoryManagement/" aria-label="Linux Kernel - Virtual Memory Management"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/LinuxKernel-VirtualMemoryManagement/LinuxKernel-VirtualMemoryManagement.webp" data-sizes="auto" alt="Linux Kernel - Virtual Memory Management" class="lazyload">
       
@@ -355,12 +395,12 @@ Author: 堇姬Naup
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2025/01/20/Pwn-Stack-based-attack/" aria-label="Pwn-Stack-based-attack"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/HITCON-CTF-Final-2024/HITCON-CTF-Final-2024.webp" data-sizes="auto" alt="Pwn-Stack-based-attack" class="lazyload">
       
@@ -393,12 +433,12 @@ What is Pwn?二進制程式檔滲透，其實就是找尋程式中的漏洞，�
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2025/01/17/TSCCTF-2025-writeup/" aria-label="TSC CTF 2025 - writeup"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/TSCCTF-2025-writeup/TSCCTF_banner.webp" data-sizes="auto" alt="TSC CTF 2025 - writeup" class="lazyload">
       
@@ -426,12 +466,12 @@ Ranked 5th overall, solving 26 challenges. Since we solved quite a lot of challe
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2025/01/05/ASISCTF-2022-babyscan/" aria-label="ASIS CTF 2022 pwn - babyscan 1 &amp; babyscan 2"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/ASISCTF-2022-babyscan/ASISCTF-2022-babyscan.webp" data-sizes="auto" alt="ASIS CTF 2022 pwn - babyscan 1 &amp; babyscan 2" class="lazyload">
       
@@ -456,12 +496,12 @@ babyscan_1source code1234567891011121314151617181920212223242526272829303132#inc
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/12/31/2023-2024-all-record/" aria-label="2023 &amp; 2024 年度總結"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/2023and2024/2023and2024.webp" data-sizes="auto" alt="2023 &amp; 2024 年度總結" class="lazyload">
       
@@ -491,12 +531,12 @@ Author: 堇姬Naup
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/12/31/Pwn-heap-note/" aria-label="Pwn-heap note 1"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/Pwn-heap-note-1/pwn-heap-note1.webp" data-sizes="auto" alt="Pwn-heap note 1" class="lazyload">
       
@@ -525,12 +565,12 @@ heap note 2:https://hackmd.io/@naup96321/ryDzdYbjA
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/12/31/Kernel-mode-user-mode-switch/" aria-label="Kernel mode &amp; user mode switch"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/kernelmode_usermode_switch/kernelmode_usermode_switch.webp" data-sizes="auto" alt="Kernel mode &amp; user mode switch" class="lazyload">
       
@@ -561,12 +601,12 @@ IA32_GS_BASE: 用於保存當前 GS base(
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/12/15/THJCC-CTF-2024-Winter-Official-writeup/" aria-label="THJCC CTF 2024 Winter - official writeup"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/THJCC-2024-winter-writeup/THJCC-2024-winter-writeup.webp" data-sizes="auto" alt="THJCC CTF 2024 Winter - official writeup" class="lazyload">
       
@@ -587,44 +627,6 @@ source code: https://github.com/Naupjjin/THJCC-CTF-2024-2th/tree/main
 這次出了兩題滅台題，希望參賽者喜歡www
 It’s Mygo!!!!!🎤🎸🎸🥁🎸 Golang’s Funeral 🎹tag: web、reverse、pwn、golang、MyGo!!!!!
 IDA分析我沒有拔掉debug symbol(因為我發現拔掉好像會太難逆)以下可以搭配釋出的source code跟golang官方文檔，裡
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/11/13/FlareOn-11/" aria-label="Flare-On CTF 11-writeup"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        <img data-src="/images/posts_cover/FlareOn11-writeup/FlareOn11-writeup.webp" data-sizes="auto" alt="Flare-On CTF 11-writeup" class="lazyload">
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-11-13</span>
-        <span><span class="icon-pencil"></span>6k words</span>
-        <span><span class="icon-clock"></span>32 mins</span>
-      </div>
-      <h2 class="post-title">Flare-On CTF 11-writeup</h2>
-      <article class="post-article">
-        
-          Flare-on CTF 11-writeup
-Author: 堇姬Naup
-
-雖然不是玩reverse的，不過感覺蠻好玩的，所以還是跑來打flare-on CTF了結果是解了 5&amp;#x2F;10，其中有解出第五題大家都說很難的題目
-
-
-
-1-frog首先是第一題算是簽到題，是一個pygame做的小遊戲，並且有給source code
-
-
-看了一下，當我到達 victory_tile.x 跟 victory_tile.y 就會噴出flag
-123456# are they on the victory tile? if so do victoryif player.x == victory_t
         
       </article>
     </div>
@@ -664,10 +666,10 @@ Author: 堇姬Naup
     
       <div>
         <span class="icon-brush"></span>
-        207.9k
+        209.4k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        18:10
+        18:15
       </div>
     
     
@@ -703,7 +705,7 @@ Author: 堇姬Naup
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">86</div>
+    <div class="sidebar-state-number">87</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
