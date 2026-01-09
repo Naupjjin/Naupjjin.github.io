@@ -198,7 +198,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">87</div>
+    <div class="sidebar-state-number">88</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
@@ -266,10 +266,44 @@
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2024/09/21/Pwnable-secretgarden/" aria-label="Pwnable.tw-secret garden"></a>
+      <a class="post-link" href="/2024/09/23/Pwnable-realloc/" aria-label="Pwnable.tw-Re-alloc"></a>
     
     
     <div class="post-cover-left">
+      
+        <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-Re-alloc" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-09-23</span>
+        <span><span class="icon-pencil"></span>3.5k words</span>
+        <span><span class="icon-clock"></span>19 mins</span>
+      </div>
+      <h2 class="post-title">Pwnable.tw-Re-alloc</h2>
+      <article class="post-article">
+        
+          Pwnable.tw-Re-alloc
+Author: 堇姬Naup
+
+env他的版本是 Ubuntu GLIBC 2.29-0ubuntu2glibc all in one載下 libc跟ld
+1./download_old 2.29-0ubuntu2_amd64
+
+用 patchelf 來patch
+123456patchelf --set-interpreter ld-2.29.so reallocpatchelf --replace-needed libc.so.6 ./libc-2.29.so reallocnaup@naup-virtual-machine:~/Desktop/pw
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/09/21/Pwnable-secretgarden/" aria-label="Pwnable.tw-secret garden"></a>
+    
+    
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-secret garden" class="lazyload">
       
@@ -299,12 +333,12 @@ patchelf直接patch上去
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/09/20/Pwnable-seethefile/" aria-label="Pwnable.tw-seethefile"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-seethefile" class="lazyload">
       
@@ -334,12 +368,12 @@ patchelf直接patch上去
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/09/16/Pwnable-3x17/" aria-label="Pwnable.tw-3x17"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -368,12 +402,12 @@ start12345678910111213141516171819// positive sp value has been detected, the ou
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/09/11/Pwnable-tcachetear/" aria-label="Pwnable.tw-tcache tear"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -402,12 +436,12 @@ main1234567891011121314151617181920212223242526272829303132333435363738394041424
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/08/22/Python-interpreter/" aria-label="Python-interpreter"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -443,12 +477,12 @@ PRINT_ANSWER -&amp;gt; 印出stack最上方層並pop掉、無參數
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/08/20/Pwn-heap-note-2/" aria-label="Pwn-heap note 2"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -474,12 +508,12 @@ PRINT_ANSWER -&amp;gt; 印出stack最上方層並pop掉、無參數
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/08/20/Pwnable-hacknote/" aria-label="Pwnable.tw-hacknote"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -507,12 +541,12 @@ code analyzemain1234567891011121314151617181920212223242526272829303132333435363
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/08/19/AIS3-Junior-2024-command-injection-bypass-master/" aria-label="AIS3 Junior 2024-command injection bypass master"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -544,12 +578,12 @@ main
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/08/12/Pwn-SROP/" aria-label="Pwn-SROP"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -586,39 +620,6 @@ signal frame
   </div>
 </div>
   
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/08/06/pwnable-start/" aria-label="Pwnable.tw-start"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        
-        
-          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Pwnable.tw-start" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-08-06</span>
-        <span><span class="icon-pencil"></span>527 words</span>
-        <span><span class="icon-clock"></span>2 mins</span>
-      </div>
-      <h2 class="post-title">Pwnable.tw-start</h2>
-      <article class="post-article">
-        
-          Pwnable.tw-start
-Author: 堇姬Naup
-
-題目123456789101112131415161718192021220x08048060 &amp;lt;+0&amp;gt;:	push   esp0x08048061 &amp;lt;+1&amp;gt;:	push   0x804809d0x08048066 &amp;lt;+6&amp;gt;:	xor    eax,eax0x08048068 &amp;lt;+8&amp;gt;:	xor    ebx,ebx0x0804806a &amp;lt;+10&amp;gt;:	xor    ecx,ecx0x0804806c &amp;lt;+12&amp;gt;:	xor    edx,edx0x080480
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
 
 
   <nav id="page-nav" data-aos="fade-up">
@@ -639,7 +640,7 @@ Author: 堇姬Naup
     
     <div>
       <span class="icon-copyright"></span>
-      2020-2025
+      2020-2026
       <span class="footer-info-sep rotate"></span>
       Naup堇姬
     </div>
@@ -652,10 +653,10 @@ Author: 堇姬Naup
     
       <div>
         <span class="icon-brush"></span>
-        209.4k
+        214.9k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        18:15
+        18:45
       </div>
     
     
@@ -691,7 +692,7 @@ Author: 堇姬Naup
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">87</div>
+    <div class="sidebar-state-number">88</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>

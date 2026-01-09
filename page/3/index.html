@@ -198,7 +198,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">87</div>
+    <div class="sidebar-state-number">88</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
@@ -266,10 +266,47 @@
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2025/05/12/San-Diego-CTF-2025-writeup/" aria-label="San Diego CTF 2025 - all pwn challenge"></a>
+      <a class="post-link" href="/2025/05/14/XHLJ-2021-easykernel-writeup/" aria-label="XHLJ 2021-easykernel - writeup"></a>
     
     
     <div class="post-cover-left">
+      
+        <img data-src="/images/posts_cover/LinuxKernelPwn/linuxkernel.png" data-sizes="auto" alt="XHLJ 2021-easykernel - writeup" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2025-05-14</span>
+        <span><span class="icon-pencil"></span>3.2k words</span>
+        <span><span class="icon-clock"></span>16 mins</span>
+      </div>
+      <h2 class="post-title">XHLJ 2021-easykernel - writeup</h2>
+      <article class="post-article">
+        
+          XHLJ 2021-easykernel - writeup
+Author : 堇姬 Naup
+
+analyze一樣的題目給了三個文件
+12345naup96321@naup96321-virtual-machine:~/Desktop/ekernel$ tree.├── bzImage├── rootfs.img.gz└── start.sh
+
+先解包 file system
+123mkdir -p sysfilegunzip rootfs.img.gzcpio -idmv -D sysfile &amp;lt; rootfs.img
+
+順便寫 pack.sh 打包
+1find . | cpio -
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2025/05/12/San-Diego-CTF-2025-writeup/" aria-label="San Diego CTF 2025 - all pwn challenge"></a>
+    
+    
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/San-Diego-CTF-2025/SDCTF.png" data-sizes="auto" alt="San Diego CTF 2025 - all pwn challenge" class="lazyload">
       
@@ -300,12 +337,12 @@ It let you input shellcode (shellcode need to &amp;lt; 0x19
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2025/04/18/Linux-Kernel-Traversal-of-CPUandPhysical-memory-management/" aria-label="Linux Kernel - Traversal of CPU and physical memory management"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/Linux-Kernel-CPU-and-physical-memory/Archlinux_chan.png" data-sizes="auto" alt="Linux Kernel - Traversal of CPU and physical memory management" class="lazyload">
       
@@ -327,12 +364,12 @@ It let you input shellcode (shellcode need to &amp;lt; 0x19
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2025/04/11/Linux-Kernel-2025-TRX-CTF-devmem/" aria-label="2025 TRX CTF - /dev/mem"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/trxctf/TRXCTF.png" data-sizes="auto" alt="2025 TRX CTF - /dev/mem" class="lazyload">
       
@@ -361,12 +398,12 @@ Author : 堇姬 Naup
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2025/04/04/Linux-Kernel-modprobe-EoP-and-2021-3kctf-echo-nerf/" aria-label="Linux Kernel - EoP by modprobe &amp; 2021 3kCTF echo nerf"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/LinuxKernelPwn/linuxkernel.png" data-sizes="auto" alt="Linux Kernel - EoP by modprobe &amp; 2021 3kCTF echo nerf" class="lazyload">
       
@@ -394,12 +431,12 @@ do_execve第一步去 call do_execvehttps://elixir.bootlin.com/linux/v6.13.7/sou
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2025/04/02/Windows-Kernel-Exploitation-Part1/" aria-label="Windows Kernel exploitation - Part 1"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/Windows-kernel-exploitation/Windows-kernel-exploitation.webp" data-sizes="auto" alt="Windows Kernel exploitation - Part 1" class="lazyload">
       
@@ -426,12 +463,12 @@ kernel也提供了可以跑application的環境application是run在ring3，而ke
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2025/03/27/AIS3-EOF-2025-Final/" aria-label="AIS3 EOF Final 2025 - Record"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/EOF/EOF.png" data-sizes="auto" alt="AIS3 EOF Final 2025 - Record" class="lazyload">
       
@@ -467,12 +504,12 @@ Day 1一開始先釋出了 BOMBE、game 兩題 KoH先來說說 BOMBE每隊都要
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2025/03/22/Pwnable-printable/" aria-label="Pwnable.tw - printable"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw - printable" class="lazyload">
       
@@ -494,12 +531,12 @@ Day 1一開始先釋出了 BOMBE、game 兩題 KoH先來說說 BOMBE每隊都要
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2025/03/06/alpacahack-round6-pwn-writeup/" aria-label="AlpacaHack Round 6 (Pwn) - writeup"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/alpacahack/alpacahack.png" data-sizes="auto" alt="AlpacaHack Round 6 (Pwn) - writeup" class="lazyload">
       
@@ -526,12 +563,12 @@ inboundoob 寫 GOT 成 win function
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2025/03/02/Linux-Kernel-Pwn-EBH/" aria-label="Linux-Kernel-Pwn-EBH"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/LinuxKernelPwn/linuxkernel.png" data-sizes="auto" alt="Linux-Kernel-Pwn-EBH" class="lazyload">
       
@@ -558,37 +595,6 @@ analyze source code12naup@naup-virtual-machine:~/Desktop/chal/challenge$ lsbzIma
   </div>
 </div>
   
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2025/02/21/Linux-Kernel-SDM-Volume3-SystemLevelRegisters-DataStructures/" aria-label="SDM Volume 3 Figure 2-1. IA-32 System-Level Registers and Data Structures"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        <img data-src="/images/posts_cover/kernelmode_usermode_switch/kernelmode_usermode_switch.webp" data-sizes="auto" alt="SDM Volume 3 Figure 2-1. IA-32 System-Level Registers and Data Structures" class="lazyload">
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2025-02-21</span>
-        <span><span class="icon-pencil"></span>2.9k words</span>
-        <span><span class="icon-clock"></span>12 mins</span>
-      </div>
-      <h2 class="post-title">SDM Volume 3 Figure 2-1. IA-32 System-Level Registers and Data Structures</h2>
-      <article class="post-article">
-        
-          SDM Volume 3 Figure 2-1. IA-32 System-Level Registers and Data Structures
-Author: 堇姬Naup
-
-圍繞這張圖來展開(SDM Volume 3中的Figure 2-1. IA-32 System-Level Registers and Data Structures)
-第 63 頁https://www.intel.com/content/dam/www/public/us/en/documents/manuals/64-ia-32-architectures-software-developer-vol-3a-p
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
 
 
   <nav id="page-nav" data-aos="fade-up">
@@ -609,7 +615,7 @@ Author: 堇姬Naup
     
     <div>
       <span class="icon-copyright"></span>
-      2020-2025
+      2020-2026
       <span class="footer-info-sep rotate"></span>
       Naup堇姬
     </div>
@@ -622,10 +628,10 @@ Author: 堇姬Naup
     
       <div>
         <span class="icon-brush"></span>
-        209.4k
+        214.9k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        18:15
+        18:45
       </div>
     
     
@@ -661,7 +667,7 @@ Author: 堇姬Naup
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">87</div>
+    <div class="sidebar-state-number">88</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
