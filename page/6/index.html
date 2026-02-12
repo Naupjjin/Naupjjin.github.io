@@ -198,7 +198,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">88</div>
+    <div class="sidebar-state-number">89</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
@@ -266,10 +266,45 @@
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2024/09/23/Pwnable-realloc/" aria-label="Pwnable.tw-Re-alloc"></a>
+      <a class="post-link" href="/2024/09/23/Pwnable-dubble/" aria-label="Pwnable.tw-Dubblesort"></a>
     
     
     <div class="post-cover-left">
+      
+        <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-Dubblesort" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-09-23</span>
+        <span><span class="icon-pencil"></span>1k words</span>
+        <span><span class="icon-clock"></span>5 mins</span>
+      </div>
+      <h2 class="post-title">Pwnable.tw-Dubblesort</h2>
+      <article class="post-article">
+        
+          Pwnable.tw-Dubblesort
+Author: 堇姬Naup
+
+libcglibc all in one 中沒有 2.23-0ubuntu5所以去網路上找libchttps://launchpad.net/ubuntu/xenial/i386/libc6/2.23-0ubuntu5
+把i386載下來
+1dpkg -X libc6_2.23-0ubuntu5_i386.deb .
+在libs裡面就有ld跟libc了
+patchelf直接patch上去
+12patchelf --set-interpreter ld-2.23.so dubblesortpatchelf --replac
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/09/23/Pwnable-realloc/" aria-label="Pwnable.tw-Re-alloc"></a>
+    
+    
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-Re-alloc" class="lazyload">
       
@@ -298,12 +333,12 @@ env他的版本是 Ubuntu GLIBC 2.29-0ubuntu2glibc all in one載下 libc跟ld
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/09/21/Pwnable-secretgarden/" aria-label="Pwnable.tw-secret garden"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-secret garden" class="lazyload">
       
@@ -333,12 +368,12 @@ patchelf直接patch上去
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/09/20/Pwnable-seethefile/" aria-label="Pwnable.tw-seethefile"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw-seethefile" class="lazyload">
       
@@ -368,12 +403,12 @@ patchelf直接patch上去
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/09/16/Pwnable-3x17/" aria-label="Pwnable.tw-3x17"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -402,12 +437,12 @@ start12345678910111213141516171819// positive sp value has been detected, the ou
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/09/11/Pwnable-tcachetear/" aria-label="Pwnable.tw-tcache tear"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -436,12 +471,12 @@ main1234567891011121314151617181920212223242526272829303132333435363738394041424
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/08/22/Python-interpreter/" aria-label="Python-interpreter"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -477,12 +512,12 @@ PRINT_ANSWER -&amp;gt; 印出stack最上方層並pop掉、無參數
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/08/20/Pwn-heap-note-2/" aria-label="Pwn-heap note 2"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -508,12 +543,12 @@ PRINT_ANSWER -&amp;gt; 印出stack最上方層並pop掉、無參數
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/08/20/Pwnable-hacknote/" aria-label="Pwnable.tw-hacknote"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -541,12 +576,12 @@ code analyzemain1234567891011121314151617181920212223242526272829303132333435363
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/08/19/AIS3-Junior-2024-command-injection-bypass-master/" aria-label="AIS3 Junior 2024-command injection bypass master"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -571,49 +606,6 @@ Author: 堇姬Naup
 先看source code吧
 main
 123456789101112131415
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/08/12/Pwn-SROP/" aria-label="Pwn-SROP"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        
-        
-          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Pwn-SROP" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-08-12</span>
-        <span><span class="icon-pencil"></span>1.1k words</span>
-        <span><span class="icon-clock"></span>5 mins</span>
-      </div>
-      <h2 class="post-title">Pwn-SROP</h2>
-      <article class="post-article">
-        
-          Pwn-SROP
-Author: 堇姬Naup
-
-signal機制
-kernel向process發起signal機制，Process暫時中斷，進入kernel
-保存環境(簡單來說就是保存了各個暫存器的值，將所有東西壓入stack，並壓入signal相關訊息)，這段記憶體被稱為Signal Frame
-到signal handler處理
-恢復環境
-繼續執行process
-
-
-
-signal frame
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152str
         
       </article>
     </div>
@@ -653,10 +645,10 @@ signal frame
     
       <div>
         <span class="icon-brush"></span>
-        214.9k
+        217.1k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        18:45
+        18:57
       </div>
     
     
@@ -692,7 +684,7 @@ signal frame
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">88</div>
+    <div class="sidebar-state-number">89</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>

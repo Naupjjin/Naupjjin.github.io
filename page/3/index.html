@@ -198,7 +198,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">88</div>
+    <div class="sidebar-state-number">89</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
@@ -266,10 +266,46 @@
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2025/05/14/XHLJ-2021-easykernel-writeup/" aria-label="XHLJ 2021-easykernel - writeup"></a>
+      <a class="post-link" href="/2025/05/19/Linux-Kernel-2025-TRX-CTF-devmem-part2/" aria-label="2025 TRX CTF - /dev/mem - part 2"></a>
     
     
     <div class="post-cover-left">
+      
+        <img data-src="/images/posts_cover/trxctf/TRXCTF.png" data-sizes="auto" alt="2025 TRX CTF - /dev/mem - part 2" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2025-05-19</span>
+        <span><span class="icon-pencil"></span>1.5k words</span>
+        <span><span class="icon-clock"></span>7 mins</span>
+      </div>
+      <h2 class="post-title">2025 TRX CTF - /dev/mem - part 2</h2>
+      <article class="post-article">
+        
+          2025 TRX CTF - &amp;#x2F;dev&amp;#x2F;mem - part 2
+Author : 堇姬 Naup
+
+前言繼承上一篇https://naupjjin.github.io/2025/04/11/Linux-Kernel-2025-TRX-CTF-devmem/
+這邊來講講另一個思想
+analyze這次主要針對 &amp;#x2F;usr&amp;#x2F;sbin&amp;#x2F;chall，先放一下他的保護機制，沒有開 PIE並且他是 static linking
+
+
+再來去檢查這個 binary 發現他有 SUID 
+12~ # ls -l /usr/sbin/chall-rwsr-x--x 
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2025/05/14/XHLJ-2021-easykernel-writeup/" aria-label="XHLJ 2021-easykernel - writeup"></a>
+    
+    
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/LinuxKernelPwn/linuxkernel.png" data-sizes="auto" alt="XHLJ 2021-easykernel - writeup" class="lazyload">
       
@@ -301,12 +337,12 @@ analyze一樣的題目給了三個文件
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2025/05/12/San-Diego-CTF-2025-writeup/" aria-label="San Diego CTF 2025 - all pwn challenge"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/San-Diego-CTF-2025/SDCTF.png" data-sizes="auto" alt="San Diego CTF 2025 - all pwn challenge" class="lazyload">
       
@@ -337,12 +373,12 @@ It let you input shellcode (shellcode need to &amp;lt; 0x19
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2025/04/18/Linux-Kernel-Traversal-of-CPUandPhysical-memory-management/" aria-label="Linux Kernel - Traversal of CPU and physical memory management"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/Linux-Kernel-CPU-and-physical-memory/Archlinux_chan.png" data-sizes="auto" alt="Linux Kernel - Traversal of CPU and physical memory management" class="lazyload">
       
@@ -364,12 +400,12 @@ It let you input shellcode (shellcode need to &amp;lt; 0x19
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2025/04/11/Linux-Kernel-2025-TRX-CTF-devmem/" aria-label="2025 TRX CTF - /dev/mem"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/trxctf/TRXCTF.png" data-sizes="auto" alt="2025 TRX CTF - /dev/mem" class="lazyload">
       
@@ -398,12 +434,12 @@ Author : 堇姬 Naup
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2025/04/04/Linux-Kernel-modprobe-EoP-and-2021-3kctf-echo-nerf/" aria-label="Linux Kernel - EoP by modprobe &amp; 2021 3kCTF echo nerf"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/LinuxKernelPwn/linuxkernel.png" data-sizes="auto" alt="Linux Kernel - EoP by modprobe &amp; 2021 3kCTF echo nerf" class="lazyload">
       
@@ -431,12 +467,12 @@ do_execve第一步去 call do_execvehttps://elixir.bootlin.com/linux/v6.13.7/sou
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2025/04/02/Windows-Kernel-Exploitation-Part1/" aria-label="Windows Kernel exploitation - Part 1"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/Windows-kernel-exploitation/Windows-kernel-exploitation.webp" data-sizes="auto" alt="Windows Kernel exploitation - Part 1" class="lazyload">
       
@@ -463,12 +499,12 @@ kernel也提供了可以跑application的環境application是run在ring3，而ke
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2025/03/27/AIS3-EOF-2025-Final/" aria-label="AIS3 EOF Final 2025 - Record"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/EOF/EOF.png" data-sizes="auto" alt="AIS3 EOF Final 2025 - Record" class="lazyload">
       
@@ -504,12 +540,12 @@ Day 1一開始先釋出了 BOMBE、game 兩題 KoH先來說說 BOMBE每隊都要
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2025/03/22/Pwnable-printable/" aria-label="Pwnable.tw - printable"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/images/posts_cover/Pwnabletw/pwnabletw.webp" data-sizes="auto" alt="Pwnable.tw - printable" class="lazyload">
       
@@ -531,12 +567,12 @@ Day 1一開始先釋出了 BOMBE、game 兩題 KoH先來說說 BOMBE每隊都要
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2025/03/06/alpacahack-round6-pwn-writeup/" aria-label="AlpacaHack Round 6 (Pwn) - writeup"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/images/posts_cover/alpacahack/alpacahack.png" data-sizes="auto" alt="AlpacaHack Round 6 (Pwn) - writeup" class="lazyload">
       
@@ -556,39 +592,6 @@ Author: 堇姬Naup
 最近看到來賽後挑戰一下，除了第三題外都有打出來簡單記錄一下
 inboundoob 寫 GOT 成 win function 
 1234567891011121314151617181920212223from pwn import *r=process(&amp;quot;./inbound&amp;quot;)r=remote(&amp;quot;34.170.146.252&amp;quot;, 39404)win = 0x4011d6debug = input(&amp;quot;(Y/N)&amp;quot;)if debug ==
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2025/03/02/Linux-Kernel-Pwn-EBH/" aria-label="Linux-Kernel-Pwn-EBH"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        <img data-src="/images/posts_cover/LinuxKernelPwn/linuxkernel.png" data-sizes="auto" alt="Linux-Kernel-Pwn-EBH" class="lazyload">
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2025-03-02</span>
-        <span><span class="icon-pencil"></span>2k words</span>
-        <span><span class="icon-clock"></span>10 mins</span>
-      </div>
-      <h2 class="post-title">Linux-Kernel-Pwn-EBH</h2>
-      <article class="post-article">
-        
-          Linux Kernel Pwn - EBH
-Author: 堇姬Naup
-
-前言之前沒碰過 kernel pwn 沒解出來，現在回來解看看
-analyze source code12naup@naup-virtual-machine:~/Desktop/chal/challenge$ lsbzImage  initramfs.cpio.gz  run.sh
-底下是常見 kernel pwn 三個檔案
-123456789101112131415161718#!/bin/bash/usr/bin/qemu-system-x86_64 \    -kernel /home/user/challen
         
       </article>
     </div>
@@ -628,10 +631,10 @@ analyze source code12naup@naup-virtual-machine:~/Desktop/chal/challenge$ lsbzIma
     
       <div>
         <span class="icon-brush"></span>
-        214.9k
+        217.1k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        18:45
+        18:57
       </div>
     
     
@@ -667,7 +670,7 @@ analyze source code12naup@naup-virtual-machine:~/Desktop/chal/challenge$ lsbzIma
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">88</div>
+    <div class="sidebar-state-number">89</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>

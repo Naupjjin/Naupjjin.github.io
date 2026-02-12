@@ -198,7 +198,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">88</div>
+    <div class="sidebar-state-number">89</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
@@ -266,10 +266,53 @@
     <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2024/08/06/pwnable-start/" aria-label="Pwnable.tw-start"></a>
+      <a class="post-link" href="/2024/08/12/Pwn-SROP/" aria-label="Pwn-SROP"></a>
     
     
     <div class="post-cover-left">
+      
+        
+        
+          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="Pwn-SROP" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-08-12</span>
+        <span><span class="icon-pencil"></span>1.1k words</span>
+        <span><span class="icon-clock"></span>5 mins</span>
+      </div>
+      <h2 class="post-title">Pwn-SROP</h2>
+      <article class="post-article">
+        
+          Pwn-SROP
+Author: 堇姬Naup
+
+signal機制
+kernel向process發起signal機制，Process暫時中斷，進入kernel
+保存環境(簡單來說就是保存了各個暫存器的值，將所有東西壓入stack，並壓入signal相關訊息)，這段記憶體被稱為Signal Frame
+到signal handler處理
+恢復環境
+繼續執行process
+
+
+
+signal frame
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152str
+        
+      </article>
+    </div>
+  </div>
+</div>
+  
+    <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2024/08/06/pwnable-start/" aria-label="Pwnable.tw-start"></a>
+    
+    
+    <div class="post-cover-right">
       
         
         
@@ -297,12 +340,12 @@ Author: 堇姬Naup
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/08/05/AIS3-2024/" aria-label="AIS3 2024 - 專題研究成果"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -337,12 +380,12 @@ AC10 CVE付現解firmware1binwalk -E US_AC10V1.0RTL_V15.03.06.23_multi_TD01.bin
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/07/26/Pwn-File-Structure-note/" aria-label="Pwn-File Structure note"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -368,12 +411,12 @@ AC10 CVE付現解firmware1binwalk -E US_AC10V1.0RTL_V15.03.06.23_multi_TD01.bin
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/07/22/HitconCTF2024-Writeup/" aria-label="HITCON CTF 2024 Writeup"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -408,12 +451,12 @@ Echo as a Servicesource codeDockerfile
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/07/09/Pwn-Tcache-bin-dup-Glibc-2-27/" aria-label="Pwn-Tcache-bin-dup(Glibc 2.27)"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -448,12 +491,12 @@ free掉chunk 1
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/07/08/Pwn-Fastbin-Dup-1/" aria-label="Pwn-Fastbin-Dup-1(Glibc 2.23)"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -481,12 +524,12 @@ source code123456789101112131415161718192021222324252627282930313233343536373839
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/07/07/Pwnable-orw/" aria-label="Pwnable.tw-orw"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -552,12 +595,12 @@ sys_read
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2024/06/30/AIS3-pre-exam-2024-Writeup/" aria-label="AIS3-pre-exam-2024-Writeup"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         
         
@@ -601,12 +644,12 @@ Quantum Nim Heist
 </div>
   
     <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2024/06/24/Fixed-Size-Migration/" aria-label="Fixed Size Migration"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         
         
@@ -634,46 +677,6 @@ leave
 12mov rsp rbppop rbp
 
 原理1234空間(8bytes)空間(8bytes)old rbpre
-        
-      </article>
-    </div>
-  </div>
-</div>
-  
-    <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2024/06/22/cryptoCTF2024-Writeup/" aria-label="cryptoCTF2024-Writeup"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        
-        
-          <img data-src="https://i.postimg.cc/bJwcgqPx/131939316-p0.jpg" data-sizes="auto" alt="cryptoCTF2024-Writeup" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-06-22</span>
-        <span><span class="icon-pencil"></span>1.7k words</span>
-        <span><span class="icon-clock"></span>9 mins</span>
-      </div>
-      <h2 class="post-title">cryptoCTF2024-Writeup</h2>
-      <article class="post-article">
-        
-          CryptoCTF 2024
-Author:堇姬
-
-
-Rank: 29th
-
-Warm-up 🤑Welcome! 👋Crtl+cCrtl+v
-
-CCTF{Harn3sS_Y0ur_CrYptO9rAphy_Pr0wEs5_💪_⚡_💥_🔥!}
-
-Easy 😁Alibossource code123456789101112131415161718192021222324252627282930from Crypto.Util.number import *from gmpy2 import *from secret import d, flagget_context().precisi
         
       </article>
     </div>
@@ -713,10 +716,10 @@ Easy 😁Alibossource code123456789101112131415161718192021222324252627282930fro
     
       <div>
         <span class="icon-brush"></span>
-        214.9k
+        217.1k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        18:45
+        18:57
       </div>
     
     
@@ -752,7 +755,7 @@ Easy 😁Alibossource code123456789101112131415161718192021222324252627282930fro
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>Posts</div>
-    <div class="sidebar-state-number">88</div>
+    <div class="sidebar-state-number">89</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
