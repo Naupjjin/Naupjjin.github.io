@@ -1,0 +1,933 @@
+
+  <!DOCTYPE html>
+  <html lang="en"  >
+  <head>
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_bq08450reo';window.REIMU_CONFIG.clipboard_tips = {"success":"copy success(*^▽^*)","fail":"copy failed (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"Naup"}};window.REIMU_CONFIG.code_block = {"expand":true};</script>
+  
+  <title>
+    Harvest Season for SLUB - From io_uring Vulnerability to Novel Sheaf-Based Exploitation Techniques |
+    
+    堇姬 Naup&#39;s Blog
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_bq08450reo.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="Harvest Season for SLUB: From io_uring Vulnerability to Novel Sheaf-Based Exploitation Techniques Authors: nHao-Yu Yang (naup96321), Yu-Ting Lin (ddd_dong)  PrefaceThis research started with two vulne">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Harvest Season for SLUB - From io_uring Vulnerability to Novel Sheaf-Based Exploitation Techniques">
+<meta property="og:url" content="http://example.com/2026/08/22/Harvest-Season-For-Slub/index.html">
+<meta property="og:site_name" content="堇姬 Naup&#39;s Blog">
+<meta property="og:description" content="Harvest Season for SLUB: From io_uring Vulnerability to Novel Sheaf-Based Exploitation Techniques Authors: nHao-Yu Yang (naup96321), Yu-Ting Lin (ddd_dong)  PrefaceThis research started with two vulne">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/HkeZb1orfe.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HyML9CcHMg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HkKhLxjHze.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SyDfQeiBGg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rkGa1xoSGe.png">
+<meta property="article:published_time" content="2026-08-22T03:19:14.000Z">
+<meta property="article:modified_time" content="2026-08-22T03:45:01.852Z">
+<meta property="article:author" content="Naup堇姬">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/HkeZb1orfe.png">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="堇姬 Naup's Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/fav.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css">
+
+  
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+
+  <body>
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      <div class="loading-word">Naup...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/">Home</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/archives">Archives</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/about">About</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed" target="_blank"></a>
+    
+    
+    
+  </nav>
+</div>
+<header id="header">
+  
+    <picture></picture>
+    <img fetchpriority="high" src="/images/posts_cover/sheaf/sheaf.png" alt="Harvest Season for SLUB - From io_uring Vulnerability to Novel Sheaf-Based Exploitation Techniques">
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">Harvest Season for SLUB - From io_uring Vulnerability to Novel Sheaf-Based Exploitation Techniques</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  
+  <div class="sidebar-wrapper wrap-sticky">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Harvest-Season-for-SLUB-From-io-uring-Vulnerability-to-Novel-Sheaf-Based-Exploitation-Techniques"><span class="toc-number">1.</span> <span class="toc-text">Harvest Season for SLUB: From io_uring Vulnerability to Novel Sheaf-Based Exploitation Techniques</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Preface"><span class="toc-number">1.1.</span> <span class="toc-text">Preface</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Background"><span class="toc-number">1.2.</span> <span class="toc-text">1. Background</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-io-uring-Overview"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.1 io_uring Overview</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-SLUB-and-the-Sheaf-Mechanism"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2 SLUB and the Sheaf Mechanism</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-Layer-1-the-sheaf-layer-slub-percpu-sheaves"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">1.2.1 Layer 1: the sheaf layer (slub_percpu_sheaves)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-Layer-2-the-barn-layer-node-barn"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">1.2.2 Layer 2: the barn layer (node_barn)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-Layer-3-the-slab-management-layer-kmem-cache-node"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">1.2.3 Layer 3: the slab management layer (kmem_cache_node)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Vulnerability-1-Race-Condition-Between-CQ-SQ-Resize-and-Deferred-Task-Work"><span class="toc-number">1.3.</span> <span class="toc-text">2. Vulnerability 1: Race Condition Between CQ&#x2F;SQ Resize and Deferred Task Work</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Root-Cause"><span class="toc-number">1.3.1.</span> <span class="toc-text">2.1 Root Cause</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Proof-of-Concept"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.2 Proof of Concept</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Disclosure-Timeline"><span class="toc-number">1.3.3.</span> <span class="toc-text">Disclosure Timeline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Artifacts"><span class="toc-number">1.3.4.</span> <span class="toc-text">Artifacts</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Vulnerability-2-Logic-Error-in-the-Error-Handling-Path-of-the-Provided-Buffer-Bundle-Expansion-Flow"><span class="toc-number">1.4.</span> <span class="toc-text">3. Vulnerability 2: Logic Error in the Error-Handling Path of the Provided-Buffer Bundle Expansion Flow</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-Root-Cause"><span class="toc-number">1.4.1.</span> <span class="toc-text">3.1 Root Cause</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-Exploitation"><span class="toc-number">1.4.2.</span> <span class="toc-text">3.2 Exploitation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-1-Leaking-KASLR"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">3.2.1 Leaking KASLR</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-2-Leaking-the-task-struct-Address"><span class="toc-number">1.4.2.2.</span> <span class="toc-text">3.2.2 Leaking the task_struct Address</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-3-One-Shot-cred-Overwrite-Leading-to-Local-Privilege-Escalation"><span class="toc-number">1.4.2.3.</span> <span class="toc-text">3.2.3 One-Shot cred Overwrite Leading to Local Privilege Escalation</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Disclosure-Timeline-1"><span class="toc-number">1.4.3.</span> <span class="toc-text">Disclosure Timeline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Artifacts-1"><span class="toc-number">1.4.4.</span> <span class="toc-text">Artifacts</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-The-Impact-of-Sheaf-on-Traditional-Exploitation-and-the-Solutions"><span class="toc-number">1.5.</span> <span class="toc-text">4. The Impact of Sheaf on Traditional Exploitation and the Solutions</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-The-Impact-of-the-Sheaf-Mechanism"><span class="toc-number">1.5.1.</span> <span class="toc-text">4.1 The Impact of the Sheaf Mechanism</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-Solution-1-Flushing-Sheaf-and-Barn-Objects-Back-to-the-Slab-Management-Layer"><span class="toc-number">1.5.2.</span> <span class="toc-text">4.2 Solution 1: Flushing Sheaf and Barn Objects Back to the Slab Management Layer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-Solution-2-Bypassing-the-Sheaf-Cache-Layer-via-Cross-NUMA-Node-Allocation"><span class="toc-number">1.5.3.</span> <span class="toc-text">4.3 Solution 2: Bypassing the Sheaf Cache Layer via Cross-NUMA Node Allocation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Sheaf-Design-Flaws-Inconsistency-Between-the-Sheaf-and-Traditional-Slab-Implementations"><span class="toc-number">1.6.</span> <span class="toc-text">5. Sheaf Design Flaws: Inconsistency Between the Sheaf and Traditional Slab Implementations</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-Flaw-1-Bypassing-CONFIG-SLAB-FREELIST-HARDENED-Double-Free-Detection"><span class="toc-number">1.6.1.</span> <span class="toc-text">5.1 Flaw 1: Bypassing CONFIG_SLAB_FREELIST_HARDENED Double-Free Detection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-Flaw-2-Bypassing-CONFIG-SLAB-FREELIST-HARDENED-Pointer-Protection"><span class="toc-number">1.6.2.</span> <span class="toc-text">5.2 Flaw 2: Bypassing CONFIG_SLAB_FREELIST_HARDENED Pointer Protection</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Novel-Techniques-Sheaf-Based-Exploitation"><span class="toc-number">1.7.</span> <span class="toc-text">6. Novel Techniques: Sheaf-Based Exploitation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-Technique-1-Object-Array-Hijack"><span class="toc-number">1.7.1.</span> <span class="toc-text">6.1 Technique 1: Object Array Hijack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-Technique-2-Object-Array-Out-of-Bounds-Write"><span class="toc-number">1.7.2.</span> <span class="toc-text">6.2 Technique 2: Object Array Out-of-Bounds Write</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-Technique-3-Cross-Cache-via-the-RCU-slab-sheaf"><span class="toc-number">1.7.3.</span> <span class="toc-text">6.3 Technique 3: Cross-Cache via the RCU slab_sheaf</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-Applying-Technique-3-to-Vulnerability-2"><span class="toc-number">1.7.4.</span> <span class="toc-text">6.4 Applying Technique 3 to Vulnerability 2</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#6-4-1-Triple-Free-for-Information-Leak-and-Overlapping-the-RCU-slab-sheaf"><span class="toc-number">1.7.4.1.</span> <span class="toc-text">6.4.1 Triple Free for Information Leak and Overlapping the RCU slab_sheaf</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-4-2-Leaking-the-cred-kmem-cache-Address"><span class="toc-number">1.7.4.2.</span> <span class="toc-text">6.4.2 Leaking the cred kmem_cache Address</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-4-3-Privilege-Escalation-by-Poisoning-the-RCU-Cache-and-Cross-Cache-Attacking-cred-jar"><span class="toc-number">1.7.4.3.</span> <span class="toc-text">6.4.3 Privilege Escalation by Poisoning the RCU Cache and Cross-Cache Attacking cred_jar</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-Conclusion"><span class="toc-number">1.8.</span> <span class="toc-text">7. Conclusion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#after-all"><span class="toc-number">1.9.</span> <span class="toc-text">after all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-number">1.10.</span> <span class="toc-text">References</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">92</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">21</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+      
+        <div class="sidebar-btn-wrapper" style="position:static">
+          <div class="sidebar-toc-btn current"></div>
+          <div class="sidebar-common-btn"></div>
+        </div>
+      
+    </div>
+  </div>
+
+  <div class="sidebar-widget">
+  
+  </div>
+</aside>
+
+          <section id="main"><article id="post-Harvest-Season-For-Slub" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <a href="/2026/08/22/Harvest-Season-For-Slub/" class="article-date-link" data-aos="zoom-in">
+    <time datetime="2026-08-22T03:19:14.000Z" itemprop="datePublished">2026-08-22</time>
+    <time style="display: none;" id="post-update-time">2026-08-22</time>
+  </a>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <h1 id="Harvest-Season-for-SLUB-From-io-uring-Vulnerability-to-Novel-Sheaf-Based-Exploitation-Techniques"><a href="#Harvest-Season-for-SLUB-From-io-uring-Vulnerability-to-Novel-Sheaf-Based-Exploitation-Techniques" class="headerlink" title="Harvest Season for SLUB: From io_uring Vulnerability to Novel Sheaf-Based Exploitation Techniques"></a>Harvest Season for SLUB: From io_uring Vulnerability to Novel Sheaf-Based Exploitation Techniques</h1><blockquote>
+<p>Authors: nHao-Yu Yang (naup96321), Yu-Ting Lin (ddd_dong)</p>
+</blockquote>
+<h2 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h2><p>This research started with two vulnerabilities I discovered in io_uring. I will first introduce these two vulnerabilities. Then, I will describe my attempt to develop a local privilege escalation exploit for the second vulnerability. During the exploitation process, I encountered several unexpected failures caused by the new SLUB sheaf mechanism. This experience led me to investigate the mechanism further, where I discovered a new attack surface and developed several novel exploitation techniques. : )</p>
+<p>Also thanks @ddd-dong give me some idea</p>
+<h2 id="1-Background"><a href="#1-Background" class="headerlink" title="1. Background"></a>1. Background</h2><h3 id="1-1-io-uring-Overview"><a href="#1-1-io-uring-Overview" class="headerlink" title="1.1 io_uring Overview"></a>1.1 io_uring Overview</h3><p>io_uring is a kernel core component for high-performance asynchronous I&#x2F;O operations, first introduced in Linux kernel 5.1. It primarily addresses two problems: the performance bottleneck caused by synchronous blocking in traditional I&#x2F;O operations, and the cost of numerous system calls. io_uring also provides a broad async I&#x2F;O interface, covering file systems, sockets, polling, and more.</p>
+<p><img src="https://hackmd.io/_uploads/HkeZb1orfe.png" alt="io_uring SQ/CQ architecture"></p>
+<p>io_uring achieves this by constructing a Submission Queue (SQ) and a Completion Queue (CQ) in shared memory between the kernel and user space. An application in user space packs each required I&#x2F;O operation into a Submission Queue Entry (SQE) and places it into the SQ. The kernel then reads the SQE and performs the corresponding operation. Once the operation is complete, the kernel writes the result to the Completion Queue Entry (CQE), which is then read by the application in user space. This design improves performance by avoiding a system call for most I&#x2F;O operations.</p>
+<p>In addition, io_uring encourages processing multiple SQEs at once. An application can submit multiple requests to the SQ in a single batch, and the kernel can likewise fill multiple completion events into the CQ at once. There are two ways to trigger the kernel to process the I&#x2F;O requests in the SQ:</p>
+<ul>
+<li>The <code>io_uring_enter</code> system call notifies the kernel to process the I&#x2F;O requests currently in the SQ.</li>
+<li>With <code>SQPOLL</code>, the kernel starts an <code>iou-sqp</code> thread to poll the SQ, so that some I&#x2F;O operations can be submitted to the kernel without the application issuing another system call, further improving efficiency.</li>
+</ul>
+<p>Unlike traditional <code>epoll</code>, which mainly notifies an application whether a file descriptor is ready for an operation (the actual I&#x2F;O still has to be carried out by the application itself), io_uring lets an application submit a complete I&#x2F;O request and has the kernel perform the operation and report the result once it is done. This reduces the complexity of managing the I&#x2F;O flow on the application side. It also resolves several performance problems found in AIO: AIO supports only a limited range of I&#x2F;O types, its interface design is relatively fragmented, and each I&#x2F;O request usually requires a dedicated control structure along with multiple system calls for submission and status queries.</p>
+<h3 id="1-2-SLUB-and-the-Sheaf-Mechanism"><a href="#1-2-SLUB-and-the-Sheaf-Mechanism" class="headerlink" title="1.2 SLUB and the Sheaf Mechanism"></a>1.2 SLUB and the Sheaf Mechanism</h3><p>The SLUB allocator is the kernel component responsible for managing memory allocation and freeing. Beneath it, many different <code>kmem_cache</code> instances form memory pools, each responsible for managing the slabs of a specific data structure type or a fixed memory block size. A slab is a set of one or more contiguous pages of memory, and these pages hold kernel objects of a specific size.</p>
+<p>In the traditional SLUB design, a <code>kmem_cache</code> is managed mainly through two levels: a CPU-local cache layer (<code>kmem_cache_cpu</code>) and a NUMA node layer (<code>kmem_cache_node</code>). As core counts grew and large NUMA systems became common, the traditional per-CPU cache could still incur synchronization and management costs when many CPUs operated simultaneously. Linux 6.18 therefore introduces a new SLUB object caching mechanism that gradually replaces the local object management previously handled by <code>kmem_cache_cpu</code>, building a new caching layer out of <strong>sheaf</strong> and <strong>barn</strong>. The current SLUB architecture can thus be viewed as three layers that together manage kernel objects: the sheaf layer, the barn layer, and the slab management layer (<code>kmem_cache_node</code>).</p>
+<p><img src="https://hackmd.io/_uploads/HyML9CcHMg.png" alt="Three-layer SLUB architecture"></p>
+<h4 id="1-2-1-Layer-1-the-sheaf-layer-slub-percpu-sheaves"><a href="#1-2-1-Layer-1-the-sheaf-layer-slub-percpu-sheaves" class="headerlink" title="1.2.1 Layer 1: the sheaf layer (slub_percpu_sheaves)"></a>1.2.1 Layer 1: the sheaf layer (<code>slub_percpu_sheaves</code>)</h4><p>This layer is composed of three <code>slab_sheaf</code> slots: <code>main</code>, <code>spare</code>, and <code>rcu_free</code>. <code>main</code> is the sheaf currently in use, and any object to be allocated or freed is taken from this layer’s <code>main</code> slot. <code>spare</code> serves as a backup and is used as a replacement when the <code>main</code> slot has no object left to hand out or no room to store one. <code>rcu_free</code> is used for batch processing of RCU objects after <code>kfree_rcu</code>.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.1.4/source/mm/slub.c#L420</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">slub_percpu_sheaves</span> &#123;</span></span><br><span class="line">	<span class="type">local_trylock_t</span> lock;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">slab_sheaf</span> *<span class="title">main</span>;</span> <span class="comment">/* never NULL when unlocked */</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">slab_sheaf</span> *<span class="title">spare</span>;</span> <span class="comment">/* empty or full, may be NULL */</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">slab_sheaf</span> *<span class="title">rcu_free</span>;</span> <span class="comment">/* for batching kfree_rcu() */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-2-Layer-2-the-barn-layer-node-barn"><a href="#1-2-2-Layer-2-the-barn-layer-node-barn" class="headerlink" title="1.2.2 Layer 2: the barn layer (node_barn)"></a>1.2.2 Layer 2: the barn layer (<code>node_barn</code>)</h4><p>This layer keeps completely empty or completely full sheaves as reserves, which are shared within the same NUMA node. When the per-CPU sheaves are exhausted, a spinlock is acquired, and the sheaves in the barn are swapped with those in the per-CPU layer. The upper limits on the sheaves stored in the barn are <code>MAX_FULL_SHEAVES</code> and <code>MAX_EMPTY_SHEAVES</code> respectively, constants that will be referenced again during exploitation.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.1.4/source/mm/slub.c#L396</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node_barn</span> &#123;</span></span><br><span class="line">	<span class="type">spinlock_t</span> lock;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">sheaves_full</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">sheaves_empty</span>;</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> nr_full;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> nr_empty;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-3-Layer-3-the-slab-management-layer-kmem-cache-node"><a href="#1-2-3-Layer-3-the-slab-management-layer-kmem-cache-node" class="headerlink" title="1.2.3 Layer 3: the slab management layer (kmem_cache_node)"></a>1.2.3 Layer 3: the slab management layer (<code>kmem_cache_node</code>)</h4><p><code>kmem_cache_node</code>, the NUMA node layer, manages slab state at the NUMA node level, handles memory reclamation and balancing across CPUs or nodes, and maintains the complete list of all slabs on that node, including partial, full, and empty slabs.</p>
+<hr>
+<h2 id="2-Vulnerability-1-Race-Condition-Between-CQ-SQ-Resize-and-Deferred-Task-Work"><a href="#2-Vulnerability-1-Race-Condition-Between-CQ-SQ-Resize-and-Deferred-Task-Work" class="headerlink" title="2. Vulnerability 1: Race Condition Between CQ&#x2F;SQ Resize and Deferred Task Work"></a>2. Vulnerability 1: Race Condition Between CQ&#x2F;SQ Resize and Deferred Task Work</h2><h3 id="2-1-Root-Cause"><a href="#2-1-Root-Cause" class="headerlink" title="2.1 Root Cause"></a>2.1 Root Cause</h3><p>The vulnerability can be triggered through the <code>io_uring_register</code> syscall. When the opcode is set to <code>IORING_REGISTER_RESIZE_RINGS</code>, the request is forwarded to <code>io_register_resize_rings()</code>.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v6.19.3/source/io_uring/register.c#L805</span></span><br><span class="line"><span class="keyword">case</span> IORING_REGISTER_RESIZE_RINGS:</span><br><span class="line">    ret = -EINVAL;</span><br><span class="line">    <span class="keyword">if</span> (!arg || nr_args != <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    ret = io_register_resize_rings(ctx, arg);</span><br><span class="line">    <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+
+<p><code>IORING_REGISTER_RESIZE_RINGS</code> allows a process to expand or shrink the SQ&#x2F;CQ ring of an existing io_uring instance without recreating the entire io_uring. <code>io_register_resize_rings()</code> first acquires <code>ctx-&gt;mmap_lock</code> and <code>ctx-&gt;completion_lock</code>, then temporarily sets the rings pointed to by the <code>io_ring_ctx</code> of the I&#x2F;O request to NULL. After the new ring memory is allocated, the newly allocated address is written back into the <code>io_ring_ctx</code>.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v6.19.3/source/io_uring/register.c#L489</span></span><br><span class="line">	mutex_lock(&amp;ctx-&gt;mmap_lock);</span><br><span class="line">	spin_lock(&amp;ctx-&gt;completion_lock);</span><br><span class="line">	o.rings = ctx-&gt;rings;</span><br><span class="line">	ctx-&gt;rings = <span class="literal">NULL</span>;</span><br><span class="line">	o.sq_sqes = ctx-&gt;sq_sqes;</span><br><span class="line">	ctx-&gt;sq_sqes = <span class="literal">NULL</span>;</span><br><span class="line">	...</span><br><span class="line">	ctx-&gt;sq_entries = p-&gt;sq_entries;</span><br><span class="line">	ctx-&gt;cq_entries = p-&gt;cq_entries;</span><br><span class="line"></span><br><span class="line">	ctx-&gt;rings = n.rings;</span><br></pre></td></tr></table></figure>
+
+<p>Another component that interacts with this feature and causes the vulnerability is <code>IORING_SETUP_DEFER_TASKRUN</code>. By default, io_uring processes all outstanding work at the end of any system call or thread interrupt, which can delay the application’s further progress. Setting this flag hints to io_uring that it should defer work until an <code>io_uring_enter</code> call with the <code>IORING_ENTER_GETEVENTS</code> flag set.</p>
+<p>These deferred tasks are first placed into the task work queue. When new task work is added, the kernel needs to set <code>IORING_SQ_TASKRUN</code> to notify userspace that there are pending tasks that need to be processed. However, when updating the corresponding flags in <code>io_ring_ctx</code>, the operation does not acquire the same lock used by the resize functionality, resulting in a race condition.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v6.19.3/source/io_uring/io_uring.c#L1258</span></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">io_req_local_work_add</span><span class="params">(<span class="keyword">struct</span> io_kiocb *req, <span class="type">unsigned</span> flags)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">io_ring_ctx</span> *<span class="title">ctx</span> =</span> req-&gt;ctx;</span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">if</span> (!head) &#123;</span><br><span class="line">		<span class="keyword">if</span> (ctx-&gt;flags &amp; IORING_SETUP_TASKRUN_FLAG)</span><br><span class="line">			atomic_or(IORING_SQ_TASKRUN, &amp;ctx-&gt;rings-&gt;sq_flags);</span><br><span class="line">		<span class="keyword">if</span> (ctx-&gt;has_evfd)</span><br><span class="line">			io_eventfd_signal(ctx, <span class="literal">false</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-Proof-of-Concept"><a href="#2-2-Proof-of-Concept" class="headerlink" title="2.2 Proof of Concept"></a>2.2 Proof of Concept</h3><p>First, create an io_uring instance using <code>IORING_SETUP_DEFER_TASKRUN</code> and mmap the io_uring ring into userspace. Then create a <code>timerfd</code> that triggers at 100-microsecond intervals, and submit a multishot <code>IORING_OP_POLL_ADD</code> request to monitor the <code>timerfd</code> for the <code>POLLIN</code> event. Each time the timer expires, the kernel generates a poll completion. In <code>DEFER_TASKRUN</code> mode, these completions are deferred through task work, causing the kernel to repeatedly execute <code>io_req_local_work_add()</code> and set the <code>IORING_SQ_TASKRUN</code> flag.</p>
+<p>In the main loop that triggers the race condition, each iteration first invokes <code>io_uring_enter(GETEVENTS)</code>, allowing the kernel to execute the currently accumulated task work. It then calls <code>IORING_REGISTER_RESIZE_RINGS</code> to reconfigure the current SQ&#x2F;CQ rings. If, at some point, the task work is about to modify <code>sq_flags</code> through <code>ctx-&gt;rings</code> while another CPU is concurrently performing a ring resize operation — or if the execution flow is preempted by a ring resize task during the critical timing window — the race condition may cause the ring structure referenced by <code>ctx-&gt;rings</code> to become invalid, ultimately resulting in a null pointer dereference.</p>
+<h3 id="Disclosure-Timeline"><a href="#Disclosure-Timeline" class="headerlink" title="Disclosure Timeline"></a>Disclosure Timeline</h3><ul>
+<li>2026-03-07: Vulnerability discovered</li>
+<li>2026-03-09: Reported upstream together with a proposed patch</li>
+<li>2026-03-17: Patch merged and released</li>
+</ul>
+<h3 id="Artifacts"><a href="#Artifacts" class="headerlink" title="Artifacts"></a>Artifacts</h3><ul>
+<li>Patch: <a target="_blank" rel="noopener" href="https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/diff/queue-6.18/io_uring-ensure-ctx-rings-is-stable-for-task-work-flags-manipulation.patch?id=511c1f4e8933744a6e7475c5defaad673093215b">https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/diff/queue-6.18/io_uring-ensure-ctx-rings-is-stable-for-task-work-flags-manipulation.patch?id=511c1f4e8933744a6e7475c5defaad673093215b</a></li>
+<li>Exploit: <a target="_blank" rel="noopener" href="https://hackmd.io/epHcDaB_Tr6RZWmLobJY0g?view#vulnerability-1-PoC">https://hackmd.io/epHcDaB_Tr6RZWmLobJY0g?view#vulnerability-1-PoC</a></li>
+<li>Demo: <a target="_blank" rel="noopener" href="https://youtu.be/-vPd8k4ix4g">https://youtu.be/-vPd8k4ix4g</a></li>
+</ul>
+<h2 id="3-Vulnerability-2-Logic-Error-in-the-Error-Handling-Path-of-the-Provided-Buffer-Bundle-Expansion-Flow"><a href="#3-Vulnerability-2-Logic-Error-in-the-Error-Handling-Path-of-the-Provided-Buffer-Bundle-Expansion-Flow" class="headerlink" title="3. Vulnerability 2: Logic Error in the Error-Handling Path of the Provided-Buffer Bundle Expansion Flow"></a>3. Vulnerability 2: Logic Error in the Error-Handling Path of the Provided-Buffer Bundle Expansion Flow</h2><h3 id="3-1-Root-Cause"><a href="#3-1-Root-Cause" class="headerlink" title="3.1 Root Cause"></a>3.1 Root Cause</h3><p>The vulnerability appears on the handling path of <code>IORING_OP_SEND</code>, the asynchronous socket send operation provided by io_uring for submitting a socket data transmission request. When a user submits this operation through io_uring, the kernel enters the <code>io_send</code> function to process the request.</p>
+<p>When the request adopts the buffer selection mechanism, the handling flow enters the buffer selection path of send. At this point, the kernel builds the <code>buf_sel_arg</code> and selects a suitable buffer from the registered buffer pool through <code>io_buffers_select()</code> to serve as the data source for the subsequent send operation.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.2-rc1/source/io_uring/net.c#L620</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">buf_sel_arg</span> <span class="title">arg</span> =</span> &#123;</span><br><span class="line">        .iovs = &amp;kmsg-&gt;fast_iov,</span><br><span class="line">        .max_len = min_not_zero(sr-&gt;len, INT_MAX),</span><br><span class="line">        .nr_iovs = <span class="number">1</span>,</span><br><span class="line">        .buf_group = sr-&gt;buf_group,</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="type">int</span> ret;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (kmsg-&gt;vec.iovec) &#123;</span><br><span class="line">        arg.nr_iovs = kmsg-&gt;vec.nr;</span><br><span class="line">        arg.iovs = kmsg-&gt;vec.iovec;</span><br><span class="line">        arg.mode = KBUF_MODE_FREE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!(sr-&gt;flags &amp; IORING_RECVSEND_BUNDLE))</span><br><span class="line">        arg.nr_iovs = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        arg.mode |= KBUF_MODE_EXPAND;</span><br><span class="line"></span><br><span class="line">    ret = io_buffers_select(req, &amp;arg, sel, issue_flags);</span><br><span class="line">    <span class="keyword">if</span> (unlikely(ret &lt; <span class="number">0</span>))</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (arg.iovs != &amp;kmsg-&gt;fast_iov &amp;&amp; arg.iovs != kmsg-&gt;vec.iovec) &#123;</span><br><span class="line">        kmsg-&gt;vec.nr = ret;</span><br><span class="line">        kmsg-&gt;vec.iovec = arg.iovs;</span><br><span class="line">        req-&gt;flags |= REQ_F_NEED_CLEANUP;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>At this time, an <code>iovec</code> pointer is copied from <code>kmsg</code> into <code>arg.iovs</code> and then passed as an argument to <code>io_buffers_select()</code>. <code>io_buffers_select()</code> is responsible for locating the buffer list based on <code>buf_group</code>. For convenience, this research chooses the provided buffer as the further analysis target.</p>
+<p>A provided buffer allows an application to perform a receive or send without specifying a concrete memory address in each request. The kernel automatically picks free memory from a pre-registered buffer pool to hold the data, and these buffers can be registered through <code>IORING_REGISTER_PBUF_RING</code>.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.2-rc1/source/io_uring/kbuf.c#L352</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">io_buffers_select</span><span class="params">(<span class="keyword">struct</span> io_kiocb *req, <span class="keyword">struct</span> buf_sel_arg *arg,</span></span><br><span class="line"><span class="params">		      <span class="keyword">struct</span> io_br_sel *sel, <span class="type">unsigned</span> <span class="type">int</span> issue_flags)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">io_ring_ctx</span> *<span class="title">ctx</span> =</span> req-&gt;ctx;</span><br><span class="line">	<span class="type">int</span> ret = -ENOENT;</span><br><span class="line"></span><br><span class="line">	io_ring_submit_lock(ctx, issue_flags);</span><br><span class="line">	sel-&gt;buf_list = io_buffer_get_list(ctx, arg-&gt;buf_group);</span><br><span class="line">	<span class="keyword">if</span> (unlikely(!sel-&gt;buf_list))</span><br><span class="line">		<span class="keyword">goto</span> out_unlock;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (sel-&gt;buf_list-&gt;flags &amp; IOBL_BUF_RING) &#123;</span><br><span class="line">		ret = io_ring_buffers_peek(req, arg, sel-&gt;buf_list);</span><br></pre></td></tr></table></figure>
+
+<p><code>io_ring_buffers_peek()</code> starts from the head of the buffer ring and takes out one or more buffers in order, converting them into <code>iovec</code> for subsequent send&#x2F;recv use. When the bundle feature is enabled, it allows multiple buffers (multiple <code>iovec</code>) to be selected. At this point <code>kmsg</code> holds an <code>iovec</code> array, and if that array is not large enough, it is expanded by allocating a new region with <code>kmalloc</code>.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.2-rc1/source/io_uring/kbuf.c#L287</span></span><br><span class="line">		iov = kmalloc_objs(<span class="keyword">struct</span> iovec, nr_avail);</span><br><span class="line">		<span class="keyword">if</span> (unlikely(!iov))</span><br><span class="line">			<span class="keyword">return</span> -ENOMEM;</span><br><span class="line">		<span class="keyword">if</span> (arg-&gt;mode &amp; KBUF_MODE_FREE)</span><br><span class="line">			kfree(arg-&gt;iovs);</span><br><span class="line">		arg-&gt;iovs = iov;</span><br><span class="line">		nr_iovs = nr_avail;</span><br></pre></td></tr></table></figure>
+
+<p>Once processing finishes and returns upward, the updated <code>iovec</code> in <code>arg</code> is flushed back to <code>kmsg</code> so that <code>kmsg</code> holds the new <code>iovec</code>.</p>
+<p>However, after the expansion, when each provided buffer address is checked individually, if an illegal address is found, an error is returned. This error is early-returned before the <code>kmsg</code> pointer is updated, so <code>kmsg</code> still holds the pointer to the old <code>iovec</code> array that has already been freed, resulting in a <strong>use-after-free</strong>.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.2-rc1/source/io_uring/kbuf.c#L318</span></span><br><span class="line">		<span class="keyword">if</span> (unlikely(!access_ok(iov-&gt;iov_base, len))) &#123;</span><br><span class="line">			<span class="keyword">if</span> (arg-&gt;iovs != org_iovs)</span><br><span class="line">				kfree(arg-&gt;iovs);</span><br><span class="line">			<span class="keyword">return</span> -EFAULT;</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-Exploitation"><a href="#3-2-Exploitation" class="headerlink" title="3.2 Exploitation"></a>3.2 Exploitation</h3><p>In the test environment, the following protections are enabled:</p>
+<ul>
+<li>KASLR, KPTI, SMAP, SMEP</li>
+<li><code>CONFIG_MEMCG_KMEM</code></li>
+<li><code>CONFIG_STATIC_USERMODEHELPER</code></li>
+<li><code>CONFIG_SLAB_FREELIST_HARDENED</code></li>
+<li><code>CONFIG_SLAB_FREELIST_RANDOM</code></li>
+</ul>
+<h4 id="3-2-1-Leaking-KASLR"><a href="#3-2-1-Leaking-KASLR" class="headerlink" title="3.2.1 Leaking KASLR"></a>3.2.1 Leaking KASLR</h4><p>This is a powerful primitive. The UAF structure allows the <code>kmalloc</code> size to be controlled, its memory pool is <code>GFP_KERNEL</code>, and data can be written onto the UAF structure. However, since <code>CONFIG_MEMCG_KMEM</code> is enabled, the target structure should avoid using a <code>kmalloc</code> structure with the <code>GFP_KERNEL_ACCOUNT</code> flag at <code>kmalloc</code> time when heap spraying. An alternative solution is to conduct a cross-cache attack — an innovative version of which is discussed in Sections 4 and 6.</p>
+<p>The procedure for obtaining the UAF afterward follows the flow described below, except that the initial <code>iovec</code> size needs to be adjusted according to the size of the structure to be reclaimed.</p>
+<p>First, add a key to pre-allocate <code>user_key_payload</code>, and create a <code>socketpair</code> in advance for later io_uring use. Then create a uring and map the CQ and SQ.</p>
+<ul>
+<li><strong>First sending:</strong> A provided buffer is created and registered to the uring. At this stage, 4 provided buffers are created, with 4 <code>iovec</code> coming from kmalloc-64. An SQE is then set up to send the data inside the provided buffer. When <code>IOSQE_BUFFER_SELECT</code> is specified, an I&#x2F;O buffer is selected from the provided buffers as the request for the socket to read or receive data, and <code>IORING_RECVSEND_BUNDLE</code> must also be specified here. With this, the send operation tries to fill multiple buffers at once rather than selecting only a single buffer to transmit, which is what makes the <code>iovec</code> expansion reachable. Once the SQE is set up, the first send can be issued, and <code>kmsg</code> now holds the <code>iovec</code> array of 4 entries.</li>
+<li><strong>Second sending:</strong> Next, 8 provided buffers are set up again, at index 4 to 11. One of these provided buffer addresses is made to point to an illegal address, used to trigger an <code>access_ok</code> failure, which makes the old <code>iovec</code> object held by <code>kmsg</code> be freed. After the <code>access_ok</code> failure, the entire I&#x2F;O request fails, and the subsequent cleanup frees the <code>iovec</code> again, causing a double free. (The reason this does not trigger the <code>CONFIG_SLAB_FREELIST_HARDENED</code> double-free detection is covered in Section 5.1.)</li>
+<li><strong>Third sending:</strong> <code>update_key</code> is used to reallocate the key structure, and a third send is issued to make the <code>iovec</code> array overlap with the <code>user_key_payload</code> structure.</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.2-rc1/source/security/keys/keyctl.c#L325</span></span><br><span class="line"><span class="type">long</span> <span class="title function_">keyctl_update_key</span><span class="params">(<span class="type">key_serial_t</span> id,</span></span><br><span class="line"><span class="params">		       <span class="type">const</span> <span class="type">void</span> __user *_payload,</span></span><br><span class="line"><span class="params">		       <span class="type">size_t</span> plen)</span></span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">	<span class="comment">/* pull the payload in if one was supplied */</span></span><br><span class="line">	payload = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">if</span> (plen) &#123;</span><br><span class="line">		ret = -ENOMEM;</span><br><span class="line">		payload = kvmalloc(plen, GFP_KERNEL);</span><br><span class="line">		<span class="keyword">if</span> (!payload)</span><br><span class="line">			<span class="keyword">goto</span> error;</span><br></pre></td></tr></table></figure>
+
+<p>The <code>user_key_payload</code> structure is shown below. <code>datalen</code> at offset <code>0x10</code> is metadata that controls the length of the key data, and it overlaps the low 2 bytes of the second element’s address in the <code>iovec</code> array. Therefore, when supplying the provided buffer, an address whose low bits are <code>0x1000</code> is mapped in advance to overwrite the key structure.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.2-rc1/source/include/keys/user-type.h#L27</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">user_key_payload</span> &#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">rcu_head</span>	<span class="title">rcu</span>;</span>		<span class="comment">/* RCU destructor */</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span>	datalen;	<span class="comment">/* length of this data */</span></span><br><span class="line">	<span class="type">char</span>		data[] __aligned(__alignof__(u64)); <span class="comment">/* actual data */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>Finally, reading the key back produces an out-of-bounds read that leaks KASLR.</p>
+<h4 id="3-2-2-Leaking-the-task-struct-Address"><a href="#3-2-2-Leaking-the-task-struct-Address" class="headerlink" title="3.2.2 Leaking the task_struct Address"></a>3.2.2 Leaking the <code>task_struct</code> Address</h4><p>The idea for privilege escalation is to leak the <code>task_struct</code> and overwrite its <code>cred</code> pointer with <code>init_cred</code>. Leaking the current process’s <code>task_struct</code> address relies on <code>io_ring_ctx</code>, a kmalloc-2048 sized object. When created with <code>IORING_SETUP_SINGLE_ISSUER</code> set, the io_uring instance is bound to the current task and can only be submitted by that single task, and the <code>task_struct</code> is recorded in the <code>io_ring_ctx</code>.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.2-rc1/source/io_uring/io_uring.c#L3065</span></span><br><span class="line">	<span class="keyword">if</span> (ctx-&gt;flags &amp; IORING_SETUP_SINGLE_ISSUER</span><br><span class="line">	    &amp;&amp; !(ctx-&gt;flags &amp; IORING_SETUP_R_DISABLED))</span><br><span class="line">		ctx-&gt;submitter_task = get_task_struct(current);</span><br></pre></td></tr></table></figure>
+
+<p>By heap spraying this structure, and again using the same procedure as before, a <code>user_key_payload</code> capable of an out-of-bounds read is produced. Here, <code>setxattr</code> is used to overlap with the key structure from kmalloc-2048.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.2-rc1/source/fs/xattr.c#L645</span></span><br><span class="line">		ctx-&gt;kvalue = vmemdup_user(ctx-&gt;cvalue, ctx-&gt;size);</span><br><span class="line">		<span class="keyword">if</span> (IS_ERR(ctx-&gt;kvalue)) &#123;</span><br><span class="line">			error = PTR_ERR(ctx-&gt;kvalue);</span><br><span class="line">			ctx-&gt;kvalue = <span class="literal">NULL</span>;</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
+
+<p>In this way, the <code>task_struct</code> address of the current process can be leaked.</p>
+<h4 id="3-2-3-One-Shot-cred-Overwrite-Leading-to-Local-Privilege-Escalation"><a href="#3-2-3-One-Shot-cred-Overwrite-Leading-to-Local-Privilege-Escalation" class="headerlink" title="3.2.3 One-Shot cred Overwrite Leading to Local Privilege Escalation"></a>3.2.3 One-Shot cred Overwrite Leading to Local Privilege Escalation</h4><p>Since the <code>task_struct</code> address is leaked, the next step is to write to the <code>cred</code> pointer of <code>task_struct</code>. The setup is basically the same: a kmalloc-256 double free into the sheaf is performed, and <code>setxattr</code> is overlapped with <code>msg_msg</code>, which is allocated once <code>msgsnd</code> is issued.</p>
+<p>To overwrite the <code>cred</code> pointer in <code>task_struct</code>, the overlapped <code>msg_msg</code> is abused for arbitrary writes. Specifically, <code>m_list.next</code> is written as <code>task_struct-&gt;real_cred</code>, <code>m_list.prev</code> as <code>init_cred</code>, and <code>security</code> as a readable address. <code>security</code> must be set to a readable address because during <code>msgrcv</code> the SELinux hook <code>security_msg_queue_msgrcv</code> accesses that field.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.2-rc1/source/include/linux/msg.h#L9</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">msg_msg</span> &#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">m_list</span>;</span></span><br><span class="line">	<span class="type">long</span> m_type;</span><br><span class="line">	<span class="type">size_t</span> m_ts;		<span class="comment">/* message text size */</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">msg_msgseg</span> *<span class="title">next</span>;</span></span><br><span class="line">	<span class="type">void</span> *security;</span><br><span class="line">	<span class="comment">/* the actual message follows immediately */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.2-rc1/source/ipc/msgutil.c#L54</span></span><br><span class="line"><span class="type">static</span> <span class="keyword">struct</span> msg_msg *<span class="title function_">alloc_msg</span><span class="params">(<span class="type">size_t</span> len)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">msg_msg</span> *<span class="title">msg</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">msg_msgseg</span> **<span class="title">pseg</span>;</span></span><br><span class="line">	<span class="type">size_t</span> alen;</span><br><span class="line"></span><br><span class="line">	alen = min(len, DATALEN_MSG);</span><br><span class="line">	msg = kmem_buckets_alloc(msg_buckets, <span class="keyword">sizeof</span>(*msg) + alen, GFP_KERNEL);</span><br><span class="line">	<span class="keyword">if</span> (msg == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
+
+<p>When <code>list_del</code> is finally triggered, the <code>cred</code> pointer is written with <code>init_cred</code>, successfully completing the privilege escalation to root, as <code>task_struct-&gt;real_cred + 8</code> is exactly <code>task_struct-&gt;cred</code>.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.2-rc1/source/ipc/msg.c#L1163</span></span><br><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.2-rc1/source/include/linux/list.h#L224</span></span><br><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">void</span> __list_del(<span class="keyword">struct</span> list_head * prev, <span class="keyword">struct</span> list_head * next)</span><br><span class="line">&#123;</span><br><span class="line">	next-&gt;prev = prev;</span><br><span class="line">	WRITE_ONCE(prev-&gt;next, next);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Disclosure-Timeline-1"><a href="#Disclosure-Timeline-1" class="headerlink" title="Disclosure Timeline"></a>Disclosure Timeline</h3><ul>
+<li>2026-07-03: Vulnerability discovered</li>
+<li>2026-07-06: Reported upstream together with a proposed patch</li>
+<li>2026-07-12: Patch merged and released</li>
+</ul>
+<h3 id="Artifacts-1"><a href="#Artifacts-1" class="headerlink" title="Artifacts"></a>Artifacts</h3><ul>
+<li>Patch: <a target="_blank" rel="noopener" href="https://git.kernel.org/pub/scm/linux/kernel/git/axboe/linux.git/commit/?h=io_uring-7.2&id=cd053d788c3f13b3eaf16672d427ee828fda16ed">https://git.kernel.org/pub/scm/linux/kernel/git/axboe/linux.git/commit/?h=io_uring-7.2&amp;id=cd053d788c3f13b3eaf16672d427ee828fda16ed</a></li>
+<li>Exploit: <a target="_blank" rel="noopener" href="https://hackmd.io/epHcDaB_Tr6RZWmLobJY0g?view#vulnerability-2-exploit">https://hackmd.io/epHcDaB_Tr6RZWmLobJY0g?view#vulnerability-2-exploit</a></li>
+<li>Demo: <a target="_blank" rel="noopener" href="https://youtu.be/xp5Qc041YCY">https://youtu.be/xp5Qc041YCY</a></li>
+</ul>
+<h2 id="4-The-Impact-of-Sheaf-on-Traditional-Exploitation-and-the-Solutions"><a href="#4-The-Impact-of-Sheaf-on-Traditional-Exploitation-and-the-Solutions" class="headerlink" title="4. The Impact of Sheaf on Traditional Exploitation and the Solutions"></a>4. The Impact of Sheaf on Traditional Exploitation and the Solutions</h2><p>As mentioned in Section 3.2.1, the mechanism of the SLUB allocator has changed significantly since Linux kernel 6.18, due to the sheaf&#x2F;barn cache layer described in Section 1.2, which causes the traditional cross-cache method to fail. This section analyzes the cause, proposes two solutions to the impact of sheaf on prior SLUB techniques, and presents one approach that can bypass the sheaf cache entirely and exploit the old slab layer directly.</p>
+<h3 id="4-1-The-Impact-of-the-Sheaf-Mechanism"><a href="#4-1-The-Impact-of-the-Sheaf-Mechanism" class="headerlink" title="4.1 The Impact of the Sheaf Mechanism"></a>4.1 The Impact of the Sheaf Mechanism</h3><p>In traditional cross-cache techniques, a large number of freed slabs are produced, including the ones holding UAF objects, to exhaust the partial slab space of the corresponding <code>kmem_cache</code>. This makes the buddy system reclaim the page so that the page of the UAF object is allocated by another cache, and the UAF structure ends up overlapping with a structure from a different <code>kmem_cache</code>.</p>
+<p>However, sheaf directly affects the reclamation flow of a slab page. When an object in a slab is cached by sheaf, even though the object has been logically freed, it is still regarded as an object in use from the slab’s point of view. This prevents the slab holding the UAF object from entering the expected reclamation state, so the corresponding page cannot be reclaimed by the buddy system and reallocated to another <code>kmem_cache</code>.</p>
+<p>This is also the main reason why the traditional cross-cache method did not work while analyzing the exploitation flow of the provided buffer vulnerability in this research. Although the release of the UAF object can be triggered, the slab page it sits on can never be reclaimed by the buddy system, so it is not possible to overlay that memory region by allocating objects through another <code>kmem_cache</code>, and the intended cross-cache attack cannot succeed.</p>
+<h3 id="4-2-Solution-1-Flushing-Sheaf-and-Barn-Objects-Back-to-the-Slab-Management-Layer"><a href="#4-2-Solution-1-Flushing-Sheaf-and-Barn-Objects-Back-to-the-Slab-Management-Layer" class="headerlink" title="4.2 Solution 1: Flushing Sheaf and Barn Objects Back to the Slab Management Layer"></a>4.2 Solution 1: Flushing Sheaf and Barn Objects Back to the Slab Management Layer</h3><p>The first solution adds an extra step during cross-cache. The poisoned sheaf is first swapped from the per-CPU layer into the barn, and once the full sheaves or empty sheaves in the barn reach <code>MAX_FULL_SHEAVES</code> or <code>MAX_EMPTY_SHEAVES</code>, they are flushed back into the slab.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.1.4/source/mm/slub.c#L393</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MAX_FULL_SHEAVES    10</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MAX_EMPTY_SHEAVES   10</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.1.4/source/mm/slub.c#L5722</span></span><br><span class="line">	empty = barn_replace_full_sheaf(barn, pcs-&gt;main, allow_spin);</span><br><span class="line">	...</span><br><span class="line">	<span class="comment">/* sheaf_flush_unused() doesn&#x27;t support !allow_spin */</span></span><br><span class="line">	<span class="keyword">if</span> (PTR_ERR(empty) == -E2BIG &amp;&amp; allow_spin) &#123;</span><br><span class="line">		...</span><br><span class="line">		sheaf_flush_unused(s, to_flush);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>__kmem_cache_free_bulk()</code> eventually reaches <code>__slab_free()</code> and returns the object back into the slab. Only then does <code>slab-&gt;inuse</code> drop, allowing the buddy system to reclaim the slab’s pages.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.1.4/source/mm/slub.c#L2914</span></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">sheaf_flush_unused</span><span class="params">(<span class="keyword">struct</span> kmem_cache *s, <span class="keyword">struct</span> slab_sheaf *sheaf)</span></span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">	__kmem_cache_free_bulk(s, sheaf-&gt;size, &amp;sheaf-&gt;objects[<span class="number">0</span>]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.1.4/source/mm/slub.c#L7063</span></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> __kmem_cache_free_bulk(<span class="keyword">struct</span> kmem_cache *s, <span class="type">size_t</span> size, <span class="type">void</span> **p)</span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">do</span> &#123;</span><br><span class="line">		<span class="class"><span class="keyword">struct</span> <span class="title">detached_freelist</span> <span class="title">df</span>;</span></span><br><span class="line"></span><br><span class="line">		size = build_detached_freelist(s, size, p, &amp;df);</span><br><span class="line">		...</span><br><span class="line">		__slab_free(df.s, df.slab, df.freelist, df.tail, df.cnt,</span><br><span class="line">			     _RET_IP_);</span><br><span class="line">	&#125; <span class="keyword">while</span> (likely(size));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>In practice, the step to take is to first allocate far more than <code>sheaf_capacity * (MAX_FULL_SHEAVES + 1)</code> objects of the same cache, then free them all at once, after which the cross-cache attack can proceed through the normal flow.</p>
+<h3 id="4-3-Solution-2-Bypassing-the-Sheaf-Cache-Layer-via-Cross-NUMA-Node-Allocation"><a href="#4-3-Solution-2-Bypassing-the-Sheaf-Cache-Layer-via-Cross-NUMA-Node-Allocation" class="headerlink" title="4.3 Solution 2: Bypassing the Sheaf Cache Layer via Cross-NUMA Node Allocation"></a>4.3 Solution 2: Bypassing the Sheaf Cache Layer via Cross-NUMA Node Allocation</h3><p>Another method is proposed here that can bypass the sheaf caching mechanism entirely and exploit the original slab mechanism directly. After an object is freed, in the free fast path, <code>can_free_to_pcs</code> decides whether the object can be cached by sheaf. If it cannot be cached, it falls back through <code>__slab_free</code> to the traditional allocation and reclamation mechanism.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.1.4/source/mm/slub.c#L6246</span></span><br><span class="line"><span class="type">static</span> __fastpath_inline</span><br><span class="line"><span class="type">void</span> <span class="title function_">slab_free</span><span class="params">(<span class="keyword">struct</span> kmem_cache *s, <span class="keyword">struct</span> slab *slab, <span class="type">void</span> *object,</span></span><br><span class="line"><span class="params">	       <span class="type">unsigned</span> <span class="type">long</span> addr)</span></span><br><span class="line">&#123;</span><br><span class="line">	memcg_slab_free_hook(s, slab, &amp;object, <span class="number">1</span>);</span><br><span class="line">	alloc_tagging_slab_free_hook(s, slab, &amp;object, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (unlikely(!slab_free_hook(s, object, slab_want_init_on_free(s), <span class="literal">false</span>)))</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (likely(can_free_to_pcs(slab)) &amp;&amp; likely(free_to_pcs(s, object, <span class="literal">true</span>)))</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	__slab_free(s, slab, object, object, <span class="number">1</span>, addr);</span><br><span class="line">	stat(s, FREE_SLOWPATH);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>In the original design, the sheaf mechanism would cache objects from a remote NUMA node, but caching objects from a remote NUMA node lowers the chance of hitting the local NUMA node on later allocations, which increases overhead. For this reason, an object from a remote NUMA node is put directly back into its original slab.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.1.4/source/mm/slub.c#L6002</span></span><br><span class="line"><span class="type">static</span> __always_inline <span class="type">bool</span> <span class="title function_">can_free_to_pcs</span><span class="params">(<span class="keyword">struct</span> slab *slab)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> slab_node;</span><br><span class="line">    <span class="type">int</span> numa_node;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!IS_ENABLED(CONFIG_NUMA))</span><br><span class="line">        <span class="keyword">goto</span> check_pfmemalloc;</span><br><span class="line"></span><br><span class="line">    slab_node = slab_nid(slab);</span><br><span class="line">    ...</span><br><span class="line">    numa_node = numa_mem_id();</span><br><span class="line">    <span class="keyword">if</span> (likely(slab_node == numa_node))</span><br><span class="line">        <span class="keyword">goto</span> check_pfmemalloc;</span><br><span class="line">    ...</span><br><span class="line">    numa_node = numa_node_id();</span><br><span class="line">    <span class="comment">/* freed object is from this cpu&#x27;s node, proceed */</span></span><br><span class="line">    <span class="keyword">if</span> (likely(slab_node == numa_node))</span><br><span class="line">        <span class="keyword">goto</span> check_pfmemalloc;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">check_pfmemalloc:</span><br><span class="line">    <span class="keyword">return</span> likely(!slab_test_pfmemalloc(slab));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This can therefore be used when two NUMA nodes are present in the environment. If an object is allocated on the first NUMA node but freed on the second, the NUMA node of the sheaf cache layer differs from the NUMA node the object sits on, so it does not enter the sheaf mechanism but falls back to <code>__slab_free</code> to free the object at the third layer. This makes it easy to bypass the sheaf mechanism and carry out the cross-cache flow.</p>
+<h2 id="5-Sheaf-Design-Flaws-Inconsistency-Between-the-Sheaf-and-Traditional-Slab-Implementations"><a href="#5-Sheaf-Design-Flaws-Inconsistency-Between-the-Sheaf-and-Traditional-Slab-Implementations" class="headerlink" title="5. Sheaf Design Flaws: Inconsistency Between the Sheaf and Traditional Slab Implementations"></a>5. Sheaf Design Flaws: Inconsistency Between the Sheaf and Traditional Slab Implementations</h2><p>As described in Section 3.2.1, the exploitation of the provided buffer vulnerability takes advantage of a design flaw in sheaf so that the double-free detection of <code>CONFIG_SLAB_FREELIST_HARDENED</code> is not triggered. Starting from this flaw, this section systematically examines how the original slab freelist’s <code>CONFIG_SLAB_FREELIST_HARDENED</code> mitigation was not accounted for during development, and how its two protections — double-free detection and pointer protection — are thereby rendered ineffective.</p>
+<h3 id="5-1-Flaw-1-Bypassing-CONFIG-SLAB-FREELIST-HARDENED-Double-Free-Detection"><a href="#5-1-Flaw-1-Bypassing-CONFIG-SLAB-FREELIST-HARDENED-Double-Free-Detection" class="headerlink" title="5.1 Flaw 1: Bypassing CONFIG_SLAB_FREELIST_HARDENED Double-Free Detection"></a>5.1 Flaw 1: Bypassing <code>CONFIG_SLAB_FREELIST_HARDENED</code> Double-Free Detection</h3><p>In the traditional SLUB allocator, after an object is freed, its freelist pointer is updated through <code>set_freepointer()</code>. Before setting the next free object, SLUB checks whether the current object points to itself, in order to detect a double free.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.1.4/source/mm/slub.c#L541</span></span><br><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">void</span> <span class="title function_">set_freepointer</span><span class="params">(<span class="keyword">struct</span> kmem_cache *s, <span class="type">void</span> *object, <span class="type">void</span> *fp)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> freeptr_addr = (<span class="type">unsigned</span> <span class="type">long</span>)object + s-&gt;offset;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> CONFIG_SLAB_FREELIST_HARDENED</span></span><br><span class="line">	BUG_ON(object == fp); <span class="comment">/* naive detection of double free or corruption */</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">	freeptr_addr = (<span class="type">unsigned</span> <span class="type">long</span>)kasan_reset_tag((<span class="type">void</span> *)freeptr_addr);</span><br><span class="line">	*(<span class="type">freeptr_t</span> *)freeptr_addr = freelist_ptr_encode(s, fp, freeptr_addr);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>However, when storing a newly freed object, sheaf does not use <code>set_freepointer()</code>. As a result, when the same object is freed repeatedly, sheaf can store the duplicate object reference directly, and during a later allocation two structures may end up sharing the same block of memory. In addition, since the sheaf cache sits before the SLUB freelist, objects are managed by sheaf first, which lets an attacker build a usable double-free primitive without triggering the SLUB freelist double-free protection.</p>
+<h3 id="5-2-Flaw-2-Bypassing-CONFIG-SLAB-FREELIST-HARDENED-Pointer-Protection"><a href="#5-2-Flaw-2-Bypassing-CONFIG-SLAB-FREELIST-HARDENED-Pointer-Protection" class="headerlink" title="5.2 Flaw 2: Bypassing CONFIG_SLAB_FREELIST_HARDENED Pointer Protection"></a>5.2 Flaw 2: Bypassing <code>CONFIG_SLAB_FREELIST_HARDENED</code> Pointer Protection</h3><p>Besides double-free detection, <code>CONFIG_SLAB_FREELIST_HARDENED</code> also provides freelist pointer protection, which prevents an attacker from directly modifying the next object pointer stored in the freelist. In the traditional SLUB, the next pointer of a free object is not stored in plaintext but encoded through <code>freelist_ptr_encode()</code>, which xors the next pointer with <code>s-&gt;random</code>, a random value generated when each <code>kmem_cache</code> is initialized.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.1.4/source/mm/slub.c#L504</span></span><br><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">freeptr_t</span> <span class="title function_">freelist_ptr_encode</span><span class="params">(<span class="type">const</span> <span class="keyword">struct</span> kmem_cache *s,</span></span><br><span class="line"><span class="params">					    <span class="type">void</span> *ptr, <span class="type">unsigned</span> <span class="type">long</span> ptr_addr)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> encoded;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> CONFIG_SLAB_FREELIST_HARDENED</span></span><br><span class="line">	encoded = (<span class="type">unsigned</span> <span class="type">long</span>)ptr ^ s-&gt;random ^ swab(ptr_addr);</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">	encoded = (<span class="type">unsigned</span> <span class="type">long</span>)ptr;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">	<span class="keyword">return</span> (<span class="type">freeptr_t</span>)&#123;.v = encoded&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>After the sheaf caching layer is introduced, a freed object first enters the object array managed by <code>slab_sheaf</code>. However, the sheaf object pointer is not encrypted. This renders the existing protection ineffective and lets an attacker easily hijack the pointer, thereby controlling the memory location allocated by the <code>kmem_cache</code>. How this flaw is exploited is described in detail in Section 6.</p>
+<h2 id="6-Novel-Techniques-Sheaf-Based-Exploitation"><a href="#6-Novel-Techniques-Sheaf-Based-Exploitation" class="headerlink" title="6. Novel Techniques: Sheaf-Based Exploitation"></a>6. Novel Techniques: Sheaf-Based Exploitation</h2><p>Building on the sheaf-related parts of the vulnerability in Section 3, this research proposes additional privilege escalation paths and reduces the impact of the sheaf&#x2F;barn mechanism on prior SLUB exploitation techniques. This section proposes three novel exploitation techniques.</p>
+<p>Existing online discussions and articles on sheaf-related exploitation, as of July 2026, remain fairly limited. The most representative is <em>SheafJack</em>, a writeup by an Indonesian researcher that likewise focuses on the attack surface introduced by the sheaf mechanism and is one of the few pieces of prior work that publicly discuss this topic. However, the direction it proposes is vague in many details and contains incorrect descriptions. Taking its description of attack vector 2 as an example, it mentions triggering the cross-cache flow through <code>refill_sheaf</code>, but reviewing the actual source code shows that no such behavior exists. This section provides a more detailed and concrete explanation of sheaf-based exploitation and presents new exploitation techniques.</p>
+<h3 id="6-1-Technique-1-Object-Array-Hijack"><a href="#6-1-Technique-1-Object-Array-Hijack" class="headerlink" title="6.1 Technique 1: Object Array Hijack"></a>6.1 Technique 1: Object Array Hijack</h3><p><code>slab_sheaf</code> is an object pointer array (see Section 1.2). When an object is freed, the <code>main</code> sheaf is taken from the current <code>slub_percpu_sheaves</code>, the object is stored into that structure, and <code>size</code> is updated.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.1.4/source/mm/slub.c#L5806</span></span><br><span class="line"><span class="type">static</span> __fastpath_inline</span><br><span class="line"><span class="type">bool</span> <span class="title function_">free_to_pcs</span><span class="params">(<span class="keyword">struct</span> kmem_cache *s, <span class="type">void</span> *object, <span class="type">bool</span> allow_spin)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">slub_percpu_sheaves</span> *<span class="title">pcs</span>;</span></span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">if</span> (unlikely(pcs-&gt;main-&gt;size == s-&gt;sheaf_capacity)) &#123;</span><br><span class="line">	...</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	pcs-&gt;main-&gt;objects[pcs-&gt;main-&gt;size++] = object;</span><br></pre></td></tr></table></figure>
+
+<p>Conversely, when the kernel tries to allocate a block of memory, it also attempts to obtain an object from the <code>main</code> sheaf.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.1.4/source/mm/slub.c#L4707</span></span><br><span class="line"><span class="type">static</span> __fastpath_inline</span><br><span class="line"><span class="type">void</span> *<span class="title function_">alloc_from_pcs</span><span class="params">(<span class="keyword">struct</span> kmem_cache *s, <span class="type">gfp_t</span> gfp, <span class="type">int</span> node)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">slub_percpu_sheaves</span> *<span class="title">pcs</span>;</span></span><br><span class="line">	<span class="type">bool</span> node_requested;</span><br><span class="line">	<span class="type">void</span> *object;</span><br><span class="line">	...</span><br><span class="line">	object = pcs-&gt;main-&gt;objects[pcs-&gt;main-&gt;size - <span class="number">1</span>];</span><br><span class="line">	...</span><br><span class="line">	pcs-&gt;main-&gt;size--;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> object;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>If the object array pointer in <code>slab_sheaf</code> can be overwritten, the memory allocated by SLUB can be hijacked to any desired location for later exploitation. The <code>slab_sheaf</code> structure is shown below.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.1.4/source/mm/slub.c#L404</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">slab_sheaf</span> &#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">union</span> &#123;</span></span><br><span class="line">		<span class="class"><span class="keyword">struct</span> <span class="title">rcu_head</span> <span class="title">rcu_head</span>;</span></span><br><span class="line">		<span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">barn_list</span>;</span></span><br><span class="line">		<span class="comment">/* only used for prefilled sheafs */</span></span><br><span class="line">		<span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">			<span class="type">unsigned</span> <span class="type">int</span> capacity;</span><br><span class="line">			<span class="type">bool</span> pfmemalloc;</span><br><span class="line">		&#125;;</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">kmem_cache</span> *<span class="title">cache</span>;</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> size;</span><br><span class="line">	<span class="type">int</span> node; <span class="comment">/* only used for rcu_sheaf */</span></span><br><span class="line">	<span class="type">void</span> *objects[];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>The object array in this structure is a variable-length array of pointers. Every <code>kmem_cache</code> has its own sheaf layer, and which <code>kmem_cache</code> a <code>slab_sheaf</code> is allocated from depends on the size of the object it manages, as shown below. Note that the actual capacity is obtained by taking the maximum of the value below and the capacity specified when each <code>kmem_cache</code> is initialized.</p>
+<table>
+<thead>
+<tr>
+<th><code>s-&gt;size</code></th>
+<th>Capacity</th>
+<th>Backing kmalloc cache</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&lt; 256</td>
+<td>60</td>
+<td>kmalloc-512</td>
+</tr>
+<tr>
+<td>≥ 256 and &lt; 1024</td>
+<td>26</td>
+<td>kmalloc-256</td>
+</tr>
+<tr>
+<td>≥ 1024 and &lt; <code>PAGE_SIZE</code></td>
+<td>12</td>
+<td>kmalloc-128</td>
+</tr>
+<tr>
+<td>≥ <code>PAGE_SIZE</code></td>
+<td>4</td>
+<td>kmalloc-64</td>
+</tr>
+</tbody></table>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.1.4/source/mm/slub.c#L7741</span></span><br><span class="line">	<span class="keyword">if</span> (s-&gt;size &gt;= PAGE_SIZE)	capacity = <span class="number">4</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (s-&gt;size &gt;= <span class="number">1024</span>)	capacity = <span class="number">12</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (s-&gt;size &gt;= <span class="number">256</span>)	capacity = <span class="number">26</span>;</span><br><span class="line">	<span class="keyword">else</span>				capacity = <span class="number">60</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Increment capacity to make sheaf exactly a kmalloc size bucket */</span></span><br><span class="line">	size = <span class="type">struct_size_t</span>(<span class="keyword">struct</span> slab_sheaf, objects, capacity);</span><br><span class="line">	size = kmalloc_size_roundup(size);</span><br><span class="line">	capacity = (size - <span class="type">struct_size_t</span>(<span class="keyword">struct</span> slab_sheaf, objects, <span class="number">0</span>)) / <span class="keyword">sizeof</span>(<span class="type">void</span> *);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> max(capacity, args-&gt;sheaf_capacity);</span><br></pre></td></tr></table></figure>
+
+<p>Therefore, by allocating or freeing large numbers of the objects managed by <code>slab_sheaf</code>, objects in the four buckets kmalloc-64, kmalloc-128, kmalloc-256, and kmalloc-512 can be heap sprayed, and a UAF can ultimately be used to hijack the object array to achieve arbitrary read and write.</p>
+<p><img src="https://hackmd.io/_uploads/HkKhLxjHze.png" alt="Technique 1 — object array hijack"></p>
+<p>The actual procedure is as follows. The goal is to reclaim the UAF object by heap spraying <code>slab_sheaf</code>. Here, a kmalloc-512 UAF is assumed to be available, and maple tree nodes can be chosen for the heap spray. Each time a new region is mmap’d, a new VMA is allocated, and a new maple node is allocated from <code>maple_node_cache</code>.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.1.4/source/lib/maple_tree.c#L1089</span></span><br><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">void</span> <span class="title function_">mas_alloc_nodes</span><span class="params">(<span class="keyword">struct</span> ma_state *mas, <span class="type">gfp_t</span> gfp)</span></span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">		mas-&gt;alloc = mt_alloc_one(gfp);</span><br><span class="line">		<span class="keyword">if</span> (!mas-&gt;alloc)</span><br><span class="line">			<span class="keyword">goto</span> error;</span><br></pre></td></tr></table></figure>
+
+<p>This <code>kmem_cache</code> specifies a capacity of 32 at initialization, so its <code>slab_sheaf</code> is allocated from kmalloc-512.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.1.4/source/lib/maple_tree.c#L5630</span></span><br><span class="line"><span class="type">void</span> __init <span class="title function_">maple_tree_init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">kmem_cache_args</span> <span class="title">args</span> =</span> &#123;</span><br><span class="line">		.align  = <span class="keyword">sizeof</span>(<span class="keyword">struct</span> maple_node),</span><br><span class="line">		.sheaf_capacity = <span class="number">32</span>,</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>To heap spray <code>slab_sheaf</code>, the <code>slab_sheaf</code> instances in the barn and in <code>slub_percpu_sheaves</code> are first exhausted through mass allocation and freeing. Then, when allocating a new object, because all <code>slab_sheaf</code> instances are out of objects, the kernel will try to allocate a new <code>slab_sheaf</code>.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.1.4/source/mm/slub.c#L4649</span></span><br><span class="line"><span class="type">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">slub_percpu_sheaves</span> *</span></span><br><span class="line"><span class="class">__<span class="title">pcs_replace_empty_main</span>(<span class="keyword">struct</span> <span class="title">kmem_cache</span> *<span class="title">s</span>, <span class="keyword">struct</span> <span class="title">slub_percpu_sheaves</span> *<span class="title">pcs</span>, <span class="title">gfp_t</span> <span class="title">gfp</span>)</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">slab_sheaf</span> *<span class="title">empty</span> =</span> <span class="literal">NULL</span>;</span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">if</span> (!empty) &#123;</span><br><span class="line">		empty = alloc_empty_sheaf(s, gfp);</span><br><span class="line">		<span class="keyword">if</span> (!empty)</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>After that, the UAF is used to overwrite the object array with <code>modprobe_path</code> or any other target location. Privilege escalation is then achieved by making the allocator return memory at a target such as <code>modprobe_path</code> and performing an arbitrary read and write there.</p>
+<blockquote>
+<p>To simplify the verification process, Technique 1 and Technique 2 were verified using a custom kernel driver that contains a UAF, available at: <a target="_blank" rel="noopener" href="https://hackmd.io/epHcDaB_Tr6RZWmLobJY0g?view#technique-1-and-2-test-kernel-driver">https://hackmd.io/epHcDaB_Tr6RZWmLobJY0g?view#technique-1-and-2-test-kernel-driver</a></p>
+</blockquote>
+<p><strong>Artifacts</strong></p>
+<ul>
+<li>Exploit: <a target="_blank" rel="noopener" href="https://hackmd.io/epHcDaB_Tr6RZWmLobJY0g?view#technique-1-exploit">https://hackmd.io/epHcDaB_Tr6RZWmLobJY0g?view#technique-1-exploit</a></li>
+<li>Demo: <a target="_blank" rel="noopener" href="https://youtu.be/pgtzXYAjxO8">https://youtu.be/pgtzXYAjxO8</a></li>
+</ul>
+<h3 id="6-2-Technique-2-Object-Array-Out-of-Bounds-Write"><a href="#6-2-Technique-2-Object-Array-Out-of-Bounds-Write" class="headerlink" title="6.2 Technique 2: Object Array Out-of-Bounds Write"></a>6.2 Technique 2: Object Array Out-of-Bounds Write</h3><p>An arbitrary write of sufficient length is not always available, or the UAF write primitive on the object may be incomplete, so overwriting the object array can easily lead to a kernel panic. Two additional methods are provided here to escalate privileges without controlling the object array — the first below, and the second in Section 6.3. The following is the behavior when freeing an object:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.1.4/source/mm/slub.c#L5806</span></span><br><span class="line"><span class="type">static</span> __fastpath_inline</span><br><span class="line"><span class="type">bool</span> <span class="title function_">free_to_pcs</span><span class="params">(<span class="keyword">struct</span> kmem_cache *s, <span class="type">void</span> *object, <span class="type">bool</span> allow_spin)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">slub_percpu_sheaves</span> *<span class="title">pcs</span>;</span></span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">if</span> (unlikely(pcs-&gt;main-&gt;size == s-&gt;sheaf_capacity)) &#123;</span><br><span class="line">	...</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	pcs-&gt;main-&gt;objects[pcs-&gt;main-&gt;size++] = object;</span><br></pre></td></tr></table></figure>
+
+<p>It can be observed that when the <code>size</code> field of the current <code>main</code> sheaf equals <code>capacity</code>, the sheaf is treated as a full sheaf that can take no more objects, so the <code>main</code> sheaf is swapped with another sheaf. However, if the <code>size</code> field of <code>slab_sheaf</code> can be controlled to exceed <code>capacity</code>, no check is performed, and the next time an object is freed, its object pointer is written to an arbitrary location. This yields a single arbitrary pointer write.</p>
+<p><img src="https://hackmd.io/_uploads/SyDfQeiBGg.png" alt="Technique 2 — object array out-of-bounds write"></p>
+<p>The exploit procedure is as follows. First, two <code>cred</code> structures with root privileges are loaded into memory in advance. The <code>usage</code> field is set to a large value to prevent the structures from being accidentally reclaimed during later exploitation.</p>
+<p>Next, <code>slab_sheaf</code> and <code>task_struct</code> are heap sprayed in an interleaved manner. <code>task_struct</code> is sprayed through <code>fork</code>, and each subprocess repeatedly checks its own uid.</p>
+<p>Through corrupting the <code>size</code> field, the offset of the next write is changed to the <code>task_struct-&gt;real_cred</code> field. The pre-arranged structures are then freed. On the first free, the object is placed at <code>objects[size]</code> through <code>free_to_pcs</code> to overwrite the <code>real_cred</code> pointer. On the second free, it is placed at <code>objects[size+1]</code> to overwrite the <code>cred</code> pointer. After the out-of-bounds operation, <code>size</code> is restored to its original position to prevent a kernel panic during subsequent frees.</p>
+<p>When a looping subprocess finds that its own uid has become 0 (root), a root shell can be opened, completing the privilege escalation.</p>
+<p><strong>Artifacts</strong></p>
+<ul>
+<li>Exploit: <a target="_blank" rel="noopener" href="https://hackmd.io/epHcDaB_Tr6RZWmLobJY0g?view#technique-2-exploit">https://hackmd.io/epHcDaB_Tr6RZWmLobJY0g?view#technique-2-exploit</a></li>
+<li>Demo: <a target="_blank" rel="noopener" href="https://youtu.be/K4ZJ_W5pkfE">https://youtu.be/K4ZJ_W5pkfE</a></li>
+</ul>
+<h3 id="6-3-Technique-3-Cross-Cache-via-the-RCU-slab-sheaf"><a href="#6-3-Technique-3-Cross-Cache-via-the-RCU-slab-sheaf" class="headerlink" title="6.3 Technique 3: Cross-Cache via the RCU slab_sheaf"></a>6.3 Technique 3: Cross-Cache via the RCU <code>slab_sheaf</code></h3><p>This section proposes a novel technique that resolves the following three problems of traditional cross-cache:</p>
+<ul>
+<li>Traditional cross-cache requires mass frees to fill the SLUB partial freelist and have it reclaimed into the buddy system, and there is no precise way to know whether the page holding the UAF object has already been reclaimed.</li>
+<li>The operating system carries a lot of noise, so the page holding the reclaimed UAF object is very likely to be allocated by another <code>kmem_cache</code>, causing the exploitation to fail.</li>
+<li>When the buddy system finds that adjacent pages are all reclaimed, they are merged into a larger <code>free_area</code>, making the corresponding page difficult to obtain.</li>
+</ul>
+<p>This section presents a new technique that can precisely steer a UAF object into a <code>kmem_cache</code> of any size and type, and that can escalate privileges under more constrained environments or primitives.</p>
+<p>Besides <code>main</code> and <code>spare</code>, <code>slab_sheaf</code> also has an <code>rcu</code> slot. After an object is freed through <code>kfree_rcu</code>, the rcu sheaf stores the freed object until the grace period ends, at which point the whole batch of objects is flushed into the barn. If the barn reaches its limit, the objects are flushed directly back into the slab of the corresponding <code>kmem_cache</code>.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.1.4/source/mm/slab_common.c#L1957</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">kvfree_call_rcu</span><span class="params">(<span class="keyword">struct</span> rcu_head *head, <span class="type">void</span> *ptr)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> flags;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">kfree_rcu_cpu</span> *<span class="title">krcp</span>;</span></span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!IS_ENABLED(CONFIG_PREEMPT_RT) &amp;&amp; kfree_rcu_sheaf(ptr))</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	success = add_ptr_to_bulk_krc_lock(&amp;krcp, &amp;flags, ptr, !head);</span><br><span class="line">	<span class="keyword">if</span> (!success) &#123;</span><br><span class="line">		...</span><br><span class="line"></span><br><span class="line">		head-&gt;func = ptr;</span><br><span class="line">		head-&gt;next = krcp-&gt;head;</span><br><span class="line">		WRITE_ONCE(krcp-&gt;head, head);</span><br><span class="line">		<span class="type">atomic_inc</span>(&amp;krcp-&gt;head_count);</span><br><span class="line">	&#125;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br><span class="line">EXPORT_SYMBOL_GPL(kvfree_call_rcu);</span><br></pre></td></tr></table></figure>
+
+<p>Through the rcu sheaf, an RCU callback does not have to be created for every object, and a large number of RCU objects can be processed in batch. The callback function <code>rcu_free_sheaf</code> registered by <code>call_rcu</code> is then invoked after the grace period ends, and it begins cleaning up the objects in the rcu sheaf.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.1.4/source/mm/slub.c#L5974</span></span><br><span class="line"><span class="type">bool</span> __kfree_rcu_sheaf(<span class="keyword">struct</span> kmem_cache *s, <span class="type">void</span> *obj)</span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">	rcu_sheaf-&gt;objects[rcu_sheaf-&gt;size++] = obj;</span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">if</span> (rcu_sheaf)</span><br><span class="line">		call_rcu(&amp;rcu_sheaf-&gt;rcu_head, rcu_free_sheaf);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Which barn an object is placed into, or which <code>kmem_cache</code> structure it is flushed back to, is looked up according to the <code>cache</code> field of the rcu <code>slab_sheaf</code> itself, and which <code>kmem_cache</code>‘s barn is used is also determined by that field.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">rcu_free_sheaf</span><span class="params">(<span class="keyword">struct</span> rcu_head *head)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">slab_sheaf</span> *<span class="title">sheaf</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">node_barn</span> *<span class="title">barn</span> =</span> <span class="literal">NULL</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">kmem_cache</span> *<span class="title">s</span>;</span></span><br><span class="line"></span><br><span class="line">	s = sheaf-&gt;cache;</span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">	barn = get_barn_node(s, sheaf-&gt;node);</span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (data_race(barn-&gt;nr_full) &lt; MAX_FULL_SHEAVES) &#123;</span><br><span class="line">		barn_put_full_sheaf(barn, sheaf);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	...</span><br><span class="line">flush:</span><br><span class="line">	stat(s, BARN_PUT_FAIL);</span><br><span class="line">	sheaf_flush_unused(s, sheaf);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>With a UAF primitive available, hijacking the <code>cache</code> field allows a large heap spray of RCU to flush the UAF object into an arbitrary <code>kmem_cache</code> during the RCU callback.</p>
+<p>This technique is a new cross-cache path. It does not rely on the traditional route of going through the buddy system to cross a UAF object into another memory pool, reducing the uncertainty caused by internal state changes in the buddy system, and making the overall attack flow more stable. In addition, this method does not require the complex free procedure described in Section 4.2, nor the NUMA-node-dependent operations described in Section 4.3, which simplifies the overall execution flow and improves the portability of the technique.</p>
+<p><img src="https://hackmd.io/_uploads/rkGa1xoSGe.png" alt="Technique 3 — cross-cache via RCU slab_sheaf"></p>
+<h3 id="6-4-Applying-Technique-3-to-Vulnerability-2"><a href="#6-4-Applying-Technique-3-to-Vulnerability-2" class="headerlink" title="6.4 Applying Technique 3 to Vulnerability 2"></a>6.4 Applying Technique 3 to Vulnerability 2</h3><p>This section applies the proposed Technique 3 to the provided buffer vulnerability found in this research, offering a new privilege escalation path.</p>
+<h4 id="6-4-1-Triple-Free-for-Information-Leak-and-Overlapping-the-RCU-slab-sheaf"><a href="#6-4-1-Triple-Free-for-Information-Leak-and-Overlapping-the-RCU-slab-sheaf" class="headerlink" title="6.4.1 Triple Free for Information Leak and Overlapping the RCU slab_sheaf"></a>6.4.1 Triple Free for Information Leak and Overlapping the RCU <code>slab_sheaf</code></h4><p>The goal is to corrupt an object managed by kmalloc-192, whose <code>slab_sheaf</code> comes from kmalloc-512, so many of the following operations take place across these two <code>kmem_cache</code>.</p>
+<p>First, in addition to pre-allocating <code>user_key_payload</code> and later allocating it via update key, a large number of IPv6 multicast sockets are also created in advance for the subsequent heap spray of the RCU <code>slab_sheaf</code>.</p>
+<p>Then, the vulnerability is triggered as before, but this time a double free is performed twice, producing three pointers on the sheaf that point to the same location for later use.</p>
+<p>After that, <code>user_key_payload</code> allocated from kmalloc-512 overlaps with the <code>iovec</code> structure, overwriting <code>datalen</code> and causing an out-of-bounds read. This out-of-bounds read is mainly used to observe the sheaf state and leak the <code>cred_jar</code> address, while the third pointer is left for later use by a newly allocated sheaf.</p>
+<p>A large number of kmalloc-192 objects are then allocated and freed, in order to exhaust the free sheaves in the <code>main</code> and barn of the corresponding <code>kmem_cache</code>. This forces <code>alloc_empty_sheaf</code> to request new memory for the rcu <code>slab_sheaf</code> when a kmalloc-192 object is RCU freed and placed into it, and that new sheaf takes the third pointer produced above, overlapping the <code>iovec</code> with the <code>user_key_payload</code>. Whether the occupation succeeds is determined by the <code>READ_LEN</code> returned when <code>user_key_payload</code> is read, since that value is shrunk by the allocated <code>slab_sheaf</code>.</p>
+<p>As mentioned earlier, the heap spray of the rcu sheaf slab is done through IPv6 multicast sockets. <code>MCAST_MSFILTER</code> is the API used to filter multicast sources. To support switching the multicast source filter from the old version to the new version safely, RCU is invoked, and <code>kfree_rcu</code> is called in the end.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.1.4/source/net/ipv6/mcast.c#L574</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">ip6_mc_msfilter</span><span class="params">(<span class="keyword">struct</span> sock *sk, <span class="keyword">struct</span> group_filter *gsf,</span></span><br><span class="line"><span class="params">		    <span class="keyword">struct</span> sockaddr_storage *<span class="built_in">list</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">ip6_sf_socklist</span> *<span class="title">psl</span>;</span></span><br><span class="line">	...</span><br><span class="line">	kfree_rcu(psl, rcu);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> err;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-4-2-Leaking-the-cred-kmem-cache-Address"><a href="#6-4-2-Leaking-the-cred-kmem-cache-Address" class="headerlink" title="6.4.2 Leaking the cred kmem_cache Address"></a>6.4.2 Leaking the cred <code>kmem_cache</code> Address</h4><p>The <code>iovec</code> is then updated again to restore <code>datalen</code> and regain the information leak. <code>cred</code> is heap sprayed and freed through <code>fork</code> subprocesses to force the allocation of a <code>slab_sheaf</code> from the <code>cred</code> <code>kmem_cache</code>, so that <code>slab_sheaf-&gt;cache</code> appears in memory. The address of that structure and its fields appear near <code>user_key_payload</code>, and the location of <code>cred_jar</code> can be leaked through the information leak. Although <code>cred</code> is also kmalloc-192 in size, it is a <code>kmem_cache</code> independent of the general cache pool, so it does not affect the state produced earlier.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.1.4/source/kernel/cred.c#L36</span></span><br><span class="line"><span class="type">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">kmem_cache</span> *<span class="title">cred_jar</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// https://elixir.bootlin.com/linux/v7.1.4/source/kernel/cred.c#L535</span></span><br><span class="line"><span class="type">void</span> __init <span class="title function_">cred_init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">/* allocate a slab in which we can store credentials */</span></span><br><span class="line">	cred_jar = KMEM_CACHE(cred,</span><br><span class="line">			      SLAB_HWCACHE_ALIGN | SLAB_PANIC | SLAB_ACCOUNT);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-4-3-Privilege-Escalation-by-Poisoning-the-RCU-Cache-and-Cross-Cache-Attacking-cred-jar"><a href="#6-4-3-Privilege-Escalation-by-Poisoning-the-RCU-Cache-and-Cross-Cache-Attacking-cred-jar" class="headerlink" title="6.4.3 Privilege Escalation by Poisoning the RCU Cache and Cross-Cache Attacking cred_jar"></a>6.4.3 Privilege Escalation by Poisoning the RCU Cache and Cross-Cache Attacking <code>cred_jar</code></h4><p>A UAF object is then produced again through the earlier method. One object is an <code>iovec</code> used to write to the object, and another uses an IPv6 multicast socket so <code>ip6_sf_socklist</code> can take the other copy. After RCU ends, the UAF object is placed into the RCU <code>slab_sheaf</code> that was overlapped with the other objects earlier.</p>
+<p>Next, the RCU <code>slab_sheaf-&gt;cache</code> is written to change it to <code>cred_jar</code>.</p>
+<p>A large heap spray is then performed so that <code>ip6_sf_socklist</code> fills the RCU <code>slab_sheaf</code>. Once it becomes a full sheaf, the <code>slab_sheaf</code> is swapped into the barn. Because its owning cache has been corrupted, it is placed into the barn of <code>cred</code>. The UAF object is thereby cross-cached into another <code>kmem_cache</code>.</p>
+<p>Finally, through a large number of <code>fork</code> subprocesses, an attempt is made to obtain the UAF object that has entered <code>cred_jar</code>, and the UAF object is actively written through the <code>iovec</code>. Each subprocess then keeps checking in a loop whether its uid or gid has been overwritten, and privilege escalation is ultimately achieved.</p>
+<p><strong>Artifacts</strong></p>
+<ul>
+<li>Exploit: <a target="_blank" rel="noopener" href="https://hackmd.io/epHcDaB_Tr6RZWmLobJY0g?view#vulnerability-2-exploit-via-technique-3">https://hackmd.io/epHcDaB_Tr6RZWmLobJY0g?view#vulnerability-2-exploit-via-technique-3</a></li>
+<li>Demo: <a target="_blank" rel="noopener" href="https://youtu.be/9xl1PZMr06k">https://youtu.be/9xl1PZMr06k</a></li>
+</ul>
+<h2 id="7-Conclusion"><a href="#7-Conclusion" class="headerlink" title="7. Conclusion"></a>7. Conclusion</h2><p>This research first discovers two 0-days in the io_uring subsystem. Both vulnerabilities have already been reported to upstream, fixed, and patched.</p>
+<ul>
+<li>The first vulnerability lies between the CQ&#x2F;SQ ring resize feature and the deferred task work mechanism. During ring resize, the update to <code>ctx-&gt;rings</code> and the task work operation that modifies the ring flag do not hold the proper lock and therefore lack adequate synchronization, which creates a race condition that an attacker can exploit to cause a null pointer dereference.</li>
+<li>The second vulnerability lies in the error-handling flow of the provided-buffer bundle feature. After the kernel tries to expand the <code>iovec</code> array, an error occurs and the path rolls back when a provided buffer contains an illegal address. On the rollback path, the <code>iovec</code> pointer in <code>kmsg</code> itself is not updated correctly, leading to a UAF. This research further builds a complete exploit chain for this vulnerability and achieves local privilege escalation in an environment with multiple modern Linux kernel protections enabled.</li>
+</ul>
+<p>However, during exploit development, this research finds that the SLUB sheaf&#x2F;barn mechanism introduced after Linux kernel 6.18, which adds two cache layers targeting per-CPU and NUMA on top of the original slab mechanism, significantly changes the object management flow of the traditional SLUB allocator. Techniques widely used in past kernel exploitation are invalid once sheaf is introduced: a freed object may remain in the new caching layer for a long time, so the object is marked as still in use by the slab itself and cannot be reclaimed by the buddy system. Two solutions are therefore proposed:</p>
+<ul>
+<li>More objects are heap sprayed to swap large numbers of per-CPU sheaves into the barn. Once the full sheaves or empty sheaves in the barn reach their limit, they are flushed into the slab, and the original cross-cache can finally be carried out this way.</li>
+<li>In an environment with multiple NUMA nodes, memory can be allocated by binding the current process to one NUMA node while freeing on another. Since caching objects from a different NUMA node in the sheaf layer would lower the chance of hitting the local NUMA node later and cause a performance problem, sheaf does not cache objects from a remote NUMA node, and this allows the original slab mechanism to be exploited directly.</li>
+</ul>
+<p>In addition, a deeper study of the sheaf&#x2F;barn mechanism reveals that its design renders the original SLUB <code>SLAB_FREELIST_HARDENED</code> mitigation almost completely ineffective. This mitigation mainly provides the following two protections:</p>
+<ul>
+<li><strong>Double-free check:</strong> when an object is linked into the freelist, whether the object being linked already exists in the freelist is checked, in order to detect repeated frees. On the sheaf fast path, however, this check is never used, and under normal conditions an object is cached by sheaf&#x2F;barn first, so a simple double free of the same object into the sheaf makes later exploitation easy.</li>
+<li><strong>Pointer protection:</strong> the freelist is a linked list in which each freed object points to the next through a pointer, and this protection encodes the pointer by xoring it with a random value generated when the <code>kmem_cache</code> is created. In the sheaf mechanism, however, <code>slab_sheaf</code> uses an object pointer array to manage the objects stored in it, and on free or allocation, an object is obtained according to the number of objects the current sheaf holds (<code>size</code>). The object pointer array is not protected by pointer encryption, so a simple heap spray of <code>slab_sheaf</code> and tampering with the object array pointer makes it easy to hijack object allocation and freeing.</li>
+</ul>
+<p>Beyond that, introducing sheaf&#x2F;barn does not only bring inconvenience to SLUB exploitation. On the contrary, this mechanism actually offers a larger attack surface, and building on it, three new sheaf-based exploitation techniques are developed:</p>
+<ul>
+<li><strong>Object array hijack:</strong> this exploits the fact that <code>slab_sheaf-&gt;objects[]</code> is not covered by pointer protection to directly control the SLUB allocator into returning an object at an arbitrary location.</li>
+<li><strong>Object array OOB write:</strong> this uses controllable sheaf metadata, such as the <code>size</code> field, to cause an out-of-bounds write on the object pointer array. Heap grooming arranges <code>task_struct</code> and <code>slab_sheaf</code> into a specific layout in memory, and tampering with <code>size</code> then achieves a single arbitrary pointer write. The memory that this pointer refers to is filled with a root-privileged <code>cred</code>, and the arbitrary pointer write is used to overwrite <code>task_struct-&gt;cred</code> for privilege escalation.</li>
+<li><strong>Cross-cache by RCU sheaf:</strong> traditional cross-cache relies on the buddy system to reclaim a useless page (slab) once the partial freelist reaches its limit, thereby moving a UAF object into another <code>kmem_cache</code>. This technique instead makes use of how RCU accumulates rcu objects into a <code>slab_sheaf</code> during a grace period and creates a callback for multiple objects at once. After the grace period ends, the objects stored in the <code>slab_sheaf</code> are flushed back into the barn or the slab. <code>slab_sheaf-&gt;cache</code> records which cache the stored objects come from, and hijacking this metadata makes it possible to place objects into any cache pool more flexibly and stably. Compared with traditional cross-cache, this method does not depend on the buddy system reclaiming pages, avoiding the uncertainty caused by the buddy system’s internal state and by different <code>kmem_cache</code> contending for pages.</li>
+</ul>
+<p>Finally, based on the new cross-cache technique proposed above, a new exploit chain is built for the second vulnerability.</p>
+<p>In summary, this research not only presents two new memory safety vulnerabilities in the io_uring subsystem but also builds a complete privilege escalation path on one of them. This also serves as the starting point for an in-depth study of how the new SLUB sheaf&#x2F;barn allocator affects existing kernel exploitation techniques, along with the corresponding solutions. Going further, this research analyzes the sheaf&#x2F;barn mechanism as a new attack surface, first showing how its design flaws render the original SLUB mitigation ineffective, and then proposing three new exploitation techniques based on the mechanism. Among them, the RCU sheaf-based cross-cache technique breaks the traditional cross-cache attack’s dependence on buddy system page reclaim, allowing an attacker to steer objects between different cache pools more flexibly and stably. This research is intended to provide a new direction and attack surface for future work on Linux kernel exploitation.</p>
+<h2 id="after-all"><a href="#after-all" class="headerlink" title="after all"></a>after all</h2><p>I hope you enjoyed this research. I believe there are still many aspects worth further study. If you found any mistake and want to discuss with me, please cotact with my discord (naup_sumire_hime) or my gmail (<a href="mailto:&#110;&#97;&#x75;&#112;&#57;&#x36;&#55;&#x32;&#49;&#x40;&#103;&#x6d;&#x61;&#105;&#x6c;&#46;&#99;&#x6f;&#x6d;">&#110;&#97;&#x75;&#112;&#57;&#x36;&#55;&#x32;&#49;&#x40;&#103;&#x6d;&#x61;&#105;&#x6c;&#46;&#99;&#x6f;&#x6d;</a>). </p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li>Game of Cross-Cache — <a target="_blank" rel="noopener" href="https://i.blackhat.com/Asia-24/Presentations/Asia-24-Wu-Game-of-Cross-Cache.pdf">https://i.blackhat.com/Asia-24/Presentations/Asia-24-Wu-Game-of-Cross-Cache.pdf</a></li>
+<li>USENIX Security ‘23 prepub — <a target="_blank" rel="noopener" href="https://www.usenix.org/system/files/sec23summer_79-lee-prepub.pdf">https://www.usenix.org/system/files/sec23summer_79-lee-prepub.pdf</a></li>
+<li>linux-kernel mailing list, sheaf discussion — <a target="_blank" rel="noopener" href="https://lists.openwall.net/linux-kernel/2025/09/10/485">https://lists.openwall.net/linux-kernel/2025/09/10/485</a></li>
+<li><code>io_uring_enter(2)</code> man page — <a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man2/io_uring_enter.2.html">https://man7.org/linux/man-pages/man2/io_uring_enter.2.html</a></li>
+<li>SheafJack: Advanced Kernel Exploitation in Linux 6.18 via slab_sheaf Hijack — <a target="_blank" rel="noopener" href="https://www.slideshare.net/slideshow/sheafjack-advanced-kernel-exploitation-in-linux-6-18-via-slab_sheaf-hijack/287245786">https://www.slideshare.net/slideshow/sheafjack-advanced-kernel-exploitation-in-linux-6-18-via-slab_sheaf-hijack/287245786</a></li>
+<li>SYSTOR ‘22, APIs paper — <a target="_blank" rel="noopener" href="https://atlarge-research.com/pdfs/2022-systor-apis.pdf">https://atlarge-research.com/pdfs/2022-systor-apis.pdf</a></li>
+<li>FOSDEM 2026, SLUB Sheaves Update — <a target="_blank" rel="noopener" href="https://fosdem.org/2026/events/attachments/DPXVYJ-slub-sheaves-update/slides/267397/fosdem-sh_pvi6fpf.pdf">https://fosdem.org/2026/events/attachments/DPXVYJ-slub-sheaves-update/slides/267397/fosdem-sh_pvi6fpf.pdf</a></li>
+<li>maple-tree mailing list — <a target="_blank" rel="noopener" href="https://lists.infradead.org/pipermail/maple-tree/2025-August/004477.html">https://lists.infradead.org/pipermail/maple-tree/2025-August/004477.html</a></li>
+<li>“sheaves for all” patch series (v2) — <a target="_blank" rel="noopener" href="https://patchew.org/linux/20260112-sheaves-for-all-v2-0-98225cfb50cf@suse.cz/20260112-sheaves-for-all-v2-14-98225cfb50cf@suse.cz/">https://patchew.org/linux/20260112-sheaves-for-all-v2-0-98225cfb50cf@suse.cz/20260112-sheaves-for-all-v2-14-98225cfb50cf@suse.cz/</a></li>
+<li>Black Hat USA ‘22 — A New Exploitation Method — <a target="_blank" rel="noopener" href="https://i.blackhat.com/USA-22/Thursday/US-22-Lin-Cautious-A-New-Exploitation-Method.pdf">https://i.blackhat.com/USA-22/Thursday/US-22-Lin-Cautious-A-New-Exploitation-Method.pdf</a></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+  <nav id="article-nav" data-aos="fade-up">
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        <img data-src="/images/posts_cover/linux-cve/Linux-Kernel.webp" data-sizes="auto" alt="My Second CVE on Linux Kernel - Futex and mempolicy race condition to UAF" class="lazyload">
+      
+      <a href="/2026/07/21/my-second-cve-futex-and-mempolicy-race/"></a>
+      <div class="article-nav-caption">Older</div>
+      <h3 class="article-nav-title">
+        
+          My Second CVE on Linux Kernel - Futex and mempolicy race condition to UAF
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+</article>
+
+
+
+
+
+
+</section>
+        </div>
+        
+        
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      2020-2026
+      <span class="footer-info-sep rotate"></span>
+      Naup堇姬
+    </div>
+    
+      <div>
+        Powered by&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        228.8k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        20:09
+      </div>
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">Number of visits&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">Number of visitors&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">Contents</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Harvest-Season-for-SLUB-From-io-uring-Vulnerability-to-Novel-Sheaf-Based-Exploitation-Techniques"><span class="toc-number">1.</span> <span class="toc-text">Harvest Season for SLUB: From io_uring Vulnerability to Novel Sheaf-Based Exploitation Techniques</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Preface"><span class="toc-number">1.1.</span> <span class="toc-text">Preface</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Background"><span class="toc-number">1.2.</span> <span class="toc-text">1. Background</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-io-uring-Overview"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.1 io_uring Overview</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-SLUB-and-the-Sheaf-Mechanism"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2 SLUB and the Sheaf Mechanism</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-Layer-1-the-sheaf-layer-slub-percpu-sheaves"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">1.2.1 Layer 1: the sheaf layer (slub_percpu_sheaves)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-Layer-2-the-barn-layer-node-barn"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">1.2.2 Layer 2: the barn layer (node_barn)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-Layer-3-the-slab-management-layer-kmem-cache-node"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">1.2.3 Layer 3: the slab management layer (kmem_cache_node)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Vulnerability-1-Race-Condition-Between-CQ-SQ-Resize-and-Deferred-Task-Work"><span class="toc-number">1.3.</span> <span class="toc-text">2. Vulnerability 1: Race Condition Between CQ&#x2F;SQ Resize and Deferred Task Work</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Root-Cause"><span class="toc-number">1.3.1.</span> <span class="toc-text">2.1 Root Cause</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Proof-of-Concept"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.2 Proof of Concept</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Disclosure-Timeline"><span class="toc-number">1.3.3.</span> <span class="toc-text">Disclosure Timeline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Artifacts"><span class="toc-number">1.3.4.</span> <span class="toc-text">Artifacts</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Vulnerability-2-Logic-Error-in-the-Error-Handling-Path-of-the-Provided-Buffer-Bundle-Expansion-Flow"><span class="toc-number">1.4.</span> <span class="toc-text">3. Vulnerability 2: Logic Error in the Error-Handling Path of the Provided-Buffer Bundle Expansion Flow</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-Root-Cause"><span class="toc-number">1.4.1.</span> <span class="toc-text">3.1 Root Cause</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-Exploitation"><span class="toc-number">1.4.2.</span> <span class="toc-text">3.2 Exploitation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-1-Leaking-KASLR"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">3.2.1 Leaking KASLR</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-2-Leaking-the-task-struct-Address"><span class="toc-number">1.4.2.2.</span> <span class="toc-text">3.2.2 Leaking the task_struct Address</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-3-One-Shot-cred-Overwrite-Leading-to-Local-Privilege-Escalation"><span class="toc-number">1.4.2.3.</span> <span class="toc-text">3.2.3 One-Shot cred Overwrite Leading to Local Privilege Escalation</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Disclosure-Timeline-1"><span class="toc-number">1.4.3.</span> <span class="toc-text">Disclosure Timeline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Artifacts-1"><span class="toc-number">1.4.4.</span> <span class="toc-text">Artifacts</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-The-Impact-of-Sheaf-on-Traditional-Exploitation-and-the-Solutions"><span class="toc-number">1.5.</span> <span class="toc-text">4. The Impact of Sheaf on Traditional Exploitation and the Solutions</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-The-Impact-of-the-Sheaf-Mechanism"><span class="toc-number">1.5.1.</span> <span class="toc-text">4.1 The Impact of the Sheaf Mechanism</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-Solution-1-Flushing-Sheaf-and-Barn-Objects-Back-to-the-Slab-Management-Layer"><span class="toc-number">1.5.2.</span> <span class="toc-text">4.2 Solution 1: Flushing Sheaf and Barn Objects Back to the Slab Management Layer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-Solution-2-Bypassing-the-Sheaf-Cache-Layer-via-Cross-NUMA-Node-Allocation"><span class="toc-number">1.5.3.</span> <span class="toc-text">4.3 Solution 2: Bypassing the Sheaf Cache Layer via Cross-NUMA Node Allocation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Sheaf-Design-Flaws-Inconsistency-Between-the-Sheaf-and-Traditional-Slab-Implementations"><span class="toc-number">1.6.</span> <span class="toc-text">5. Sheaf Design Flaws: Inconsistency Between the Sheaf and Traditional Slab Implementations</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-Flaw-1-Bypassing-CONFIG-SLAB-FREELIST-HARDENED-Double-Free-Detection"><span class="toc-number">1.6.1.</span> <span class="toc-text">5.1 Flaw 1: Bypassing CONFIG_SLAB_FREELIST_HARDENED Double-Free Detection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-Flaw-2-Bypassing-CONFIG-SLAB-FREELIST-HARDENED-Pointer-Protection"><span class="toc-number">1.6.2.</span> <span class="toc-text">5.2 Flaw 2: Bypassing CONFIG_SLAB_FREELIST_HARDENED Pointer Protection</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Novel-Techniques-Sheaf-Based-Exploitation"><span class="toc-number">1.7.</span> <span class="toc-text">6. Novel Techniques: Sheaf-Based Exploitation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-Technique-1-Object-Array-Hijack"><span class="toc-number">1.7.1.</span> <span class="toc-text">6.1 Technique 1: Object Array Hijack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-Technique-2-Object-Array-Out-of-Bounds-Write"><span class="toc-number">1.7.2.</span> <span class="toc-text">6.2 Technique 2: Object Array Out-of-Bounds Write</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-Technique-3-Cross-Cache-via-the-RCU-slab-sheaf"><span class="toc-number">1.7.3.</span> <span class="toc-text">6.3 Technique 3: Cross-Cache via the RCU slab_sheaf</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-Applying-Technique-3-to-Vulnerability-2"><span class="toc-number">1.7.4.</span> <span class="toc-text">6.4 Applying Technique 3 to Vulnerability 2</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#6-4-1-Triple-Free-for-Information-Leak-and-Overlapping-the-RCU-slab-sheaf"><span class="toc-number">1.7.4.1.</span> <span class="toc-text">6.4.1 Triple Free for Information Leak and Overlapping the RCU slab_sheaf</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-4-2-Leaking-the-cred-kmem-cache-Address"><span class="toc-number">1.7.4.2.</span> <span class="toc-text">6.4.2 Leaking the cred kmem_cache Address</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-4-3-Privilege-Escalation-by-Poisoning-the-RCU-Cache-and-Cross-Cache-Attacking-cred-jar"><span class="toc-number">1.7.4.3.</span> <span class="toc-text">6.4.3 Privilege Escalation by Poisoning the RCU Cache and Cross-Cache Attacking cred_jar</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-Conclusion"><span class="toc-number">1.8.</span> <span class="toc-text">7. Conclusion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#after-all"><span class="toc-number">1.9.</span> <span class="toc-text">after all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-number">1.10.</span> <span class="toc-text">References</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Naup堇姬" class="lazyload">
+  <div class="sidebar-author-name">Naup堇姬</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div>
+    <div class="sidebar-state-number">92</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">21</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+    <div class="icon-email sidebar-social-icon">
+      <a href=naup96721@gmail.com itemprop="url" target="_blank" aria-label="email" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+    <div class="icon-github sidebar-social-icon">
+      <a href=https://github.com/Naupjjin itemprop="url" target="_blank" aria-label="github" rel="noopener external nofollow noreferrer"></a>
+    </div>
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+  
+</div>
+</div>
+    
+  </div>
+  
+    <div class="sidebar-btn-wrapper">
+      <div class="sidebar-toc-btn current"></div>
+      <div class="sidebar-common-btn"></div>
+    </div>
+  
+</nav>
+
+    </div>
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.0.6/dist/index.umd.js" integrity="sha384-vkGvf25gm1C1PbcoD5dNfc137HzNL&#x2F;hr1RKA5HniJOaawtvUmH5lTVFgFAruE9Ge" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["#ff5252","#ff7c7c","#ffafaf","#ffd0d0"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["#ff0000"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "Naup堇姬",
+          title: "Harvest Season for SLUB - From io_uring Vulnerability to Novel Sheaf-Based Exploitation Techniques",
+          url: "http://example.com/2026/08/22/Harvest-Season-For-Slub/",
+          excerpt: "",
+          description: "",
+          stripContent: "Harvest Season for SLUB: From io_uring Vulnerability to Novel Sheaf-Based Exploitation Techniques Authors: nHao-Yu Yang (naup96321), Yu-Ting Lin (ddd_dong)  PrefaceThis research started with two vulnerabilities I discovered in io_uring. I will first ",
+          date: "Sat Aug 22 2026 11:19:14 GMT+0800",
+          updated: "Sat Aug 22 2026 11:45:01 GMT+0800",
+          cover: "/images/posts_cover/sheaf/sheaf.png",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+
+
+
+
+
+
+
+
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.3.0' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+  </body>
+  </html>
+
